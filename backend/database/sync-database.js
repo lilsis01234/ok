@@ -1,6 +1,9 @@
 const sequelize = require('../database/database');
 const User = require('../Modele/User');
 const Compte = require('../Modele/Compte');
+const Departement = require('../Modele/Departement');
+const Poste = require('../Modele/Poste'); 
+
 
 
 //Synchronisation de la base de donnée 

@@ -3,7 +3,6 @@ const sequelize = require('../database/database');
 const User = require('./User');
 
 
-//Utilisation de la clé etrangère 
 class Compte extends Model{}
 
 Compte.init({
@@ -29,6 +28,7 @@ Compte.init({
     modelName : 'Compte'
 }); 
 
+//Utilisation de la clé etrangère 
 Compte.belongsTo(User, {
     foreignKey : 'userId'
 });
