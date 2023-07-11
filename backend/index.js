@@ -1,6 +1,6 @@
 const express = require('express');
 //const mysql = require('mysql');
-const sequelize = require('./Modele/database');
+const sequelize = require('./database/database');
 const User = require('./Modele/User')
 
 const app = express();
