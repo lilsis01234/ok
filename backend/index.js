@@ -4,6 +4,9 @@ const sequelize = require('./database/database');
 const User = require('./Modele/User')
 
 const app = express();
+const departementRouter = require('./routes/departement');
+const posteRouter = require('./routes/postes');
+
 
 
 /*
@@ -17,6 +20,11 @@ const connection = mysql.createConnection({
 
 //Ajout de middleware express.json()
 app.use(express.json())
+
+
+//utilisation des routes middleware
+app.use('/api/departement', departementRouter); //route pour le département
+app.use('/api/poste', posteRouter );
 
 //Connection à la base de donnée MySQL
 sequelize.authenticate()
