@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const Departement = require('../Modele/Departement');
 const Poste = require('../Modele/Poste');
 
 const router = require('express').Router();
@@ -19,19 +20,40 @@ router.post('/add', async(req, res) => {
     }
 })
 
-module.exports = router;
-
 
 //Afficher la liste des postes 
 router.get('/all_postes', async(req, res) => {
-    try {
-        const listesPostes = await Poste.findAll();
-        res.status(201).json(listesPostes);
-    }
-    catch (error){
-        console.error('Erreur lors de la génération du liste des postes'),
-        res.status(500).json({message : 'Erreur lors de la génération du listes des départements'});
-    }
+    Poste.findAll({
+        include : {model : Departement, attributes : ['nomDepartement']}
+    })
+    .then((postes) => {
+        res.status(200).json(
+            postes.map((poste) => {
+                return {
+                    id : poste.id,
+                    titrePoste : poste.titrePoste,
+                    nomDepartement : poste.Departement.nomDepartement
+                }
+            })
+        )
+    })
+    .catch((err) => {
+        res.send(err);
+    })
+    
+
+
+
+    // try {
+    //     const listesPostes = await Poste.findAll({
+    //         include: {model : Departement, attributes : ['nomDepartement']}
+    //     });
+    //     res.status(201).json();
+    // }
+    // catch (error){
+    //     console.error('Erreur lors de la génération du liste des postes'),
+    //     res.status(500).json({message : 'Erreur lors de la génération du listes des départements'});
+    // }
 })
 
 //Afficher seuleument un poste
@@ -65,3 +87,26 @@ router.delete('/delete/:id', async(req, res) => {
         res.status(500).json({message : 'Erreur lors de la suppression du poste'})
     }
 })
+
+//Mettre à jour un poste existant 
+router.put('/edit/:id', async(req, res) => {
+    const {id} = req.params;
+    try {
+        const updatePoste = await Poste.findByPk(id);
+        if (!updatePoste) {
+            return res.status(404).json({error : 'Poste introuvable'});
+        }
+        const updatedPoste = await updatePoste.update({
+            titrePoste : req.body.titrePoste,
+            departement : req.body.departement,
+            })
+        // const savedPoste = await updatedPoste.save()
+        res.status(201).json(updatedPoste);
+    }
+    catch (error) {
+        console.error('Erreur lors de la mise à jour du poste', error);
+        res.status(500).json({error : 'Erreur lors de la mise à jour de l\'utilisateur'});
+    }
+})
+
+module.exports = router;

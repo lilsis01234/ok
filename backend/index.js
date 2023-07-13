@@ -6,8 +6,8 @@ const User = require('./Modele/User')
 const app = express();
 const departementRouter = require('./routes/departement');
 const posteRouter = require('./routes/postes');
-
-
+const collabRouter = require('./routes/collaborateur');
+const compte_collab = require('./routes/compteCollab');
 
 /*
 const connection = mysql.createConnection({
@@ -24,7 +24,9 @@ app.use(express.json())
 
 //utilisation des routes middleware
 app.use('/api/departement', departementRouter); //route pour le département
-app.use('/api/poste', posteRouter );
+app.use('/api/poste', posteRouter ); // route pour le router
+app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs
+app.use('/api/compte_collaborateur', compte_collab) ; //route pour les comptes collaborateurs
 
 //Connection à la base de donnée MySQL
 sequelize.authenticate()

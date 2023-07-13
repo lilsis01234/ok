@@ -3,7 +3,8 @@ const User = require('../Modele/User');
 const Compte = require('../Modele/Compte');
 const Departement = require('../Modele/Departement');
 const Poste = require('../Modele/Poste'); 
-// const DepartementPoste = require('../Modele/DepartementPoste'); 
+const Collaborateur = require ('../Modele/Collaborateur');
+const CompteCollab = require('../Modele/CompteCollab');
 
 
 
