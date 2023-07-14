@@ -1,6 +1,7 @@
 const {DataTypes, Model} = require('sequelize');
 const sequelize = require('../database/database');
 const Collaborateur = require('./Collaborateur');
+const Role = require('./Role');
 
 class CompteCollab extends Model{}
 
@@ -31,4 +32,9 @@ CompteCollab.belongsTo(Collaborateur, {
     foreignKey : 'collaborateur',
 })
 
+Role.hasMany(CompteCollab);
+CompteCollab.belongsTo(Role);
+
+
 module.exports = CompteCollab;
+

@@ -8,6 +8,15 @@ const departementRouter = require('./routes/departement');
 const posteRouter = require('./routes/postes');
 const collabRouter = require('./routes/collaborateur');
 const compte_collab = require('./routes/compteCollab');
+const login = require('./routes/auth');
+const role = require('./routes/role');
+
+//importation des configurations$
+const dotenv = require('dotenv');
+const auth_config = require('./config/auth_config');
+
+dotenv.config();
+auth_config();
 
 /*
 const connection = mysql.createConnection({
@@ -27,6 +36,8 @@ app.use('/api/departement', departementRouter); //route pour le département
 app.use('/api/poste', posteRouter ); // route pour le router
 app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs
 app.use('/api/compte_collaborateur', compte_collab) ; //route pour les comptes collaborateurs
+app.use('/api/auth', login); //route pour l'authentification
+app.use('/api/role', role); //route pour les rôles
 
 //Connection à la base de donnée MySQL
 sequelize.authenticate()

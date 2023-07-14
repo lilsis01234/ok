@@ -105,7 +105,7 @@ router.put('/edit/:id', async(req, res) => {
     }
     catch (error) {
         console.error('Erreur lors de la mise à jour du poste', error);
-        res.status(500).json({error : 'Erreur lors de la mise à jour de l\'utilisateur'});
+        res.status(500).json({error : 'Erreur lors de la mise à jour du poste'});
     }
 })
 
