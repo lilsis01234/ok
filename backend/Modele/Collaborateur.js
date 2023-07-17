@@ -44,7 +44,7 @@ Collaborateur.init({
     sequelize,
     modelName : 'Collaborateur'
 })
-
+    
 Collaborateur.belongsTo(Poste, {
     foreignKey : 'poste',
 })

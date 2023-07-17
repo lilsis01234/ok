@@ -2,13 +2,31 @@ const Collaborateur = require('../Modele/Collaborateur');
 const Departement = require('../Modele/Departement');
 const Poste = require('../Modele/Poste');
 const CompteCollab = require('../Modele/CompteCollab');
+const multer = require('multer'); //Package pour gérer l'upload des contenus multimédias
+const path = require('path');
 
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 
+
+//Configuration du stockages des fichiers uploader
+const storage = multer.diskStorage({
+    destination : 'uploads/',
+    filename : (req, file, cb) => {
+        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
+        const ext = path.extname(file.originalname);
+        cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+    },
+})
+
+const upload = multer({storage});
+
+
 //Ajouter des collaborateurs
-router.post('/add', async (req, res) => {
+router.post('/add', upload.single('image') ,async (req, res) => {
     try {
+        const image = req.file;
+
         const newCollab = await Collaborateur.create({
             matricule : req.body.matricule,
             nom : req.body.nom,
@@ -20,7 +38,7 @@ router.post('/add', async (req, res) => {
             tel : req.body.tel,
             dateEmbauche : req.body.dateEmbauche,
             site : req.body.site,
-            image : req.body.image,
+            image : image ? image.path : null ,
             poste: req.body.poste,
         })
         const savedCollab = await newCollab.save();
@@ -92,7 +110,9 @@ router.get('/:id', async(req, res) => {
 })
 
 //Mettre à jour un collaborateur existant 
-router.put('/edit/:id', async(req, res) => {
+router.put('/edit/:id', upload.single('image') ,async(req, res) => {
+    const image = req.file;
+
     const  {id} = req.params;
     try {
         const updateCollab = await Collaborateur.findByPk(id);
@@ -105,7 +125,7 @@ router.put('/edit/:id', async(req, res) => {
             ville : req.body.ville,
             tel : req.body.tel,
             site : req.body.site,
-            image : req.body.image,
+            image : image ? image.path : null ,
             poste: req.body.poste,
         })
 

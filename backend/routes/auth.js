@@ -3,7 +3,11 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
+const crypto = require('crypto')
+
 const router = require('express').Router();
+
+const secretKey = crypto.randomBytes(32).toString('hex');
 
 
 //pour se connecter
@@ -19,12 +23,12 @@ router.post('/login', (req, res, next) => {
                return res.status(401).json({message : 'Mot de passe incorrect'})
            }
 
-           const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+        //    const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
            res.status(200).json({
                id :  comptes.id,
                token : jwt.sign(
                    {id : comptes.id},
-                   accessTokenSecret,
+                   secretKey,
                    { expiresIn : '24h' }
                )
            })
