@@ -2,6 +2,7 @@ const express = require('express');
 //const mysql = require('mysql');
 const sequelize = require('./database/database');
 const User = require('./Modele/User')
+const cors = require('cors');
 
 const app = express();
 const departementRouter = require('./routes/departement');
@@ -10,6 +11,7 @@ const collabRouter = require('./routes/collaborateur');
 const compte_collab = require('./routes/compteCollab');
 const login = require('./routes/auth');
 const role = require('./routes/role');
+const page = require('./routes/home_admin');
 
 //importation des configurations$
 const dotenv = require('dotenv');
@@ -26,7 +28,7 @@ const connection = mysql.createConnection({
     database : 'testintranet',
 })
 */
-
+app.use(cors());
 //Ajout de middleware express.json()
 app.use(express.json())
 
@@ -38,6 +40,7 @@ app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs
 app.use('/api/compte_collaborateur', compte_collab) ; //route pour les comptes collaborateurs
 app.use('/api/auth', login); //route pour l'authentification
 app.use('/api/role', role); //route pour les rôles
+app.use('/api/admin', page); //route pour les la page d'acceuil admin
 
 //Connection à la base de donnée MySQL
 sequelize.authenticate()
