@@ -33,7 +33,7 @@ CompteCollab.belongsTo(Collaborateur, {
 })
 
 Role.hasMany(CompteCollab);
-CompteCollab.belongsTo(Role);
+CompteCollab.belongsTo(Role, {});
 
 
 module.exports = CompteCollab;

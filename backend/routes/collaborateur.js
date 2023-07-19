@@ -50,7 +50,8 @@ router.post('/add', upload.single('image') ,async (req, res) => {
         const newCompte = await CompteCollab.create({
             email : req.body.email,
             password : hashedPassword,
-            collaborateur : savedCollab.id
+            collaborateur : savedCollab.id,
+            RoleId : req.body.RoleId
         })
         const savedCompte = await newCompte.save();
 
@@ -77,6 +78,7 @@ router.get('/all_collaborateurs', async(req,res) => {
                     matricule : collaborateur.matricule,
                     nom : collaborateur.nom,
                     prenom : collaborateur.prenom,
+                    sexe : collaborateur.sexe,
                     dateNaissance: collaborateur.dateNaissance,
                     lot : collaborateur.lot,
                     quartier : collaborateur.quartier,

@@ -23,6 +23,7 @@ router.get('/liste_collaborateur', (req, res) => {
                     nom : compte.Collaborateur.nom,
                     prenom : compte.Collaborateur.prenom,
                     dateNaissance : compte.Collaborateur.dateNaissance,
+                    sexe : compte.Collaborateur.sexe,
                     lot : compte.Collaborateur.lot,
                     quartier : compte.Collaborateur.quartier,
                     ville : compte.Collaborateur.ville,

@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 //Importer axios pour lier le backend avec le frontend 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; //Package utile pour la redirection vers un autre page
+import { setAuthToken } from './auth_config';
 
 
 
@@ -29,9 +30,14 @@ function AuthForm(props) {
 
         axios.post('http://localhost:3000/api/auth/login', formData)
         .then((response) => {
+            //Stocker le JWT dans le LocalStorage
+            // localStorage.setItem('jwt', response.data.token);
+
+            //Si on utilise des cookies securisés
+            setAuthToken(response.data.token);
             navigate('/home');
             console.log(response.data);
-            
+        
         })
         .catch((error) => {
             console.error(error);

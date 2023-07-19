@@ -18,6 +18,9 @@ Collaborateur.init({
     prenom : {
         type : DataTypes.STRING(40),
     },
+    sexe: {
+        type : DataTypes.STRING(10),
+    },
     dateNaissance : {
         type : DataTypes.DATE()
     },

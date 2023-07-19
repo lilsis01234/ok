@@ -11,7 +11,8 @@ const collabRouter = require('./routes/collaborateur');
 const compte_collab = require('./routes/compteCollab');
 const login = require('./routes/auth');
 const role = require('./routes/role');
-const page = require('./routes/home_admin');
+const api_config = require('./config/api_config');
+
 
 //importation des configurations$
 const dotenv = require('dotenv');
@@ -34,13 +35,15 @@ app.use(express.json())
 
 
 //utilisation des routes middleware
+app.use('/api', api_config) //route pour la configuration 
+
 app.use('/api/departement', departementRouter); //route pour le département
 app.use('/api/poste', posteRouter ); // route pour le router
 app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs
 app.use('/api/compte_collaborateur', compte_collab) ; //route pour les comptes collaborateurs
 app.use('/api/auth', login); //route pour l'authentification
 app.use('/api/role', role); //route pour les rôles
-app.use('/api/admin', page); //route pour les la page d'acceuil admin
+
 
 //Connection à la base de donnée MySQL
 sequelize.authenticate()
