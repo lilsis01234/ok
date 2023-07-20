@@ -3,7 +3,9 @@ import React, {useState} from 'react';
 //Importer axios pour lier le backend avec le frontend 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; //Package utile pour la redirection vers un autre page
-import { setAuthToken } from './auth_config';
+// import { setAuthToken } from './auth_config';
+import Cookies from 'js-cookie';
+import { getRoleFromToken } from './getRoleFromToken';
 
 
 
@@ -28,15 +30,25 @@ function AuthForm(props) {
             password : password
         }
 
-        axios.post('http://localhost:3000/api/auth/login', formData)
+        axios.post('http://localhost:4000/api/auth/login', formData)
         .then((response) => {
             //Stocker le JWT dans le LocalStorage
             // localStorage.setItem('jwt', response.data.token);
 
             //Si on utilise des cookies securisés
-            setAuthToken(response.data.token);
-            navigate('/home');
+            // setAuthToken(response.data.token);
+            // navigate('/home');
+            // const token = Cookies.get('access_token');
+            const userRole = getRoleFromToken();
+            if(userRole && userRole.includes('Administrateur')) {
+                navigate('/home');
+            } else if (userRole && userRole.includes('User')){
+                navigate('/userHome');
+            }
+
+    
             console.log(response.data);
+            console.log(userRole);
         
         })
         .catch((error) => {

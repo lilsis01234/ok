@@ -1,7 +1,5 @@
 const Departement = require('../Modele/Departement');
 const Poste = require('../Modele/Poste');
-
-
 const router = require('express').Router();
 
 
