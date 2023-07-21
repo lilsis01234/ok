@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 
 
+
 require('dotenv').config();
 
 
@@ -52,14 +53,14 @@ router.post('/login', (req, res, next) => {
                 secretKey,
                 {expiresIn : '24h'}
             )
-            res.cookie('access_token', token, {httpOnly: true, secure: true, maxAge: 86400000})
+            res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400000})
             res.status(200).json({
                 id : comptes.id,
                 role : roleTitle,
                 token : token,
             })
             console.log('Utilisateur connecté avec succés')
-
+            
         
         })
        })

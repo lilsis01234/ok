@@ -16,7 +16,7 @@ router.post('/add', async(req, res) => {
     }
     catch (error){
         console.error('Erreur lors de la création d\'un départemtent: ', error);
-        res.status(201).json({message : 'Erreur lors de la création de l\'utilisateur'});
+        res.status(401).json({message : 'Erreur lors de la création de l\'utilisateur'});
     }
 })
 
