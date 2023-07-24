@@ -1,6 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Home from '../components/Administrateur/Home'
+import Home from '../components/Other_component/Home'
 import HomeAdmin from '../components/Administrateur/HomeAdmin'
 import Login from '../components/Authentification/Login'
 import HomeUser from '../components/User/HomeUser'

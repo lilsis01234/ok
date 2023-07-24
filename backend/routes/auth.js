@@ -30,7 +30,7 @@ router.post('/login', (req, res, next) => {
        bcrypt
        .compare(req.body.password, comptes.password)
        .then(valid => {
-           if (!valid) {
+           if (!valid) { 
                return res.status(401).json({message : 'Mot de passe incorrect'})
            }
 
