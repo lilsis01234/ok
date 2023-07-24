@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-import Cookies  from 'js-cookie';
+
 
 function Login(props){
     const navigate = useNavigate();
@@ -23,10 +23,11 @@ function Login(props){
 
         axios.post('http://localhost:4000/api/auth/login', formData)
         .then((response) => {
-            const token = response.data.token;
-            Cookies.set('jwt', token)
-            console.log(response.data);
-            navigate('/admin/home');
+            const {token, role} = response.data;
+           localStorage.setItem('jwt', token);
+           localStorage.setItem('role', role);
+            // Cookies.set('jwt', token)
+            navigate('/home');
         })
         .catch((error) => {
             console.error(error);

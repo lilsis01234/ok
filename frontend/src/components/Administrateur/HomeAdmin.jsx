@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 function HomeAdmin(){
     const navigate = useNavigate();
     useEffect(() => {
-        const token = Cookies.get('jwt');
+        // const token = Cookies.get('jwt');
+        const token = localStorage.getItem('jwt');
         console.log(token);
         if (!token){
             navigate('/login');
