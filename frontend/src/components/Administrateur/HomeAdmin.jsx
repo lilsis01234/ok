@@ -13,6 +13,11 @@ function HomeAdmin(){
             navigate('/login');
         }
 
+        const role = localStorage.getItem('role'); 
+        if (!(role === "Administrateur")){
+            navigate('/home');
+        }
+
     }, [navigate])
 
     return (

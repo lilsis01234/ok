@@ -12,6 +12,7 @@ const compte_collab = require('./routes/compteCollab');
 const login = require('./routes/auth');
 const role = require('./routes/role');
 const api_config = require('./config/api_config');
+const password = require('./routes/motdepasseOublie');
 
 
 //importation des configurations$
@@ -43,6 +44,8 @@ app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs
 app.use('/api/compte_collaborateur', compte_collab) ; //route pour les comptes collaborateurs
 app.use('/api/auth', login); //route pour l'authentification
 app.use('/api/role', role); //route pour les rôles
+app.use('/api/password', password ); //role pour les mot de passe oublié
+
 
 
 //Connection à la base de donnée MySQL
@@ -89,3 +92,4 @@ connection.connect((err) =>{
 app.listen(4000, () => {
     console.log('Serveur Express en écoute sur le port 3000')
 });
+

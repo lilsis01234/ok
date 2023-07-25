@@ -8,8 +8,10 @@ const Home = () => {
         const role = localStorage.getItem('role');
         if (role === 'Administrateur'){
             navigate('/admin/home');
+            console.log('Redirection vers le page administrateur');
         } else {
             navigate('/user/home');
+            console.log('Redirection vers le page user');
         }
     }, [navigate]);
   return (

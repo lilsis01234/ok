@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 function Login(props){
@@ -48,6 +48,7 @@ function Login(props){
                 </div>
                 <button type="submit">Se connecter </button>
             </form> 
+            <Link to="/reset/password">Mot de passe oublié</Link>
         </div>
     )
 }

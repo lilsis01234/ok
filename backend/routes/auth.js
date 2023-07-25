@@ -11,11 +11,13 @@ require('dotenv').config();
 const crypto = require('crypto');
 const Role = require('../Modele/Role');
 
+
 const router = require('express').Router();
 
 router.use(cookieParser());
 
 const secretKey = crypto.randomBytes(32).toString('hex');
+
 
 
 //pour se connecter
@@ -53,7 +55,6 @@ router.post('/login', (req, res, next) => {
                 secretKey,
                 {expiresIn : '24h'}
             )
-            // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400000})
             res.status(200).json({
                 id : comptes.id,
                 role : roleTitle,
@@ -68,13 +69,6 @@ router.post('/login', (req, res, next) => {
     })
     .catch(error => res.status(500).json(error));
 })
-
-// router.post('/logout', (req, res) => {
-//     res.clearCookie('access_token');
-//     console.log('Deconnexion réussie');
-//     res.status(200).json({ message: 'Déconnexion réussie' });
-// })
-
 
 
 module.exports = router;

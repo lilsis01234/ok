@@ -12,6 +12,11 @@ function HomeUser (){
             navigate('/login');
         }
 
+        const role = localStorage.getItem('role'); 
+        if (!(role === "User")){
+            navigate('/home');
+        }
+
     }, [navigate])
     return (
         <div>

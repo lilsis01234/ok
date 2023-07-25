@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router'
 
 
@@ -10,8 +9,7 @@ const Logout = () => {
         localStorage.removeItem('jwt');
         localStorage.removeItem('role');
         navigate('/login');
-        window.location.reload(true);
-    }
+      }
 
   return (
     <div>
