@@ -1,8 +1,11 @@
-const User = require('../Modele/User');
 const router = require('express').Router();
 const crypto = require('crypto');
 const PasswordResetRequest = require('../Modele/PasswordResetRequest');
 const transporter = require('../config/mailConfig');
+const CompteCollab = require('../Modele/CompteCollab');
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+require('dotenv').config();
 
 const secretkey = crypto.randomBytes(20).toString('hex');
 
@@ -11,7 +14,7 @@ router.post('/password_request_rest', async(req, res) => {
     
     const {email} = req.body;
     try {
-        const user = await User.findOne({where : {email}});
+        const user = await CompteCollab.findOne({where : {email}});
 
         if(!user) {
             return res.status(404).json({message : 'Utilisateur non trouvé '})
@@ -24,24 +27,24 @@ router.post('/password_request_rest', async(req, res) => {
 
         //Création du mail pour réinitialiser le mot de passe
         const baseUrl = 'http://localhost:3000';
-        const resetPasswordLink = `${baseUrl}/reinitialiser-mot-de-passe/${token}`
+        const resetPasswordLink = `${baseUrl}/reset-password/${token}`
 
         //Contenu du mail 
         const mailOptions = {
-            from : 'addressEmail@gmail.com',
+            from : process.env.MAIL_USER,
             to : email,
             subject : 'Réinitialisaton du mot de passe',
             html : `<div>
                         <p> Bonjour </p>
                         <p> Vous avez demandé une réinitialisation de mot de passe. Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe</p>
-                        <a href="${resetPasswordLink}"></a>
+                        <p><a href="${resetPasswordLink}">${resetPasswordLink}</a></p>
                         <p>Ce lien est valable pendant 15 minutes. Si vous n'avez pas demandé de réinitialisation de mot de passe, ignorez simplement cet e-mail.</p>
                         <p>Merci,</p>
                         <p>Votre équipe de support</p>
                     </div>`
         }
 
-        
+        console.log(mailOptions);
 
         //Pour envoyer le mail 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -68,9 +71,25 @@ router.post('/reset-password/:token', async(req, res) => {
 
     try {
         const resetRequest = await PasswordResetRequest.findOne({where : {token}})
-    }
-    catch {
-        
+        if (!resetRequest) {
+            return res.status(400).json({message : 'Jeton de réinitialisaton invalide ou expiré'})
+        }
+
+        const user = await CompteCollab.findByPk(resetRequest.userId);
+
+        const saltRounds = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hashSync(password, saltRounds)
+
+
+        user.password = hashedPassword;
+        await user.save();
+
+        await resetRequest.destroy();
+        return res.status(200).json({message : 'Mot de passe réinitialisé avec succès'});
+    } 
+    catch (error){
+        console.error('Erreur lors de la réinitialisaton du mot de passe:', error)
+        return res.status(500).json({message : 'Une erreur est survenue lors de la réinitialisation du mot de passe'});
     }
 })
 

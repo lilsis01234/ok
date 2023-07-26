@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom';
-
+import "./Login.css"
 
 function Login(props){
     const navigate = useNavigate();
@@ -48,7 +48,7 @@ function Login(props){
                 </div>
                 <button type="submit">Se connecter </button>
             </form> 
-            <Link to="/reset/password">Mot de passe oublié</Link>
+            <Link to="password/reset_request/">Mot de passe oublié</Link>
         </div>
     )
 }

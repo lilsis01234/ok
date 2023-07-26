@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
 const ForgotPasswordForm = () => {
@@ -5,6 +6,14 @@ const ForgotPasswordForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        axios.post('http://localhost:4000/api/password/password_request_rest', {email})
+          .then((response) => {
+            alert("Demande de réinitialisation du mot de passe envoyées avec succès")
+          })
+          .catch((error) => {
+            console.error('Erreur lors de la demande de réinitialisation du mot de passe', error);
+            alert("Une erreur est survenue lors de la demande de réinitialisation");
+          })
     };
 
 

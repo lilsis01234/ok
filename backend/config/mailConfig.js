@@ -1,10 +1,13 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
-    service : 'Gmail',
+    host : 'smtp.phpnet.org',
+    port : 465,
+    secure : true,
     auth : {
-        user: 'addressEmail@gmail.com', //Remplacer par l'adresse email
-        pass: 'motDePasse' //Le mot de passe de l'adresse email
+        user: process.env.MAIL_USER, //Remplacer par l'adresse email
+        pass: process.env.MAIL_PASS, //Le mot de passe de l'adresse email
     }
 })
 

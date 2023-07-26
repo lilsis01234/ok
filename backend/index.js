@@ -20,7 +20,7 @@ const dotenv = require('dotenv');
 const auth_config = require('./config/auth_config');
 
 dotenv.config();
-auth_config();
+//auth_config();
 
 /*
 const connection = mysql.createConnection({
