@@ -1,12 +1,12 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Home from '../components/Other_component/Home'
+import Home from '../components/Other_component/Home/Home'
 import HomeAdmin from '../components/Administrateur/HomeAdmin'
-import Login from '../components/Authentification/Login'
-import HomeUser from '../components/User/HomeUser'
-import ErrorPage from '../components/Other_component/ErrorPage'
-import ForgotPasswordForm from '../components/Authentification/ForgotPasswordForm'
-import ResetPasswordForm from '../components/Authentification/ResetPasswordForm'
+import Login from '../components/Authentification/Login/Login'
+import HomeUser from '../components/User/HomeUser/HomeUser'
+import ErrorPage from '../components/Other_component/ErrorPage/ErrorPage'
+import ForgotPasswordForm from '../components/Authentification/ForgotPasswordForm/ForgotPasswordForm'
+import ResetPasswordForm from '../components/Authentification/ResetPasswordForm/ResetPasswordForm'
 
 
 

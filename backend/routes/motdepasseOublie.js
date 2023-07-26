@@ -19,11 +19,27 @@ router.post('/password_request_rest', async(req, res) => {
         if(!user) {
             return res.status(404).json({message : 'Utilisateur non trouvé '})
         }
-        const token = jwt.sign({ userId: user.id}, secretkey, {expiresIn:'15m'})
+
+         //S'assurer que l'utilisateur ne peut pas faire qu'une demande tout les 30 minutes
+        const now = new Date();
+        const minutesLimit = 10;
+        const limitTime = new Date(now.getTime() - (minutesLimit * 60 * 1000));
+        if (user.lastResetRequest && user.lastResetRequest > limitTime){
+            console.log('Vous ne pouvez demander qu\'une demande de réinitialisation de mot de passe toute les 10 minutes');
+            return res.status(429).json({message : 'Vous ne pouvez demander qu\'une demande de réinitialisation de mot de passe toute les 10 minutes'});  
+          
+        }
+
+        const token = jwt.sign({ userId: user.id}, secretkey, {expiresIn:'30m'})
+        const expiresAt = new Date(now.getTime() + 30 * 60 * 1000);
         await PasswordResetRequest.create({
             userId : user.id,
             token,
+            expiresAt
         });
+
+        user.lastResetRequest = now;
+        await user.save();
 
         //Création du mail pour réinitialiser le mot de passe
         const baseUrl = 'http://localhost:3000';

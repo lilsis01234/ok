@@ -20,7 +20,12 @@ PasswordResetRequest.init({
         },
         onUpdate : 'CASCADE',
         onDelete: 'CASCADE',
+    },
+    expiresAt : {
+        type : DataTypes.DATE,
+        allowNull : false,
     }
+    
     
 }, {
     sequelize,

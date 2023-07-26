@@ -17,8 +17,9 @@ const password = require('./routes/motdepasseOublie');
 
 //importation des configurations$
 const dotenv = require('dotenv');
-const auth_config = require('./config/auth_config');
+// const auth_config = require('./config/auth_config');
 
+require('./config/passwordResetConfig')
 dotenv.config();
 //auth_config();
 
