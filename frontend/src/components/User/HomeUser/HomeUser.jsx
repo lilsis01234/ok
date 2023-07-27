@@ -9,7 +9,7 @@ function HomeUser (){
         const token = localStorage.getItem('jwt');
         console.log(token);
         if (!token){
-            navigate('/login');
+            navigate('/');
         }
 
         const role = localStorage.getItem('role'); 

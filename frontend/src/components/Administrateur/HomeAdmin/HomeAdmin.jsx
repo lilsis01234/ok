@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Logout from '../Authentification/Logout';
+import NavBar from '../NavBar/NavbarAdmin';
+import SideBar from '../SideBarAdmin/SideBar';
+import './page.css';
 // import Cookies from 'js-cookie';
 
 function HomeAdmin(){
@@ -10,7 +12,7 @@ function HomeAdmin(){
         const token = localStorage.getItem('jwt');
         console.log(token);
         if (!token){
-            navigate('/login');
+            navigate('/');
         }
 
         const role = localStorage.getItem('role'); 
@@ -21,9 +23,10 @@ function HomeAdmin(){
     }, [navigate])
 
     return (
-        <div>
+        <div className="page">
+            <NavBar/>
+            <SideBar/>
             <h1>Bienvenue Administrateur</h1>
-            <Logout/>
         </div>
     )
 }

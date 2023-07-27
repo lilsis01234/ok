@@ -35,20 +35,20 @@ function Login(props){
     }
 
     return(
-        <div>
-            <h1>Connexion</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="login">
+           <h1 className="login-title">Connexion</h1>
+            <form onSubmit={handleSubmit} className="login-form">
                 <div>
-                    <label>Adresse email</label>
-                    <input type="email" name="email" onChange={(e) => setEmail(e.target.value)}/>
+                    <label className="login-label">Adresse email</label>
+                    <input type="email" name="email" onChange={(e) => setEmail(e.target.value)} className="login-input"/>
                 </div>
                 <div>
-                    <label>Mot de passe</label>
-                    <input type="password" name="password" onChange={(e) => setPassword(e.target.value)}/>
+                    <label className="login-label">Mot de passe</label>
+                    <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} className="login-input"/>
                 </div>
-                <button type="submit">Se connecter </button>
+                <button type="submit" className="login-button">Se connecter </button>
             </form> 
-            <Link to="password/reset_request/">Mot de passe oublié</Link>
+            <Link to="/password/reset_request/" className="login-link"> Mot de passe oublié ? Cliquez ici pour le réinitialiser</Link>
         </div>
     )
 }

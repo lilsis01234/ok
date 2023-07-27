@@ -1,5 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { Link} from 'react-router-dom';
+import "../Login/Login.css"
+import './ForgotPasswordForm.css'
 
 const ForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
@@ -8,8 +11,7 @@ const ForgotPasswordForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-
-        axios.post('http://localhost:4000/api/password/password_request_rest', {email})
+        axios.post('http://192.168.16.244:4001/api/password/password_request_rest', {email})
           .then((response) => {
             alert("Demande de réinitialisation du mot de passe envoyées avec succès")
             setTimeout(() => {
@@ -24,21 +26,23 @@ const ForgotPasswordForm = () => {
 
 
   return (
-    <div>
-      <h2>Réinitialier votre mot de passe</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="login">
+      <h2 className="resetpassword-title">Réinitialiser votre mot de passe</h2>
+      <form onSubmit={handleSubmit} className="login-form">
         <div>
-            <label htmlFor="email">Adresse e-mail :</label>
+            <label htmlFor="email" className="login-label">Adresse e-mail :</label>
             <input 
                 type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="login-input"
             />
         </div>
-        <button type="submit" disabled={isLoading}>Envoyer</button>
+        <button type="submit" disabled={isLoading} className="login-button">Envoyer</button>
       </form>
+      <Link to="/login" className="login-link"> Revenir à la page de connexion </Link>
     </div>
   )
 }
