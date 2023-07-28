@@ -28,7 +28,7 @@ function HomeAdmin(){
             <NavBar/>
             <SideBar/>
             <h1>Bienvenue Administrateur</h1>
-            <Link to='/liseCollab'>Voir la liste des collaborateurs</Link>
+            <Link to='/listeCollab'>Voir la liste des collaborateurs</Link>
         </div>
     )
 }

@@ -8,6 +8,7 @@ import ForgotPasswordForm from '../components/Authentification/ForgotPasswordFor
 import ResetPasswordForm from '../components/Authentification/ResetPasswordForm/ResetPasswordForm'
 import HomeAdmin from '../components/Administrateur/HomeAdmin/HomeAdmin'
 import ListeCollab from '../components/Administrateur/CrudCollab/listeCollab'
+import AddCollab from '../components/Administrateur/CrudCollab/AddCollab'
 
 
 function AppRoute(){
@@ -21,6 +22,7 @@ function AppRoute(){
                 <Route path='/listeCollab' element={<ListeCollab/>}/>
                 <Route path="/admin/home" element={<HomeAdmin/>}/> 
                 <Route path="/user/home" element={<HomeUser/>}/>
+                <Route path="/addColad" element={<AddCollab/>}/>
 
 
 
