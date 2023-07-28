@@ -54,7 +54,7 @@ function SideBar(){
                    </ul>
             </div>
             )} 
-            <button onClick={toogleSideBar} className="sideBar_button"> <GiHamburgerMenu/></button>
+            <button onClick={toogleSideBar} className="sideBar_button"><GiHamburgerMenu/> </button>
         </div>
     )
 }
