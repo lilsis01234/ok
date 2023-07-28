@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../NavBar/NavbarAdmin';
 import SideBar from '../SideBarAdmin/SideBar';
+import ListeCollab from '../CrudCollab/listeCollab';
 import './page.css';
 // import Cookies from 'js-cookie';
 
@@ -27,6 +28,7 @@ function HomeAdmin(){
             <NavBar/>
             <SideBar/>
             <h1>Bienvenue Administrateur</h1>
+            <ListeCollab/>
         </div>
     )
 }
