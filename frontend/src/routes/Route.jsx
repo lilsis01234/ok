@@ -19,7 +19,7 @@ function AppRoute(){
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/password/reset_request/" element={<ForgotPasswordForm/>}/>
                 <Route path="/reset-password/:token" element={<ResetPasswordForm/>}/>
-                <Route path='/listeCollab' element={<ListeCollab/>}/>
+                <Route path='/admin/listeCollab' element={<ListeCollab/>}/>
                 <Route path="/admin/home" element={<HomeAdmin/>}/> 
                 <Route path="/user/home" element={<HomeUser/>}/>
                 <Route path="/addColad" element={<AddCollab/>}/>
