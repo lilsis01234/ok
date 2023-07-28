@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.page{
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-image: url('https://images.pexels.com/photos/1101122/pexels-photo-1101122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.main-content{
+    flex: 1;
+    padding: 20px;
+    overflow: hidden;
+    
+}
+
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 3px;}

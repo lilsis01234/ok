@@ -1,0 +1,33 @@
+.listDepartement {
+    height: 80vh;
+    width: 45%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins';
+}
+
+.listDepartement_title {
+    text-align : center;
+    padding: 20px;
+    font-size : 20pt;
+
+}
+
+.listDepartement_table{
+    text-align: center;
+
+}
+
+.table_item_icon {
+    background: none;
+    border : none;
+    padding-left: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.table_item_icon:hover {
+    transform: scale(1.1);
+    color: #9C1D21;
+}

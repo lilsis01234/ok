@@ -1,0 +1,33 @@
+.dashboard{
+    height: 80vh;
+    background-color: #202020;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard_graph{
+    width: 30%;
+    height: 60%;
+    background-color: white;
+    align-self: center;
+    margin: 25px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+
+}
+
+.dashboard_description{
+    width: 60%;
+    height: 70vh;
+    background-color: white;
+    align-self: center;
+    margin: 23px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+

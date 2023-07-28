@@ -32,6 +32,7 @@ router.post('/add', upload.single('image') ,async (req, res) => {
             nom : req.body.nom,
             prenom : req.body.prenom,
             dateNaissance : req.body.dateNaissance,
+            sexe : req.body.sexe,
             lot : req.body.lot,
             quartier : req.body.quartier,
             ville : req.body.ville,

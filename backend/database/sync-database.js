@@ -1,11 +1,10 @@
 const sequelize = require('../database/database');
-const User = require('../Modele/User');
-const Compte = require('../Modele/Compte');
 const Departement = require('../Modele/Departement');
 const Poste = require('../Modele/Poste'); 
 const Collaborateur = require ('../Modele/Collaborateur');
 const CompteCollab = require('../Modele/CompteCollab');
 const RoleCollab = require('../Modele/Role');
+const PasswordResetRequest = require('../Modele/PasswordResetRequest');
 
 
 

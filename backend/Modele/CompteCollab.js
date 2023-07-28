@@ -22,6 +22,9 @@ CompteCollab.init({
             model : Collaborateur,
             key : 'id'
         }
+    }, 
+    lastResetRequest : {
+       type : DataTypes.DATE, 
     }
 }, {
     sequelize,

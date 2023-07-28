@@ -1,7 +1,6 @@
 const express = require('express');
 //const mysql = require('mysql');
 const sequelize = require('./database/database');
-const User = require('./Modele/User')
 const cors = require('cors');
 
 const app = express();
@@ -12,14 +11,16 @@ const compte_collab = require('./routes/compteCollab');
 const login = require('./routes/auth');
 const role = require('./routes/role');
 const api_config = require('./config/api_config');
+const password = require('./routes/motdepasseOublie');
 
 
 //importation des configurations$
 const dotenv = require('dotenv');
-const auth_config = require('./config/auth_config');
+// const auth_config = require('./config/auth_config');
 
+require('./config/passwordResetConfig')
 dotenv.config();
-auth_config();
+// auth_config();
 
 /*
 const connection = mysql.createConnection({
@@ -29,7 +30,7 @@ const connection = mysql.createConnection({
     database : 'testintranet',
 })
 */
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: 'http://192.168.16.244:3000', credentials: true }));
 //Ajout de middleware express.json()
 app.use(express.json())
 
@@ -43,6 +44,7 @@ app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs
 app.use('/api/compte_collaborateur', compte_collab) ; //route pour les comptes collaborateurs
 app.use('/api/auth', login); //route pour l'authentification
 app.use('/api/role', role); //route pour les rôles
+app.use('/api/password', password ); //route pour les mot de passe
 
 
 //Connection à la base de donnée MySQL
@@ -86,6 +88,6 @@ connection.connect((err) =>{
 
 
 //Initialisation du serveur
-app.listen(4000, () => {
-    console.log('Serveur Express en écoute sur le port 3000')
+app.listen(4001, () => {
+    console.log('Serveur Express en écoute sur le port 4000')
 });

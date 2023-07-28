@@ -5,6 +5,10 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(()=> {
+        const token = localStorage.getItem('jwt')
+        if (!token){
+            navigate('/');
+        }
         const role = localStorage.getItem('role');
         if (role === 'Administrateur'){
             navigate('/admin/home');

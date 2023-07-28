@@ -69,11 +69,7 @@ router.post('/login', (req, res, next) => {
     .catch(error => res.status(500).json(error));
 })
 
-// router.post('/logout', (req, res) => {
-//     res.clearCookie('access_token');
-//     console.log('Deconnexion réussie');
-//     res.status(200).json({ message: 'Déconnexion réussie' });
-// })
+
 
 
 
