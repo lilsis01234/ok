@@ -7,7 +7,7 @@ const AddCollab = () => {
 
  const navigate = useNavigate();
  const [nom,setNom]=useState('');
- const [photo,setPhoto]=useState('');
+ const [photo,setPhoto]=useState(null);
  const [prenom,setPrenom]=useState('');
  const [lot,setLot]=useState('');
  const [quartier,setQuartier]=useState('');
@@ -19,39 +19,43 @@ const AddCollab = () => {
  const[site,setSite]=useState('');
  const[poste,setPoste]=useState('');
  const[sexe,setSexe]=useState('');
-
+ 
  
  const Validation=(event)=>{
     event.preventDefault();
-    const Collabs = {
-        nom:nom,
-        prenom:prenom,
-        lot:lot,
-        quartier:quartier,
-        ville:ville,
-        telephone:telephone,
-        photo:photo,
-        matricule:matricule,
-        dateEmbauche:dateEmbauche,
-        site:site,
-        poste:poste,
-        dateNaissance:dateNaissance,
-        sexe:sexe
-    }
-    console.log(Collabs)
-    axios.post('http://localhost:4000/api/collaborateur/add',Collabs)
+
+    const formData = new FormData();
+    formData.append('image',photo);
+    formData.append('nom',nom);
+    formData.append('lot',lot);
+    formData.append('quartier',quartier);
+    formData.append('ville',ville);
+    formData.append('dateEmbauche',dateEmbauche);
+    formData.append('site',site);
+    formData.append('dateNaissance',dateNaissance);
+    formData.append('poste',poste);
+    formData.append('sexe',sexe);
+    formData.append('prenom',prenom);
+    formData.append('telephone',telephone);
+    formData.append('matricule',matricule);
+    console.log(formData);
+
+    axios.post('http://localhost:4000/api/collaborateur/add',formData,{headers: {
+      'Content-Type': 'multipart/form-data',
+    },})
     .then(res => {
         console.log(res);
         navigate('/admin/listeCollab');
     }).catch(err =>console.log(err));
- } 
+ };
+
   return (
     <div className='block'>
         <h1>Ajouter un collaborateur</h1>
         <form onSubmit={Validation} className='add-form'>
           <div className='add'>
           <label className="add-collab">Photo:</label><br></br>
-          <input type='file' onChange={(e)=>setPhoto(e.target.files)} className='add-input'></input>
+          <input type='file' onChange={(e)=>setPhoto(e.target.files[0])} className='add-input'></input>
           
           <label className="add-collab">Nom:</label> <br></br>
           <input type='text' onChange={(e)=>{setNom(e.target.value)}} className='add-input'></input>
