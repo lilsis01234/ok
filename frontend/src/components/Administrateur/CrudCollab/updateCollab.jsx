@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState ,useParams} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const UpdateCollab = () => {
+  const {id}= useParams();
   const navigate = useNavigate();
   const [nom,setNom]=useState('');
   const [photo,setPhoto]=useState(null);
@@ -20,9 +21,15 @@ const UpdateCollab = () => {
   const[sexe,setSexe]=useState('');
   
   
+  useEffect(()=>{
+    axios.get('http://localhost:4000/api/edit/'+id)
+    .then(res => {
+        console.log(res);
+    }).catch(err =>console.log(err));
+   });
+
   const ValidateUpdate=(event)=>{
      event.preventDefault();
-     const {id}= useParams();
      const formData = new FormData();
      formData.append('image',photo);
      formData.append('nom',nom);
@@ -39,14 +46,15 @@ const UpdateCollab = () => {
      formData.append('matricule',matricule);
      console.log(formData);
  
-     axios.get('http://localhost:4000/api/edit/'+id,formData,{headers: {
-       'Content-Type': 'multipart/form-data',
-     },})
-     .then(res => {
-         console.log(res);
-         
-     }).catch(err =>console.log(err));
-  };
+     axios.put('http://localhost:4000/api/edit/'+id,formData,{headers: {
+      'Content-Type': 'multipart/form-data',
+    },})
+    .then(res => {
+        console.log(res);
+        
+    }).catch(err =>console.log(err));
+   }
+   
  
    return (
      <div className='block'>
