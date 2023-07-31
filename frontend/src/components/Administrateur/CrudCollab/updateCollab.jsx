@@ -2,7 +2,9 @@ import React from 'react'
 
 const UpdateCollab = () => {
   return (
-    <div>updateCollab</div>
+    <div>
+      <h1>Modifier un collaborateur</h1>
+    </div>
   )
 }
 
