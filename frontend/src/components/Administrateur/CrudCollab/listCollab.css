@@ -102,3 +102,7 @@ th,td{
     width: 23.5%;
     margin-left: -1.5%;
 }
+td img{
+    width: 100%;
+    height: 100%;
+}
