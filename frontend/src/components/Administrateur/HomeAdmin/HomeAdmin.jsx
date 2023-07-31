@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
 import Dashboard from '../Dashboard/Dashboard';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '../NavBar/NavbarAdmin';
 import SideBar from '../SideBarAdmin/SideBar';
+// import ListeCollab from '../CrudCollab/listeCollab';
 import './page.css';
 // import Cookies from 'js-cookie';
 
@@ -32,7 +33,7 @@ function HomeAdmin(){
                     <Dashboard/>
                 </div>
             </div>
-        </div>
+    </div>
     )
 }
 

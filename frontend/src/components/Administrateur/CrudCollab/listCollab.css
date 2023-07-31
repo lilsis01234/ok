@@ -1,0 +1,109 @@
+thead,tbody{
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+th,td{
+    width: 10%;
+    text-align: center;
+    align-items: center;
+}
+.update{
+    width: 100%;
+    background-color:green;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 14px;
+    height: 30px;
+}
+.update a {
+    text-decoration: none !important;
+    color: #ffffff !important;
+}
+.bodyliste h1{
+    text-align: center;
+    color: rgb(136, 36, 36);
+    margin-bottom: 30px;
+    text-decoration: underline;
+}
+.bodyliste{
+    width: 100%;
+    height: 200vh;
+    background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)), url("https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+}
+.ajout{
+    width: 50px;
+    height: 40px;
+    margin-left: 30px;
+    margin-top: 10px;
+    float: left;
+    border-radius: 0 !important;
+    font-size: 20px !important;
+    background-color: rgb(93, 163, 201);
+    border: none !important;
+}
+.ajout a{
+    text-decoration: none !important;
+    color: #ffffff !important;
+}
+
+
+.block{
+    display: block;
+    background:linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)), url("https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") ;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+.block h1{
+    text-align: center;
+    color: rgb(114, 23, 23);
+    margin-bottom: 20px;
+}
+.add{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.add-input{
+    width: 25%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border: none;
+    border-radius: 5px;
+    height: 35px;
+    margin-right: 3%;
+}
+.add label{
+    width: 25%;
+    text-align: center;
+}
+.block button{
+   background-color: rgb(114, 23, 23);
+   width: 600px;
+   height: 45px;
+   color: #ffffff;
+   border: none;
+   justify-content: center;
+   align-items: center;
+   border-radius: 5px;
+   margin-left: 20%;
+}
+.add2{
+    display: flex;
+}
+.add2 label{
+    width: 25%;
+    text-align: center;
+}
+.add2 input{
+    width: 23.5%;
+    margin-left: -1.5%;
+}
+td img{
+    width: 100%;
+    height: 100%;
+}
+

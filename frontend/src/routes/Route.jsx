@@ -14,7 +14,7 @@ function AppRoute(){
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Login/>}/>
+                <Route path='/' element={<Login/>}/>
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/password/reset_request/" element={<ForgotPasswordForm/>}/>
                 <Route path="/reset-password/:token" element={<ResetPasswordForm/>}/>
@@ -23,8 +23,8 @@ function AppRoute(){
 
                 <Route path="/admin/home" element={<HomeAdmin/>}/> 
                 <Route path="/user/home" element={<HomeUser/>}/>
-
-
+                <Route path="/admin/addCollab" element={<AddCollab/>}/>
+                <Route path='/admin/update/:id' element={<UpdateCollab/>}/>
 
                 {/* 
                 <Route path="/admin/home" element={<HomeAdmin/>}/>
