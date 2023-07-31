@@ -9,7 +9,7 @@ import ResetPasswordForm from '../components/Authentification/ResetPasswordForm/
 import HomeAdmin from '../components/Administrateur/HomeAdmin/HomeAdmin'
 import ListeCollab from '../components/Administrateur/CrudCollab/listeCollab'
 import AddCollab from '../components/Administrateur/CrudCollab/AddCollab'
-import updateCollab from '../components/Administrateur/CrudCollab/updateCollab'
+import UpdateCollab from '../components/Administrateur/CrudCollab/updateCollab'
 
 function AppRoute(){
     return (
@@ -23,7 +23,7 @@ function AppRoute(){
                 <Route path="/admin/home" element={<HomeAdmin/>}/> 
                 <Route path="/user/home" element={<HomeUser/>}/>
                 <Route path="/admin/addCollab" element={<AddCollab/>}/>
-                <Route path='/admin/update/:id' element={<updateCollab/>}/>
+                <Route path='/admin/update/:id' element={<UpdateCollab/>}/>
 
                 {/* 
                 <Route path="/admin/home" element={<HomeAdmin/>}/>

@@ -24,6 +24,7 @@ const upload = multer({storage});
 
 //Ajouter des collaborateurs
 router.post('/add', upload.single('image') ,async (req, res) => {
+    console.log(req.body.Collabs);
     try {
         const image = req.file;
 
@@ -35,11 +36,12 @@ router.post('/add', upload.single('image') ,async (req, res) => {
             lot : req.body.lot,
             quartier : req.body.quartier,
             ville : req.body.ville,
-            tel : req.body.tel,
+            tel : req.body.telephone,
             dateEmbauche : req.body.dateEmbauche,
             site : req.body.site,
             image : image ? image.path : null ,
             poste: req.body.poste,
+            sexe:req.body.sexe
         })
         const savedCollab = await newCollab.save();
 
@@ -62,6 +64,7 @@ router.post('/add', upload.single('image') ,async (req, res) => {
         res.status(201).json({message : 'Erreur lors de la création d\'un collaborateur'});
     }
 })
+
 
 //Afficher la liste des postes 
 router.get('/all_collaborateurs', async(req,res) => {
@@ -92,8 +95,10 @@ router.get('/all_collaborateurs', async(req,res) => {
                 }
             })
         )
+        console.log(collaborateur)
     }) 
 })
+
 
 //Afficher seulement un collaborateur
 router.get('/:id', async(req, res) => {
