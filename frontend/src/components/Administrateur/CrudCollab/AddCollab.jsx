@@ -7,11 +7,18 @@ const AddCollab = () => {
 
  const navigate = useNavigate();
  const [nom,setNom]=useState('');
+ const [photo,setPhoto]=useState('');
  const [prenom,setPrenom]=useState('');
  const [lot,setLot]=useState('');
  const [quartier,setQuartier]=useState('');
  const [ville,setVille]=useState('');
  const [telephone,setTelephone]=useState('');
+ const[matricule,setMatricule] = useState('');
+ const[dateNaissance,setdateNaissance]=useState('');
+ const[dateEmbauche,setdateEmbauche]=useState('');
+ const[site,setSite]=useState('');
+ const[poste,setPoste]=useState('');
+ const[sexe,setSexe]=useState('');
 
  
  const Validation=(event)=>{
@@ -22,28 +29,84 @@ const AddCollab = () => {
         lot:lot,
         quartier:quartier,
         ville:ville,
-        telephone:telephone
+        telephone:telephone,
+        photo:photo,
+        matricule:matricule,
+        dateEmbauche:dateEmbauche,
+        site:site,
+        poste:poste,
+        dateNaissance:dateNaissance,
+        sexe:sexe
     }
-
-    axios.post('http://localhost:4000/api/collaborateur/add', Collabs)
+    console.log(Collabs)
+    axios.post('http://localhost:4000/api/collaborateur/add',Collabs)
     .then(res => {
         console.log(res);
-        navigate('/');
+        navigate('/admin/listeCollab');
     }).catch(err =>console.log(err));
  } 
   return (
-    <div>
+    <div className='block'>
         <h1>Ajouter un collaborateur</h1>
-        <form onSubmit={Validation}>
-           Nom: <input type='text'></input>
-           Prenom: <input type='text'></input>
-           Lot: <input type='text'></input>
-           Quartier: <input type='text'></input>
-           Ville: <input type='text'></input>
-           Téléphone: <input type='text'></input>
-        </form>
+        <form onSubmit={Validation} className='add-form'>
+          <div className='add'>
+          <label className="add-collab">Photo:</label><br></br>
+          <input type='file' onChange={(e)=>setPhoto(e.target.files)} className='add-input'></input>
+          
+          <label className="add-collab">Nom:</label> <br></br>
+          <input type='text' onChange={(e)=>{setNom(e.target.value)}} className='add-input'></input>
+          </div>
+
+          <div className='add'>
+          <label className="add-collab">Prenom:</label><br></br>  
+          <input type='text'onChange={(e)=>{setPrenom(e.target.value)}} className='add-input'></input>
+          
+          <label className="add-collab">Adresse:</label><br></br> 
+          <input type='text' onChange={(e)=>{setLot(e.target.value)}} className='add-input'></input>
+          </div>
+
+          <div className='add'>
+          <label className="add-collab">Quartier:</label><br></br>    
+          <input type='text' onChange={(e)=>{setQuartier(e.target.value)}} className='add-input'></input>
+          
+          <label className="add-collab">Ville:</label><br></br>    
+          <input type='text' onChange={(e)=>{setVille(e.target.value)}} className='add-input'></input>
+          </div>
+
+          <div className='add'>
+          <label className="add-collab"> Téléphone:</label><br></br>  
+          <input type='text' onChange={(e)=>{setTelephone(e.target.value)}} className='add-input'></input>
+          
+          <label className="add-collab"> Matricule:</label><br></br>  
+          <input type='text' onChange={(e)=>{setMatricule(e.target.value)}} className='add-input'></input>
+          </div>
+          
+          <div className='add'>
+          <label className="add-collab"> Date de naissance:</label><br></br>  
+          <input type='date' onChange={(e)=>{setdateNaissance(e.target.value)}} className='add-input'></input>
+          
+          <label className="add-collab"> Poste:</label><br></br>  
+          <input type='text' onChange={(e)=>{setPoste(e.target.value)}} className='add-input'></input>
+          </div>
+
+          <div className='add'>
+          <label className="add-collab"> Date d'embauche:</label><br></br>  
+          <input type='date' onChange={(e)=>{setdateEmbauche(e.target.value)}} className='add-input'></input>
+          
+          <label className="add-collab"> Site:</label><br></br>  
+          <input type='text' onChange={(e)=>{setSite(e.target.value)}} className='add-input'></input>
+          </div>
+
+          <div className='add2'>
+          <label className="add-collab">Sexe:</label><br></br>  
+          <input type='text' onChange={(e)=>{setSexe(e.target.value)}} className='add-input'></input>
+          </div>
+
+          <button type='submit'>Envoyer</button>
+          </form>
     </div>
   )
 }
+
 
 export default AddCollab
