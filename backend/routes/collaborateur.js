@@ -25,7 +25,6 @@ const upload = multer({storage});
 
 //Ajouter des collaborateurs
 router.post('/add', upload.single('image') ,async (req, res) => {
-    console.log(req.body.Collabs);
     try {
         const image = req.file;
 
@@ -158,7 +157,7 @@ router.get('/:id', async(req, res) => {
 //Mettre à jour un collaborateur existant 
 router.put('/edit/:id', upload.single('image') ,async(req, res) => {
     const image = req.file;
-
+    console.log(req.body.lot);
     const  {id} = req.params;
     try {
         const updateCollab = await Collaborateur.findByPk(id);
