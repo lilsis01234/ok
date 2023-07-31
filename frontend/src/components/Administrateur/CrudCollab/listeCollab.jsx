@@ -37,7 +37,7 @@ const ListeCollab = () => {
         <tbody>
           {Collabs.map(Collab =>
            <tr key={Collab.id}>
-            <td><img src={`http://localhost:4000/${Collab.image.replace(/\\/g, '/')}`} alt={Collab.nom}/></td>
+            <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
             <td>{Collab.matricule}</td>
             <td>{Collab.nom}</td>
             <td>{Collab.prenom}</td>
