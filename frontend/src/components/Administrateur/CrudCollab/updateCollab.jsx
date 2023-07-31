@@ -35,7 +35,6 @@ const UpdateCollab = () => {
      event.preventDefault();
      const formData = new FormData();
      formData.append('image',photo);
-     formData.append('nom',nom);
      formData.append('lot',lot);
      formData.append('quartier',quartier);
      formData.append('ville',ville);
