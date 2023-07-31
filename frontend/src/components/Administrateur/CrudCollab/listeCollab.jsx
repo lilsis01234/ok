@@ -2,6 +2,7 @@ import React from "react";
 import { useState,useEffect } from "react";
 import axios from "axios";
 import './listCollab.css'
+import { Link } from "react-router-dom";
 
 
 const ListeCollab = () => {
@@ -15,7 +16,8 @@ const ListeCollab = () => {
 
 
   return (
-    <div>
+    <div className="bodyliste">
+      <button className="ajout"><Link to='/admin/addCollab'>+</Link></button>
       <h1>Liste des Collaborateurs</h1>
       <table>
         <thead>
@@ -44,7 +46,7 @@ const ListeCollab = () => {
             <td>{Collab.site}</td>
             <td>{Collab.titrePoste}</td>
             <td>{Collab.departement}</td>
-            <td><button>Modifier</button></td>
+            <td><button className="update"><Link to={`/admin/update/${Collab.id}`}>Modifier</Link></button></td>
             </tr>
           )}
           </tbody>    
