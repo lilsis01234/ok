@@ -3,7 +3,7 @@ const express = require('express');
 const sequelize = require('./database/database');
 const User = require('./Modele/User')
 const cors = require('cors');
-
+const path = require('path');
 const app = express();
 const departementRouter = require('./routes/departement');
 const posteRouter = require('./routes/postes');
@@ -31,6 +31,7 @@ const connection = mysql.createConnection({
     database : 'testintranet',
 })
 */
+
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 //Ajout de middleware express.json()
 app.use(express.json())
@@ -38,7 +39,7 @@ app.use(express.json())
 
 //utilisation des routes middleware
 app.use('/api', api_config) //route pour la configuration 
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/departement', departementRouter); //route pour le département
 app.use('/api/poste', posteRouter ); // route pour le router
 app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs
