@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import Dashboard from '../Dashboard/Dashboard';
-import NavBar from '../NavBar/NavbarAdmin';
-import SideBar from '../SideBarAdmin/SideBar';
-import './page.css';
-// import Cookies from 'js-cookie';
+import React, {useEffect } from "react";
+import '../HomeAdmin/page.css'
+import NavBar from "../NavBar/NavbarAdmin";
+import SideBar from "../SideBarAdmin/SideBar";
+import ListDepartement from "./listeDepartement/listeDepartement";
+import {useNavigate} from "react-router-dom"
+import FormulaireAjoutDepartement from "./Formulaire/FormulaireAjoutDepartement";
+import './Departement.css'
 
-function HomeAdmin(){
+function PageDepartement(){
     const navigate = useNavigate();
     useEffect(() => {
         // const token = Cookies.get('jwt');
@@ -29,11 +30,14 @@ function HomeAdmin(){
             <div className="content">
                 <SideBar/>
                 <div className="main-content">
-                    <Dashboard/>
+                    <div className="departement-content">
+                        <ListDepartement/>
+                        <FormulaireAjoutDepartement/>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default HomeAdmin;
+export default PageDepartement;

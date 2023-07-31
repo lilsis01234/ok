@@ -12,3 +12,23 @@
     position: relative;
     overflow: hidden;
 }
+
+.content{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.main-content{
+    flex: 1;
+    padding: 20px;
+    overflow: hidden;
+    
+}
+
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 3px;
+}

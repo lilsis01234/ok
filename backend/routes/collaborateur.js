@@ -1,3 +1,5 @@
+const router = require('express').Router();
+
 const Collaborateur = require('../Modele/Collaborateur');
 const Departement = require('../Modele/Departement');
 const Poste = require('../Modele/Poste');
@@ -5,7 +7,6 @@ const CompteCollab = require('../Modele/CompteCollab');
 const multer = require('multer'); //Package pour gérer l'upload des contenus multimédias
 const path = require('path');
 
-const router = require('express').Router();
 const bcrypt = require('bcrypt');
 
 
@@ -95,6 +96,42 @@ router.get('/all_collaborateurs', async(req,res) => {
     }) 
 })
 
+//Liste des derniers collaborateurs
+router.get('/listes_derniers_embauches', async (req, res) => {
+    try {
+        const collaborateur = await Collaborateur.findAll({
+            order : [['dateEmbauche', 'DESC']],
+            limit : 10,
+            include : {
+                model : Poste,
+                attributes : ['titrePoste', 'departement'],
+                include : {
+                    model : Departement,
+                    attributes : ['nomDepartement']
+                }
+            }
+        })
+
+        res.status(200).json(
+            collaborateur.map((collaborateur) => {
+                return {
+                    matricule : collaborateur.matricule,
+                    nom : collaborateur.nom,
+                    prenom : collaborateur.prenom,
+                    dateEmbauche : collaborateur.dateEmbauche,
+                    site : collaborateur.site,
+                    titrePoste : collaborateur.Poste.titrePoste,
+                    departement : collaborateur.Poste.Departement.nomDepartement,
+                }
+            })
+        )
+    }
+    catch (error) {
+        res.status(500).json({message : "Une erreur s'est produit dans la récupération des données"})
+    }
+})
+
+
 //Afficher seulement un collaborateur
 router.get('/:id', async(req, res) => {
     const {id} = req.params; 
@@ -156,5 +193,8 @@ router.delete('/delete/:id', async(req, res) => {
         res.status(500).json({message : 'Erreur lors de la suppression du poste'})
     }
 })
+
+
+
 
 module.exports = router;

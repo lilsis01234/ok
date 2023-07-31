@@ -8,6 +8,9 @@
     border-bottom: 1px solid black;  
 }
 
+.navbar_logo{
+    width: 40%;
+}
 .nav-left{
     display: flex;
     justify-content: center;
@@ -49,7 +52,7 @@
     content: "";
     width: 0%;
     height: 2px;
-    background: #9C1D21;
+    background: c;
     position: absolute;
     bottom: 0;
     left: 50%;

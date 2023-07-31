@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 import {RiLogoutBoxRLine} from 'react-icons/ri'
-import '../../Administrateur/NavBar/navbar.css'
+import '../../Administrateur/NavBar/navBar.css'
 
 const Logout = () => {
     const navigate = useNavigate();

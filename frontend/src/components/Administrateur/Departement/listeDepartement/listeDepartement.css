@@ -1,0 +1,91 @@
+.listDepartement {
+    height: 80vh;
+    width: 60%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins';
+}
+
+.listDepartement_title {
+    text-align : center;
+    padding: 20px;
+    font-size : 20pt;
+
+}
+
+.listDepartement_table{
+    text-align: center;
+    margin-top: 25px;
+
+}
+
+.table_item_icon {
+    background: none;
+    border : none;
+    padding-left: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.table_item_icon:hover {
+    transform: scale(1.1);
+    color: #9C1D21;
+}
+
+.listDepartement_search {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.listDepartement_search  input{
+    padding: 10px;
+    width: 320px;
+    margin-right: 10px;
+    border-radius: 10px;
+    border: none;
+
+}
+.listDepartement_search  input:focus{
+    outline-color: #9C1D21;
+    transition: 0.3s ease;
+}
+
+.search_clearButton {
+    position: absolute;
+    right: 44%;
+    padding: 6px;
+    margin-right: 10px;
+    background-color: lightgrey;
+    height: 28px;
+    border: none;
+    border-radius: 5px;
+}
+
+.search_clearButton:hover{
+    cursor: pointer;
+    background-color: #9C1D21; 
+}
+
+.search_Button{
+    padding: 10px;
+    width: 120px;
+    border: 1px solid ;
+    background-color: #9C1D21;
+    border-radius: 10px;
+    border-color: #9C1D21;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.search_Button:hover{
+    transform: scale(1.1);
+    color: #fff;
+}
+
+
+
+

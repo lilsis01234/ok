@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import {GiHamburgerMenu} from 'react-icons/gi'
+import {IoMdClose} from 'react-icons/io'
 import './SideBar.css'
 
 function SideBar(){
@@ -27,9 +29,9 @@ function SideBar(){
     return (
         <div className="sideBar_container">
             {isSidebarOpen && (
-            <div className="sideBar">
+            <div className={`sideBar ${isSidebarOpen ? 'open' : 'closed'}`}>
                    <ul className="sideBar_menu">
-                        <li className="sideBar_menu_item"><Link>Tableau de bord </Link></li>
+                        <li className="sideBar_menu_item"><Link to="/admin/home">Tableau de bord </Link></li>
                         <li className="sideBar_menu_item"><Link onClick={toggleSubMenuCollab} >Collaborateur</Link></li>
                      {isSubmenuCollabOpen && (
                         <ul className="sidebar_sousMenu">
@@ -44,7 +46,7 @@ function SideBar(){
                              <li className="sidebar_sousMenu_item"><Link>Liste des Postes</Link></li>
                         </ul>
                      )}
-                     <li className="sideBar_menu_item"><Link onClick={ toggleSubMenuDepartement} >Département</Link></li>
+                     <li className="sideBar_menu_item"><Link to="/admin/departement" onClick={ toggleSubMenuDepartement} >Département</Link></li>
                      {isSubmenuDepartOpen && (
                         <ul className="sidebar_sousMenu">
                              <li className="sidebar_sousMenu_item"><Link>Ajouter un département</Link></li>
@@ -54,7 +56,9 @@ function SideBar(){
                    </ul>
             </div>
             )} 
-            <button onClick={toogleSideBar} className="sideBar_button"><GiHamburgerMenu/></button>
+            <button onClick={toogleSideBar} className="sideBar_button">
+                {isSidebarOpen ? <IoMdClose/> : <GiHamburgerMenu />}
+            </button>
         </div>
     )
 }

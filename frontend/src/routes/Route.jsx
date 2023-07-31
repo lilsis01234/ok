@@ -7,6 +7,7 @@ import ErrorPage from '../components/Other_component/ErrorPage/ErrorPage'
 import ForgotPasswordForm from '../components/Authentification/ForgotPasswordForm/ForgotPasswordForm'
 import ResetPasswordForm from '../components/Authentification/ResetPasswordForm/ResetPasswordForm'
 import HomeAdmin from '../components/Administrateur/HomeAdmin/HomeAdmin'
+import PageDepartement from '../components/Administrateur/Departement/Departement'
 
 
 function AppRoute(){
@@ -17,6 +18,8 @@ function AppRoute(){
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/password/reset_request/" element={<ForgotPasswordForm/>}/>
                 <Route path="/reset-password/:token" element={<ResetPasswordForm/>}/>
+
+                <Route path="/admin/departement" element={<PageDepartement/>}/>
 
                 <Route path="/admin/home" element={<HomeAdmin/>}/> 
                 <Route path="/user/home" element={<HomeUser/>}/>
