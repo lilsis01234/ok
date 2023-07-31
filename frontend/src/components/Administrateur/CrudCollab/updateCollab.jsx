@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { useState ,useParams} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState} from 'react';
+import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 
 const UpdateCollab = () => {
@@ -22,12 +22,15 @@ const UpdateCollab = () => {
   
   
   useEffect(()=>{
-    axios.get('http://localhost:4000/api/edit/'+id)
+    axios.get('http://localhost:4000/api/collaborateur/'+id)
     .then(res => {
-        console.log(res);
+        console.log(res.data);
+        setNom(res.data.collaborateur.nom)
+        setPrenom(res.data.collaborateur.prenom)
     }).catch(err =>console.log(err));
    });
 
+   
   const ValidateUpdate=(event)=>{
      event.preventDefault();
      const formData = new FormData();
@@ -46,11 +49,12 @@ const UpdateCollab = () => {
      formData.append('matricule',matricule);
      console.log(formData);
  
-     axios.put('http://localhost:4000/api/edit/'+id,formData,{headers: {
+     axios.put('http://localhost:4000/api/collaborateur/edit/'+id,formData,{headers: {
       'Content-Type': 'multipart/form-data',
     },})
     .then(res => {
         console.log(res);
+        navigate('/admin/listeCollab');
         
     }).catch(err =>console.log(err));
    }
@@ -58,19 +62,19 @@ const UpdateCollab = () => {
  
    return (
      <div className='block'>
-         <h1>Ajouter un collaborateur</h1>
+         <h1>Modifier le collaborateur</h1>
          <form onSubmit={ValidateUpdate} className='add-form'>
            <div className='add'>
            <label className="add-collab">Photo:</label><br></br>
            <input type='file' onChange={(e)=>setPhoto(e.target.files[0])} className='add-input'></input>
            
            <label className="add-collab">Nom:</label> <br></br>
-           <input type='text' onChange={(e)=>{setNom(e.target.value)}} className='add-input'></input>
+           <input type='text' onChange={(e)=>{setNom(e.target.value)}} className='add-input' placeholder={nom}></input>
            </div>
  
            <div className='add'>
            <label className="add-collab">Prenom:</label><br></br>  
-           <input type='text'onChange={(e)=>{setPrenom(e.target.value)}} className='add-input'></input>
+           <input type='text'onChange={(e)=>{setPrenom(e.target.value)}} className='add-input'  placeholder={prenom}></input>
            
            <label className="add-collab">Adresse:</label><br></br> 
            <input type='text' onChange={(e)=>{setLot(e.target.value)}} className='add-input'></input>
