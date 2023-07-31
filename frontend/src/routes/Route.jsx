@@ -8,6 +8,8 @@ import ForgotPasswordForm from '../components/Authentification/ForgotPasswordFor
 import ResetPasswordForm from '../components/Authentification/ResetPasswordForm/ResetPasswordForm'
 import HomeAdmin from '../components/Administrateur/HomeAdmin/HomeAdmin'
 import PageDepartement from '../components/Administrateur/Departement/Departement'
+import AddCollab from '../components/Administrateur/CrudCollab/AddCollab'
+import UpdateCollab from '../components/Administrateur/CrudCollab/updateCollab'
 
 
 function AppRoute(){

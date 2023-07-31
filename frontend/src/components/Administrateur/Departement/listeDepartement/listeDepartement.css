@@ -86,6 +86,30 @@
     color: #fff;
 }
 
+.listDepartement_pagination{
+    align-self: center;
+    margin: 10px;
+}
+
+.listDepartement_pagination button {
+    padding: 5px;
+    width: 30px;
+    border : none;
+    background: none;
+}
+
+.listDepartement_pagination button:hover {
+    transform: scale(1.1);
+    background-color: #9C1D21;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.listDepartement_pagination .active{
+    background-color: #9C1D21;
+    color : #fff;
+    border-radius: 10px;
+}
 
 
 
