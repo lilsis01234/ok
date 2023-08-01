@@ -8,8 +8,9 @@ import ForgotPasswordForm from '../components/Authentification/ForgotPasswordFor
 import ResetPasswordForm from '../components/Authentification/ResetPasswordForm/ResetPasswordForm'
 import HomeAdmin from '../components/Administrateur/HomeAdmin/HomeAdmin'
 import PageDepartement from '../components/Administrateur/Departement/Departement'
-
-
+import AddCollab from '../components/Administrateur/CrudCollab/AddCollab'
+import UpdateCollab from '../components/Administrateur/CrudCollab/updateCollab'
+import ListeCollab from '../components/Administrateur/CrudCollab/listeCollab'
 function AppRoute(){
     return (
         <BrowserRouter>
@@ -23,8 +24,9 @@ function AppRoute(){
 
                 <Route path="/admin/home" element={<HomeAdmin/>}/> 
                 <Route path="/user/home" element={<HomeUser/>}/>
-                <Route path="/admin/addCollab" element={<AddCollab/>}/>
+               <Route path='/admin/add'element={<AddCollab/>}/>
                 <Route path='/admin/update/:id' element={<UpdateCollab/>}/>
+                <Route path='/admin/listeCollab' element={<ListeCollab/>}/>
 
                 {/* 
                 <Route path="/admin/home" element={<HomeAdmin/>}/>
