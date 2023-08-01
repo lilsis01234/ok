@@ -114,4 +114,6 @@ td img{
     height: 230px;
     margin-left: 7%;
 }
-
+.listeCollabo, .listeCollabo tr, .listeCollabo td, .listeCollabo th,.listeCollabo thead,.listeCollabo tbody{
+    border: none !important;
+}
