@@ -29,6 +29,7 @@ th,td{
     color: rgb(136, 36, 36);
     margin-bottom: 30px;
     text-decoration: underline;
+    margin-left: 13%;
 }
 .bodyliste{
     width: 100%;
@@ -38,19 +39,29 @@ th,td{
 .ajout{
     width: 50px;
     height: 40px;
-    margin-left: 30px;
-    margin-top: 10px;
-    float: left;
     border-radius: 0 !important;
     font-size: 20px !important;
     background-color: rgb(93, 163, 201);
     border: none !important;
+    margin-left: 5%;
+    margin-right: 3%;
 }
-.ajout a{
+.ajout a,.ajout2 a{
     text-decoration: none !important;
     color: #ffffff !important;
 }
-
+.ajout2{
+    width: 75px;
+    height: 40px;
+    border-radius: 13px;
+    font-size: 14px !important;
+    background-color: rgb(93, 163, 201);
+    border: none !important;
+}
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .block{
     display: block;
@@ -116,4 +127,8 @@ td img{
 }
 .listeCollabo, .listeCollabo tr, .listeCollabo td, .listeCollabo th,.listeCollabo thead,.listeCollabo tbody{
     border: none !important;
+}
+#recherche{
+    float: right;
+    margin-left: 5%;
 }
