@@ -154,10 +154,12 @@ router.get('/:id', async(req, res) => {
 //Mettre à jour un collaborateur existant 
 router.put('/edit/:id', upload.single('image') ,async(req, res) => {
     const image = req.file;
-    console.log(req.body.lot);
+
     const  {id} = req.params;
     try {
-        const updateCollab = await Collaborateur.findByPk(id);
+        const updateCollab = await Collaborateur.findByPk(id)
+;
+        const imageCollab = updateCollab.image
         if (!updateCollab) {
             return res.status(404).json({error : 'Collaborateur introuvable'});
         }
@@ -167,9 +169,10 @@ router.put('/edit/:id', upload.single('image') ,async(req, res) => {
             ville : req.body.ville,
             tel : req.body.tel,
             site : req.body.site,
-            image : image ? image.path : null ,
+            image : image ? image.path : imageCollab ,
             poste: req.body.poste,
-        })
+            })
+       
 
         res.status(201).json(updatedCollab)
     }
