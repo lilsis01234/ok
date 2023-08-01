@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 const UpdateCollab = () => {
-  
+  const[listePoste,setListePoste]=useState([])
   const navigate = useNavigate();
   const { id } = useParams();
   const [photo, setPhoto] = useState(null);
@@ -51,12 +51,19 @@ const UpdateCollab = () => {
       .catch((err) => console.log(err));
   }, [id]);
 
+  useEffect(()=>{
+    axios.get('http://localhost:4000/api/poste/all_postes')
+    .then((res) => {setListePoste(res.data)
+                 console.log(listePoste)})
+    .catch(err => console.log(err));
+   }
+   )
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedCollab = new FormData();
-    if (photo === '') {
-      updatedCollab.append('image', '');
+    if (photo === ''||photo===null) {
+      updatedCollab.append('image', anciennephoto);
     } else {
       updatedCollab.append('image', photo);
     }
@@ -140,13 +147,19 @@ const UpdateCollab = () => {
             </div>
 
             <div className="add">
-              <label className='add-collab'>Poste</label>
-              <input
-                type="text"
-                className='add-input'
-                value={poste}
-                onChange={(e) => setPoste(e.target.value)}
-              />
+            <label className='add-collab'>Poste</label>
+          <select
+            value={poste}
+            onChange={(e) => setPoste(e.target.value)}
+            className='add-input'
+          >
+            {listePoste.map((poste) => (
+              <option key={poste.id} value={poste.id}>
+                {poste.titrePoste}
+              </option>
+            ))}
+          </select>
+
               <label className='add-collab'>Date de naissance</label>
               <input
                 type="text"
