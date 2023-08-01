@@ -5,7 +5,11 @@ import {useNavigate } from 'react-router-dom';
 
 const AddCollab = () => {
 
- const navigate = useNavigate();
+const Sexe= [
+  {id:1,nom:'masculin'},
+  {id:2,nom:'feminin'}
+]
+const navigate = useNavigate();
  const [nom,setNom]=useState('');
  const [photo,setPhoto]=useState(null);
  const [prenom,setPrenom]=useState('');
@@ -124,8 +128,18 @@ const AddCollab = () => {
 
           <div className='add2'>
           <label className="add-collab">Sexe:</label><br></br>  
-          <input type='text' onChange={(e)=>{setSexe(e.target.value)}} className='add-input'></input>
-          </div>
+          {Sexe.map(sexe => (
+          <label key={sexe.id}>
+               <input
+                  type='radio'
+                  name='sexe'
+                  value={sexe.nom}
+                  onChange={(e) => setSexe(e.target.value)}
+                  className='radio'
+             />
+            {sexe.nom}
+          </label>))} 
+         </div> 
 
           <button type='submit'>Envoyer</button>
           </form>
