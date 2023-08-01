@@ -99,7 +99,6 @@ router.get('/all_collaborateurs', async(req,res) => {
     }) 
 })
 
-<<<<<<< HEAD
 //Liste des derniers collaborateurs
 router.get('/listes_derniers_embauches', async (req, res) => {
     try {
@@ -135,8 +134,6 @@ router.get('/listes_derniers_embauches', async (req, res) => {
     }
 })
 
-=======
->>>>>>> 386658b5500996ad8144a69456b9d44abdb76424
 
 //Afficher seulement un collaborateur
 router.get('/:id', async(req, res) => {
