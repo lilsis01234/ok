@@ -4,7 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 const UpdateCollab = () => {
-  const navigate = useNavigate;
+  
+  const navigate = useNavigate();
   const { id } = useParams();
   const [photo, setPhoto] = useState(null);
   const [lot, setLot] = useState("");
@@ -14,6 +15,7 @@ const UpdateCollab = () => {
   const [site, setSite] = useState("");
   const [poste, setPoste] = useState("");
 
+  const[anciennephoto,setAnciennePhoto]=useState('');
   const [dateNaissance, setDateNaissance] = useState("");
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
@@ -23,8 +25,11 @@ const UpdateCollab = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setPhoto(selectedFile);
-  };
+    if (selectedFile) {
+      setPhoto(selectedFile);
+    };
+    }
+
   useEffect(() => {
     axios.get(`http://localhost:4000/api/collaborateur/${id}`)
       .then((res) => {
@@ -34,7 +39,7 @@ const UpdateCollab = () => {
         setTel(res.data.collaborateur.tel);
         setSite(res.data.collaborateur.site);
         setPoste(res.data.collaborateur.poste);
-        setPhoto(res.data.collaborateur.image);
+        setAnciennePhoto(res.data.collaborateur.image);
 
         setDateNaissance(res.data.collaborateur.dateNaissance);
         setNom(res.data.collaborateur.nom);
@@ -50,142 +55,147 @@ const UpdateCollab = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedCollab = new FormData();
-    updatedCollab.append('image',photo);
+    if (photo === '') {
+      updatedCollab.append('image', '');
+    } else {
+      updatedCollab.append('image', photo);
+    }
     updatedCollab.append('lot',lot);
     updatedCollab.append('quartier',quartier);
     updatedCollab.append('ville', ville);
     updatedCollab.append('tel', tel);
     updatedCollab.append('site', site);
     updatedCollab.append('poste',poste);
-
+    console.log(updatedCollab)
+    
     axios.put(`http://localhost:4000/api/collaborateur/edit/${id}`, updatedCollab,{headers: {
       'Content-Type': 'multipart/form-data',
     },})
     .then((res) => {
-        console.log("Collaborateur modifié avec succès",res);
+        console.log(res);
         navigate('/admin/listeCollab'); // Use navigate here
     }).catch(err =>console.log(err));
     };
+
+
+
   return (
-     <div>
-      <h1>Modifier</h1>
+     <div className='block'>
+      <h1>Modifier un collaborateur</h1>
       <form onSubmit={handleSubmit}>
-            <div className="editCollaborateurItem">
-              <label>Photo</label>
+            <div className="add">
+              <label className='add-collab'>Photo</label>
               <input
                 type="file"
                 id="file"
                 name="file"
+                className='add-input'
+                defaultValue={anciennephoto}
                 onChange={handleFileChange}
               />
-            </div>
-            <div className="mb-2">
-              <label>Lot</label>
+
+              <label className='add-collab'>Lot</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 name="lot"
                 value={lot}
                 onChange={(e) => setLot(e.target.value)}
               />
             </div>
-            <div className="mb-2">
-              <label>Quartier</label>
+            
+            <div className="add">
+              <label className='add-collab'>Quartier</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={quartier}
                 onChange={(e) => setQuartier(e.target.value)}
               />
-            </div>
-            <div className="mb-2">
-              <label>Ville</label>
+              <label className='add-collab'>Ville</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={ville}
                 onChange={(e) => setVille(e.target.value)}
               />
             </div>
-            <div className="mb-2">
-              <label>Tel</label>
+
+            <div className="add">
+              <label className='add-collab'>Tel</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={tel}
                 onChange={(e) => setTel(e.target.value)}
               />
-            </div>
-            <div className="mb-2">
-              <label>Site</label>
+
+              <label className='add-collab'>Site</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={site}
                 onChange={(e) => setSite(e.target.value)}
               />
             </div>
-            <div className="mb-2">
-              <label>Poste</label>
+
+            <div className="add">
+              <label className='add-collab'>Poste</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={poste}
                 onChange={(e) => setPoste(e.target.value)}
               />
-            </div>
-
-            {/* Non-editable fields */}
-            <div className="mb-2">
-              <label>Date de naissance</label>
+              <label className='add-collab'>Date de naissance</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={dateNaissance}
                 disabled
               />
             </div>
-            <div className="mb-2">
-              <label>Nom</label>
+
+
+            <div className="add">
+              <label className='add-collab'>Nom</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={nom}
                 disabled
               />
-            </div>
-            <div className="mb-2">
-              <label>Prénom</label>
+              <label className='add-collab'>Prénom</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={prenom}
                 disabled
               />
             </div>
-            <div className="mb-2">
-              <label>Sexe</label>
+
+            <div className="add">
+              <label className='add-collab'>Sexe</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={sexe}
                 disabled
               />
-            </div>
-            <div className="mb-2">
-              <label>Date d'embauche</label>
+              <label className='add-collab'>Date d'embauche</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={dateEmbauche}
                 disabled
               />
             </div>
-            <div className="mb-2">
-              <label>Matricule</label>
+
+            <div className="add">
+              <label className='add-collab'>Matricule</label>
               <input
                 type="text"
-                className="form-control"
+                className='add-input'
                 value={matricule}
                 disabled
               />
