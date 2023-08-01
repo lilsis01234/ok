@@ -20,7 +20,7 @@ const UpdateCollab = () => {
   const [dateEmbauche, setDateEmbauche] = useState("");
   const [matricule, setMatricule] = useState("");
   const [sexe, setSexe] = useState("");
-  
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setPhoto(selectedFile);
@@ -76,7 +76,6 @@ const UpdateCollab = () => {
                 type="file"
                 id="file"
                 name="file"
-                value={photo}
                 onChange={handleFileChange}
               />
             </div>
