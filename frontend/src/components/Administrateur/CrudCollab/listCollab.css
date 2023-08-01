@@ -1,7 +1,10 @@
 thead,tbody{
     width: 100%;
-    border: none;
+    border: none !important;
     border-collapse: collapse;
+}
+.listeCollabo{
+    border: none !important;
 }
 th,td{
     width: 10%;
