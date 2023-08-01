@@ -17,9 +17,9 @@ const ListeCollab = () => {
 
   return (
     <div className="bodyliste">
-      <button className="ajout"><Link to='/admin/addCollab'>+</Link></button>
+      <button className="ajout"><Link to='/admin/add'>+</Link></button>
       <h1>Liste des Collaborateurs</h1>
-      <table>
+      <table className="listeCollabo">
         <thead>
         <tr>
             <th>Photo</th>
