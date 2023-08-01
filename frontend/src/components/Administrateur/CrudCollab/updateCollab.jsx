@@ -20,6 +20,7 @@ const UpdateCollab = () => {
   const [dateEmbauche, setDateEmbauche] = useState("");
   const [matricule, setMatricule] = useState("");
   const [sexe, setSexe] = useState("");
+  
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setPhoto(selectedFile);
@@ -71,12 +72,6 @@ const UpdateCollab = () => {
       <form onSubmit={handleSubmit}>
             <div className="editCollaborateurItem">
               <label>Photo</label>
-              {photo && (
-                <img
-                  src={URL.createObjectURL(photo)} // Use URL.createObjectURL to generate preview URL
-                  alt="Selected"
-                />
-              )}
               <input
                 type="file"
                 id="file"
