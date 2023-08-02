@@ -15,9 +15,17 @@ const Postes = () => {
   return (
     <div className='poste'>
      <h1>Les postes</h1>
-        {listePoste.map(poste=>(
-            <Link to={`collab/${poste.id}`}><h3>{poste.titrePoste}</h3></Link>
-        ))}
+     <div className='block2'>
+  {listePoste.map(poste => (
+    <div className='com' key={poste.id}>
+      <div className='background-image'></div>
+      <h4>{poste.titrePoste}</h4>
+      <Link to={`/admin/postes/collab/${poste.id}`}>
+        <h5>Voir qui ont ce poste</h5>
+      </Link>
+    </div>
+  ))}
+</div>
     </div>
   )
 }
