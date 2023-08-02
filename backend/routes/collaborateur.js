@@ -99,6 +99,50 @@ router.get('/all_collaborateurs', async(req,res) => {
     }) 
 })
 
+router.get('/all_collaborateurs/:poste', async (req, res) => {
+    const { poste } = req.params;
+    try {
+        const collaborateurs = await Collaborateur.findAll({
+            where: { poste: poste },
+            include: [
+                {
+                    model: Poste,
+                    include: [
+                        { model: Departement }
+                    ]
+                }
+            ]
+         }).then((collaborateur) => {
+            res.status(200).json(
+                collaborateur.map((collaborateur) => {
+                    return {
+                        id : collaborateur.id,
+                        matricule : collaborateur.matricule,
+                        nom : collaborateur.nom,
+                        prenom : collaborateur.prenom,
+                        sexe : collaborateur.sexe,
+                        dateNaissance: collaborateur.dateNaissance,
+                        lot : collaborateur.lot,
+                        quartier : collaborateur.quartier,
+                        ville : collaborateur.ville,
+                        tel : collaborateur.tel,
+                        dateEmbauche : collaborateur.dateEmbauche,
+                        site : collaborateur.site,
+                        image : collaborateur.image,
+                        titrePoste : collaborateur.Poste.titrePoste,
+                        departement : collaborateur.Poste.Departement.nomDepartement,
+                    }
+                })
+            )
+            console.log(collaborateur)
+        }) 
+    } catch (error) {
+        console.error(error); // Log the error for debugging
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+
 //Liste des derniers collaborateurs
 router.get('/listes_derniers_embauches', async (req, res) => {
     try {
