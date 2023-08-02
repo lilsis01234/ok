@@ -201,8 +201,7 @@ router.put('/edit/:id', upload.single('image') ,async(req, res) => {
 
     const  {id} = req.params;
     try {
-        const updateCollab = await Collaborateur.findByPk(id)
-;
+        const updateCollab = await Collaborateur.findByPk(id);
         const imageCollab = updateCollab.image
         if (!updateCollab) {
             return res.status(404).json({error : 'Collaborateur introuvable'});
@@ -225,7 +224,6 @@ router.put('/edit/:id', upload.single('image') ,async(req, res) => {
         res.status(500).json({error : 'Erreur lors de la mise à jour du collaborateur'});
     }
 })
-
 
 //Supprimer un collaborateur 
 router.delete('/delete/:id', async(req, res) => {

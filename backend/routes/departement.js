@@ -48,23 +48,23 @@ router.get('/:id', async(req, res) =>{
 
 //Mettre à jour les enregistrements existant 
 router.put('/:id', async(req, res) => {
-    if (req.body.id === req.params.id){
-        const updateDepartement = await Departement.findByPk(req.params.id)
+    const {id} = req.params;
+    try {
+        const updateDepartement = await Departement.findByPk(id)
         if (!updateDepartement){
             return res.status(400).json({error : 'Département non trouvé'})
         }
-
-        if(req.body.nomDepartement){
-            updateDepartement.nomDepartement = req.body.nomDepartement;
-        }
-
-
-        await updateDepartement.save();
-        res.status(200).json({message : 'Mise à jour du département réussie'});
+        const newDepartement = await updateDepartement.update({
+            nomDepartement : req.body.nomDepartement
+            })
+        res.status(201).json(newDepartement); 
+    } 
+    catch(error) {
+        res.status(401).json({message : 'Erreur lors de la mise à jour du département'});
+        console.error('Erreur lors de la mise à jour du département', error);
+        
     }
-    else {
-        res.status(401).json({message : 'Vous ne pouvez pas modifier ce département'});
-    }
+
 
 })
 
