@@ -3,7 +3,7 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 import './listCollab.css'
 import { Link } from "react-router-dom";
-
+import logo from '../../../image/logo_sahaza.png';
 
 const ListeCollab = () => {
 
@@ -21,13 +21,15 @@ const ListeCollab = () => {
 
   return (
     <div className="bodyliste">
-  <div className='flex'>
-      <button className="ajout"><Link to='/admin/add'>+</Link></button>
-      <button className="ajout2"><Link to='/admin/postes'>Les postes</Link></button>
+      <img className="logo" src={logo} alt='logo sahaza'/>
       <h1>Liste des Collaborateurs</h1>
-
+      
+      
       <input type='text' id='recherche'className="add-input" placeholder="rechercher ici" onChange={(e)=>setRecherche(e.target.value)}/>
-  </div>
+    
+    
+    <button className="ajout"><Link to='/admin/add'>+</Link></button>
+    <button className="ajout2"><Link to='/admin/postes'>Les postes</Link></button>
     <table className="listeCollabo">
       {Collabs.filter(collab=>collab.nom.includes(recherche)).map(Collab=>(
        <tr key={Collab.id}>
