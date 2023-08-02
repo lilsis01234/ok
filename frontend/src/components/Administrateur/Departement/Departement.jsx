@@ -4,7 +4,6 @@ import NavBar from "../NavBar/NavbarAdmin";
 import SideBar from "../SideBarAdmin/SideBar";
 import ListDepartement from "./listeDepartement/listeDepartement";
 import {useNavigate} from "react-router-dom"
-import FormulaireAjoutDepartement from "./Formulaire/FormulaireAjoutDepartement";
 import './Departement.css'
 
 function PageDepartement(){
@@ -32,7 +31,6 @@ function PageDepartement(){
                 <div className="main-content">
                     <div className="departement-content">
                         <ListDepartement/>
-                        <FormulaireAjoutDepartement/>
                     </div>
                 </div>
             </div>

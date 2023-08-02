@@ -159,6 +159,7 @@ router.put('/edit/:id', upload.single('image') ,async(req, res) => {
     const  {id} = req.params;
     try {
         const updateCollab = await Collaborateur.findByPk(id);
+        const imageCollab = updateCollab.image
         if (!updateCollab) {
             return res.status(404).json({error : 'Collaborateur introuvable'});
         }
@@ -168,9 +169,10 @@ router.put('/edit/:id', upload.single('image') ,async(req, res) => {
             ville : req.body.ville,
             tel : req.body.tel,
             site : req.body.site,
-            image : image ? image.path : null ,
+            image : image ? image.path : imageCollab ,
             poste: req.body.poste,
-        })
+            })
+       
 
         res.status(201).json(updatedCollab)
     }
@@ -179,7 +181,6 @@ router.put('/edit/:id', upload.single('image') ,async(req, res) => {
         res.status(500).json({error : 'Erreur lors de la mise à jour du collaborateur'});
     }
 })
-
 
 //Supprimer un collaborateur 
 router.delete('/delete/:id', async(req, res) => {

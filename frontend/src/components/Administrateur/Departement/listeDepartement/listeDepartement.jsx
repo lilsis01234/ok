@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {MdEdit} from 'react-icons/md'
 import {MdOutlineDeleteForever} from 'react-icons/md'
+import FormulaireDepartement from "../Formulaire/FormulaireAjoutDepartement";
 import './listeDepartement.css'
 
 const ListDepartement = () => {
@@ -9,7 +10,12 @@ const ListDepartement = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredDepartement, setFilteredDepartement] = useState([]);
 
-    //Pöur la pagination
+    //Pour les formulaire
+    const [isEdit, setEdit] = useState(false);
+    const [departementToEditID, setDepartementToEditId ] = useState(null);
+
+
+    //Pour la pagination
     const [currentPage, setCurrentPage] = useState(1);
     // Nombre d'éléments par page 
     const itemsPerPage = 15;
@@ -57,9 +63,34 @@ const ListDepartement = () => {
     //Calculer le nombre total de pages 
     const totalPages = Math.ceil(departementList.length / itemsPerPage);
 
+
+    const handleEditDepartement = (departementId) => {
+        setEdit(!isEdit)
+        setDepartementToEditId(departementId)
+        const selectedDepartement = departementList.find((departement) => departement.id === departementId)
+        setDepartementToEditId(selectedDepartement);
+
+
+    }
+
+    //Fonction pour gérer l'ajout d'un département
+    const handleAddDepartement = (newDepartement) => {
+        setDepartementList([ ...departementList, newDepartement]);
+    }
+
+    const handleUpdateDepartement = (updatedDepartement) => {
+        setDepartementList((prevDepartementList) => prevDepartementList.map((departement) => 
+            departement.id === updatedDepartement.id ?  updatedDepartement : departement))
+
+        setDepartementToEditId(null);
+    }
+   
+   
+
   
     return (
-       <div className="listDepartement">
+    <>
+    <div className="listDepartement">
         <h2 className="listDepartement_title">Liste des Départements </h2>
         <div className="listDepartement_search">
             <input type="text" value={searchTerm} onChange={handleInputChange} placeholder="Rechercher un département"/>
@@ -82,7 +113,7 @@ const ListDepartement = () => {
                         <td>{departement.id}</td>
                         <td>{departement.nomDepartement}</td>
                         <td>
-                            <button className="table_item_icon"><MdEdit/></button>
+                            <button className="table_item_icon" onClick={() => handleEditDepartement(departement.id)}><MdEdit/></button>
                             <button className="table_item_icon"><MdOutlineDeleteForever/></button>
                         </td>
                     </tr>
@@ -92,7 +123,7 @@ const ListDepartement = () => {
                         <td>{departement.id}</td>
                         <td>{departement.nomDepartement}</td>
                         <td>
-                            <button className="table_item_icon"><MdEdit/></button>
+                            <button className="table_item_icon" onClick={() => handleEditDepartement(departement.id)}><MdEdit/></button>
                             <button className="table_item_icon"><MdOutlineDeleteForever/></button>
                         </td>
                     </tr>
@@ -112,6 +143,14 @@ const ListDepartement = () => {
             ))}
         </div>
     </div>
+    <FormulaireDepartement 
+                isEditing={isEdit} 
+                departementToEdit={departementToEditID} 
+                onAddDepartement={handleAddDepartement}
+                onUpdateDepartement={handleUpdateDepartement}
+                setEditing = {setEdit}
+                />
+    </>
     )
 }
 
