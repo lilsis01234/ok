@@ -25,7 +25,6 @@ const upload = multer({storage});
 
 //Ajouter des collaborateurs
 router.post('/add', upload.single('image') ,async (req, res) => {
-    console.log(req.body.Collabs);
     try {
         const image = req.file;
 

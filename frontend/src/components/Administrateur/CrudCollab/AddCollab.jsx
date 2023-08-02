@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 const AddCollab = () => {
 
- const navigate = useNavigate();
+const Sexe= [
+  {id:1,nom:'masculin'},
+  {id:2,nom:'feminin'}
+]
+const navigate = useNavigate();
  const [nom,setNom]=useState('');
  const [photo,setPhoto]=useState(null);
  const [prenom,setPrenom]=useState('');
@@ -20,6 +24,15 @@ const AddCollab = () => {
  const[poste,setPoste]=useState('');
  const[sexe,setSexe]=useState('');
  
+ const[listePoste,setListePoste]=useState([])
+
+ useEffect(()=>{
+  axios.get('http://localhost:4000/api/poste/all_postes')
+  .then((res) => {setListePoste(res.data)
+               console.log(listePoste)})
+  .catch(err => console.log(err));
+ }
+ )
  
  const Validation=(event)=>{
     event.preventDefault();
@@ -89,8 +102,18 @@ const AddCollab = () => {
           <label className="add-collab"> Date de naissance:</label><br></br>  
           <input type='date' onChange={(e)=>{setdateNaissance(e.target.value)}} className='add-input'></input>
           
-          <label className="add-collab"> Poste:</label><br></br>  
-          <input type='text' onChange={(e)=>{setPoste(e.target.value)}} className='add-input'></input>
+          <label className='add-collab'>Poste</label>
+          <select
+            value={poste}
+            onChange={(e) => setPoste(e.target.value)}
+            className='add-input'
+          >
+            {listePoste.map((poste) => (
+              <option key={poste.id} value={poste.id}>
+                {poste.titrePoste}
+              </option>
+            ))}
+          </select>
           </div>
 
           <div className='add'>
@@ -102,9 +125,19 @@ const AddCollab = () => {
           </div>
 
           <div className='add2'>
-          <label className="add-collab">Sexe:</label><br></br>  
-          <input type='text' onChange={(e)=>{setSexe(e.target.value)}} className='add-input'></input>
-          </div>
+          <label  className="add-collab">Sexe</label>
+          <select
+            value={sexe}
+            onChange={(e) => setSexe(e.target.value)}
+            className='add-input'
+          >
+            {Sexe.map((sexe) => (
+              <option key={sexe.id} value={sexe.nom}>
+                {sexe.nom}
+              </option>
+            ))}
+          </select>
+         </div> 
 
           <button type='submit'>Envoyer</button>
           </form>
