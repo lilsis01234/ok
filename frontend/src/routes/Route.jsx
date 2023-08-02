@@ -29,7 +29,7 @@ function AppRoute(){
                 <Route path="/user/home" element={<HomeUser/>}/>
                <Route path='/admin/add'element={<AddCollab/>}/>
                 <Route path='/admin/update/:id' element={<UpdateCollab/>}/>
-                <Route path='/admin/postes/collab/:id' element={<CollabParPoste/>}/>
+                <Route path='/admin/postes/collab/:idposte' element={<CollabParPoste/>}/>
                 <Route path='/admin/listeCollab' element={<ListeCollab/>}/>
 
                 {/* 
