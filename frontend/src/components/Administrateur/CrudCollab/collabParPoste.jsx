@@ -3,6 +3,9 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import logo from '../../../image/sahaza.svg';
+import {FaPlus,FaListUl} from 'react-icons/fa';
+import {MdWorkspacesFilled,MdOutlineBusiness} from 'react-icons/md'
 
 const CollabParPoste = () => {
 
@@ -32,16 +35,18 @@ const CollabParPoste = () => {
       
       <div className="main">
       <div className="sidebar">
-      <input type='text' id='recherche'className="add-input" placeholder="rechercher ici" onChange={(e)=>setRecherche(e.target.value)}/>
-      <button className="ajout"><Link to='/admin/add'>Nouveau</Link></button>
-      <button className="ajout2"><Link to='/admin/postes'>Les postes</Link></button>
-      <button className="ajout2"><Link to='/admin/listeCollab'>Les collaborateurs</Link></button>
-      <button className="ajout2"><Link to='/admin/departements'>Les departements</Link></button>
+      <img className="logo" src={logo} alt='logo sahaza'/>
+      <input type='text' id='recherche'className="add-input" placeholder="rechercher" onChange={(e)=>setRecherche(e.target.value)}/>
+      <button className="ajout"><Link to='/admin/add'><FaPlus/></Link></button>
+      <button className="ajout2"><Link to='/admin/listeCollab'><FaListUl/></Link></button>
+      <button className="ajout2"><Link to='/admin/postes'><MdWorkspacesFilled/></Link></button>
+      <button className="ajout2"><Link to='/admin/departements'><MdOutlineBusiness/></Link></button>
      
       </div>
 
         <div className='tableau'>
-        <table className="listeCollabo">
+        <div  className="listeCollabo">
+
 
         {Collabs.filter(collab=>collab.nom.includes(recherche)).map(Collab=>(
         <tr key={Collab.id}>
@@ -57,7 +62,7 @@ const CollabParPoste = () => {
           <td><button className="update"><Link to={`/admin/update/${Collab.id}`}>Modifier</Link></button></td>
         </tr>
         ))}
-        </table>
+
 
 
           <table className="listeCollabo">
@@ -94,6 +99,7 @@ const CollabParPoste = () => {
           </table>
           </div>
           </div>
+      </div>
       </div>
     )
 }
