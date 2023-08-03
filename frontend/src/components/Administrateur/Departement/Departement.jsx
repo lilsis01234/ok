@@ -11,7 +11,6 @@ function PageDepartement(){
     useEffect(() => {
         // const token = Cookies.get('jwt');
         const token = localStorage.getItem('jwt');
-        console.log(token);
         if (!token){
             navigate('/');
         }

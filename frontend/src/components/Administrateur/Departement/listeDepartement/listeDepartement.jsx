@@ -92,8 +92,8 @@ const ListDepartement = () => {
     <>
     <div className="listDepartement">
         <h2 className="listDepartement_title">Liste des Départements </h2>
-        <div className="listDepartement_search">
-            <input type="text" value={searchTerm} onChange={handleInputChange} placeholder="Rechercher un département"/>
+        <div className="search_form">
+            <input type="text" value={searchTerm} onChange={handleInputChange} placeholder="Rechercher un département" className="search_input"/>
              {searchTerm && (
                  <button onClick ={() => setSearchTerm('')} className="search_clearButton">X</button>
                 )}
@@ -108,7 +108,7 @@ const ListDepartement = () => {
                 </tr>
             </thead>
             <tbody>
-                {searchTerm === '' ? (departementList.map((departement)=> (
+                {searchTerm === ' ' ? (departementList.map((departement)=> (
                     <tr key={departement.id}>
                         <td>{departement.id}</td>
                         <td>{departement.nomDepartement}</td>
@@ -131,7 +131,7 @@ const ListDepartement = () => {
             )}
             </tbody>
         </table>
-        <div className="listDepartement_pagination">
+        <div className="list_pagination">
             {Array.from({length : totalPages}, (_, index) => index + 1).map((page) => (
                 <button
                     key={page}
