@@ -28,39 +28,14 @@ th,td{
     text-align: center;
     color: rgb(136, 36, 36);
     text-decoration: underline;
-    margin-bottom: 3%;
-    margin-top: -30px;
+    margin-top: -7%;
     margin-left: -2%;
+    position: relative;
 }
 .bodyliste{
     width: 100%;
     height: 200vh;
-    /* background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)), url("https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"); */
-}
-.ajout{
-    width: 50px;
-    height: 45px;
-    border-radius: 0 !important;
-    font-size: 20px !important;
-    background-color: rgb(114, 23, 23);
-    border: none !important;
-    margin-left: 5%;
-    margin-right: 3%;
-    margin-bottom: 3%;
-}
-.ajout a,.ajout2 a{
-    text-decoration: none !important;
-    color: #ffffff !important;
-}
-.ajout2{
-    width: 120px;
-    height: 45px;
-    border-radius: 13px;
-    font-size: 14px !important;
-    background-color: rgb(114, 23, 23);
-    border: none !important;
-    text-align: center;
-    margin-bottom: 3%;
+    background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)), url("https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
 }
 .flex{
     display: flex;
@@ -76,7 +51,7 @@ th,td{
 .block h1,.poste h1{
     text-align: center;
     color: rgb(114, 23, 23);
-    margin-bottom: 20px;
+    margin-bottom: 3%;
 }
 .add{
     display: flex;
@@ -100,7 +75,7 @@ th,td{
 }
 .block button{
    background-color: rgb(114, 23, 23);
-   width: 600px;
+   width: 70%;
    height: 45px;
    color: #ffffff;
    border: none;
@@ -132,17 +107,9 @@ td img{
 .listeCollabo, .listeCollabo tr, .listeCollabo td, .listeCollabo th,.listeCollabo thead,.listeCollabo tbody{
     border: 1px solid #e8e5e5;
 }
-#recherche{
-    margin-top: -70px;
-    float: right;
-    background-color: rgb(222, 219, 219);
-    color: #000000;
-    font-size: 14px;
-    text-align: center;
-}
 .logo{
-    width: 140px;
-    height: 80px;
+    width: 13%;
+    height: 100px;
     margin-left: 5%;
 }
 .block2{
@@ -153,12 +120,12 @@ td img{
 .com {
     position: relative;
     border-radius: 20px;
-    width: 40%;
-    height: 6cm;
+    width: 100%;
+    height: 100%;
     margin-left: 5%;
     padding: 3%;
     margin-bottom: 10px;
-    display: block;
+    display: flex;
     border: 3px solid #e8e5e5;
     text-align: left;
     overflow: hidden; /* Clip any overflow from the background image */
@@ -170,25 +137,26 @@ td img{
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('https://francinelaurinpsy.com/wp-content/uploads/2016/10/groupe-travail.jpg');
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfGg8a5Apgv-bHgcLf2W_wOEGDPrAv8MsTDg&usqp=CAU');
     filter: blur(3px);
     opacity: 0.7;
     z-index: -1;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   
   .com h4 {
-    color: #6c6c6c;
-    font-size: 32px;
+    color: #545252;
+    font-size: 22px;
     opacity: 1;
   }
   
   .com a {
     color: rgb(114, 23, 23);
     padding: 10px 10px;
-    font-size: 22px;
+    font-size: 18px;
   }
   .bodyliste2 h1{
-    text-align: center;
     color:rgb(114, 23, 23) ;
     margin-top: 3%;
     margin-bottom: 3%;
@@ -199,4 +167,57 @@ td img{
     text-align: center;
     background-color: #c7c2c2;
     font-size: 18px;
+  }
+  #filtre{
+    width: 100%;
+    text-align: center;
+    border: 1px solid rgb(239, 233, 233);
+  }
+  @media only screen and (max-device-width: 480px) {
+   .logo{
+    display: none;
+   }
+   .bodyliste h1{
+    margin-top: 0 !important;
+   }
+   #recherche{
+    margin-top: 10%;
+    margin-left: 4%;
+    float: right;
+    margin-right: 0;
+   }
+   .ajout{
+    margin-top: 2%;
+   }
+  }
+  .sidebar{
+    width: 20%;
+    background-color: rgb(114, 23, 23);
+    padding: 2%;
+    box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    color: #ffffff !important;
+  }
+  .sidebar input{
+    width: 100%;
+    background-color: #ffffff;
+  }
+  .main{
+    display: flex;
+    margin-top: 5%;
+  }
+  .tableau{
+    border-top:5px solid rgb(114, 23, 23);
+  }
+  .sidebar button{
+    background-color: transparent;
+    height: 2cm;
+    border:none !important ;
+    width: 100%;
+    font-size: 18px;
+  }
+  .sidebar a{
+    text-decoration: none !important;
+    color: #ffffff !important;
   }
