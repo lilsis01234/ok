@@ -8,11 +8,12 @@ import ForgotPasswordForm from '../components/Authentification/ForgotPasswordFor
 import ResetPasswordForm from '../components/Authentification/ResetPasswordForm/ResetPasswordForm'
 import HomeAdmin from '../components/Administrateur/HomeAdmin/HomeAdmin'
 import PageDepartement from '../components/Administrateur/Departement/Departement'
-import AddCollab from '../components/Administrateur/CrudCollab/AddCollab'
-import UpdateCollab from '../components/Administrateur/CrudCollab/updateCollab'
-import ListeCollab from '../components/Administrateur/CrudCollab/listeCollab'
-import Postes from '../components/Administrateur/CrudCollab/Postes'
-import CollabParPoste from '../components/Administrateur/CrudCollab/collabParPoste'
+import AddCollab from '../components/Administrateur/CrudCollab/formulaire/AddCollab'
+import UpdateCollab from '../components/Administrateur/CrudCollab/formulaire/updateCollab'
+import ListeCollab from '../components/Administrateur/CrudCollab/listeCollaborateur/listeCollab'
+import Postes from '../components/Administrateur/CrudCollab/collabParposte/Postes'
+import CollabParPoste from '../components/Administrateur/CrudCollab/collabParposte/collabParPoste'
+import ListDepartement from '../components/Administrateur/CrudCollab/collabParDepartement/departements'
 
 function AppRoute(){
     return (
@@ -23,6 +24,7 @@ function AppRoute(){
                 <Route path="/password/reset_request/" element={<ForgotPasswordForm/>}/>
                 <Route path="/reset-password/:token" element={<ResetPasswordForm/>}/>
 
+
                 <Route path="/admin/departement" element={<PageDepartement/>}/>
                 <Route path='/admin/postes' element={<Postes/>}/>
                 <Route path="/admin/home" element={<HomeAdmin/>}/> 
@@ -31,6 +33,7 @@ function AppRoute(){
                 <Route path='/admin/update/:id' element={<UpdateCollab/>}/>
                 <Route path='/admin/postes/collab/:idposte' element={<CollabParPoste/>}/>
                 <Route path='/admin/listeCollab' element={<ListeCollab/>}/>
+                <Route path='/admin/departements' element={<ListDepartement/>}/>
 
                 {/* 
                 <Route path="/admin/home" element={<HomeAdmin/>}/>
