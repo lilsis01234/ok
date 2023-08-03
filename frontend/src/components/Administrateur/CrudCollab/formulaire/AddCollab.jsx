@@ -5,36 +5,36 @@ import {useNavigate } from 'react-router-dom';
 
 const AddCollab = () => {
 
-const Sexe= [
-  {id:1,nom:'masculin'},
-  {id:2,nom:'feminin'}
-]
-const navigate = useNavigate();
- const [nom,setNom]=useState('');
- const [photo,setPhoto]=useState(null);
- const [prenom,setPrenom]=useState('');
- const [lot,setLot]=useState('');
- const [quartier,setQuartier]=useState('');
- const [ville,setVille]=useState('');
- const [telephone,setTelephone]=useState('');
- const[matricule,setMatricule] = useState('');
- const[dateNaissance,setdateNaissance]=useState('');
- const[dateEmbauche,setdateEmbauche]=useState('');
- const[site,setSite]=useState('');
- const[poste,setPoste]=useState('');
- const[sexe,setSexe]=useState('');
- 
- const[listePoste,setListePoste]=useState([])
+  const Sexe= [
+    {id:1,nom:'masculin'},
+    {id:2,nom:'feminin'}
+  ]
+  const navigate = useNavigate();
+  const [nom,setNom]=useState('');
+  const [photo,setPhoto]=useState(null);
+  const [prenom,setPrenom]=useState('');
+  const [lot,setLot]=useState('');
+  const [quartier,setQuartier]=useState('');
+  const [ville,setVille]=useState('');
+  const [telephone,setTelephone]=useState('');
+  const[matricule,setMatricule] = useState('');
+  const[dateNaissance,setdateNaissance]=useState('');
+  const[dateEmbauche,setdateEmbauche]=useState('');
+  const[site,setSite]=useState('');
+  const[poste,setPoste]=useState('');
+  const[sexe,setSexe]=useState('');
+  
+  const[listePoste,setListePoste]=useState([])
 
- useEffect(()=>{
-  axios.get('http://localhost:4000/api/poste/all_postes')
-  .then((res) => {setListePoste(res.data)
-               console.log(listePoste)})
-  .catch(err => console.log(err));
- }
- )
+  useEffect(()=>{
+    axios.get('http://localhost:4000/api/poste/all_postes')
+    .then((res) => {setListePoste(res.data)
+                console.log(listePoste)})
+    .catch(err => console.log(err));
+  }
+  )
  
- const Validation=(event)=>{
+  const Validation=(event)=>{
     event.preventDefault();
 
     const formData = new FormData();
@@ -60,7 +60,7 @@ const navigate = useNavigate();
         console.log(res);
         navigate('/admin/listeCollab');
     }).catch(err =>console.log(err));
- };
+  };
 
   return (
     <div className='block'>
