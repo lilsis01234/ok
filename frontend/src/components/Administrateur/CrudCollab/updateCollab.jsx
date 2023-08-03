@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 const UpdateCollab = () => {
+
   const[listePoste,setListePoste]=useState([])
   const navigate = useNavigate();
   const { id } = useParams();
@@ -30,64 +31,64 @@ const UpdateCollab = () => {
     };
     }
 
-  useEffect(() => {
-    axios.get(`http://localhost:4000/api/collaborateur/${id}`)
+    useEffect(() => {
+      axios.get(`http://localhost:4000/api/collaborateur/${id}`)
+        .then((res) => {
+          setLot(res.data.collaborateur.lot);
+          setQuartier(res.data.collaborateur.quartier);
+          setVille(res.data.collaborateur.ville);
+          setTel(res.data.collaborateur.tel);
+          setSite(res.data.collaborateur.site);
+          setPoste(res.data.collaborateur.poste);
+          setAnciennePhoto(res.data.collaborateur.image);
+
+          setDateNaissance(res.data.collaborateur.dateNaissance);
+          setNom(res.data.collaborateur.nom);
+          setPrenom(res.data.collaborateur.prenom);
+          setDateEmbauche(res.data.collaborateur.dateEmbauche);
+          setMatricule(res.data.collaborateur.matricule);
+          setSexe(res.data.collaborateur.sexe);
+        })
+        .catch((err) => console.log(err));
+    }, [id]);
+
+      useEffect(()=>{
+        axios.get('http://localhost:4000/api/poste/all_postes')
+        .then((res) => {setListePoste(res.data)
+                       console.log(listePoste)})
+        .catch(err => console.log(err));
+      }
+      )
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const updatedCollab = new FormData();
+      if (photo === ''||photo===null) {
+        updatedCollab.append('image', anciennephoto);
+      } else {
+        updatedCollab.append('image', photo);
+      }
+      updatedCollab.append('lot',lot);
+      updatedCollab.append('quartier',quartier);
+      updatedCollab.append('ville', ville);
+      updatedCollab.append('tel', tel);
+      updatedCollab.append('site', site);
+      updatedCollab.append('poste',poste);
+      console.log(updatedCollab)
+      
+      axios.put(`http://localhost:4000/api/collaborateur/edit/${id}`, updatedCollab,{headers: {
+        'Content-Type': 'multipart/form-data',
+      },})
       .then((res) => {
-        setLot(res.data.collaborateur.lot);
-        setQuartier(res.data.collaborateur.quartier);
-        setVille(res.data.collaborateur.ville);
-        setTel(res.data.collaborateur.tel);
-        setSite(res.data.collaborateur.site);
-        setPoste(res.data.collaborateur.poste);
-        setAnciennePhoto(res.data.collaborateur.image);
-
-        setDateNaissance(res.data.collaborateur.dateNaissance);
-        setNom(res.data.collaborateur.nom);
-        setPrenom(res.data.collaborateur.prenom);
-        setDateEmbauche(res.data.collaborateur.dateEmbauche);
-        setMatricule(res.data.collaborateur.matricule);
-        setSexe(res.data.collaborateur.sexe);
-      })
-      .catch((err) => console.log(err));
-  }, [id]);
-
-  useEffect(()=>{
-    axios.get('http://localhost:4000/api/poste/all_postes')
-    .then((res) => {setListePoste(res.data)
-                 console.log(listePoste)})
-    .catch(err => console.log(err));
-   }
-   )
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updatedCollab = new FormData();
-    if (photo === ''||photo===null) {
-      updatedCollab.append('image', anciennephoto);
-    } else {
-      updatedCollab.append('image', photo);
-    }
-    updatedCollab.append('lot',lot);
-    updatedCollab.append('quartier',quartier);
-    updatedCollab.append('ville', ville);
-    updatedCollab.append('tel', tel);
-    updatedCollab.append('site', site);
-    updatedCollab.append('poste',poste);
-    console.log(updatedCollab)
-    
-    axios.put(`http://localhost:4000/api/collaborateur/edit/${id}`, updatedCollab,{headers: {
-      'Content-Type': 'multipart/form-data',
-    },})
-    .then((res) => {
-        console.log(res);
-        navigate('/admin/listeCollab'); // Use navigate here
-    }).catch(err =>console.log(err));
-    };
+          console.log(res);
+          navigate('/admin/listeCollab'); // Use navigate here
+      }).catch(err =>console.log(err));
+      };
 
 
 
-  return (
-     <div className='block'>
+    return (
+      <div className='block'>
       <h1>Modifier un collaborateur</h1>
       <form onSubmit={handleSubmit}>
             <div className="add">
@@ -148,26 +149,26 @@ const UpdateCollab = () => {
 
             <div className="add">
             <label className='add-collab'>Poste</label>
-          <select
-            value={poste}
-            onChange={(e) => setPoste(e.target.value)}
-            className='add-input'
-          >
+            <select
+              value={poste}
+              onChange={(e) => setPoste(e.target.value)}
+              className='add-input'
+            >
             {listePoste.map((poste) => (
               <option key={poste.id} value={poste.id}>
                 {poste.titrePoste}
               </option>
             ))}
-          </select>
+            </select>
 
-              <label className='add-collab'>Date de naissance</label>
-              <input
-                type="text"
-                className='add-input'
-                value={dateNaissance}
-                disabled
-              />
-            </div>
+            <label className='add-collab'>Date de naissance</label>
+            <input
+              type="text"
+              className='add-input'
+              value={dateNaissance}
+              disabled
+            />
+          </div>
 
 
             <div className="add">
