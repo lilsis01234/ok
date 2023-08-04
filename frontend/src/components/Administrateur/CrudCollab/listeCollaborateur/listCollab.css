@@ -241,4 +241,8 @@ td img{
     text-decoration: none !important;
     color: #ffffff !important;
   }
-  
+  .listDepartement2{
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+  }
