@@ -34,10 +34,10 @@ const CollabParPoste = () => {
       <div className="sidebar">
       <img className="logo" src={logo} alt='logo sahaza'/>
       <input type='text' id='recherche'className="add-input" placeholder="rechercher" onChange={(e)=>setRecherche(e.target.value)}/>
-      <button className="ajout"><Link to='/admin/add'><FaPlus/></Link></button>
-      <button className="ajout2"><Link to='/admin/listeCollab'><FaListUl/></Link></button>
-      <button className="ajout2"><Link to='/admin/postes'><MdWorkspacesFilled/></Link></button>
-      <button className="ajout2"><Link to='/admin/departements'><MdOutlineBusiness/></Link></button>
+      <button className="ajout"><Link to='/admin/add'><FaPlus/> Ajouter</Link></button>
+      <button className="ajout2"><Link to='/admin/listeCollab'><FaListUl/> Collaborateurs</Link></button>
+      <button className="ajout2"><Link to='/admin/postes'><MdWorkspacesFilled/> Postes</Link></button>
+      <button className="ajout2"><Link to='/admin/departements'><MdOutlineBusiness/> Departements</Link></button>
      
       </div>
 
