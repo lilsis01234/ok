@@ -73,7 +73,7 @@ const CollabParPoste = () => {
               <td><button className="update"><Link to={`/admin/update/${Collab.id}`}>Modifier</Link></button></td>
               </tr>
             )):
-             (Collabs.filter(collab=>collab.nom.includes(recherche)).map(Collab=>(
+             (Collabs.filter(collab=>collab.nom.toLowerCase().includes(recherche.toLowerCase())).map(Collab=>(
                 <tr key={Collab.id}>
                 <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
                 <td>{Collab.matricule}</td>
