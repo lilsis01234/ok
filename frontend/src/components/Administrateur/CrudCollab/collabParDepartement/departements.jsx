@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 
 const ListDepartement = () => {
@@ -61,7 +62,7 @@ const ListDepartement = () => {
   
     return (
     <>
-    <div className="listDepartement">
+    <div className="listDepartement2">
         <h2 className="listDepartement_title">Liste des Départements </h2>
         <div className="listDepartement_search">
             <input type="text" value={searchTerm} onChange={handleInputChange} placeholder="Rechercher un département"/>
@@ -75,7 +76,7 @@ const ListDepartement = () => {
                 <tr>
                     <th>N°</th>
                     <th>Département</th>
-                    <th></th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -83,12 +84,14 @@ const ListDepartement = () => {
                     <tr key={departement.id}>
                         <td>{departement.id}</td>
                         <td>{departement.nomDepartement}</td>
+                        <td><button><Link to={`/collab/${departement.nomDepartement}`}>Voir qui sont dans ce departement</Link></button></td>
                     </tr>
                 ))) : (
                 filteredDepartement.map((departement) => (
                     <tr key={departement.id}>
                         <td>{departement.id}</td>
                         <td>{departement.nomDepartement}</td>
+                        <td><button><Link to={`/collab/${departement.nomDepartement}`}>Voir qui sont dans ce departement</Link></button></td>
                     </tr>
                 ))
             )}
