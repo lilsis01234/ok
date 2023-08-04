@@ -75,7 +75,7 @@ const CollabParDepartement = () => {
               <td>{Collab.dateEmbauche}</td>
               </tr>
             )):
-            (filteredCollabs.filter(filteredCollabs=>filteredCollabs.nom.includes(recherche)).map(Collab=>
+            (filteredCollabs.filter(filteredCollabs=>filteredCollabs.nom.toLowerCase().includes(recherche.toLowerCase())).map(Collab=>
                 <tr key={Collab.id}>
                 <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
                 <td>{Collab.matricule}</td>
