@@ -102,7 +102,7 @@ const ListeCollab = () => {
             <td><input type='text'id='filtre'className="add-input" placeholder="departement" onChange={(e)=>setRechercheDepartement(e.target.value)}/></td>
         </tr>
 
-        {Collabs.filter(collab=>collab.matricule.includes(recherchematricule)).map(Collab=>(
+        {Collabs.filter(collab=>collab.matricule.toLowerCase().includes(recherchematricule.toLowerCase())).map(Collab=>(
         <tr key={Collab.id}>
           <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
           <td>{Collab.matricule}</td>
@@ -117,7 +117,7 @@ const ListeCollab = () => {
           </tr>
         ))}
 
-        {Collabs.filter(collab=>collab.nom.includes(recherchenom)).map(Collab=>(
+        {Collabs.filter(collab=>collab.nom.toLowerCase().includes(recherchenom.toLowerCase())).map(Collab=>(
         <tr key={Collab.id}>
           <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
           <td>{Collab.matricule}</td>
@@ -132,7 +132,7 @@ const ListeCollab = () => {
           </tr>
         ))}
 
-        {Collabs.filter(collab=>collab.prenom.includes(rechercheprenom)).map(Collab=>(
+        {Collabs.filter(collab=>collab.prenom.toLowerCase().includes(rechercheprenom.toLowerCase())).map(Collab=>(
         <tr key={Collab.id}>
           <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
           <td>{Collab.matricule}</td>
@@ -147,22 +147,7 @@ const ListeCollab = () => {
           </tr>
         ))}
 
-        {Collabs.filter(collab=>collab.lot.includes(rechercheadresse)).map(Collab=>(
-        <tr key={Collab.id}>
-          <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
-          <td>{Collab.matricule}</td>
-          <td>{Collab.nom}</td>
-          <td>{Collab.prenom}</td>
-          <td>{Collab.lot}</td>
-          <td>{Collab.tel}</td>
-          <td>{Collab.dateNaissance}</td>
-          <td>{Collab.titrePoste}</td>
-          <td>{Collab.departement}</td>
-          <td><button className="update"><Link to={`/admin/update/${Collab.id}`}>Modifier</Link></button></td>
-          </tr>
-        ))}
-
-        {Collabs.filter(collab=>collab.lot.includes(rechercheadresse)).map(Collab=>(
+        {Collabs.filter(collab=>collab.lot.toLowerCase().includes(rechercheadresse.toLowerCase())).map(Collab=>(
         <tr key={Collab.id}>
           <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
           <td>{Collab.matricule}</td>
@@ -207,7 +192,7 @@ const ListeCollab = () => {
           </tr>
         ))}
 
-        {Collabs.filter(collab=>collab.titrePoste.includes(rechercheposte)).map(Collab=>(
+        {Collabs.filter(collab=>collab.titrePoste.toLowerCase().includes(rechercheposte.toLowerCase())).map(Collab=>(
         <tr key={Collab.id}>
           <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
           <td>{Collab.matricule}</td>
@@ -222,7 +207,7 @@ const ListeCollab = () => {
           </tr>
         ))}
 
-        {Collabs.filter(collab=>collab.departement.includes(recherchedepartement)).map(Collab=>(
+        {Collabs.filter(collab=>collab.departement.toLowerCase().includes(recherchedepartement.toLowerCase())).map(Collab=>(
         <tr key={Collab.id}>
           <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
           <td>{Collab.matricule}</td>
@@ -251,7 +236,7 @@ const ListeCollab = () => {
             <td><button className="update"><Link to={`/admin/update/${Collab.id}`}>Modifier</Link></button></td>
             </tr>
         )) 
-        : (Collabs.filter(collab=>collab.nom.includes(recherche)).map(Collab=>(
+        : (Collabs.filter(collab=>collab.nom.toLowerCase().includes(recherche.toLowerCase())).map(Collab=>(
           <tr key={Collab.id}>
             <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
             <td>{Collab.matricule}</td>
