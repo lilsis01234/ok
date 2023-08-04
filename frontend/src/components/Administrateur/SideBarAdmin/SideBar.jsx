@@ -39,7 +39,7 @@ function SideBar(){
                              <li className="sidebar_sousMenu_item"><Link>Liste des Collaborateurs</Link></li>
                         </ul>
                      )}
-                     <li className="sideBar_menu_item"><Link onClick={toggleSubMenuPoste} >Poste</Link></li>
+                     <li className="sideBar_menu_item"><Link to="/admin/poste" onClick={toggleSubMenuPoste} >Poste</Link></li>
                      {isSubmenuPosteOpen && (
                         <ul className="sidebar_sousMenu">
                              <li className="sidebar_sousMenu_item"><Link>Ajouter un Poste </Link></li>

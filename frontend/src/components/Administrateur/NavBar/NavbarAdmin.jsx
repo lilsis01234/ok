@@ -16,7 +16,7 @@ function NavBar(){
                 <ul className="menu">
                     <li><Link to="/admin/home">Dashboard</Link></li>
                     <li><Link to="#">Collaborateur</Link></li>
-                    <li><Link to="#">Poste</Link></li>
+                    <li><Link to="/admin/poste">Poste</Link></li>
                     <li><Link to="/admin/departement">Département</Link></li>
                 </ul>
             </div>

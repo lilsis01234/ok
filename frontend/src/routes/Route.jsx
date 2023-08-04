@@ -11,7 +11,6 @@ import PageDepartement from '../components/Administrateur/Departement/Departemen
 import AddCollab from '../components/Administrateur/CrudCollab/formulaire/AddCollab'
 import UpdateCollab from '../components/Administrateur/CrudCollab/formulaire/updateCollab'
 import ListeCollab from '../components/Administrateur/CrudCollab/listeCollaborateur/listeCollab'
-import Postes from '../components/Administrateur/CrudCollab/collabParposte/Postes'
 import CollabParPoste from '../components/Administrateur/CrudCollab/collabParposte/collabParPoste'
 import ListDepartement from '../components/Administrateur/CrudCollab/collabParDepartement/departements'
 import CollabParDepartement from '../components/Administrateur/CrudCollab/collabParDepartement/collabParDepartement'
@@ -27,10 +26,16 @@ function AppRoute(){
 
 
                 <Route path="/admin/departement" element={<PageDepartement/>}/>
-                <Route path='/admin/postes' element={<Postes/>}/>
+                {/* <Route path='/admin/postes' element={<Postes/>}/> */}
+                <Route path="/admin/poste" element={<PagePoste/>}/>
+
+
+
                 <Route path="/admin/home" element={<HomeAdmin/>}/> 
                 <Route path="/user/home" element={<HomeUser/>}/>
-               <Route path='/admin/add'element={<AddCollab/>}/>
+
+                
+                <Route path='/admin/add'element={<AddCollab/>}/>
                 <Route path='/admin/update/:id' element={<UpdateCollab/>}/>
                 <Route path='/admin/postes/collab/:idposte' element={<CollabParPoste/>}/>
                 <Route path='/admin/listeCollab' element={<ListeCollab/>}/>
