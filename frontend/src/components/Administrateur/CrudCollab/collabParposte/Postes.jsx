@@ -18,14 +18,16 @@ const Postes = () => {
        }
        )
       return (
-        <div className='poste'>
-         <div className="main">
+        <div className='bodyliste'>
+         <div className='poste'>
+          <div className="main">
+
           <div className="sidebar">
           <img className="logo" src={logo} alt='logo sahaza'/>
           <input type='text' id='recherche'className="add-input" placeholder="rechercher" onChange={(e)=>setRecherche(e.target.value)}/>
           <button className="ajout"><Link to='/admin/add'><FaPlus/> Nouveau</Link></button>
           <button className="ajout2"><Link to='/admin/listeCollab'><FaListUl/> Collaborateurs</Link></button>
-          <button className="ajout2"><Link to='/admin/postes'><MdWorkspacesFilled/> Postes</Link></button>
+          <button className="ajout2"><Link to='/admin/postesDepartement'><MdWorkspacesFilled/> Postes</Link></button>
           <button className="ajout2"><Link to='/admin/departements'><MdOutlineBusiness/> Departements</Link></button>
           </div>
 
@@ -52,6 +54,7 @@ const Postes = () => {
 
                 )}
               </div>
+            </div>
             </div>
         </div>
         </div>
