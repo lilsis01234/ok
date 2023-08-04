@@ -10,6 +10,7 @@ import {MdWorkspacesFilled,MdOutlineBusiness} from 'react-icons/md'
 
 const CollabParDepartement = () => {
   const { nomDepartement } = useParams();
+  const[recherche,setRecherche]=useState('');
   const [collabs, setCollabs] = useState([]);
   const [filteredCollabs, setFilteredCollabs] = useState([]);
 
@@ -33,6 +34,7 @@ const CollabParDepartement = () => {
     <div className="main">
       <div className="sidebar">
       <img className="logo" src={logo} alt='logo sahaza'/>
+      <input type='text' id='recherche'className="add-input" placeholder="rechercher" onChange={(e)=>setRecherche(e.target.value)}/>
       <button className="ajout"><Link to='/admin/add'><FaPlus/></Link></button>
       <button className="ajout2"><Link to='/admin/listeCollab'><FaListUl/></Link></button>
       <button className="ajout2"><Link to='/admin/postes'><MdWorkspacesFilled/></Link></button>
@@ -59,7 +61,7 @@ const CollabParDepartement = () => {
           </tr>
           </thead>
           <tbody>
-            {filteredCollabs.map(Collab =>
+            {recherche === '' ? (filteredCollabs.map(Collab =>
             <tr key={Collab.id}>
               <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
               <td>{Collab.matricule}</td>
@@ -72,7 +74,22 @@ const CollabParDepartement = () => {
               <td>{Collab.titrePoste}</td>
               <td>{Collab.dateEmbauche}</td>
               </tr>
-            )}
+            )):
+            (filteredCollabs.filter(filteredCollabs=>filteredCollabs.nom.includes(recherche)).map(Collab=>
+                <tr key={Collab.id}>
+                <td><img src={`http://localhost:4000/${Collab.image}`} alt={Collab.nom}/></td>
+                <td>{Collab.matricule}</td>
+                <td>{Collab.nom}</td>
+                <td>{Collab.prenom}</td>
+                <td>{Collab.lot}</td>
+                <td>{Collab.ville}</td>
+                <td>{Collab.tel}</td>
+                <td>{Collab.dateNaissance}</td>
+                <td>{Collab.titrePoste}</td>
+                <td>{Collab.dateEmbauche}</td>
+                </tr>
+            ))
+            }
           </tbody>    
           </table>
     </div>
