@@ -206,7 +206,7 @@ td img{
    }
   }
   .sidebar{
-    width: 40%;
+    width: 270px;
     background-color: rgb(124, 23, 23);
     padding: 3%;
     box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.1);
