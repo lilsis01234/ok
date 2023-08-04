@@ -14,6 +14,7 @@ import ListeCollab from '../components/Administrateur/CrudCollab/listeCollaborat
 import Postes from '../components/Administrateur/CrudCollab/collabParposte/Postes'
 import CollabParPoste from '../components/Administrateur/CrudCollab/collabParposte/collabParPoste'
 import ListDepartement from '../components/Administrateur/CrudCollab/collabParDepartement/departements'
+import CollabParDepartement from '../components/Administrateur/CrudCollab/collabParDepartement/collabParDepartement'
 
 function AppRoute(){
     return (
@@ -34,7 +35,7 @@ function AppRoute(){
                 <Route path='/admin/postes/collab/:idposte' element={<CollabParPoste/>}/>
                 <Route path='/admin/listeCollab' element={<ListeCollab/>}/>
                 <Route path='/admin/departements' element={<ListDepartement/>}/>
-
+                <Route path='/collab/:nomDepartement' element={<CollabParDepartement/>}/>
                 {/* 
                 <Route path="/admin/home" element={<HomeAdmin/>}/>
                 <Route path="/user/home" element={<HomeUser/>}/>   */}
