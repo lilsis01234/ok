@@ -71,10 +71,10 @@ const ListeCollab = () => {
 
      <div className="tableau">
       <h1>Liste des Collaborateurs</h1>
-    <div  className="listeCollabo">
+      <div  className="listeCollabo">
 
 
-      <table className="listeCollabo">
+       <table className="listeCollabo">
         <thead>
         <tr>
             <th>Photo</th>
@@ -249,11 +249,11 @@ const ListeCollab = () => {
             <td>{Collab.departement}</td>
             <td><button className="update"><Link to={`/admin/update/${Collab.id}`}>Modifier</Link></button></td>
             </tr>
-          )))}
+        )))}
         </tbody>    
-        </table>
-        </div>
-        </div>
+       </table>
+     </div>
+    </div>
     </div>
     </div>
   )
