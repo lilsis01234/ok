@@ -2,6 +2,8 @@ const express = require('express');
 //const mysql = require('mysql');
 const sequelize = require('./database/database');
 const cors = require('cors');
+const path = require('path');
+
 
 const app = express();
 const departementRouter = require('./routes/departement');
@@ -34,6 +36,9 @@ app.use(cors({ origin: 'http://192.168.16.244:3000', credentials: true }));
 //Ajout de middleware express.json()
 app.use(express.json())
 
+
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 //utilisation des routes middleware
 app.use('/api', api_config) //route pour la configuration 
@@ -88,6 +93,6 @@ connection.connect((err) =>{
 
 
 //Initialisation du serveur
-app.listen(4001, () => {
-    console.log('Serveur Express en écoute sur le port 4000')
+app.listen(4003, () => {
+    console.log('Serveur Express en écoute sur le port 4003')
 });

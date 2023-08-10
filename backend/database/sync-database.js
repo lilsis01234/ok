@@ -11,7 +11,7 @@ const PasswordResetRequest = require('../Modele/PasswordResetRequest');
 //Synchronisation de la base de donnée 
 async function syncDatabase(){
     try{
-        await sequelize.sync({force : true}); 
+        await sequelize.sync({force : false}); 
         console.log('La base de donnée est synchronisée avec succès')
     }  catch (error){
         console.error('Erreur lors de la synchronisation de la base de données :', error )

@@ -33,6 +33,7 @@ CompteCollab.init({
 
 CompteCollab.belongsTo(Collaborateur, {
     foreignKey : 'collaborateur',
+    onDelete : 'CASCADE'
 })
 
 Role.hasMany(CompteCollab);

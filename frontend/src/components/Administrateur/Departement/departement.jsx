@@ -4,6 +4,8 @@ import SideBar from '../SideBarAdmin/SideBar'
 import '../../Other_component/Page.css'
 import { useNavigate } from 'react-router-dom';
 import ListDepartement from './listeDepartement/listeDepartement';
+import './departement.css';
+
 
 function PageDepartement (){
     const navigate = useNavigate();
@@ -30,7 +32,9 @@ function PageDepartement (){
             <div className="content">
                 <SideBar/>
                 <div className="main-content">
-                    <ListDepartement/>
+                    <div className="departement-content">
+                        <ListDepartement/>
+                    </div>
                 </div>
             </div>
         </div>

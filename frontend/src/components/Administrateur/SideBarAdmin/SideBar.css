@@ -16,19 +16,20 @@
     color: #9C1D21;
 }
 
-
-
 .sideBar{
     margin: 0px;
     padding: 0px;
     width: 250px;
-    height: 100vh;
+    height : calc(100vh - 0px);
     opacity: 100%;
     border: 1px solid black;
     font-family: 'Poppins', sans-serif;
     font-size: 12pt;
     background-color: #080202; 
+    transition: transform 0.3s ease;
 }
+
+
 
 .sideBar_menu{
     margin: 0;
@@ -64,6 +65,12 @@
     text-decoration: none;
 }
 
+.sideBar.open{
+    transform: translateX(0);
+}
+.sideBar.closed{
+    transform: translate(-100%);
+}
 
 
 

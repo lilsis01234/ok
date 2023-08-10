@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import './Dashboard.css'
+import NewCollaborateurList from './CollaborateurList';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -15,7 +16,6 @@ const Dashboard = () => {
     const navigate = useNavigate();
     useEffect(() => {
         const token = localStorage.getItem('jwt');
-        console.log(token);
         if (!token){
             navigate('/');
         }
@@ -29,7 +29,7 @@ const Dashboard = () => {
 
     useEffect(()=> {
         axios
-            .get("http://192.168.16.244:4001/api/collaborateur/all_collaborateurs")
+            .get("http://192.168.16.244:4003/api/collaborateur/all_collaborateurs")
             .then((response) => {
                 setData(response.data);
             })
@@ -77,11 +77,12 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
+        
         <div className="dashboard_graph">
             <Pie data={chartData} options ={chartOptions} />
         </div>
-        <div className="dashboard_description">
-            Texte à ajouter, description
+        <div className="dashboard_table">
+            <NewCollaborateurList/>
         </div>
     </div>
   )

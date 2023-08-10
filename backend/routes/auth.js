@@ -53,7 +53,7 @@ router.post('/login', (req, res, next) => {
                 secretKey,
                 {expiresIn : '24h'}
             )
-            // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400000})
+            // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400300})
             res.status(200).json({
                 id : comptes.id,
                 role : roleTitle,

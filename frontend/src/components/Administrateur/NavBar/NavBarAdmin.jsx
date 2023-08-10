@@ -25,10 +25,10 @@ function Navbar() {
               <Link to="/admin/home">Tableau de bord</Link>
             </li>
             <li>
-              <Link to="#">Collaborateur</Link>
+              <Link to="/admin/collaborateur/liste">Collaborateur</Link>
             </li>
             <li>
-              <Link to="#">Poste</Link>
+              <Link to="/admin/poste">Poste</Link>
             </li>
             <li>
               <Link to="/admin/departement">Département</Link>

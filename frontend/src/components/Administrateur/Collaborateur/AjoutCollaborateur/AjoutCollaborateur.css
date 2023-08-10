@@ -1,0 +1,85 @@
+.collaborateurAddContent{
+    display : flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color:black;
+    
+}
+
+.collaborateurAddContent_Form{
+    background-color: #ffff;
+    margin: 25px;
+    color: black;
+    border-radius: 10px;
+    width: 80%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-items: center;
+
+}
+
+.collaborateurAddContent_Form_Photo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+
+.collaborateurAddContent_Form_Item{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+}
+
+.collaborateurAddContent_Form_Item div{
+    padding: 5px 15px;
+    margin : 5px 25px;
+    width: 250px;
+}
+
+
+
+.collaborateurAddContent_Form_Item input, .collaborateurAddContent_Form_Item select{
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border-radius: 5px;
+    border: 1px solid;
+    height: 35px;
+    margin-right: 3%;
+    width: 100%;
+    border-color: #9C1D21;
+    padding: 5px;
+}
+
+.collaborateurAddContent_Form_Item input:focus{
+    outline: #9C1D21;
+}
+
+
+.collaborateurAddContent_FormContent{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.collaborateurAddContent_Form_Button{
+    width: 30%;
+    align-self: center;
+    height: 40px;
+    border-radius: 10px;
+    margin: 5px;
+    background-color: #9C1D21;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+
