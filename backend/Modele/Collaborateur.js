@@ -7,7 +7,7 @@ class Collaborateur extends Model{};
 
 Collaborateur.init({
     matricule : {
-        type : DataTypes.STRING(6),
+        type : DataTypes.STRING(10),
         allowNull : false,
         unique : true,
     },
@@ -50,6 +50,7 @@ Collaborateur.init({
     
 Collaborateur.belongsTo(Poste, {
     foreignKey : 'poste',
+    onUpdate : 'CASCADE',
 })
 
 module.exports = Collaborateur;

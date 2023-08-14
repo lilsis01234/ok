@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 import {RiLogoutBoxRLine} from 'react-icons/ri'
-import '../../Administrateur/NavBar/navBar.css'
+import '../../Administrateur/NavBar/NavBarAdmin.css'
 
 const Logout = () => {
     const navigate = useNavigate();
@@ -13,10 +13,9 @@ const Logout = () => {
 
   return (
     <div>
-      <button onClick={handleLagout} className="logout"><RiLogoutBoxRLine className="logout-icon"/></button>
+      <span onClick={handleLagout} className="logout"><RiLogoutBoxRLine className="logout-icon"/> Déconnexion </span>
     </div>
   )
 }
 
 export default Logout;
-

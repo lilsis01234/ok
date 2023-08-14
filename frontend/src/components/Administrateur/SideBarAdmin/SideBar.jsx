@@ -32,27 +32,27 @@ function SideBar(){
             <div className={`sideBar ${isSidebarOpen ? 'open' : 'closed'}`}>
                    <ul className="sideBar_menu">
                         <li className="sideBar_menu_item"><Link to="/admin/home">Tableau de bord </Link></li>
-                        <li className="sideBar_menu_item"><Link onClick={toggleSubMenuCollab} >Collaborateur</Link></li>
+                        <li className="sideBar_menu_item"><Link onClick={toggleSubMenuCollab} >Collaborateurs</Link></li>
                      {isSubmenuCollabOpen && (
                         <ul className="sidebar_sousMenu">
-                             <li className="sidebar_sousMenu_item"><Link>Ajouter un Collaborateur</Link></li>
-                             <li className="sidebar_sousMenu_item"><Link>Liste des Collaborateurs</Link></li>
+                             <li className="sidebar_sousMenu_item"><Link to="/admin/collaborateur/add">Ajouter un Collaborateur</Link></li>
+                             <li className="sidebar_sousMenu_item"><Link to="/admin/collaborateur/liste">Liste des Collaborateurs</Link></li>
                         </ul>
                      )}
-                     <li className="sideBar_menu_item"><Link to="/admin/poste" onClick={toggleSubMenuPoste} >Poste</Link></li>
-                     {isSubmenuPosteOpen && (
+                     <li className="sideBar_menu_item"><Link to="/admin/poste" onClick={toggleSubMenuPoste} >Postes</Link></li>
+                     {/* {isSubmenuPosteOpen && (
                         <ul className="sidebar_sousMenu">
                              <li className="sidebar_sousMenu_item"><Link>Ajouter un Poste </Link></li>
                              <li className="sidebar_sousMenu_item"><Link>Liste des Postes</Link></li>
                         </ul>
-                     )}
-                     <li className="sideBar_menu_item"><Link to="/admin/departement" onClick={ toggleSubMenuDepartement} >Département</Link></li>
-                     {isSubmenuDepartOpen && (
+                     )} */}
+                     <li className="sideBar_menu_item"><Link to="/admin/departement" onClick={ toggleSubMenuDepartement} >Départements</Link></li>
+                     {/* {isSubmenuDepartOpen && (
                         <ul className="sidebar_sousMenu">
                              <li className="sidebar_sousMenu_item"><Link>Ajouter un département</Link></li>
                              <li className="sidebar_sousMenu_item"><Link>Listes des départements</Link></li>
                         </ul>
-                     )}
+                     )} */}
                    </ul>
             </div>
             )} 

@@ -1,50 +1,50 @@
+import React, { useState} from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import React, { useState } from 'react'
-import { Link} from 'react-router-dom';
-import "../Login/Login.css";
-import '../ForgotPasswordForm/ForgotPasswordForm';
+import "../Login/Login.css"
+import '../ForgotPasswordForm/ForgotPasswordForm.css'
 
-const ForgotPasswordForm = () => {
-    const [email, setEmail] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+const ResetPasswordForm = () => {
+    const navigate = useNavigate();
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const {token} = useParams();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setIsLoading(true);
-        axios.post('http://192.168.16.244:4001/api/password/password_request_rest', {email})
-          .then((response) => {
-            alert("Demande de réinitialisation du mot de passe envoyées avec succès")
-            setTimeout(() => {
-              setIsLoading(false);
-            }, 30 * 60 * 1000);
-          })
-          .catch((error) => {
-            console.error('Erreur lors de la demande de réinitialisation du mot de passe', error);
-            alert("Une erreur est survenue lors de la demande de réinitialisation");
-          })
-    };
 
+        if (password !== confirmPassword){
+            alert("Les mots de passe ne correspondent pas !");
+            return;
+        }
+
+        axios.post(`http;//localhost:4000/api/password/reset-password/${token}`, {password})
+        .then((response) => {
+            alert("Le mot de passe a été réinitialisé avec succès")
+            navigate("/login");
+        })
+        .catch((error) => {
+            console.error('Erreur lors de la réinitialisation du mot de passe:', error);
+        })
+
+    }
 
   return (
-    <div className="login">
-      <h2 className="resetpassword-title">Réinitialiser votre mot de passe</h2>
+    <div className='login'>
+      <h2 className='resetpassword-title'>Réinitialiser mot de passe </h2>
       <form onSubmit={handleSubmit} className="login-form">
-        <div>
-            <label htmlFor="email" className="login-label">Adresse e-mail :</label>
-            <input 
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="login-input"
-            />
-        </div>
-        <button type="submit" disabled={isLoading} className="login-button">Envoyer</button>
+          <div>
+              <label className="login-label">Nouveau mot de passe :</label>
+              <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="login-input"/>
+          </div>
+          <div>
+              <label className="login-label ">Confirmer le mot de passe :</label>
+              <input type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required className="login-input"/>
+          </div>
+          <button type="submit" className="login-button">Enregistrer</button>
       </form>
-      <Link to="/" className="login-link"> Revenir à la page de connexion </Link>
     </div>
   )
 }
 
-export default ForgotPasswordForm;
+export default ResetPasswordForm;

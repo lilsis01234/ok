@@ -4,10 +4,11 @@
     display: flex;
     flex-direction: row;
     font-family: 'Poppins', sans-serif;
+    justify-content: center;
 }
 
 .dashboard_graph{
-    width: 30%;
+    width: 45%;
     height: 60%;
     background-color: white;
     align-self: center;
@@ -22,27 +23,40 @@
 
 .dashboard_table{
     width: 100%;
+    margin: 10px;
     height: 70vh;
     background-color: white;
     align-self: center;
-    margin: 23px;
     border-radius: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+   
+    
 }  
 
 .dashboard_table_title{
     padding: 20px;
     font-family: 'Poppins', sans-serif;
+    font-size: 15pt;
+    font-weight: bold;
 }
 
 .dashboard_table_item{
     padding: 15px;
-    width: 80%;
+    width: 95%;
     font-family: 'Poppins', sans-serif;
+    font-size: 10pt;
+    border: none;
+}
 
+.dashboard_table_item td, .dashboard_table_item th{
+    border : none
+}
+
+.dashboard_table_item tr{
+    cursor: pointer;
 }
 
 .table_item_nom{
@@ -64,5 +78,12 @@
 .table_item_departement{
     width: 15%;
 }
+
+.collab_photo{
+    max-width: 90%;
+}
+
+
+
 
 

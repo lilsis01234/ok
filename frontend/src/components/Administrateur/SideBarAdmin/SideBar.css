@@ -20,7 +20,7 @@
     margin: 0px;
     padding: 0px;
     width: 250px;
-    height: 100vh;
+    height : calc(100vh - 0px);
     opacity: 100%;
     border: 1px solid black;
     font-family: 'Poppins', sans-serif;

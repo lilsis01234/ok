@@ -5,6 +5,7 @@ const transporter = require('../config/mailConfig');
 const CompteCollab = require('../Modele/CompteCollab');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
+const { Op } = require('sequelize');
 require('dotenv').config();
 
 const secretkey = crypto.randomBytes(20).toString('hex');
@@ -20,7 +21,7 @@ router.post('/password_request_rest', async(req, res) => {
             return res.status(404).json({message : 'Utilisateur non trouvé '})
         }
 
-         //S'assurer que l'utilisateur ne peut pas faire qu'une demande tout les 30 minutes
+        //S'assurer que l'utilisateur ne peut pas faire qu'une demande tout les 30 minutes
         const now = new Date();
         const minutesLimit = 10;
         const limitTime = new Date(now.getTime() - (minutesLimit * 60 * 1000));
@@ -51,10 +52,10 @@ router.post('/password_request_rest', async(req, res) => {
             to : email,
             subject : 'Réinitialisaton du mot de passe',
             html : `<div>
-                        <p> Bonjour </p>
+                        <p> Bonjour, </p>
                         <p> Vous avez demandé une réinitialisation de mot de passe. Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe</p>
                         <p><a href="${resetPasswordLink}">${resetPasswordLink}</a></p>
-                        <p>Ce lien est valable pendant 15 minutes. Si vous n'avez pas demandé de réinitialisation de mot de passe, ignorez simplement cet e-mail.</p>
+                        <p>Le lien expirera dans 15 minutes. Si vous n'avez pas demandé de réinitialisation de mot de passe, ignorez simplement cet e-mail.</p>
                         <p>Merci,</p>
                         <p>Votre équipe de support</p>
                     </div>`
@@ -80,6 +81,8 @@ router.post('/password_request_rest', async(req, res) => {
     }
 })
 
+
+
 //route pour réinitialiser le mot de passe 
 router.post('/reset-password/:token', async(req, res) => {
     const {token} = req.params;
@@ -88,11 +91,14 @@ router.post('/reset-password/:token', async(req, res) => {
     try {
         const resetRequest = await PasswordResetRequest.findOne({where : {token}})
         if (!resetRequest) {
-            return res.status(400).json({message : 'Jeton de réinitialisaton invalide ou expiré'})
+            return res.status(400).json({message : 'Jeton de réinitialisaton invalide ou expiré qu\'une réinitialisation de mot de passe toutes les 30 minutes.'})
         }
 
         const user = await CompteCollab.findByPk(resetRequest.userId);
 
+      
+
+       
         const saltRounds = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hashSync(password, saltRounds)
 
@@ -102,12 +108,22 @@ router.post('/reset-password/:token', async(req, res) => {
 
         await resetRequest.destroy();
         return res.status(200).json({message : 'Mot de passe réinitialisé avec succès'});
+        
+
+        
     } 
     catch (error){
         console.error('Erreur lors de la réinitialisaton du mot de passe:', error)
         return res.status(500).json({message : 'Une erreur est survenue lors de la réinitialisation du mot de passe'});
     }
 })
+
+
+
+
+
+
+
 
 
 module.exports = router;

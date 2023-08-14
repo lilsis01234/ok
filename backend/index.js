@@ -4,6 +4,8 @@ const sequelize = require('./database/database');
 const User = require('./Modele/User')
 const cors = require('cors');
 const path = require('path');
+
+
 const app = express();
 const departementRouter = require('./routes/departement');
 const posteRouter = require('./routes/postes');
@@ -13,6 +15,8 @@ const login = require('./routes/auth');
 const role = require('./routes/role');
 const api_config = require('./config/api_config');
 const password = require('./routes/motdepasseOublie');
+const archive = require('./routes/archiveCollab')
+const userProfile = require('./routes/userProfile');
 
 
 //importation des configurations$
@@ -36,7 +40,7 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 //Ajout de middleware express.json()
 app.use(express.json())
 
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 //utilisation des routes middleware
 app.use('/api', api_config) //route pour la configuration 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -46,7 +50,9 @@ app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs
 app.use('/api/compte_collaborateur', compte_collab) ; //route pour les comptes collaborateurs
 app.use('/api/auth', login); //route pour l'authentification
 app.use('/api/role', role); //route pour les rôles
-app.use('/api/password', password ); //role pour les mot de passe oublié
+app.use('/api/password', password ); //route pour les mot de passe
+app.use('/api/archive', archive); //route pour archiver les collaborateurs 
+app.use('/api/user', userProfile); //route pour afficher les profiles des collaborateurs 
 
 
 

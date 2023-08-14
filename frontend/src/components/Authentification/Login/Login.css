@@ -11,7 +11,13 @@
 
 .login-title{
     font-size: 50px;
+    font-weight: 400;
     font-family: 'Poppins', sans-serif;
+}
+
+.email{
+    display: flex;
+    flex-direction: column;
 }
 
 .login-form{
@@ -23,23 +29,25 @@
     align-items: center;
 } 
 
-.login div {
-    padding: 10px 0px;
+.email{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.password{
     display: flex;
     flex-direction: column;
 }
 
-.login-label{
-    font-family: 'Poppins', sans-serif;
-}
-
 .login-input{
-    padding-top: 10px;
+    margin-top: 5px;
+    padding: 10px 10px 10px 10px;
     background-color: #fff;
     border: none;
     border-radius: 10px;
     width: 380px;
-    height: 25px;
+    height: 40px;
 }
 
 .login-input:focus{
@@ -54,10 +62,11 @@
     border: none;
     color: white;
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
     transition: 0.3s ease;
-    width: 100px;
+    width: 200px;
     text-align: center;
+    font-family: 'Poppins', sans-serif;
 }
 
 .login-button:hover{
@@ -66,15 +75,20 @@
 }
 
 .login-link{
-    padding: 10px 0px;
+    padding: 20px 0px;
     color : black;
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
+    transition: 0.3s all ease-in;
 }
 
 .login-link:hover{
-    transform: scale(1.1);
+    text-decoration: underline;
     color: #9C1D21;
+}
+
+.login-link:disabled{
+    background-color: #9E9E9E; 
 }
 
 

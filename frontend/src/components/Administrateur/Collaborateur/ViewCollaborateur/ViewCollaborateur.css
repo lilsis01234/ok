@@ -1,0 +1,12 @@
+.collabView{
+    font-family: 'Poppins', sans-serif;
+}
+
+.collabView_Photo{
+    width: 20%;
+    height: auto;
+}
+
+.collabView_Item{
+    width: 80%;
+}

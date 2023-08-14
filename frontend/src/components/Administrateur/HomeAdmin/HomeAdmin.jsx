@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
-import Dashboard from '../Dashboard/Dashboard';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../NavBar/NavbarAdmin';
+import NavBarAdmin from '../NavBar/NavBarAdmin';
 import SideBar from '../SideBarAdmin/SideBar';
-// import ListeCollab from '../CrudCollab/listeCollab';
-import './page.css';
+import '../../Other_component/Page.css'
+import Dashboard from '../Dashboard/Dashboard';
 // import Cookies from 'js-cookie';
 
 function HomeAdmin(){
+    
     const navigate = useNavigate();
     useEffect(() => {
         // const token = Cookies.get('jwt');
@@ -23,17 +23,18 @@ function HomeAdmin(){
         }
 
     }, [navigate])
-
     return (
         <div className="page">
-            <NavBar/>
+            <NavBarAdmin/>
             <div className="content">
                 <SideBar/>
                 <div className="main-content">
                     <Dashboard/>
                 </div>
             </div>
-    </div>
+
+            
+        </div>
     )
 }
 

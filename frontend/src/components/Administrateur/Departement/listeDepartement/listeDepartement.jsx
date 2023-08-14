@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {MdEdit} from 'react-icons/md'
-import {MdOutlineDeleteForever} from 'react-icons/md'
-import FormulaireDepartement from "../Formulaire/FormulaireAjoutDepartement";
+import FormulaireDepartement from "../formulaireDepartement/FormulaireAjoutDepartement";
 import './listeDepartement.css'
+
 
 const ListDepartement = () => {
     const [departementList, setDepartementList] = useState([]);
@@ -15,23 +15,23 @@ const ListDepartement = () => {
     const [departementToEditID, setDepartementToEditId ] = useState(null);
 
 
-    //Pour la pagination
-    const [currentPage, setCurrentPage] = useState(1);
-    // Nombre d'éléments par page 
-    const itemsPerPage = 15;
+
+     //Pour la pagination
+     const [currentPage, setCurrentPage] = useState(1);
+     // Nombre d'éléments par page 
+     const itemsPerPage = 15;
+ 
 
 
-
-    useEffect(() => {
-        axios.get('http://localhost:4000/api/departement/all_departement')
-        .then(response => {
-            setDepartementList(response.data);
-            // setFilteredDepartement(response.data);
+    useEffect(()=> {
+        axios.get("http;//localhost:4000/api/departement/all_departement")
+        .then((response) => {
+             setDepartementList(response.data);
         })
-        .catch(error => {
-            console.error('Erreur lors de la récupération des données:', error)
+        .catch((err)=>{
+            console.error('Erreur lors de la récupération des données:', err)
         })
-    }, []);
+    }, [])
 
 
     useEffect(() => {
@@ -39,7 +39,6 @@ const ListDepartement = () => {
         const endIndex = startIndex + itemsPerPage;
         setFilteredDepartement(departementList.slice(startIndex, endIndex));
     }, [departementList, currentPage])
-
 
 
 
@@ -65,7 +64,7 @@ const ListDepartement = () => {
 
 
     const handleEditDepartement = (departementId) => {
-        setEdit(!isEdit)
+        setEdit(true)
         setDepartementToEditId(departementId)
         const selectedDepartement = departementList.find((departement) => departement.id === departementId)
         setDepartementToEditId(selectedDepartement);
@@ -85,17 +84,17 @@ const ListDepartement = () => {
         setDepartementToEditId(null);
     }
    
-   
 
-  
+
+
     return (
     <>
-    <div className="listDepartement">
+       <div className="listDepartement">
         <h2 className="listDepartement_title">Liste des Départements </h2>
         <div className="search_form">
             <input type="text" value={searchTerm} onChange={handleInputChange} placeholder="Rechercher un département" className="search_input"/>
              {searchTerm && (
-                 <button onClick ={() => setSearchTerm('')} className="search_clearButton">X</button>
+                 <button onClick ={() => setSearchTerm(' ')} className="search_clearButton">X</button>
                 )}
             <button onClick={handleSearch} className="search_Button">Rechercher </button>
         </div>
@@ -113,8 +112,7 @@ const ListDepartement = () => {
                         <td>{departement.id}</td>
                         <td>{departement.nomDepartement}</td>
                         <td>
-                            <button className="table_item_icon" onClick={() => handleEditDepartement(departement.id)}><MdEdit/></button>
-                            <button className="table_item_icon"><MdOutlineDeleteForever/></button>
+                            <button className="table_item_icon" onClick={() => handleEditDepartement(departement.id)}><MdEdit/> Modifier </button>
                         </td>
                     </tr>
                 ))) : (
@@ -122,9 +120,9 @@ const ListDepartement = () => {
                     <tr key={departement.id}>
                         <td>{departement.id}</td>
                         <td>{departement.nomDepartement}</td>
-                        <td>
-                            <button className="table_item_icon" onClick={() => handleEditDepartement(departement.id)}><MdEdit/></button>
-                            <button className="table_item_icon"><MdOutlineDeleteForever/></button>
+                        <td className="w-20">
+                            <button className="flex table_item_icon" onClick={() => handleEditDepartement(departement.id)}><MdEdit/> Modifier </button>
+                
                         </td>
                     </tr>
                 ))
