@@ -2,7 +2,7 @@ import React from "react";
 import "./NavBarAdmin.css";
 import Logo from "../../../image/logo_sahaza.png"
 import { Link} from "react-router-dom";
-import Logout from "../../Authentification/Logout/Logout";
+import UserProfile from "../../Authentification/UserProfile/UserProfile";
 
 
 function Navbar() {
@@ -36,7 +36,7 @@ function Navbar() {
           </ul>
         </div>
       </div>
-        <Logout/>
+        <UserProfile/>
     </div>
   );
 }

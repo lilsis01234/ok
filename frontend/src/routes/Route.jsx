@@ -12,7 +12,7 @@ import PagePoste from '../components/Administrateur/Poste/Poste'
 
 import AjoutCollaborateur from '../components/Administrateur/Collaborateur/AjoutCollaborateur/AjoutCollaborateur'
 import ListeCollaborateur from '../components/Administrateur/Collaborateur/ListeCollaborateur/ListeCollaborateur'
-import RechercheCollaborateur from '../components/Administrateur/Collaborateur/RechercheCollaborateur/RechercheCollaborateur'
+import Profil from '../components/ProfilUser/PageProfil/Profil'
 
 function AppRoute(){
     return (
@@ -29,10 +29,11 @@ function AppRoute(){
                 
                 <Route path="/admin/collaborateur/add" element={<AjoutCollaborateur/>}/>
                 <Route path="/admin/collaborateur/liste" element={<ListeCollaborateur/>}/>
-                <Route path="/admin/collaborateur/all" element={<RechercheCollaborateur/>}/>
 
                 <Route path="/admin/home" element={<HomeAdmin/>}/>
                 <Route path="/user/home" element={<HomeUser/>}/>
+
+                <Route path="/user/profile" element={<Profil/>}/>
 
                 <Route path="/error" element={<ErrorPage/>}/>
 

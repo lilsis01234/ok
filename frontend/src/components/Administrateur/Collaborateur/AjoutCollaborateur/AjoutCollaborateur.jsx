@@ -85,7 +85,7 @@ const AjoutCollaborateur = () => {
         })
             .then(res => {
                 console.log(res);
-                navigate('/admin/collaborateur/liste_collaborateur');
+                navigate('/admin/collaborateur/liste');
             }).catch(err => console.log(err));
 
     }

@@ -72,9 +72,6 @@
     position: relative;
     height: 30px;
     cursor: pointer;
-    background-color: transparent;
-    margin-top: 20px;
-    margin-right: 20px;
     border: none;
     display: flex;
     align-items: center;

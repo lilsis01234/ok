@@ -32,9 +32,11 @@ function Login(props){
 
         axios.post('http://192.168.16.244:4003/api/auth/login', formData)
         .then((response) => {
-            const {token, role} = response.data;
+            const {token, role, id} = response.data;
+            console.log(response.data);
            localStorage.setItem('jwt', token);
            localStorage.setItem('role', role);
+           localStorage.setItem('id', id);
             // Cookies.set('jwt', token)
             navigate('/home');
         })

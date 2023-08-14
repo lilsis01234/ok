@@ -4,12 +4,13 @@ import SideBar from '../../SideBarAdmin/SideBar'
 import axios from 'axios'
 import './ListeCollaborateur.css'
 import { Link } from 'react-router-dom'
-import { MdEdit } from 'react-icons/md'
+import { MdEdit, MdOutlineDeleteForever } from 'react-icons/md'
 import { GrView } from 'react-icons/gr'
 import ModifCollab from '../ModifCollaborateur/ModifCollab'
 import Modal from 'react-modal'
 import ViewCollaborateur from '../ViewCollaborateur/ViewCollaborateur'
 import { Avatar } from '@material-tailwind/react'
+import ArchiveCollaborateur from '../ArchiveCollaborateur/ArchiveCollaborateur'
 
 
 Modal.setAppElement('#root');
@@ -147,6 +148,23 @@ const ListeCollaborateur = () => {
       setCollabToView(selectedCollaborateur)
     }
 
+    //Pour supprimer ou archiver un utilisateur
+    const [collabToArchive, setCollabToArchive] = useState(null);
+    const [isModalArchiveOpen, setIsModalArchiveOpen] = useState(false);
+    
+    const OpenArchiveModel = () => {
+      setIsModalArchiveOpen(true)
+    }
+
+    const CloseArchiveModal = () => {
+      setIsModalArchiveOpen(false)
+    }
+
+    const ArchiveCollab = (collabId) => {
+      const selectedCollaborateur = listeCollab.find((collaborateur) => collaborateur.id === collabId)
+      setCollabToArchive(selectedCollaborateur)
+    }
+
    
 
 
@@ -163,7 +181,7 @@ const ListeCollaborateur = () => {
                 <div className="search_form">
                   <input type="text" value={recherche} onChange={handleInputChange} placeholder="Rechercher un collaborateur" className=""></input>
                   {recherche && (
-                    <button onClick={() => setRecherche(' ')} className="search_clearButton">X</button>
+                    <button onClick={() => setRecherche('')} className="search_clearButton">X</button>
                   )}
                   <button onClick={handleSearch} className="search_Button"> Rechercher </button>
                   <Link to="/admin/collaborateur/add" className="AddCollab_Link">Ajouter un nouveau collaborateur</Link>
@@ -193,11 +211,11 @@ const ListeCollaborateur = () => {
                     <td></td>
                   </tr>
                   {recherche === '' ? (listeCollab.filter(collaborateur => (
-                    (recherchematricule === 'null' | collaborateur.matricule.toLowerCase().includes(recherchematricule.toLowerCase())) && 
-                    (recherchenom === 'null' | collaborateur.nom.toLowerCase().includes(recherchenom.toLowerCase())) &&
-                    (rechercheprenom === 'null' | collaborateur.prenom.toLowerCase().includes(rechercheprenom.toLowerCase())) &&
-                    (rechercheposte === 'null' | collaborateur.titrePoste.toLowerCase().includes(rechercheposte.toLowerCase())) &&
-                    (recherchedepartement === 'null' | collaborateur.departement.toLowerCase().includes(recherchedepartement.toLowerCase()))
+                    (recherchematricule === 'null' || collaborateur.matricule.toLowerCase().includes(recherchematricule.toLowerCase())) && 
+                    (recherchenom === 'null' || collaborateur.nom.toLowerCase().includes(recherchenom.toLowerCase())) &&
+                    (rechercheprenom === 'null' || collaborateur.prenom.toLowerCase().includes(rechercheprenom.toLowerCase())) &&
+                    (rechercheposte === 'null' || collaborateur.titrePoste.toLowerCase().includes(rechercheposte.toLowerCase())) &&
+                    (recherchedepartement === 'null' || collaborateur.departement.toLowerCase().includes(recherchedepartement.toLowerCase()))
                   )).map(collaborateur => (
                       <tr key={collaborateur.id}>
                           <td><Avatar src={`http://192.168.16.244:4003/${collaborateur.image}`} alt={collaborateur.nom}  size="xs" className="rounded-full w-16 h-16 object-cover"/></td>
@@ -209,6 +227,7 @@ const ListeCollaborateur = () => {
                           <td className="CollabEdit_Button">
                             <button onClick={() => {EditCollab(collaborateur.id) ; openEditModal()}}><MdEdit/></button>
                             <button onClick={() => {ViewCollab(collaborateur.id); openViewModal()}}><GrView/></button>
+                            <button onClick={() => {ArchiveCollab(collaborateur.id); OpenArchiveModel()}}><MdOutlineDeleteForever/></button>
                           </td>
                       </tr>
                   ))) : (
@@ -229,6 +248,7 @@ const ListeCollaborateur = () => {
                           <td className="CollabEdit_Button">
                             <button onClick={() => {EditCollab(collaborateur.id) ; openEditModal()}}><MdEdit/></button>
                             <button onClick={() => {ViewCollab(collaborateur.id); openViewModal()}}><GrView/></button>
+                            <button><MdOutlineDeleteForever/></button>
                             </td>
                       </tr>))
                   )}
@@ -291,6 +311,28 @@ const ListeCollaborateur = () => {
                   <button onClick={closeViewModal} className="collabView_Modal_closeBtn">Retourner à la liste des collaborateurs</button>
               </Modal>
 
+            </div>
+            <div>
+              <Modal
+                isOpen = {isModalArchiveOpen}
+                onRequestClose = {CloseArchiveModal}
+                style = { {
+                  content : {
+                    width : '400px',
+                    height : '500px',
+                    borderRadius : '10px',
+                    margin : 'auto',
+                    top: '0',
+                    bottom : '0', 
+                    left : '0', 
+                    right : '0'
+                  }
+                }
+              }
+              >
+                <h2 className="font-bold text-2xl text-center font-['Poppins']">Supprimer un collaborateur</h2>
+                <ArchiveCollaborateur CollabToArchive={collabToArchive}/>
+              </Modal>
             </div>
             
           </div>

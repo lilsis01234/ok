@@ -5,6 +5,7 @@ const Collaborateur = require ('../Modele/Collaborateur');
 const CompteCollab = require('../Modele/CompteCollab');
 const RoleCollab = require('../Modele/Role');
 const PasswordResetRequest = require('../Modele/PasswordResetRequest');
+const ArchiveCollab = require('../Modele/ArchiveCollab');
 
 
 
