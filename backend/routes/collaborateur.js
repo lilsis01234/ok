@@ -1,3 +1,5 @@
+const router = require('express').Router();
+
 const Collaborateur = require('../Modele/Collaborateur');
 const Departement = require('../Modele/Departement');
 const Poste = require('../Modele/Poste');
@@ -8,7 +10,6 @@ const nodemailer = require('nodemailer');
 
 require('dotenv').config();
 
-const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const Role = require('../Modele/Role');
 const transporter  = require('../config/mailConfig');
@@ -55,11 +56,12 @@ router.post('/add', upload.single('image') ,async (req, res) => {
             lot : req.body.lot,
             quartier : req.body.quartier,
             ville : req.body.ville,
-            tel : req.body.tel,
+            tel : req.body.telephone,
             dateEmbauche : req.body.dateEmbauche,
             site : req.body.site,
             image : image ? image.path : null ,
             poste: req.body.poste,
+            sexe:req.body.sexe
         })
         const savedCollab = await newCollab.save();
 
@@ -128,6 +130,7 @@ router.post('/add', upload.single('image') ,async (req, res) => {
     }
 })
 
+
 //Afficher la liste des postes 
 router.get('/all_collaborateurs', async(req,res) => {
     Collaborateur.findAll({
@@ -157,6 +160,7 @@ router.get('/all_collaborateurs', async(req,res) => {
                 }
             })
         )
+        console.log(collaborateur)
     }) 
 })
 
@@ -258,7 +262,6 @@ router.put('/edit/:id', upload.single('image') ,async(req, res) => {
     }
 })
 
-
 //Supprimer un collaborateur 
 router.delete('/delete/:id', async(req, res) => {
     const {id} = req.params;
@@ -275,5 +278,8 @@ router.delete('/delete/:id', async(req, res) => {
         res.status(500).json({message : 'Erreur lors de la suppression du poste'})
     }
 })
+
+
+
 
 module.exports = router;

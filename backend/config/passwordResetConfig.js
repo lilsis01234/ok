@@ -23,4 +23,3 @@ const deleteExpiredResetRequest = async () => {
 
 //Planifier la tâche pour s'executer toutes les heures 
 cron.schedule('0 * * * *', deleteExpiredResetRequest);
-

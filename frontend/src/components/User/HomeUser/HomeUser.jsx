@@ -6,7 +6,8 @@ function HomeUser (){
     const navigate = useNavigate();
     useEffect(() => {
         // const token = Cookies.get('jwt');
-        const token = localStorage.getItem('jwt')
+        const token = localStorage.getItem('jwt');
+        console.log(token);
         if (!token){
             navigate('/');
         }

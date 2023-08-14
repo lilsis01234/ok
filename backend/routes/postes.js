@@ -15,7 +15,7 @@ router.post('/add', async(req, res) => {
         res.status(201).json(savedPoste);
     }
     catch (error){
-        console.error('Erreur lors de la création d\'un départemtent: ', error);
+        console.error('Erreur lors de la création d\'un département: ', error);
         res.status(401).json({message : 'Erreur lors de la création de l\'utilisateur'});
     }
 })

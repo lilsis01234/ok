@@ -44,7 +44,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 //utilisation des routes middleware
 app.use('/api', api_config) //route pour la configuration 
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/departement', departementRouter); //route pour le département
 app.use('/api/poste', posteRouter ); // route pour le router
 app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs

@@ -10,7 +10,6 @@ const ListDepartement = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredDepartement, setFilteredDepartement] = useState([]);
 
-
     //Pour les formulaire
     const [isEdit, setEdit] = useState(false);
     const [departementToEditID, setDepartementToEditId ] = useState(null);
