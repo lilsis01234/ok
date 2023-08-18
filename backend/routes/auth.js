@@ -53,9 +53,9 @@ router.post('/login', (req, res, next) => {
             const token = jwt.sign(
                 {id : comptes.id, role : roleTitle},
                 secretKey,
-                {expiresIn : '24h'}
+                {expiresIn : '1h'}
             )
-            // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400300})
+            // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400000})
 
             res.status(200).json({
                 id : comptes.id,

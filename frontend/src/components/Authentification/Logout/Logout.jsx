@@ -13,7 +13,7 @@ const Logout = () => {
 
   return (
     <div>
-      <span onClick={handleLagout} className="logout"><RiLogoutBoxRLine className="logout-icon"/> Déconnexion </span>
+      <span onClick={handleLagout} className="logout"><RiLogoutBoxRLine className="logout-icon mr-2"/> Déconnexion </span>
     </div>
   )
 }

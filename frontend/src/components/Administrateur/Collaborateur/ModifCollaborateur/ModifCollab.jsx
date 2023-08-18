@@ -23,7 +23,7 @@ const ModifCollab = ({CollabToEdit, onCollabUpdated}) => {
     const [sexe, setSexe] = useState(CollabToEdit?.sexe || '');
     //Récupération de la liste des postes 
     useEffect(() => {
-        axios.get('http://192.168.16.244:4003/api/poste/all_postes')
+        axios.get('http://192.168.16.244:4000/api/poste/all_postes')
             .then((res) => {
                 setListePoste(res.data)
             })
@@ -92,7 +92,7 @@ const ModifCollab = ({CollabToEdit, onCollabUpdated}) => {
 
        
 
-        axios.put(`http://192.168.16.244:4003/api/collaborateur/edit/${CollabToEdit.id}`, formData, {headers : {
+        axios.put(`http://192.168.16.244:4000/api/collaborateur/edit/${CollabToEdit.id}`, formData, {headers : {
             'Content-Type' : 'multipart/form-data',
         }})
             .then((response) => {
@@ -125,7 +125,7 @@ const ModifCollab = ({CollabToEdit, onCollabUpdated}) => {
                         <label >Photo:</label><br></br>
                         <input type='file' onChange={handleImageChange} className='justify-self-center' name="image"></input>
                         {!selectImage && image && (
-                             <Avatar src={`http://192.168.16.244:4003/${image}`}/>
+                             <Avatar src={`http://192.168.16.244:4000/${image}`}/>
                         )}
                         {selectImage && (
                             <Avatar src={URL.createObjectURL(selectImage)} className="w-32 h-32 rounded-full"/>

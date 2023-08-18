@@ -10,7 +10,7 @@ const AjoutPoste = ({onPosteAdded}) => {
 
     //Récupération des départements dans la base de données
     useEffect(() => {
-       axios.get('http://192.168.16.244:4003/api/departement/all_departement')
+       axios.get('http://192.168.16.244:4000/api/departement/all_departement')
        .then(response => {
            setDepartementList(response.data);
        }) 
@@ -33,7 +33,7 @@ const AjoutPoste = ({onPosteAdded}) => {
             alert("Le champ Poste ne peut pas être vide");
             return;
         }
-        axios.post('http://192.168.16.244:4003/api/poste/add', formData)
+        axios.post('http://192.168.16.244:4000/api/poste/add', formData)
         .then((response) => {
             alert('Poste ajoutée avec succès')
             onPosteAdded();

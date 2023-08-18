@@ -29,7 +29,7 @@ const Dashboard = () => {
 
     useEffect(()=> {
         axios
-            .get("http://192.168.16.244:4003/api/collaborateur/all_collaborateurs")
+            .get("http://192.168.16.244:4000/api/collaborateur/all_collaborateurs")
             .then((response) => {
                 setData(response.data);
             })

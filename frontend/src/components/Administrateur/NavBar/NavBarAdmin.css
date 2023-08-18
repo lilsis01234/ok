@@ -16,7 +16,7 @@
 }
 
 .navbar_logo {
-    width: 40%;
+    width: 30%;
 }
 
 
@@ -27,7 +27,7 @@
 .menu{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     height: 100%;
     
 }
@@ -75,7 +75,6 @@
     border: none;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .logout-icon{
@@ -90,6 +89,9 @@
     color: #9C1D21;
 }
 
+.nav-profile{
+    flex: 0.3;
+}
 
 
 

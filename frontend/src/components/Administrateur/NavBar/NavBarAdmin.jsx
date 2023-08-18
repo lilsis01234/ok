@@ -3,6 +3,7 @@ import "./NavBarAdmin.css";
 import Logo from "../../../image/logo_sahaza.png"
 import { Link} from "react-router-dom";
 import UserProfile from "../../Authentification/UserProfile/UserProfile";
+import '../../Administrateur/NavBar/NavBarAdmin.css'
 
 
 function Navbar() {
@@ -14,8 +15,8 @@ function Navbar() {
   return (
     <div className="navBar">
       <div className="nav-left">
-        <Link to="/">
-        <img src={Logo} alt="logo" className="navbar_logo" />
+        <Link to="/home">
+        <img src={Logo} alt="logo" className="navbar_logo"/>
         </Link> 
       </div>
       <div className="nav-right">
@@ -36,7 +37,7 @@ function Navbar() {
           </ul>
         </div>
       </div>
-        <UserProfile/>
+        <div className="nav-profile"><UserProfile/> </div>
     </div>
   );
 }
