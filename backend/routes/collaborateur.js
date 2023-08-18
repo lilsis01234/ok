@@ -4,6 +4,7 @@ const Collaborateur = require('../Modele/Collaborateur');
 const Departement = require('../Modele/Departement');
 const Poste = require('../Modele/Poste');
 const CompteCollab = require('../Modele/CompteCollab');
+const requireAuth = require('../middlware/authentificationMiddlware')
 const multer = require('multer'); //Package pour gérer l'upload des contenus multimédias
 const path = require('path');
 const nodemailer = require('nodemailer');
@@ -166,7 +167,7 @@ router.get('/all_collaborateurs', async(req,res) => {
 
 
 //Liste des derniers collaborateurs
-router.get('/listes_derniers_embauches', async (req, res) => {
+router.get('/listes_derniers_embauches',async (req, res) => {
     try {
         const collaborateur = await Collaborateur.findAll({
             order : [['dateEmbauche', 'DESC']],

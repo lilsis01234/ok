@@ -41,7 +41,7 @@ const AjoutCollaborateur = () => {
     const [listePoste, setListePoste] = useState([])
 
     useEffect(() => {
-        axios.get('http;//localhost:4000/api/poste/all_postes')
+        axios.get('http://localhost:4000/api/poste/all_postes')
             .then((res) => {
                 setListePoste(res.data)
             })
@@ -78,7 +78,7 @@ const AjoutCollaborateur = () => {
         formData.append('matricule', matricule);
         formData.append('email', email);
 
-        axios.post('http;//localhost:4000/api/collaborateur/add', formData, {
+        axios.post('http://localhost:4000/api/collaborateur/add', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

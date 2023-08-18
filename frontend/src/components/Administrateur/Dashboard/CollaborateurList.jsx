@@ -13,7 +13,7 @@ const NewCollaborateurList = () => {
 
     useEffect(()=> {
         axios
-            .get("http;//localhost:4000/api/collaborateur/listes_derniers_embauches")
+            .get("http://localhost:4000/api/collaborateur/listes_derniers_embauches")
             .then((response) => {
                 setData(response.data);
             })
@@ -61,7 +61,7 @@ const NewCollaborateurList = () => {
             {data.map((collaborateur, index) => (
                 <tr key={index} onClick={() => {viewCollab(collaborateur.id); openModal()}}>
                     <td className="table_item_photo">
-                        <Avatar src={`http;//localhost:4000/${collaborateur.image}`} alt="avatar" withBorder={false} size="xs"  className="rounded-full w-16 h-16 object-cover collab_photo"/>
+                        <Avatar src={`http://localhost:4000/${collaborateur.image}`} alt="avatar" withBorder={false} size="xs"  className="rounded-full w-16 h-16 object-cover collab_photo"/>
                     </td>
                     <td className="table_item_matricule">{collaborateur.matricule}</td>
                     <td className="table_item_nom">{collaborateur.nom}</td>

@@ -12,7 +12,7 @@ const ViewCollaborateur = ({ CollabToView }) => {
     const [collab, setCollab] = useState({});
 
     useEffect(() => {
-        axios.get(`http;//localhost:4000/api/collaborateur/${CollabToView.id}`)
+        axios.get(`http://localhost:4000/api/collaborateur/${CollabToView.id}`)
             .then((response) => {
                 setCollab(response.data.collaborateur)
             })
@@ -31,7 +31,7 @@ const ViewCollaborateur = ({ CollabToView }) => {
         <div className="collabView">
             {collab && (
                 <div className="flex flex-col items-center collabView m-15 p-15">
-                    <Avatar src={`http;//localhost:4000/${collab.image}`} alt={collab.nom} className="flex self-center m-5 collabView_Photo" />
+                    <Avatar src={`http://localhost:4000/${collab.image}`} alt={collab.nom} className="flex self-center m-5 collabView_Photo" />
                     <div className="collabView_Item">
                         <div className="flex flex-row items-start justify-start">
                             <div className="px-5 w-40">

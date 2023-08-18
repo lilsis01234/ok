@@ -24,7 +24,7 @@ const ListDepartement = () => {
 
 
     useEffect(()=> {
-        axios.get("http;//localhost:4000/api/departement/all_departement")
+        axios.get("http://localhost:4000/api/departement/all_departement")
         .then((response) => {
              setDepartementList(response.data);
         })

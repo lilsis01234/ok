@@ -8,6 +8,11 @@ function Login(props){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const token = localStorage.getItem('jwt');
+    if(token){
+        navigate('/home');
+    }
+
     
 
     //Gestionnaire d'évenement lors de la soumission du formulaire
@@ -23,9 +28,10 @@ function Login(props){
 
         axios.post('http://localhost:4000/api/auth/login', formData)
         .then((response) => {
-            const {token, role} = response.data;
+            const {token, role, id} = response.data;
            localStorage.setItem('jwt', token);
            localStorage.setItem('role', role);
+           localStorage.setItem('id', id)
             // Cookies.set('jwt', token)
             navigate('/home');
         })

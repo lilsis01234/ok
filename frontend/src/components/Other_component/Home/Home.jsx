@@ -14,7 +14,7 @@ const Home = () => {
             navigate('/admin/home');
             console.log('Redirection vers le page administrateur');
         } else {
-            navigate('/user/home');
+            navigate('/user/profile'); //A changer quand une nouvelle module soit installer
             console.log('Redirection vers le page user');
         }
     }, [navigate]);

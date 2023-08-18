@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Logout from '../../Authentification/Logout/Logout';
+import NavBarUser from '../NavBarUser/NavBarUser';
 
 function HomeUser (){
     const navigate = useNavigate();
@@ -19,9 +19,8 @@ function HomeUser (){
 
     }, [navigate])
     return (
-        <div>
-            <h1>Bienvenue User</h1>
-            <Logout/>
+        <div className="page">
+           <NavBarUser/>
         </div>
     )
 }

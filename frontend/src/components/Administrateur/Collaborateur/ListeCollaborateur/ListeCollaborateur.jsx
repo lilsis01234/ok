@@ -41,7 +41,7 @@ const ListeCollaborateur = () => {
 
     //Récupération de la liste des collaborateurs
     const fetchCollaborateur = () => {
-      axios.get('http;//localhost:4000/api/collaborateur/all_collaborateurs')
+      axios.get('http://localhost:4000/api/collaborateur/all_collaborateurs')
         .then(res => {setListCollab(res.data); setAllCollab(res.data)})
         .catch(err => console.log(err));
     }
@@ -61,7 +61,13 @@ const ListeCollaborateur = () => {
   const handleSearch = () => {
     setGlobalSearchResults(allCollab)
     const filteredCollab = allCollab.filter(collab => {
-      return Object.values(collab).some(value => value !== null && value.toString().toLowerCase().includes(recherche.toLowerCase()))
+      return (
+        (collab.matricule.toLowerCase().includes(recherche.toLowerCase())) ||
+        (collab.nom.toLowerCase().includes(recherche.toLowerCase())) ||
+        (collab.prenom.toLowerCase().includes(recherche.toLowerCase())) ||
+        (collab.titrePoste.toLowerCase().includes(recherche.toLowerCase())) ||
+        (collab.departement.toLowerCase().includes(recherche.toLowerCase())) 
+      )
     })
 
     setGlobalSearchResults(filteredCollab);
@@ -192,7 +198,7 @@ const ListeCollaborateur = () => {
                 <thead>
                   <tr >
                     <th></th>
-                    <th>Numéro matricule</th>
+                    <th>Matricule</th>
                     <th>Nom</th>
                     <th>Prenoms</th>
                     <th>Poste</th>
@@ -218,7 +224,7 @@ const ListeCollaborateur = () => {
                     (recherchedepartement === 'null' || collaborateur.departement.toLowerCase().includes(recherchedepartement.toLowerCase()))
                   )).map(collaborateur => (
                       <tr key={collaborateur.id}>
-                          <td><Avatar src={`http;//localhost:4000/${collaborateur.image}`} alt={collaborateur.nom}  size="xs" className="rounded-full w-16 h-16 object-cover"/></td>
+                          <td><Avatar src={`http://localhost:4000/${collaborateur.image}`} alt={collaborateur.nom}  size="xs" className="rounded-full w-16 h-16 object-cover"/></td>
                           <td>{collaborateur.matricule}</td>
                           <td>{collaborateur.nom}</td>
                           <td>{collaborateur.prenom}</td>
@@ -239,7 +245,7 @@ const ListeCollaborateur = () => {
                       (recherchedepartement === 'null' | collaborateur.departement.toLowerCase().includes(recherchedepartement.toLowerCase())) 
                     )).map(collaborateur => (
                       <tr key={collaborateur.id}>
-                          <td><Avatar src={`http;//localhost:4000/${collaborateur.image}`} alt={collaborateur.nom} className="rounded-full w-16 h-16 object-cover"/></td>
+                          <td><Avatar src={`http://localhost:4000/${collaborateur.image}`} alt={collaborateur.nom} className="rounded-full w-16 h-16 object-cover"/></td>
                           <td>{collaborateur.matricule}</td>
                           <td>{collaborateur.nom}</td>
                           <td>{collaborateur.prenom}</td>
