@@ -4,18 +4,17 @@ const sequelize = require('./database/database');
 const cors = require('cors');
 const path = require('path');
 
-
 const app = express();
-const departementRouter = require('./routes/departement');
-const posteRouter = require('./routes/postes');
-const collabRouter = require('./routes/collaborateur');
-const compte_collab = require('./routes/compteCollab');
-const login = require('./routes/auth');
-const role = require('./routes/role');
+const departementRouter = require('./routes/Poste/departement');
+const posteRouter = require('./routes/Poste/postes');
+const collabRouter = require('./routes/Collaborateur/collaborateur');
+const compte_collab = require('./routes/Compte/compteCollab');
+const login = require('./routes/Compte/auth');
+const role = require('./routes/Role/role');
 const api_config = require('./config/api_config');
-const password = require('./routes/motdepasseOublie');
-const archive = require('./routes/archiveCollab')
-const userProfile = require('./routes/userProfile');
+const password = require('./routes/Compte/motdepasseOublie');
+const archive = require('./routes/Collaborateur/archiveCollab')
+const userProfile = require('./routes/Compte/userProfile');
 
 
 //importation des configurations$
@@ -30,11 +29,11 @@ dotenv.config();
 const connection = mysql.createConnection({
     host : 'localhost', 
     user : 'root',
-    password : '',
+    password : '',s
     database : 'testintranet',
 })
 */
-app.use(cors({ origin: 'http://192.168.16.244:3000', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 //Ajout de middleware express.json()
 app.use(express.json())
 
@@ -54,6 +53,8 @@ app.use('/api/role', role); //route pour les rôles
 app.use('/api/password', password ); //route pour les mot de passe
 app.use('/api/archive', archive); //route pour archiver les collaborateurs 
 app.use('/api/user', userProfile); //route pour afficher les profiles des collaborateurs 
+
+
 
 
 //Connection à la base de donnée MySQL
@@ -79,6 +80,6 @@ connection.connect((err) =>{
 
 
 //Initialisation du serveur
-app.listen(4000, () => {
-    console.log('Serveur Express en écoute sur le port 4000')
+app.listen(4001, () => {
+    console.log('Serveur Express en écoute sur le port 4001')
 });

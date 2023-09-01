@@ -16,7 +16,7 @@ const UserProfile = () => {
     const navigate = useNavigate();
    
     useEffect(() => {
-        axios.get(`http://192.168.16.244:4000/api/user/profile/${idProfile}`)
+        axios.get(`http://localhost:4001/api/user/${idProfile}/profile`)
             .then(response => {
                 setCollaborateurData(response.data)
             })
@@ -36,7 +36,7 @@ const UserProfile = () => {
         <>
             <Menu className="m-10 fixed" placement="bottom-end" >
                 <MenuHandler >
-                   <Avatar src={`http://192.168.16.244:4000/${collaborateurData.Collaborateur.image}`} className="mr-10 rounded-full w-16 h-16 object-cover mt-2" />
+                   <Avatar src={`http://localhost:4001/${collaborateurData.Collab.image}`} className="mr-10 rounded-full w-16 h-16 object-cover mt-2" />
                 </MenuHandler>
                 <MenuList>
                     <MenuItem onClick={() => navigate('/user/profile')} className="flex flex-row"><FaRegUser className="mr-2 text-[#9C1D21]"/> Mon profil</MenuItem>

@@ -1,0 +1,47 @@
+.addPoste_form {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+}
+
+
+
+.addPoste_form label{
+    font-family: 'Poppins';
+    margin: 5px;
+}
+
+.poste{
+    height: 40px;
+    border-radius: 10px;
+    border : 1px solid #9C1D21;
+    padding : 5px;
+}
+
+.poste:focus{
+    outline: #9C1D21;
+}
+
+.addPoste_Submit{
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    align-self: center;
+    margin: 15px;
+    background-color: #9C1D21;
+    color : #fff;
+    transition: 0.3s ease-in-out;
+}
+
+.addPoste_Submit:hover{
+    transform: scale(1.1);
+    color: #fff;
+}
+
+.form_checkbox div {
+    display: flex ;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+}
+
