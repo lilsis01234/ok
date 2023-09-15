@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
 import "./Login.css"
 
 function Login(props){
@@ -8,12 +9,21 @@ function Login(props){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const token = localStorage.getItem('jwt');
-    if(token){
-        navigate('/home');
-    }
+    useEffect(() => {
+        const token = localStorage.getItem('jwt')
 
-    
+        if (token){
+            const decodedToken = jwt_decode(token)
+            if(decodedToken.exp){
+                navigate('/home')
+
+            } else {
+                localStorage.removeItem('jwt');
+                navigate('/')
+            }
+          
+        } 
+    }, [navigate])
 
     //Gestionnaire d'évenement lors de la soumission du formulaire
     const handleSubmit = (e) => {
@@ -26,7 +36,8 @@ function Login(props){
         //Configuration de axios pour resoudre les problème CROSS
         axios.defaults.withCredentials = true;
 
-        axios.post('http://192.168.16.244:4000/api/auth/login', formData)
+        // axios.post('http://localhost:4000/api/auth/login', formData)
+        axios.post('http://localhost:4000/api/auth/connect', formData)
         .then((response) => {
             const {token, role, id} = response.data;
            localStorage.setItem('jwt', token);

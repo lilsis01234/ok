@@ -1,4 +1,4 @@
-const PasswordResetRequest = require('../Modele/PasswordResetRequest');
+const PasswordResetRequest = require('../Modele/CompteModel/PasswordResetRequest');
 const {Op} = require('sequelize');
 const cron = require('node-cron');
 
