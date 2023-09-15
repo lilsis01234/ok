@@ -59,7 +59,11 @@ const ListeCollaborateur = () => {
 
     //Récupération de la liste des collaborateurs
     const fetchCollaborateur = () => {
+<<<<<<< HEAD
       axios.get('http://localhost:4000/api/collaborateur/all')
+=======
+      axios.get('http://localhost:4001/api/collaborateur/all')
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         .then(res => {setListCollab(res.data); setAllCollab(res.data)})
         .catch(err => console.log(err));
     }
@@ -85,7 +89,10 @@ const ListeCollaborateur = () => {
         (collab.nom.toLowerCase().includes(recherche.toLowerCase())) ||
         (collab.prenom.toLowerCase().includes(recherche.toLowerCase())) ||
         (collab.poste1.titrePoste.toLowerCase().includes(recherche.toLowerCase())) ||
+<<<<<<< HEAD
         (collab.equipe1.nomEquipe.toLowerCase().includes(recherche.toLowerCase())) ||
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         (collab.departement1.nomDepartement.toLowerCase().includes(recherche.toLowerCase())) 
       )
     })
@@ -248,16 +255,26 @@ const ListeCollaborateur = () => {
                     (recherchenom === 'null' || collaborateur.nom.toLowerCase().includes(recherchenom.toLowerCase())) &&
                     (rechercheprenom === 'null' || collaborateur.prenom.toLowerCase().includes(rechercheprenom.toLowerCase())) &&
                     (rechercheposte === 'null' || collaborateur.poste1.titrePoste.toLowerCase().includes(rechercheposte.toLowerCase())) &&
+<<<<<<< HEAD
                     (rechercheEquipe === 'null' || collaborateur.equipe1.nomEquipe.toLowerCase().includes(rechercheEquipe.toLowerCase())) &&
                     (recherchedepartement === 'null' || collaborateur.departement1.nomDepartement.toLowerCase().includes(recherchedepartement.toLowerCase()))
                   )).map(collaborateur => (
                       <tr key={collaborateur.id}>
                           <td><Avatar src={`http://localhost:4000/${collaborateur.image}`} alt={collaborateur.nom}  size="xs" className="rounded-full w-15 h-12  object-cover"/></td>
+=======
+                    (recherchedepartement === 'null' || collaborateur.departement1.nomDepartement.toLowerCase().includes(recherchedepartement.toLowerCase()))
+                  )).map(collaborateur => (
+                      <tr key={collaborateur.id}>
+                          <td><Avatar src={`http://localhost:4001/${collaborateur.image}`} alt={collaborateur.nom}  size="xs" className="rounded-full w-16 h-16 object-cover"/></td>
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                           <td>{collaborateur.matricule}</td>
                           <td>{collaborateur.nom}</td>
                           <td>{collaborateur.prenom}</td>
                           <td>{collaborateur.poste1.titrePoste}</td>
+<<<<<<< HEAD
                           <td>{collaborateur.equipe1.nomEquipe}</td>
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                           <td>{collaborateur.departement1.nomDepartement}</td>
                           <td className="CollabEdit_Button">
                             <button onClick={() => {EditCollab(collaborateur.id) ; openEditModal()}}><MdEdit/></button>
@@ -270,17 +287,27 @@ const ListeCollaborateur = () => {
                       (recherchematricule === 'null' | collaborateur.matricule.toLowerCase().includes(recherchematricule.toLowerCase())) && 
                       (recherchenom === 'null' | collaborateur.nom.toLowerCase().includes(recherchenom.toLowerCase())) &&
                       (rechercheprenom === 'null' | collaborateur.prenom.toLowerCase().includes(rechercheprenom.toLowerCase())) &&
+<<<<<<< HEAD
                       (rechercheEquipe === 'null' || collaborateur.equipe1.nomEquipe.toLowerCase().includes(rechercheEquipe.toLowerCase())) &&
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                       (rechercheposte === 'null' | collaborateur.poste1.titrePoste.toLowerCase().includes(rechercheposte.toLowerCase())) &&
                       (recherchedepartement === 'null' |  collaborateur.departement1.nomDepartement.toLowerCase().includes(recherchedepartement.toLowerCase())) 
                     )).map(collaborateur => (
                       <tr key={collaborateur.id}>
+<<<<<<< HEAD
                           <td><Avatar src={`http://localhost:4000/${collaborateur.image}`} alt={collaborateur.nom} className="rounded-full w-16 h-16 object-cover"/></td>
+=======
+                          <td><Avatar src={`http://localhost:4001/${collaborateur.image}`} alt={collaborateur.nom} className="rounded-full w-16 h-16 object-cover"/></td>
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                           <td>{collaborateur.matricule}</td>
                           <td>{collaborateur.nom}</td>
                           <td>{collaborateur.prenom}</td>
                           <td>{collaborateur.poste1.titrePoste}</td>
+<<<<<<< HEAD
                           <td>{collaborateur.equipe1.nomEquipe}</td>
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                           <td>{collaborateur.departement1.nomDepartement}</td>
                           <td className="CollabEdit_Button">
                             <button onClick={() => {EditCollab(collaborateur.id) ; openEditModal()}}><MdEdit/></button>

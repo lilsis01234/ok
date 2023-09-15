@@ -35,8 +35,12 @@ router.post('/collab/:id',  async(req, res) => {
             departement : collaborateur.departement,
             poste2 : collaborateur.poste2,
             departement2 : collaborateur.departement2,
+<<<<<<< HEAD
             statut : req.body.statut,
             dateDebauche : req.body.dateDebauche
+=======
+            statut : req.body.statut
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         })
 
         await collaborateur.destroy();

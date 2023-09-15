@@ -16,12 +16,20 @@ const CollabDepartement = () => {
 useEffect(() => {
   const fetchCollaborateur = () => {
     axios
+<<<<<<< HEAD
       .get(`http://localhost:4000/api/departement/${id}/collaborateur`)
+=======
+      .get(`http://localhost:4001/api/departement/${id}/collaborateur`)
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
       .then((res) => {
         setCollab(res.data);
       })
       .catch((err) => console.log(err));
+<<<<<<< HEAD
     axios.get("http://localhost:4000/api/departement/all_departement")
+=======
+    axios.get("http://localhost:4001/api/departement/all_departement")
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
       .then((response) => {
            setDepartement(response.data);
       })
@@ -70,7 +78,11 @@ useEffect(() => {
                   {collabs.map((collab) => (
                     <>
                       <Avatar
+<<<<<<< HEAD
                         src={`http://localhost:4000/${collab.image}`}
+=======
+                        src={`http://localhost:4001/${collab.image}`}
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                         alt={collab.nom}
                         size="xxl"
                         className="m-3"

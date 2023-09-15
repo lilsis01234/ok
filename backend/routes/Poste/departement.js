@@ -1,14 +1,22 @@
 const router = require('express').Router();
+<<<<<<< HEAD
 const TestDepartement = require('../../Modele/Structure/TestDepartement');
 const Collab = require('../../Modele/CollabModel/Collab');
 const TestPoste = require('../../Modele/Structure/TestPoste');
 const { Op } = require('sequelize');
 const Direction = require('../../Modele/Structure/Direction');
+=======
+const TestDepartement = require('../../Modele/posteModel/TestDepartement');
+const Collab = require('../../Modele/CollabModel/Collab');
+const TestPoste = require('../../Modele/posteModel/TestPoste');
+const { Op } = require('sequelize');
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 
 //Afficher les listes des départements
 router.get('/all', async(req, res) => {
     try {
+<<<<<<< HEAD
         const listDepartement = await TestDepartement.findAll(
             {
                 include : [
@@ -16,6 +24,9 @@ router.get('/all', async(req, res) => {
                 ]
             }
         );
+=======
+        const listDepartement = await TestDepartement.findAll();
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         res.status(201).json(listDepartement);
     }
     catch (error){
@@ -24,6 +35,51 @@ router.get('/all', async(req, res) => {
     }
 })
 
+<<<<<<< HEAD
+=======
+
+//Récupérer tous les membres du departement direction
+router.get('/collab/direction', async(req, res) => {
+    try {
+        const direction = await TestDepartement.findOne({
+            where : {nomDepartement : "Direction"}
+        })
+
+        if(!direction){
+            return res.status(404).json({message : 'Aucun département direction trouvé'})
+        }
+
+        const directionMember = await Collab.findAll({
+            where : {departement : direction.id},
+            include : [
+                {
+                    model : TestPoste,
+                    as : 'poste1',
+                },{
+                    model : TestPoste,
+                    as : 'postes',
+                }, {
+                    model : TestDepartement,
+                    as : 'departement1',
+                }, {
+                    model : TestDepartement,
+                    as : 'departements',
+                }
+            ]
+        })
+        res.json(directionMember)
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message : 'Erreur lors de la récupération des employés'})
+    }
+})
+
+
+
+
+
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 //Récupérer les membres de chaque departement
 router.get('/collab/:departementId', async(req, res) => {
     try {
@@ -68,7 +124,10 @@ router.post('/new', async(req, res) => {
     try {
       const newDepartement = await TestDepartement.create({
           nomDepartement : req.body.nomDepartement,
+<<<<<<< HEAD
           direction : req.body.direction,
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
       });
       const savedDepartement = await newDepartement.save()
       res.status(201).json(savedDepartement);
@@ -83,12 +142,16 @@ router.post('/new', async(req, res) => {
 router.get('/view/:id', async(req, res) =>{
     const {id} = req.params;
     try {
+<<<<<<< HEAD
         const departement = await TestDepartement.findByPk(id, 
             {include : [
                 {model: Direction}
             ]}
             );
 
+=======
+        const departement = await TestDepartement.findByPk(id);
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         if (!departement ) {
             return res.status(404).json({error : 'Departement introuvable'});
         }
@@ -109,8 +172,12 @@ router.put('/edit/:id', async(req, res) => {
             return res.status(400).json({error : 'Département non trouvé'})
         }
         const newDepartement = await updateDepartement.update({
+<<<<<<< HEAD
             nomDepartement : req.body.nomDepartement, 
             direction : req.body.direction,
+=======
+            nomDepartement : req.body.nomDepartement
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             })
         res.status(201).json(newDepartement); 
     } 

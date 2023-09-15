@@ -6,8 +6,11 @@ import { Avatar, Input, Select, Option, Alert } from '@material-tailwind/react';
 const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
     const [listePoste, setListePoste] = useState([])
     const [listeDepartement, setListeDepartement] = useState([])
+<<<<<<< HEAD
     const [listeEquipe, setListeEquipe] = useState([])
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     // const navigate = useNavigate();
 
     const [nom, setNom] = useState(CollabToEdit?.nom || '');
@@ -16,10 +19,14 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
     const [lot, setLot] = useState(CollabToEdit?.lot || '');
     const [quartier, setQuartier] = useState(CollabToEdit?.quartier || '');
     const [ville, setVille] = useState(CollabToEdit?.ville || '');
+<<<<<<< HEAD
 
     const [tel, setTel] = useState(CollabToEdit?.tel || '');
     const [telurgence, setTelUrgence] = useState(CollabToEdit?.telurgence || '');
 
+=======
+    const [tel, setTel] = useState(CollabToEdit?.tel || '');
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     const [matricule, setMatricule] = useState(CollabToEdit?.matricule || '');
     const [dateNaissance, setdateNaissance] = useState(CollabToEdit?.dateNaissance || '');
     const [dateEmbauche, setdateEmbauche] = useState(CollabToEdit?.dateEmbauche || '');
@@ -27,6 +34,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
     // const [poste, setPoste] = useState(CollabToEdit?.poste || '');
 
     const [lieuNaissance, setLieuNaissance] = useState(CollabToEdit?.lieuNaissance || '')
+<<<<<<< HEAD
 
     const [CIN, setCIN] = useState(CollabToEdit?.CIN || '');
     const [dateDelivrance, setDateDelivrance] = useState(CollabToEdit?.dateDelivrance || '');
@@ -35,6 +43,8 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
     const [statutmatrimoniale, setStatutMatrimoniale] = useState(CollabToEdit?.statutmatrimoniale || '');
     const [nbEnfant, setNbEnfant] = useState(CollabToEdit?.nbEnfant || 0);
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     const [poste, setPoste] = useState(CollabToEdit?.poste1.titrePoste || '');
     const [poste2, setposte2] = useState(CollabToEdit?.postes?.titrePoste || '');
 
@@ -42,6 +52,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
     const [departement2, setdepartement2] = useState(CollabToEdit?.departements?.nomDepartement || '');
 
     const [entreprise, setEntreprise] = useState(CollabToEdit?.entreprise || '');
+<<<<<<< HEAD
     const [categorie, setCategorie] = useState(CollabToEdit?.categorie || '');
     const [contrat, setContrat] = useState(CollabToEdit?.contrat || '');
 
@@ -55,6 +66,13 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
     //Récupération de la liste des postes 
     useEffect(() => {
         axios.get('http://localhost:4000/api/poste/all')
+=======
+
+    const [sexe, setSexe] = useState(CollabToEdit?.sexe || '');
+    //Récupération de la liste des postes 
+    useEffect(() => {
+        axios.get('http://localhost:4001/api/poste/all')
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((res) => {
                 setListePoste(res.data)
 
@@ -65,7 +83,11 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
 
     //Récupération de la liste des départements
     useEffect(() => {
+<<<<<<< HEAD
         axios.get('http://localhost:4000/api/departement/all')
+=======
+        axios.get('http://localhost:4001/api/departement/all')
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((res) => {
                 setListeDepartement(res.data)
 
@@ -73,6 +95,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
             .catch(err => console.log(err))
     }, [])
 
+<<<<<<< HEAD
     useEffect(() => {
         axios.get('http://localhost:4000/api/equipe/all')
             .then((res) => {
@@ -81,6 +104,8 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
             .catch(err => console.log(err))
     }, [])
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
     const Site = [
         { id: 1, nom: 'Fivoarana' },
@@ -88,11 +113,14 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
         { id: 3, nom: 'Soazaraina' }
     ]
 
+<<<<<<< HEAD
     const StatutMatrimoniale = [
         { id: 1, nom: 'Marié(e)' },
         { id: 2, nom: 'Célibataire' }
     ]
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
     useEffect(() => {
         if (CollabToEdit) {
@@ -115,6 +143,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
             setdepartement2(CollabToEdit?.departements?.id)
             setSexe(CollabToEdit.sexe)
             setEntreprise(CollabToEdit.entreprise)
+<<<<<<< HEAD
             setTelUrgence(CollabToEdit.telurgence)
             setCIN(CollabToEdit.CIN)
             setDateDelivrance(CollabToEdit.dateDelivrance)
@@ -125,6 +154,9 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
             setContrat(CollabToEdit.contrat)
             setEquipe(CollabToEdit.equipe1?.id)
             setEquipe2(CollabToEdit.equipe2?.id)
+=======
+
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         } else {
             setNom("")
             setPrenom("")
@@ -145,6 +177,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
             setdepartement2("")
             setSexe("")
             setEntreprise("")
+<<<<<<< HEAD
             setTelUrgence("")
             setCIN("")
             setDateDelivrance("")
@@ -155,11 +188,16 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
             setContrat("")
             setEquipe("")
             setEquipe2("")
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         }
     }, [CollabToEdit])
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = {
@@ -168,22 +206,33 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
             quartier,
             ville,
             tel,
+<<<<<<< HEAD
             telurgence,
             statutmatrimoniale,
             nbEnfant,
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             site,
             poste,
             poste2,
             departement,
+<<<<<<< HEAD
             departement2,
             equipe,
             equipe2,
+=======
+            departement2
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
         }
 
 
 
+<<<<<<< HEAD
         axios.put(`http://localhost:4000/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
+=======
+        axios.put(`http://localhost:4001/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
@@ -220,7 +269,11 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
                         <label >Photo:</label><br></br>
 
                         {!selectImage && image && (
+<<<<<<< HEAD
                             <Avatar src={`http://localhost:4000/${image}`} />
+=======
+                            <Avatar src={`http://localhost:4001/${image}`} />
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                         )}
                         {selectImage && (
                             <Avatar src={URL.createObjectURL(selectImage)} className="w-32 h-32 rounded-full" />
@@ -237,7 +290,11 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
 
                         <div className="col-span-4  mr-5">
 
+<<<<<<< HEAD
                             <Input label="Prénom" onChange={(e) => { setPrenom(e.target.value) }} className='add-input' disabled value={prenom} color="black" />
+=======
+                            <Input label="Nom" onChange={(e) => { setPrenom(e.target.value) }} className='add-input' disabled value={prenom} color="black" />
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                         </div>
                     </div>
                     <div className="grid grid-cols-12 my-3 font-[Poppins]">
@@ -268,6 +325,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
                         <div className="col-span-4  mr-2">
                             <Input label="Téléphone" onChange={(e) => { setTel(e.target.value) }} value={tel} color="black" />
                         </div>
+<<<<<<< HEAD
                         <div className="col-span-4  mr-2">
                             <Input label="Téléphone d'urgence" onChange={(e) => { setTelUrgence(e.target.value) }} value={telurgence} color="black" />
                         </div>
@@ -311,6 +369,15 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
                     <div className="grid grid-cols-12 my-5">
                         <div className="col-span-4 mr-2">
                             <Select
+=======
+                    </div>
+                    <div className="grid grid-cols-12 my-5">
+                        <div className="col-span-4 mr-2">
+                            <Input label="Date d'embauche" disabled onChange={(e) => { setdateEmbauche(e.target.value) }} value={dateEmbauche} color="black" />
+                        </div>
+                        <div className="col-span-4 mr-2">
+                            <Select 
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                 label="Poste"
                                 onChange={(e) => setPoste(e)}
                             >
@@ -332,6 +399,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
 
                             </Select>
                         </div>
+<<<<<<< HEAD
                         <div className="col-span-4 mr-2 ">
                             <Select
                                 label="Equipe"
@@ -347,6 +415,19 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
                     <div className="grid grid-cols-12 my-5">
                         <div className="col-span-4 mr-2"> <Input type="text" label="Catégorie" onChange={(e) => { setCategorie(e.target.value) }} size="lg" value={categorie} disabled /></div>
                         <div className="col-span-4 mr-2"> <Input type="text" label="Contrat" onChange={(e) => { setContrat(e.target.value) }} size="lg" value={contrat} disabled /></div>
+=======
+                        <div className="col-span-4 mr-2 mt-3 ">
+                            <Select label="Site"  onChange={(e) => setSite(e)} >
+                                {Site.map((Site) => (
+                                    <Option key={Site.id} value={Site.nom}> {Site.nom}</Option>
+                                ))}
+                            </Select>
+
+                        </div>
+                        <div className="col-span-4 mr-2 mt-3">
+                            <Input label="Entreprise" disabled onChange={(e) => { setEntreprise(e.target.value) }} value={entreprise} color="black"/>        
+                        </div>
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                     </div>
                     <div className="mr-2 ">
                         <Alert color="amber" className="text-xs">Les informations ci-dessous sont à compléter au cas où le collaborateur possède une deuxième poste.</Alert>
@@ -376,6 +457,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
 
                                 </Select>
                             </div>
+<<<<<<< HEAD
                             <div className="col-span-4 mr-2 ">
                             <Select
                                 label="Equipe"
@@ -388,6 +470,8 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
                             </Select>
                         </div>
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                         </div>
                     </div>
                     <button type='submit' className="collaborateurAddContent_Form_Button">Modifier</button>

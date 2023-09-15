@@ -31,12 +31,12 @@ dotenv.config();
 const connection = mysql.createConnection({
     host : 'localhost', 
     user : 'root',
-    password : '',
+    password : '',s
     database : 'testintranet',
 })
 */
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-app.use(cors({ origin: 'http://localhost:3002', credentials: true}));
+
 //Ajout de middleware express.json()
 app.use(express.json())
 
@@ -58,6 +58,8 @@ app.use('/api/archive', archive); //route pour archiver les collaborateurs
 app.use('/api/user', userProfile); //route pour afficher les profiles des collaborateurs 
 app.use('/api/direction', direction) //route pour afficher les direction
 app.use('/api/equipe', equipe ) //route pour afficher les routes
+
+
 
 
 
@@ -85,6 +87,6 @@ connection.connect((err) =>{
 
 
 //Initialisation du serveur
-app.listen(4000, () => {
-    console.log('Serveur Express en écoute sur le port 4000')
+app.listen(4001, () => {
+    console.log('Serveur Express en écoute sur le port 4001')
 });

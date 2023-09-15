@@ -1,7 +1,11 @@
 const { Router, application } = require('express');
 
+<<<<<<< HEAD
 const { TestPoste, TestDepartement, PosteDepartement } = require('../../Modele/Structure/association.js');
 
+=======
+const { TestPoste, TestDepartement, PosteDepartement } = require('../../Modele/posteModel/association.js')
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 const router = require('express').Router();
 
@@ -15,7 +19,12 @@ router.get('/all', async (req, res) => {
                 {
                     model: TestDepartement,
                     as: 'departement',
+<<<<<<< HEAD
                 }]
+=======
+                }
+            ]
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         })
         res.status(200).json(postes);
     } catch (error) {
@@ -31,13 +40,21 @@ router.get('/all', async (req, res) => {
 //Créer une nouvelle poste et une instance de la table association
 router.post('/new', async (req, res) => {
     try {
+<<<<<<< HEAD
         const { titrePoste, departement, direction} = req.body;
+=======
+        const { titrePoste, departement } = req.body;
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
         //Creation de l'étudiant
         const newPoste = await TestPoste.create({
             titrePoste
         })
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         if (departement && departement.length > 0) {
             for (const departementId of departement) {
                 // console.log(departementId)
@@ -45,6 +62,10 @@ router.post('/new', async (req, res) => {
                 if (!departementInstance) {
                     console.log('PosteDepartement non sauvegardé', departementId)
                 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                 const postedepartement = await PosteDepartement.create({
                     poste: newPoste.id,
                     departement: departementId
@@ -52,6 +73,10 @@ router.post('/new', async (req, res) => {
             }
 
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         return res.status(201).json({ message: 'Poste crée avec succès' })
     }
     catch (error) {
@@ -64,10 +89,17 @@ router.post('/new', async (req, res) => {
 router.get('/view/:id', async (req, res) => {
     try {
         const poste = await TestPoste.findByPk(req.params.id, {
+<<<<<<< HEAD
             include: [{
                 model: TestDepartement,
                 as: 'departement'
             }]
+=======
+            include: {
+                model: TestDepartement,
+                as: 'departement'
+            }
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         });
         res.json(poste)
     } catch (error) {
@@ -81,7 +113,11 @@ router.get('/view/:id', async (req, res) => {
 router.put('/:id/edit', async (req, res) => {
     try {
         const posteId = req.params.id;
+<<<<<<< HEAD
         const { titrePoste, departement, direction} = req.body;
+=======
+        const { titrePoste, departement } = req.body;
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 
         //Vérifier d'abord si le poste existe
@@ -94,8 +130,11 @@ router.put('/:id/edit', async (req, res) => {
         poste.titrePoste = titrePoste;
         await poste.save();
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         //Récupérer les associtions actuelles du poste
         const association = await PosteDepartement.findAll({
             where: {
@@ -109,12 +148,18 @@ router.put('/:id/edit', async (req, res) => {
         //Identifier les departement à ajouter
         const departementAajouter = departement.filter((departementId) => !departementActuelle.includes(departementId))
 
+<<<<<<< HEAD
 
         //Identifier les departements avec les associations à supprimer
         const departementSupprimer = departementActuelle.filter((departementId) => !departement.includes(departementId))
 
     
 
+=======
+        //Identifier les departements avec les associations à supprimer
+        const departementSupprimer = departementActuelle.filter((departementId) => !departement.includes(departementId))
+
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         //Supprimer les associations avec les départements
         await PosteDepartement.destroy({
             where: {
@@ -123,7 +168,10 @@ router.put('/:id/edit', async (req, res) => {
             }
         })
 
+<<<<<<< HEAD
        
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         //Ajouter nouvelle associations
         for (const departementId of departementAajouter) {
             const departements = await TestDepartement.findByPk(departementId)

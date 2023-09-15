@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { MdEdit } from 'react-icons/md'
 import { Typography, Button} from "@material-tailwind/react";
 import './listeDepartement.css'
@@ -12,10 +13,34 @@ Modal.setAppElement('#root');
 
 
 const ListDepartement = () => {
+=======
+import { Link, useNavigate } from "react-router-dom";
+import SideBarUser from "../../SideBar/SideBarUser";
+import NavBarUser from "../../NavBarUser/NavBarUser";
+import './listeDepartementUser.css';
+
+const ListDepartementUser = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        // const token = Cookies.get('jwt');
+        const token = localStorage.getItem('jwt');
+        if (!token){
+            navigate('/');
+        }
+
+        const role = localStorage.getItem('role'); 
+        if (!(role === "User")){
+            navigate('/home');
+        }
+
+    }, [navigate])
+
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     const [departementList, setDepartementList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredDepartement, setFilteredDepartement] = useState([]);
 
+<<<<<<< HEAD
     //Pour la pagination
     const [currentPage, setCurrentPage] = useState(1);
     // Nombre d'éléments par page 
@@ -44,6 +69,27 @@ const ListDepartement = () => {
 
     useEffect(() => {
         fetchDepartement()
+=======
+     //Pour la pagination
+     const [currentPage, setCurrentPage] = useState(1);
+     // Nombre d'éléments par page 
+     const itemsPerPage = 15;
+ 
+
+
+    useEffect(()=> {
+<<<<<<<< HEAD:frontend/src/components/FrontOffice/Departement/ListeDepartement/ListeDepartement.jsx
+        axios.get("http://localhost:4000/api/departement/all_departement")
+========
+        axios.get("http://localhost:4001/api/departement/all")
+>>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9:frontend/src/components/BackOffice/Departement/listeDepartement/listeDepartement.jsx
+        .then((response) => {
+             setDepartementList(response.data);
+        })
+        .catch((err)=>{
+            console.error('Erreur lors de la récupération des données:', err)
+        })
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     }, [])
 
 
@@ -60,10 +106,16 @@ const ListDepartement = () => {
     }
 
     const handleSearch = () => {
+<<<<<<< HEAD
         const filteredDepartement = departementList.filter((departement) => {
             return (
                 (departement.nomDepartement.toLowerCase().includes(searchTerm.toLowerCase())) ||
                 (departement.Direction?.nomDirection.toLowerCase().includes(searchTerm.toLowerCase()))) })
+=======
+        const filteredDepartement = departementList.filter((departement) => 
+            departement.nomDepartement.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
         setFilteredDepartement(filteredDepartement);
         setCurrentPage(1);
@@ -73,15 +125,19 @@ const ListDepartement = () => {
         setCurrentPage(page);
     }
 
+<<<<<<< HEAD
     //Rafraîchir la liste après l'ajout des postes
     const handleAddDepartement = () => {
         fetchDepartement()
     }
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     //Calculer le nombre total de pages 
     const totalPages = Math.ceil(departementList.length / itemsPerPage);
 
 
+<<<<<<< HEAD
     //Pour le modification du formulaire
     const [departementToEdit, setDepartementToEdit] = useState(null);
     const [isModalEditOpen, setisModalEditOpen] = useState(false)
@@ -218,3 +274,76 @@ const ListDepartement = () => {
 }
 
 export default ListDepartement;
+=======
+    return (
+    <>
+     <div className="page">
+       <NavBarUser/>
+        <div className="content">
+        <SideBarUser/>
+        <div className="main-content">
+        <div className="departementUser-content">
+        <div className="listDepartementUser">
+        <h2 className="listDepartement_title">Liste des Départements </h2>
+        <div className="search_form" id='search'>
+            <input type="text" value={searchTerm} onChange={handleInputChange} placeholder="Rechercher un département" className="search_input"/>
+             {searchTerm && (
+                 <button onClick ={() => setSearchTerm('')} className="search_clearButton">X</button>
+                )}
+            <button onClick={handleSearch} className="search_Button">Rechercher </button>
+        </div>
+        <table className="listDepartementUser_table">
+            <thead>
+                <tr>
+                    <th className="w-40">N°</th>
+                    <th className="w-80">Département</th>
+                    <th className="w-90"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {searchTerm === '' ? (departementList.filter((departementList)=> departementList.nomDepartement.toLowerCase()!=='direction').map((departement)=> (
+                    <tr key={departement.id}>
+                        <td className="w-40">{departement.id}</td>
+                        <td className="w-80">{departement.nomDepartement}</td>
+                        <td className="w-90">
+                            {/* lien '/collaborateur/id_departement' */}
+                            <button className="table_item_icon"><Link to={`/userdepartement/collaborateurs/${departement.id}`}>Collaborateurs au département {departement.nomDepartement}</Link></button>
+                        </td>
+                    </tr>
+                ))) : (
+                filteredDepartement.filter((departementList)=>departementList.nomDepartement.toLowerCase()!=='direction').map((departement) => (
+                    <tr key={departement.id}>
+                        <td className="w-40">{departement.id}</td>
+                        <td className="w-80">{departement.nomDepartement}</td>
+                        <td className="w-90">
+                          {/* lien '/collaborateur/id_departement' */}
+                          <button className="table_item_icon"><Link to={`/userDepartement/collaborateurs/${departement.id}`}>Collaborateurs au département {departement.nomDepartement}</Link></button>
+                        </td>
+                    </tr>
+                ))
+            )}
+            </tbody>
+        </table>
+        <div className="list_pagination">
+            {Array.from({length : totalPages}, (_, index) => index + 1).map((page) => (
+                <button
+                    key={page}
+                    className={page === currentPage ? "active" : ""}
+                    onClick={() => handlePageChange(page)}
+                >
+                    {page}
+                </button>
+            ))}
+        </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  
+</>
+)
+}
+
+export default ListDepartementUser;
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9

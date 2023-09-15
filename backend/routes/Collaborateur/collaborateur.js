@@ -14,12 +14,20 @@ const transporter = require('../../config/mailConfig')
 
 const Collab = require('../../Modele/CollabModel/Collab');
 const Compte = require('../../Modele/CompteModel/Compte');
+<<<<<<< HEAD
 const TestPoste = require('../../Modele/Structure/TestPoste');
 const TestDepartement = require('../../Modele/Structure/TestDepartement')
 const Role = require('../../Modele/RoleModel/Role');
 
 const {verifyToken} = require('../Compte/auth');
 const Equipe = require('../../Modele/Structure/Equipe');
+=======
+const TestPoste = require('../../Modele/posteModel/TestPoste');
+const TestDepartement = require('../../Modele/posteModel/TestDepartement')
+const Role = require('../../Modele/RoleModel/Role');
+
+const {verifyToken} = require('../Compte/auth')
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 
 //Configuration du stockages des fichiers uploader
@@ -62,24 +70,33 @@ router.post('/new', upload.single('image') ,async (req, res) => {
             quartier : req.body.quartier,
             ville : req.body.ville,
             tel : req.body.tel,
+<<<<<<< HEAD
             telurgence : req.body.telurgence,
             CIN : req.body.CIN,
             dateDelivrance : req.body.dateDelivrance,
             lieuDelivrance : req.body.lieuDelivrance,
             statutmatrimoniale : req.body.statutmatrimoniale,
             nbEnfant : req.body.nbEnfant,
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             dateEmbauche : req.body.dateEmbauche,
             site : req.body.site,
             image : image ? image.path : null ,
             entreprise : req.body.entreprise,
+<<<<<<< HEAD
             categorie : req.body.categorie,
             contrat : req.body.contrat,
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             poste: req.body.poste,
             poste2 : req.body.poste2,
             departement : req.body.departement,
             departement2 : req.body.departement2,
+<<<<<<< HEAD
             equipe : req.body.equipe,
             equipe2 : req.body.equipe2
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         })
         const savedCollab = await newCollab.save();
 
@@ -178,6 +195,7 @@ router.get('/all', async(req,res) => {
             }, {
                 model : TestDepartement,
                 as : 'departements',
+<<<<<<< HEAD
             },
             {
                 model : Equipe,
@@ -188,6 +206,12 @@ router.get('/all', async(req,res) => {
             }
         ] 
         })
+=======
+            }
+        ] 
+        })
+
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         res.status(200).json(collaborateur)
     }
     catch (error) {
@@ -216,12 +240,15 @@ router.get('/newcollab',async (req, res) => {
                 }, {
                     model : TestDepartement,
                     as : 'departements',
+<<<<<<< HEAD
                 }, {
                     model : Equipe,
                     as : 'equipe1'
                 }, {
                     model : Equipe,
                     as : 'equipes'
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                 }
                 ] 
         })
@@ -252,12 +279,15 @@ router.get('/view/:id', async(req, res) => {
                 }, {
                     model : TestDepartement,
                     as : 'departements',
+<<<<<<< HEAD
                 },  {
                     model : Equipe,
                     as : 'equipe1'
                 }, {
                     model : Equipe,
                     as : 'equipes'
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                 }] 
         });
         if (!collaborateur) {
@@ -296,8 +326,11 @@ router.put('/:id/edit', upload.single('image') ,async(req, res) => {
             poste2 : req.body.poste2,
             departement : req.body.departement,
             departement2: req.body.departement2,
+<<<<<<< HEAD
             equipe : req.body.equipe,
             equipe2 : req.body.equipes
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             })
        
 

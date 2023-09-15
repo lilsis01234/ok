@@ -11,7 +11,10 @@ import PageDepartement from '../components/BackOffice/Departement/Departement'
 import ListDepartementUser from '../components/FrontOffice/Departement/ListeDepartement/ListeDepartement'
 import CollabDepartement from '../components/FrontOffice/Departement/CollabParDepartement/CollabDepartement'
 import PagePoste from '../components/BackOffice/Poste/PagePost'
+<<<<<<< HEAD
 import Direction from '../components/BackOffice/Direction/Direction'
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 import AjoutCollaborateur from '../components/BackOffice/Collaborateur/AjoutCollaborateur/AjoutCollaborateur'
 import ListeCollaborateur from '../components/BackOffice/Collaborateur/ListeCollaborateur/ListeCollaborateur'
@@ -19,7 +22,10 @@ import Profil from '../components/ProfilUser/PageProfil/Profil'
 import ProfilParametre from '../components/ProfilUser/ProfilParametre/ProfilParametre'
 import ListeCollaborateurFront from '../components/FrontOffice/Collaborateur/ListeCollaborateur/ListeCollaborateurFront'
 import Organigramme from '../components/FrontOffice/Organigramme/Organigramme'
+<<<<<<< HEAD
 import Equipe from '../components/BackOffice/Equipe/Equipe'
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 function AppRoute(){
     return (

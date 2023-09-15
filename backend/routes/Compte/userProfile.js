@@ -1,7 +1,12 @@
 const Collab = require('../../Modele/CollabModel/Collab');
 const Compte = require('../../Modele/CompteModel/Compte');
+<<<<<<< HEAD
 const TestDepartement = require('../../Modele/Structure/TestDepartement');
 const TestPoste = require('../../Modele/Structure/TestPoste');
+=======
+const TestDepartement = require('../../Modele/posteModel/TestDepartement');
+const TestPoste = require('../../Modele/posteModel/TestPoste');
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 const router = require('express').Router();
 

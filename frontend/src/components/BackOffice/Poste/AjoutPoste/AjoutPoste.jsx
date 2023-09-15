@@ -11,7 +11,11 @@ const AjoutPoste = ({ onPosteAdded }) => {
 
     //Récupération des départements dans la base de données
     useEffect(() => {
+<<<<<<< HEAD
         axios.get('http://localhost:4000/api/departement/all')
+=======
+        axios.get('http://localhost:4001/api/departement/all')
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then(response => {
                 setDepartementList(response.data);
             })
@@ -40,7 +44,11 @@ const AjoutPoste = ({ onPosteAdded }) => {
             alert("Le champ Poste ne peut pas être vide");
             return;
         }
+<<<<<<< HEAD
         axios.post('http://localhost:4000/api/poste/new', formData)
+=======
+        axios.post('http://localhost:4001/api/poste/new', formData)
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((response) => {
                 alert('Poste ajoutée avec succès')
                 onPosteAdded();

@@ -83,7 +83,11 @@ const ListePoste = () => {
 
     //Récupération de la liste des postes 
     const fetchPoste = () => {
+<<<<<<< HEAD
         axios.get('http://localhost:4000/api/poste/all')
+=======
+        axios.get('http://localhost:4001/api/poste/all')
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((res) => {
                 setListePoste(res.data)
             })
@@ -137,6 +141,11 @@ const ListePoste = () => {
                             <button onClick={() => setSearchTerm('')} className="search_clearButton">X</button>
                         )}
                         <button onClick={handleSearch} className="search_Button"> Rechercher </button>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                         <Link className="listPoste_link" onClick={openModal} >Ajouter un nouveau poste</Link>
                     </div>
 

@@ -7,7 +7,11 @@ const CollabParDepartement = (departToView) => {
 
 
   useEffect(() => {
+<<<<<<< HEAD
     axios.get(`http://localhost:4000/api/departement/${departToView.departToView.id}/collaborateur`)
+=======
+    axios.get(`http://localhost:4001/api/departement/${departToView.departToView.id}/collaborateur`)
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
       .then(response => {
         setCollab(response.data)
       })
@@ -27,7 +31,11 @@ const CollabParDepartement = (departToView) => {
       {collab.map((collaborateur) => (
         <div className="col-span-4"  key={collaborateur.id}>
           <div className="flex flex-row">
+<<<<<<< HEAD
             <Avatar src={`http://localhost:4000/${collaborateur.image}`} alt={collaborateur.nom} className="m-5" size="xl"/>
+=======
+            <Avatar src={`http://localhost:4001/${collaborateur.image}`} alt={collaborateur.nom} className="m-5" size="xl"/>
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             <div className="flex flex-col justify-center ">
                 <Typography variant="h6" className="font-[Poppins]">{collaborateur.prenom} {collaborateur.nom}</Typography>
                 <Typography variant="h6" className="font-[Poppins]">{collaborateur.matricule} </Typography>

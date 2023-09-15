@@ -18,7 +18,11 @@ const ResetPasswordForm = () => {
             return;
         }
 
+<<<<<<< HEAD
         axios.post(`http://localhost:4000/api/password/reset-password/${token}`, {password})
+=======
+        axios.post(`http://localhost:4001/api/password/reset-password/${token}`, {password})
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         .then((response) => {
             alert("Le mot de passe a été réinitialisé avec succès")
             navigate("/login");

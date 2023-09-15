@@ -51,7 +51,11 @@ const Profil = () => {
 
 
     useEffect(() => {
+<<<<<<< HEAD
         axios.get(`http://localhost:4000/api/user/${idProfile}/profile`)
+=======
+        axios.get(`http://localhost:4001/api/user/${idProfile}/profile`)
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then(response => {
                 setCollaborateurData(response.data)
             })
@@ -81,7 +85,11 @@ const Profil = () => {
                 <div className="main-content">
                     <div className="bg-black rounded-md userProfile h-full flex flex-row">
                         <div className="m-8 p-5 grid grid-row-3">
+<<<<<<< HEAD
                             <Avatar src={`http://localhost:4000/${collaborateurData.Collab.image}`} variant="rounded" className="row-span-2 imagePhoto" />
+=======
+                            <Avatar src={`http://localhost:4001/${collaborateurData.Collab.image}`} variant="rounded" className="row-span-2 imagePhoto" />
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                             <Button className="h-10 flex flex-row justify-center bg-[#9C1D21]" onClick={() => { OpenModal() }}><MdModeEdit />Modifier</Button>
                         </div>
                         <div className="bg-white m-5 p-5 rounded-md w-full">

@@ -1,7 +1,12 @@
 const {DataTypes, Model} = require('sequelize');
 const sequelize = require('../../database/database');
+<<<<<<< HEAD
 const TestDepartement = require('../Structure/TestDepartement');
 const TestPoste = require('../Structure/TestPoste');
+=======
+const TestDepartement = require('../posteModel/TestDepartement');
+const TestPoste = require('../posteModel/TestPoste');
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 
 class ArchiveCollaborateur extends Model{};
@@ -40,6 +45,7 @@ ArchiveCollaborateur.init({
     tel: { 
         type: DataTypes.STRING(14) 
     },
+<<<<<<< HEAD
     telurgence : {
         type : DataTypes.STRING(14)
     },
@@ -77,6 +83,8 @@ ArchiveCollaborateur.init({
 
 
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     dateEmbauche: { 
         type: DataTypes.DATE 
     },
@@ -90,6 +98,7 @@ ArchiveCollaborateur.init({
         type : DataTypes.STRING(25),
         allowNull: false, 
     },
+<<<<<<< HEAD
     categorie : {
         type : DataTypes.STRING(20), 
     },
@@ -99,6 +108,8 @@ ArchiveCollaborateur.init({
 
 
 
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     poste : {
         type : DataTypes.INTEGER,
         allowNull : false,
@@ -136,10 +147,13 @@ ArchiveCollaborateur.init({
     statut : {
         type: DataTypes.STRING(),
         allowNull : false
+<<<<<<< HEAD
     }, 
     dateDebauche : {
         type : DataTypes.STRING(),
         allowNull : false
+=======
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     }
 }, {
     sequelize,

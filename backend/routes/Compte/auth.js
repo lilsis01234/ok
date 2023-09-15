@@ -51,7 +51,11 @@ router.post('/connect',(req, res, next) => {
                 secretKey,
                 {expiresIn : '1h'}
             )
+<<<<<<< HEAD
             // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400100})
+=======
+            res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400100})
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
             res.status(200).json({
                 id : comptes.id,

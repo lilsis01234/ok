@@ -2,8 +2,13 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const Compte = require('../../Modele/CompteModel/Compte');
 const Collab = require('../../Modele/CollabModel/Collab');
+<<<<<<< HEAD
 const TestPoste = require('../../Modele/Structure/TestPoste');
 const TestDepartement = require('../../Modele/Structure/TestDepartement');
+=======
+const TestPoste = require('../../Modele/posteModel/TestPoste');
+const TestDepartement = require('../../Modele/posteModel/TestDepartement');
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 
 
