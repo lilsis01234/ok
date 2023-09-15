@@ -47,18 +47,15 @@ router.post('/connect',(req, res, next) => {
             const roleTitle = userRoles.length > 0 ? userRoles[0] :null;
 
             const token = jwt.sign(
-                {id : comptes.id, role : roleTitle},
+                {comptes, role : roleTitle},
                 secretKey,
                 {expiresIn : '1h'}
             )
-<<<<<<< HEAD
             // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400100})
-=======
-            res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400100})
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
             res.status(200).json({
                 id : comptes.id,
+                compte : compte,
                 role : roleTitle,
                 token : token,
             })
@@ -72,7 +69,31 @@ router.post('/connect',(req, res, next) => {
     .catch(error => res.status(500).json(error));
 })
 
+//Renouveler le token
+function verifyJWTToken(token) {
+    try {
+        const decoded = jwt.verify(token, secretKey);
+        return decoded;
+    } catch (error){
+        return null;
+    }
+}
 
+//Renouveler le token
+router.post('/access-token', (req, res) => {
+    const {acess_token} = req.body;
+
+    const decodedToken = verifyJWTToken(acess_token);
+    if (decodedToken){
+        const {compte, role} = decodedToken;
+        const newAcessToken = jwt.sign({compte, role}, secretKey , {
+            expiresIn : '1h'
+        })
+
+        return res.status(200).json({compte, role, token : newAcessToken})
+    }
+    return res.status(401).json({error : 'Token invalide'})
+})
 
 const verifyToken = async (req, res, next) => {
     try {

@@ -13,13 +13,14 @@ class JwtService extends FuseUtils.EventEmitter {
 
   //Methode pour vérifier si l'utilisateur est connecté
   setInterceptors = () => {
+    axios.defaults.withCredentials = true;
     axios.interceptors.response.use(
       (response) => {
         return response;
       },
       (err) => {
         return new Promise((resolve, reject) => {
-          if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
+          if (err.response && err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
             // if you ever get an unauthorized response, logout the user
             this.emit('onAutoLogout', 'Invalid access_token');
             this.setSession(null);
@@ -64,9 +65,8 @@ class JwtService extends FuseUtils.EventEmitter {
   // };
 
   signInWithEmailAndPassword = (email, password) => {
-    return new Promise((resolve, reject) => {
-      axios
-        .post(jwtServiceConfig.signUp, {
+    return axios
+        .post(jwtServiceConfig.login, {
           data: {
             email,
             password,
@@ -75,18 +75,17 @@ class JwtService extends FuseUtils.EventEmitter {
         .then((response) => {
           if (response.data) {
             this.setSession(response.data.token);
-            resolve(response.data.user);
-            this.emit('onLogin', response.data.user);
+            resolve(response.data.compte);
+            this.emit('onLogin', response.data.compte);
           } else {
             reject(response.data.error);
           }
-        });
+       
     });
   };
 
   signInWithToken = () => {
-    return new Promise((resolve, reject) => {
-      axios
+    return axios
         .get(jwtServiceConfig.accessToken, {
           data: {
             access_token: this.getAccessToken(),
@@ -95,7 +94,7 @@ class JwtService extends FuseUtils.EventEmitter {
         .then((response) => {
           if (response.data.user) {
             this.setSession(response.data.access_token);
-            resolve(response.data.user);
+            resolve(response.data.compte);
           } else {
             this.logout();
             reject(new Error('Failed to login with token.'));
@@ -105,14 +104,14 @@ class JwtService extends FuseUtils.EventEmitter {
           this.logout();
           reject(new Error('Failed to login with token.'));
         });
-    });
+   
   };
 
-  updateUserData = (user) => {
-    return axios.post(jwtServiceConfig.updateUser, {
-      user,
-    });
-  };
+  // updateUserData = (user) => {
+  //   return axios.post(jwtServiceConfig.updateUser, {
+  //     user,
+  //   });
+  // };
 
   setSession = (access_token) => {
     if (access_token) {
