@@ -1,13 +1,18 @@
 const { Router, application } = require('express');
 
-<<<<<<< HEAD
 const { TestPoste, TestDepartement, PosteDepartement } = require('../../Modele/Structure/association.js');
 
-=======
-const { TestPoste, TestDepartement, PosteDepartement } = require('../../Modele/posteModel/association.js')
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 const router = require('express').Router();
+
+//Pour le route import
+const xlsx = require('xlsx')
+const multer = require('multer');
+const { Op } = require('sequelize')
+
+//Conserver l'image dans le mémoire
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage })
 
 
 
@@ -19,12 +24,7 @@ router.get('/all', async (req, res) => {
                 {
                     model: TestDepartement,
                     as: 'departement',
-<<<<<<< HEAD
                 }]
-=======
-                }
-            ]
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         })
         res.status(200).json(postes);
     } catch (error) {
@@ -40,21 +40,13 @@ router.get('/all', async (req, res) => {
 //Créer une nouvelle poste et une instance de la table association
 router.post('/new', async (req, res) => {
     try {
-<<<<<<< HEAD
-        const { titrePoste, departement, direction} = req.body;
-=======
-        const { titrePoste, departement } = req.body;
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
+        const { titrePoste, departement, direction } = req.body;
 
         //Creation de l'étudiant
         const newPoste = await TestPoste.create({
             titrePoste
         })
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         if (departement && departement.length > 0) {
             for (const departementId of departement) {
                 // console.log(departementId)
@@ -62,10 +54,6 @@ router.post('/new', async (req, res) => {
                 if (!departementInstance) {
                     console.log('PosteDepartement non sauvegardé', departementId)
                 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                 const postedepartement = await PosteDepartement.create({
                     poste: newPoste.id,
                     departement: departementId
@@ -73,10 +61,6 @@ router.post('/new', async (req, res) => {
             }
 
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         return res.status(201).json({ message: 'Poste crée avec succès' })
     }
     catch (error) {
@@ -85,21 +69,78 @@ router.post('/new', async (req, res) => {
     }
 })
 
+
+//Importer les postes
+router.post('/import-excel', upload.single('excel'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ message: 'Aucun fichier n\'a été téléchargé' })
+    }
+    const fileBuffer = req.file.buffer;
+    const sheetName = req.body.sheetName;
+
+    //Récupération de l'extension du fichier
+    const fileExtension = req.file.originalname.split('.').pop().toLowerCase()
+
+    if (fileExtension === 'xlsx' || fileExtension === 'xls') {
+        const workbook = xlsx.read(fileBuffer, { type: 'buffer' })
+
+        if (!sheetName || !workbook.Sheets[sheetName]) {
+            return res.status(400).json({ message: 'Nom de la feuille invalide ou introuvable' })
+        }
+
+        const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName], {
+            header: 1
+        })
+
+        try {
+            for (let i = 1; i < data.length; i++) {
+                const record = data[i];
+
+                const posteExiste = await TestPoste.findOne({ where: { titrePoste: record[0] } })
+                const departement = await TestDepartement.findOne({ where: { nomDepartement: record[1] } })
+
+                if (posteExiste !== null) {
+                    const posteDepartement = await PosteDepartement.findOne({ where: { [Op.and]: [{ poste: posteExiste.id }, { departement: departement.id }] } })
+                    if (posteDepartement === null) {
+                        await PosteDepartement.create({
+                            poste: posteExiste.id,
+                            departement: departement.id
+                        })
+                    }
+
+                } else {
+                    const newPoste = await TestPoste.create({
+                        titrePoste: record[0]
+                    })
+
+                    await PosteDepartement.create({
+                        poste: newPoste.id,
+                        departement: departement.id
+                    })
+                }
+            }
+
+            res.status(500).json({message : 'Importaton des données fait avec succès'})
+        }
+        catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Erreur lors de l\'importation des données' })
+        }
+    } else {
+        return res.status(400).json({ message: 'Formati de fichier non pris en charge' })
+    }
+
+
+})
+
 //Afficher un poste et les departements qui lui sont associés
 router.get('/view/:id', async (req, res) => {
     try {
         const poste = await TestPoste.findByPk(req.params.id, {
-<<<<<<< HEAD
             include: [{
                 model: TestDepartement,
                 as: 'departement'
             }]
-=======
-            include: {
-                model: TestDepartement,
-                as: 'departement'
-            }
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         });
         res.json(poste)
     } catch (error) {
@@ -113,11 +154,7 @@ router.get('/view/:id', async (req, res) => {
 router.put('/:id/edit', async (req, res) => {
     try {
         const posteId = req.params.id;
-<<<<<<< HEAD
-        const { titrePoste, departement, direction} = req.body;
-=======
-        const { titrePoste, departement } = req.body;
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
+        const { titrePoste, departement, direction } = req.body;
 
 
         //Vérifier d'abord si le poste existe
@@ -130,11 +167,8 @@ router.put('/:id/edit', async (req, res) => {
         poste.titrePoste = titrePoste;
         await poste.save();
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         //Récupérer les associtions actuelles du poste
         const association = await PosteDepartement.findAll({
             where: {
@@ -148,18 +182,12 @@ router.put('/:id/edit', async (req, res) => {
         //Identifier les departement à ajouter
         const departementAajouter = departement.filter((departementId) => !departementActuelle.includes(departementId))
 
-<<<<<<< HEAD
 
         //Identifier les departements avec les associations à supprimer
         const departementSupprimer = departementActuelle.filter((departementId) => !departement.includes(departementId))
 
-    
 
-=======
-        //Identifier les departements avec les associations à supprimer
-        const departementSupprimer = departementActuelle.filter((departementId) => !departement.includes(departementId))
 
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         //Supprimer les associations avec les départements
         await PosteDepartement.destroy({
             where: {
@@ -168,10 +196,7 @@ router.put('/:id/edit', async (req, res) => {
             }
         })
 
-<<<<<<< HEAD
-       
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
+
         //Ajouter nouvelle associations
         for (const departementId of departementAajouter) {
             const departements = await TestDepartement.findByPk(departementId)
@@ -191,7 +216,7 @@ router.put('/:id/edit', async (req, res) => {
     }
     catch (err) {
         console.error('Erreur lors de la mise à jour du poste', err)
-        return res.status(500).json({message : 'Erreur lors de la mise à jour du poste'})
+        return res.status(500).json({ message: 'Erreur lors de la mise à jour du poste' })
     }
 })
 
@@ -201,29 +226,32 @@ router.delete('/:id/delete', async (req, res) => {
         const posteId = req.params.id;
         const poste = await TestPoste.findByPk(posteId)
 
-        if (!poste){
-            return res.status(404).json({message : "Le poste n'existe pas"});
+        if (!poste) {
+            return res.status(404).json({ message: "Le poste n'existe pas" });
         }
 
         await PosteDepartement.destroy({
-            where : {
-                poste : poste.id
+            where: {
+                poste: poste.id
             }
         })
 
         await TestPoste.destroy({
-            where : {
-                id : poste.id,
+            where: {
+                id: poste.id,
             }
         })
 
-        return res.status(200).json({message : 'Poste supprimé avec succès'})
+        return res.status(200).json({ message: 'Poste supprimé avec succès' })
 
     }
     catch (error) {
         console.error('Erreur lors de la suppressiuon du poste:', error);
-        return res.status(500).json({message : 'Erreur lors de la suppression du poste'})
+        return res.status(500).json({ message: 'Erreur lors de la suppression du poste' })
     }
 })
+
+
+
 
 module.exports = router;

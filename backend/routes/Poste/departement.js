@@ -1,22 +1,21 @@
 const router = require('express').Router();
-<<<<<<< HEAD
 const TestDepartement = require('../../Modele/Structure/TestDepartement');
 const Collab = require('../../Modele/CollabModel/Collab');
 const TestPoste = require('../../Modele/Structure/TestPoste');
 const { Op } = require('sequelize');
 const Direction = require('../../Modele/Structure/Direction');
-=======
-const TestDepartement = require('../../Modele/posteModel/TestDepartement');
-const Collab = require('../../Modele/CollabModel/Collab');
-const TestPoste = require('../../Modele/posteModel/TestPoste');
-const { Op } = require('sequelize');
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
+//Pour le route import
+const xlsx = require('xlsx')
+const multer = require('multer');
+
+//Conserver l'image dans le mémoire
+const storage = multer.memoryStorage();
+const upload = multer({storage : storage})
 
 //Afficher les listes des départements
 router.get('/all', async(req, res) => {
     try {
-<<<<<<< HEAD
         const listDepartement = await TestDepartement.findAll(
             {
                 include : [
@@ -24,9 +23,6 @@ router.get('/all', async(req, res) => {
                 ]
             }
         );
-=======
-        const listDepartement = await TestDepartement.findAll();
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         res.status(201).json(listDepartement);
     }
     catch (error){
@@ -35,51 +31,6 @@ router.get('/all', async(req, res) => {
     }
 })
 
-<<<<<<< HEAD
-=======
-
-//Récupérer tous les membres du departement direction
-router.get('/collab/direction', async(req, res) => {
-    try {
-        const direction = await TestDepartement.findOne({
-            where : {nomDepartement : "Direction"}
-        })
-
-        if(!direction){
-            return res.status(404).json({message : 'Aucun département direction trouvé'})
-        }
-
-        const directionMember = await Collab.findAll({
-            where : {departement : direction.id},
-            include : [
-                {
-                    model : TestPoste,
-                    as : 'poste1',
-                },{
-                    model : TestPoste,
-                    as : 'postes',
-                }, {
-                    model : TestDepartement,
-                    as : 'departement1',
-                }, {
-                    model : TestDepartement,
-                    as : 'departements',
-                }
-            ]
-        })
-        res.json(directionMember)
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({message : 'Erreur lors de la récupération des employés'})
-    }
-})
-
-
-
-
-
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 //Récupérer les membres de chaque departement
 router.get('/collab/:departementId', async(req, res) => {
     try {
@@ -124,10 +75,7 @@ router.post('/new', async(req, res) => {
     try {
       const newDepartement = await TestDepartement.create({
           nomDepartement : req.body.nomDepartement,
-<<<<<<< HEAD
           direction : req.body.direction,
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
       });
       const savedDepartement = await newDepartement.save()
       res.status(201).json(savedDepartement);
@@ -142,16 +90,12 @@ router.post('/new', async(req, res) => {
 router.get('/view/:id', async(req, res) =>{
     const {id} = req.params;
     try {
-<<<<<<< HEAD
         const departement = await TestDepartement.findByPk(id, 
             {include : [
                 {model: Direction}
             ]}
             );
 
-=======
-        const departement = await TestDepartement.findByPk(id);
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         if (!departement ) {
             return res.status(404).json({error : 'Departement introuvable'});
         }
@@ -172,12 +116,8 @@ router.put('/edit/:id', async(req, res) => {
             return res.status(400).json({error : 'Département non trouvé'})
         }
         const newDepartement = await updateDepartement.update({
-<<<<<<< HEAD
             nomDepartement : req.body.nomDepartement, 
             direction : req.body.direction,
-=======
-            nomDepartement : req.body.nomDepartement
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             })
         res.status(201).json(newDepartement); 
     } 
@@ -206,5 +146,66 @@ router.delete('/delete/:id', async(req, res) => {
         res.status(500).json({error : 'Erreur lors de la suppression du département'})
     }
 })
+
+
+//Importer les départements 
+router.post('/import-excel', upload.single('excel'), async(req, res) => {
+    if(!req.file){
+        return res.status(400).json({message : 'Aucun fichier n\'a été téléchargé'})
+    }
+
+    const fileBuffer = req.file.buffer;
+    const sheetName = req.body.sheetName;
+
+    //Récupérer le l'extension du fichier 
+    const fileExtension = req.file.originalname.split('.').pop().toLowerCase()
+
+    if (fileExtension === 'xlsx' || fileExtension === 'xls'){
+        const workbook = xlsx.read(fileBuffer,  {type : 'buffer'})
+
+        if(!sheetName || !workbook.Sheets[sheetName]){
+            return res.status(400).json({message : 'Nom de feuille invalide ou introuvable'})
+        }
+
+        const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName], {
+            header : 1
+        })
+
+        try {
+            for(let i = 1; i < data.length; i++){
+                const record = data[i];
+                const direction = await Direction.findOne({where : {nomDirection : record[1]}})
+
+                const departementExist = await TestDepartement.findOne({where : {nomDepartement : record[0]}})
+
+
+                if(departementExist === null) {
+                    await TestDepartement.create({
+                        nomDepartement : record[0],
+                        direction : direction.id
+    
+                    })
+                }
+               
+
+                
+            }
+
+            res.status(200).json({message : 'Donnée des départements importées avec succès'})
+        }
+        catch (err) {
+            console.error(err);
+            res.status(500).json({message : 'Erreur lors de l\'importation  des données'})
+        }
+        
+    }
+    else {
+        return res.status(400).json({message : 'Format de fichier non pris en charge'})
+    }
+    
+})
+
+
+
 
 module.exports = router;
