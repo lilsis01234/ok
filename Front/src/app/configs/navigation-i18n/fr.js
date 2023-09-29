@@ -5,7 +5,7 @@ const locale = {
     COLLABORATEURS : 'Collaborateurs',
     ENTREPRISE : 'Entreprise',
     DEPARTEMENT : 'Département',
-    EQUIPE : 'Equipe'
+    EQUIPE : 'Projet'
 }
 
 export default locale;

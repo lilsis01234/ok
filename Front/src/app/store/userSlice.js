@@ -1,11 +1,13 @@
 /* eslint import/no-extraneous-dependencies: off */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import history from '@history';
 import _ from '@lodash';
 import { setInitialSettings } from 'app/store/fuse/settingsSlice';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import settingsConfig from 'app/configs/settingsConfig';
 import jwtService from '../auth/services/jwtService';
+
+
 
 export const setUser = createAsyncThunk('user/setUser', async (user, { dispatch, getState }) => {
   /*
@@ -81,12 +83,16 @@ export const updateUserData = (user) => async (dispatch, getState) => {
     });
 };
 
+const userConnected = jwtService.getUserConnected()
+console.log(userConnected)
+
+
+
 const initialState = {
   role: [], // guest
   data: {
     displayName: 'John Doe',
     photoURL: 'assets/images/avatars/brian-hughes.jpg',
-    email: 'johndoe@withinpixels.com',
     shortcuts: ['apps.calendar', 'apps.mailbox', 'apps.contacts', 'apps.tasks'],
   },
 };

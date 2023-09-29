@@ -1,13 +1,8 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../../database/database');
-<<<<<<< HEAD
 const TestDepartement = require('../Structure/TestDepartement');
 const TestPoste = require('../Structure/TestPoste');
 const Equipe = require('../Structure/Equipe')
-=======
-const TestDepartement = require('../posteModel/TestDepartement');
-const TestPoste = require('../posteModel/TestPoste');
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 class Collab extends Model{};
 
@@ -45,7 +40,6 @@ Collab.init({
     tel: { 
         type: DataTypes.STRING(14) 
     },
-<<<<<<< HEAD
     telurgence : {
         type : DataTypes.STRING(14)
     },
@@ -66,8 +60,6 @@ Collab.init({
         type: DataTypes.INTEGER
     },
 
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     dateEmbauche: { 
         type: DataTypes.DATE 
     },
@@ -81,15 +73,12 @@ Collab.init({
         type : DataTypes.STRING(25),
         allowNull: false, 
     },
-<<<<<<< HEAD
     categorie : {
        type : DataTypes.STRING(20), 
     },
     contrat : {
         type: DataTypes.STRING(20)
     },
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     poste : {
         type : DataTypes.INTEGER,
         allowNull : false,
@@ -105,11 +94,7 @@ Collab.init({
             model: TestPoste,
             key : 'id'
         }
-<<<<<<< HEAD
     }, 
-=======
-    },  
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     departement : {
         type : DataTypes.INTEGER,
         allowNull : false,
@@ -127,7 +112,6 @@ Collab.init({
             model : TestDepartement,
             key : 'id'
         }
-<<<<<<< HEAD
     }, 
     equipe : {
         type: DataTypes.INTEGER,
@@ -143,19 +127,11 @@ Collab.init({
             key : 'id'
         }
     }
-=======
-    }
-
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 }, {
     sequelize,
     modelName: 'Collab'
 })
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 Collab.belongsTo(TestPoste, {
     foreignKey : 'poste',
     onUpdate : 'CASCADE',
@@ -168,28 +144,11 @@ Collab.belongsTo(TestPoste, {
     as : 'postes'
 })
 
-<<<<<<< HEAD
 Collab.belongsTo(TestDepartement, {foreignKey:"departement", targetKey:'id', onUpdate:'CASCADE', as: 'departement1'})
 Collab.belongsTo(TestDepartement, {foreignKey:"departement2", targetKey:'id', onUpdate:'CASCADE', as:'departements'})
 
 Collab.belongsTo(Equipe, {foreignKey:"equipe", targetKey:'id',onUpdate:'CASCADE', as:'equipe1'})
 Collab.belongsTo(Equipe, {foreignKey:"equipe2", targetKey:'id', onUpdate:'CASCADE', as:'equipes'})
-=======
-Collab.belongsTo(TestDepartement, {
-    foreignKey : 'departement',
-    onUpdate : 'CASCADE',
-    as : 'departement1'
-}
-)
-
-Collab.belongsTo(TestDepartement, {
-    foreignKey: 'departement2',
-    onUpdate : 'CASCADE',
-    as : 'departements'
-})
-
-
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 
 module.exports = Collab;

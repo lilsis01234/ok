@@ -1,5 +1,9 @@
+import { fetchRoles, getRoles } from 'src/app/auth/authRoles';
 import SignInPage from './SignInPage';
-import authRoles from '../../auth/authRoles';
+// import authRoles from '../../auth/authRoles';
+
+const roles = getRoles();
+
 
 const SignInConfig = {
   settings: {
@@ -23,7 +27,7 @@ const SignInConfig = {
       },
     },
   },
-  auth: authRoles.onlyGuest,
+  auth: roles.onlyGuest,
   routes: [
     {
       path: 'sign-in',

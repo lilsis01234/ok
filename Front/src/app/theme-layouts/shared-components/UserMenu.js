@@ -64,7 +64,7 @@ function UserMenu(props) {
           paper: 'py-8',
         }}
       >
-        {!user.role || user.role.length === 0 ? (
+        {/* {!user.role || user.role.length === 0 ? (
           <>
             <MenuItem component={Link} to="/sign-in" role="button">
               <ListItemIcon className="min-w-40">
@@ -79,7 +79,7 @@ function UserMenu(props) {
               <ListItemText primary="Sign up" />
             </MenuItem>
           </>
-        ) : (
+        ) : ( */}
           <>
             <MenuItem component={Link} to="/apps/profile" onClick={userMenuClose} role="button">
               <ListItemIcon className="min-w-40">
@@ -106,7 +106,7 @@ function UserMenu(props) {
               <ListItemText primary="Sign out" />
             </MenuItem>
           </>
-        )}
+        {/* )} */}
       </Popover>
     </>
   );

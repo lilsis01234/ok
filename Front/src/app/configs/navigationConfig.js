@@ -22,13 +22,23 @@ const navigationConfig = [
   {
     id: 'dashboard',
     title: 'Dashboard',
-    type: 'item',
+    type: 'group',
     icon: 'heroicons-outline:home',
-    translate: 'DASHBOARDS'
+    translate: 'DASHBOARDS',
+    children : [
+      {
+        id: 'dashboard.collaborateur',
+        title: 'Collaborateur',
+        type: 'item',
+        icon: 'heroicons-outline:user-group',
+        translate: 'COLLABORATEURS',
+        url : 'dashboards/collaborateur'
+      }
+    ]
   }, {
     id: 'collaborateur',
     title: 'Collaborateur',
-    type: 'item',
+    type: 'group',
     icon: 'heroicons-outline:user-group',
     translate: 'COLLABORATEURS',
   }, 
@@ -51,7 +61,7 @@ const navigationConfig = [
           icon: 'heroicons-outline:briefcase',
           translate : 'DEPARTEMENT'
         }, {
-          id : 'entreprise.equipe',
+          id : 'entreprise.projet',
           title : 'Team',
           type : 'item',
           icon : 'heroicons-outline:user-group',

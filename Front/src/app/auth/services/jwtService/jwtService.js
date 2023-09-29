@@ -2,34 +2,36 @@ import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import jwtServiceConfig from './jwtServiceConfig';
+import { useNavigate } from 'react-router-dom';
 
 /* eslint-disable camelcase */
 
 class JwtService extends FuseUtils.EventEmitter {
   init() {
-    this.setInterceptors();
+   this.setInterceptors();
     this.handleAuthentication();
   }
+
 
   //Methode pour vérifier si l'utilisateur est connecté
   setInterceptors = () => {
     axios.defaults.withCredentials = true;
-    axios.interceptors.response.use(
-      (response) => {
-        return response;
+     axios.interceptors.response.use(
+       (response) => {
+      return response;
       },
       (err) => {
-        return new Promise((resolve, reject) => {
+         return new Promise((resolve, reject) => {
           if (err.response && err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
-            // if you ever get an unauthorized response, logout the user
-            this.emit('onAutoLogout', 'Invalid access_token');
-            this.setSession(null);
-          }
+           // if you ever get an unauthorized response, logout the user
+             this.emit('onAutoLogout', 'Invalid access_token');
+           this.setSession(null);
+         }
           throw err;
         });
-      }
+       }
     );
-  };
+   };
 
   //Pour vérifier le token de l'utilisateur
   handleAuthentication = () => {
@@ -64,47 +66,47 @@ class JwtService extends FuseUtils.EventEmitter {
   //   });
   // };
 
+  //Pour se connecter 
   signInWithEmailAndPassword = (email, password) => {
+    const formData = {
+      email : email,
+      password : password
+    }
     return axios
-        .post(jwtServiceConfig.login, {
-          data: {
-            email,
-            password,
-          },
-        })
+        .post(jwtServiceConfig.login, formData)
         .then((response) => {
           if (response.data) {
             this.setSession(response.data.token);
-            resolve(response.data.compte);
+            this.isUserConnected(response.data.compte)
             this.emit('onLogin', response.data.compte);
+            return response.data
           } else {
-            reject(response.data.error);
+            throw new Error(response.data.error);
           }
-       
-    });
+        });
   };
 
   signInWithToken = () => {
-    return axios
-        .get(jwtServiceConfig.accessToken, {
-          data: {
-            access_token: this.getAccessToken(),
-          },
-        })
+      const data = {
+        acess_token : this.getAccessToken()
+      }
+      return axios
+        .post(jwtServiceConfig.accessToken, data)
         .then((response) => {
           if (response.data.user) {
-            this.setSession(response.data.access_token);
-            resolve(response.data.compte);
+            this.setSession(response.data.token);
+            return (response.data);
           } else {
             this.logout();
-            reject(new Error('Failed to login with token.'));
+            return (new Error('Failed to login with token.'));
           }
         })
         .catch((error) => {
           this.logout();
-          reject(new Error('Failed to login with token.'));
+          console.error(error)
+          return (new Error('Failed to login with token.'));
         });
-   
+  
   };
 
   // updateUserData = (user) => {
@@ -145,6 +147,21 @@ class JwtService extends FuseUtils.EventEmitter {
   getAccessToken = () => {
     return window.localStorage.getItem('jwt_access_token');
   };
+
+  //Récupération des rôles de l'utilisateur connecté
+  isUserConnected = (userInfo) => {
+    if(userInfo){
+        localStorage.setItem('user', userInfo)
+    } else {
+      localStorage.removeItem('user')
+    }
+  }
+
+  getUserConnected = () => {
+    return window.localStorage.getItem('user')
+  }
+
+
 }
 
 const instance = new JwtService();
