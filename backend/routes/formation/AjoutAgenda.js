@@ -1,0 +1,36 @@
+const express = require('express');
+const router = express.Router();
+const Agenda = require('../../Modele/formation/Seance');
+const moment = require('moment');
+const timezone = require('moment-timezone');
+moment.tz.setDefault('Indian/Antananarivo');
+
+router.post('/agenda', async (req, res) => {
+  try {
+    const eventsData = req.body;
+    const moduleId = 1; // Set your appropriate module ID here
+
+    const agendaEntries = await Promise.all(eventsData.map(async event => {
+      const { start, end, title, nombreDePlaces } = event;
+
+      const agendaEntry = await Agenda.create({
+        date: start,
+        heureStart: start,
+        heureEnd: end, // Ensure that heureEnd is set correctly
+        module: moduleId,
+        nombreDePlacesReservees: 0,
+        nombreDePlaces: nombreDePlaces,
+        title: title,
+        approbation: 1
+      });
+      return agendaEntry;
+    }));
+
+    res.status(201).json(agendaEntries);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+module.exports = router;
