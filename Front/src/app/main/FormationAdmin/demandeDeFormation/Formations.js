@@ -33,7 +33,6 @@ const Formation = ()=>{
   const fetchFormation = () => {
     axios.get('http://localhost:4001/api/formations/all_formations')
       .then(res => {setFormations(res.data)
-        console.log(Formation)
       })
       .catch(err => console.log(err));
   }
