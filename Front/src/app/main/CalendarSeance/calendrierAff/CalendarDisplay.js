@@ -24,7 +24,7 @@ function CalendarTraining() {
           };
         });
         setEvents(formattedEvents);
-        scheduleNotifications(formattedEvents);
+        scheduleNotification(formattedEvents);
       })
       .catch((error) => {
         console.error(error);
@@ -46,26 +46,43 @@ function CalendarTraining() {
     console.log('Réserver une place');
   };
 
-  const scheduleNotifications = (events) => {
-    console.log("Scheduling notifications for events:", events);
-    events.forEach((event) => {
-        const notificationTime = new Date(event.start.getTime() - 10 * 60 * 1000); // 10 minutes before the event
-        console.log(notificationTime)
-        const currentTime = new Date();
-
-        // if (notificationTime > currentTime) {
-        //     const timeDifference = notificationTime - currentTime;
-        //     setTimeout(() => {
-        //         showNotification(event.title);
-        //     }, timeDifference);
-        // }
-        
-        const message = "Dans 10 minutes";
-        if (notificationTime.getTime() === currentTime.getTime()) {
-          showNotification(event.title,message);
-      }
-    });
+  const handleSetReminderClick = (event) => {
+    scheduleNotification(event);
   };
+
+  // const scheduleNotifications = (events) => {
+  //   console.log("Scheduling notifications for events:", events);
+  //   events.forEach((event) => {
+  //       const notificationTime = new Date(event.start.getTime() - 10 * 60 * 1000); // 10 minutes before the event
+  //       console.log(notificationTime)
+  //       const currentTime = new Date();
+
+  //       // if (notificationTime > currentTime) {
+  //       //     const timeDifference = notificationTime - currentTime;
+  //       //     setTimeout(() => {
+  //       //         showNotification(event.title);
+  //       //     }, timeDifference);
+  //       // }
+
+  //       const message = "Dans 10 minutes";
+  //       if (notificationTime.getTime() === currentTime.getTime()) {
+  //         showNotification(event.title,message);
+  //     }
+  //   });
+  // };
+
+  const scheduleNotification = (event) => {
+    const notificationTime = new Date(event.start.getTime() - 10 * 60 * 1000); // 10 minutes before the event
+    const currentTime = new Date();
+  
+    if (notificationTime > currentTime) {
+      setTimeout(() => {
+        showNotification(event.title, 'Dans 10 minutes');
+      }, notificationTime - currentTime);
+    } else {
+      console.log('Event has already passed.');
+    }
+  };s
 
     const showNotification = (title,costumMessage) => {
         if (!("Notification" in window)) {
@@ -105,6 +122,7 @@ function CalendarTraining() {
         <div>
           <button onClick={handleParticipateNowClick}>Participer par appel vidéo maintenant</button>
           <button onClick={handleReserveClick}>Réserver une place</button>
+          <button onClick={() => handleSetReminderClick(selectedEvent)}>Me rappeler cette formation</button>
         </div>
       )}
     </div>
