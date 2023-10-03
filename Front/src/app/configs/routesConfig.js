@@ -10,10 +10,11 @@ import ExampleConfig from '../main/example/ExampleConfig';
 import dashboardsConfigs from '../main/Dashboard/dashboardsConfig';
 import CalendarConfig from '../main/CalendarSeance/CalendarSeanceConfig';
 import CalendarFormConfig from '../main/CalendarSeance/calendrierForm/CalendarFormConfig';
+import FormationConfig from '../main/FormationAdmin/demandeDeFormation/FormationConfig';
 
 const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
-  ... dashboardsConfigs,CalendarConfig,CalendarFormConfig
+  ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig
 ];
 
 const routes = [

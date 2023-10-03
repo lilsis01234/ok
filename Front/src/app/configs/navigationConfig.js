@@ -75,23 +75,31 @@ const navigationConfig = [
     title: 'Formations',
     type: 'group',
     icon: 'heroicons-outline:academic-cap',
-    translate: 'Trainings',
+    translate: 'Formations',
     children : [
       {
         id: 'formation.mesformations',
-        title: 'Formations',
+        title: 'Agenda',
         type: 'item',
         icon: 'heroicons-outline:calendar',
-        translate: 'Trainings',
+        translate: 'Agenda',
         url : 'dashboards/calendarseance',
+      },
+      {
+        id: 'formation.demandeformations',
+        title: 'Formations',
+        type: 'item',
+        icon: 'heroicons-outline:users',
+        translate: 'Formations',
+        url : 'dashboards/listeFormation'
       },
       {
         id: 'formation.demandeformations',
         title: 'Demandes de formations',
         type: 'item',
         icon: 'heroicons-outline:users',
-        translate: 'Requests',
-        url : 'dashboards/ajoutSeance'
+        translate: 'Demandes',
+        url : 'dashboards/demandeFormation'
       }
     ]
   },{
@@ -107,7 +115,7 @@ const navigationConfig = [
         title: 'Ajouter',
         type: 'item',
         icon: 'heroicons-outline:plus',
-        translate: 'Add',
+        translate: 'Ajouter',
         url : 'dashboards/addSeance',
       },
     ],
