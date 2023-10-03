@@ -19,6 +19,13 @@ const direction = require('./routes/Poste/direction')
 const equipe = require('./routes/Poste/equipe')
 const agendaRoutes = require('../backend/routes/formation/AjoutAgenda')
 const displayRoutes = require('../backend/routes/formation/AfficheAgenda')
+const formationRouter = require('../backend/routes/formation/formation')
+const requestRouter = require('../backend/routes/formation/demandeFormation')
+const seanceRouter = require('../backend/routes/formation/seance')
+
+
+
+
 
 //importation des configurations$
 const dotenv = require('dotenv');
@@ -65,9 +72,9 @@ app.use('/api/direction', direction) //route pour afficher les direction
 app.use('/api/equipe', equipe ) //route pour afficher les routes
 app.use('/api/agenda', agendaRoutes);
 app.use('/api/calendrier', displayRoutes);
-
-
-
+app.use('/api/formations',formationRouter);
+app.use('/api/demande_formation',requestRouter);
+app.use('/api/seances',seanceRouter)
 
 
 //Connection à la base de donnée MySQL
