@@ -12,9 +12,9 @@ function CalendarTraining  () {
   useEffect(() => {
     // Récupérer les données de l'API backend
     axios.get('http://localhost:4001/api/calendrier/agenda')
-      .then(response => {
+      .then((response) => {
         // Formatter les données pour les rendre compatibles avec React Big Calendar
-        const formattedEvents = response.data.map(event => {
+        const formattedEvents = response.data.map((event) => {
           return {
             title: event.title, // Titre de l'événement
             start: new Date(event.date), // Date de début de l'événement
@@ -23,7 +23,7 @@ function CalendarTraining  () {
         });
         setEvents(formattedEvents);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }, []); // Le tableau vide des dépendances assure que l'effet se produit une seule fois après le rendu initial

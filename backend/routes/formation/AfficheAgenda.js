@@ -7,7 +7,6 @@ router.get('/agenda', async (req, res) => {
   try {
     // Récupérez toutes les entrées de l'agenda depuis la base de données
     const agendaEntries = await Agenda.findAll();
-
     // Retournez les entrées de l'agenda en tant que réponse JSON
     res.status(200).json(agendaEntries);
   } catch (error) {

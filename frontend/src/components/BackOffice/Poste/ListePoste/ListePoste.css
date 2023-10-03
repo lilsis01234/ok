@@ -1,0 +1,97 @@
+.listePoste {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.listePoste_title{
+    padding: 10px;
+}
+
+.listePoste_table{
+    width: 80%;
+    margin: 15px;
+    border: none;
+}
+
+
+.listePoste_EditButton{
+    border: none;
+    background: none;
+    font-family: 'Poppins';
+    padding : 10px;
+    align-items: center;
+    transition: 0.3s ease-in-out;
+}
+
+.listePoste_EditButton:hover{
+    transform: scale(1,1);
+    background-color : #9C1D21;
+    color : white;
+    border-radius: 10px;
+
+}
+
+.listePoste_tools{
+    display: flex;
+    flex-direction: column;
+    justify-items: normal;
+    
+}
+
+.listPoste_link{
+    align-self: center;
+    padding: 10px;
+    margin: 20px;
+    border : 1px solid #9C1D21;
+    border-radius: 20px;
+    text-decoration: none;
+    background: none;
+    color: black;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.listPoste_link:hover{
+    transform: scale(1.1);
+    background-color: blue;
+    border-color: blue;
+    color: white;
+    
+}
+
+.modal_AddForm_Title{
+    padding: 15px;
+    margin: 5px;
+    text-align: center;
+}
+
+.closeModal{
+    border: none;
+    background: none;
+    font-family: 'Poppins';
+    padding: 5px;
+}
+
+.closeModal:hover{
+    transition: scale(1,1);
+    color: #9C1D21;
+}
+
+.listePoste_filter{
+    border : none;
+
+}
+
+.listePoste_filter_item{
+    border : none;
+    padding: 0px;
+}
+
+.listePoste_filter_item input {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
