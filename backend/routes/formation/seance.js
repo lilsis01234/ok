@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser');
 const Formation = require('../../Modele/formation/Formation');
 const Module = require('../../Modele/formation/Module');
 const Seance = require('../../Modele/formation/Seance');
-const Collaborateur = require('../../Modele/Collaborateur');
+const Collaborateur = require('../../Modele/CollabModel/Collab');
 router.use(cookieParser());
 
 router.get('/all_seances', async (req, res) => {
