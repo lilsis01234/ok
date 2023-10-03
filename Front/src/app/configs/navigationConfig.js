@@ -86,7 +86,7 @@ const navigationConfig = [
         url : 'dashboards/calendarseance',
       },
       {
-        id: 'formation.demandeformations',
+        id: 'formation.formations',
         title: 'Formations',
         type: 'item',
         icon: 'heroicons-outline:users',
