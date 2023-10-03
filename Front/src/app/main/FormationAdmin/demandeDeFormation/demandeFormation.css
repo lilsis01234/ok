@@ -1,0 +1,18 @@
+.visible{
+    width: 800px;
+    background-color: #9C1D21;
+    margin-bottom: 70px;
+    height: 50px;
+}
+.visible h1{
+    color: white !important;
+    font-size: 1.5rem;
+}
+.training_table{
+    width: 100%;
+}
+.training_table th, .training_table td{
+    width: 20%;
+    text-align: center;
+    vertical-align: middle;
+}
