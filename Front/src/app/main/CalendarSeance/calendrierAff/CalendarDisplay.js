@@ -82,7 +82,7 @@ function CalendarTraining() {
     } else {
       console.log('Event has already passed.');
     }
-  };s
+  };
 
     const showNotification = (title,costumMessage) => {
         if (!("Notification" in window)) {
