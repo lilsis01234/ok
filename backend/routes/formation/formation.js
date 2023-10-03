@@ -111,8 +111,7 @@ router.get('/all_formations/:idPersonne', async(req,res) => {
             },
             {
               model: Role2,
-              as: 'Roledestinataire',
-              attributes: ['titreRole'],
+              attributes: ['roleHierarchique'],
             },
             {
               model: Collaborateur,
@@ -158,11 +157,46 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                     },
             });
             const seances = await Seance.findAll({
-                where:{
-                    module:modules
-                }
-            })
-            const formation = await Formation.findByPk(formationId)
+              where: {
+                  module: modules,
+              },
+              include: [
+                  {
+                      model: Module, 
+                      attributes: ['id', 'titreModule', 'description'],                   },
+              ],
+          });
+          
+            const formation = await Formation.findByPk(formationId, {
+              include: [
+                  {
+                      model: Collaborateur,
+                      as: 'Auteur',
+                      attributes: ['nom', 'prenom'],
+                  },
+                  {
+                      model: Role2,
+                      attributes: ['roleHierarchique'],
+                  },
+                  {
+                      model: Collaborateur,
+                      as: 'Collaborateur',
+                      attributes: ['nom', 'prenom'],
+                  },
+                  {
+                      model: Collaborateur,
+                      as: 'Formateur',
+                      attributes: ['nom', 'prenom'],
+                  },
+                  {
+                      model: Departement,
+                      as: 'Departement',
+                      attributes: ['nomDepartement'],
+                  },
+              ],
+          });
+          
+            
             if (!formation) {
                 return res.status(404).json({ error: 'Formation introuvable' });
             }
@@ -208,7 +242,7 @@ router.get('/formations/:idPersonne',async(req,res)=>{
         },
         {
           model: Role2,
-          attributes: ['titreRole2'],
+          attributes: ['roleHierarchique'],
         },
         {
           model: Collaborateur,
@@ -263,7 +297,6 @@ router.post('/addFormation',async(req,res)=>{
     catch(err){
         console.error(err)
     }
-
 })
 
 module.exports = router;
