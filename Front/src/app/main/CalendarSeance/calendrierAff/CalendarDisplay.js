@@ -6,8 +6,10 @@ import axios from 'axios';
 
 const localizer = momentLocalizer(moment);
 
-function CalendarTraining  () {
+function CalendarTraining() {
   const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showButtons, setShowButtons] = useState(false);
 
   useEffect(() => {
     // Récupérer les données de l'API backend
@@ -16,9 +18,9 @@ function CalendarTraining  () {
         // Formatter les données pour les rendre compatibles avec React Big Calendar
         const formattedEvents = response.data.map((event) => {
           return {
-            title: event.title, // Titre de l'événement
-            start: new Date(event.date), // Date de début de l'événement
-            end: new Date(event.heureEnd), // Date de fin de l'événement
+            title: `${event.title} - ${event.nombreDePlaces} places`,
+            start: new Date(event.date),
+            end: new Date(event.heureEnd),
           };
         });
         setEvents(formattedEvents);
@@ -26,7 +28,22 @@ function CalendarTraining  () {
       .catch((error) => {
         console.error(error);
       });
-  }, []); // Le tableau vide des dépendances assure que l'effet se produit une seule fois après le rendu initial
+  }, []);
+
+  const handleEventSelect = (event) => {
+    setSelectedEvent(event);
+    setShowButtons(true);
+  };
+
+  const handleParticipateNowClick = () => {
+    // Mettez en œuvre la logique pour participer par appel vidéo ici
+    console.log('Participer par appel vidéo maintenant');
+  };
+
+  const handleReserveClick = () => {
+    // Mettez en œuvre la logique pour réserver une place ici
+    console.log('Réserver une place');
+  };
 
   return (
     <div style={{ height: '500px' }}>
@@ -35,10 +52,17 @@ function CalendarTraining  () {
         events={events}
         startAccessor="start"
         endAccessor="end"
+        onSelectEvent={handleEventSelect}
         style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
       />
+      {showButtons && selectedEvent && (
+        <div>
+          <button onClick={handleParticipateNowClick}>Participer par appel vidéo maintenant</button>
+          <button onClick={handleReserveClick}>Réserver une place</button>
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default CalendarTraining;
