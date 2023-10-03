@@ -24,6 +24,7 @@ function CalendarTraining() {
           };
         });
         setEvents(formattedEvents);
+        scheduleNotifications(formattedEvents);
       })
       .catch((error) => {
         console.error(error);
@@ -44,6 +45,51 @@ function CalendarTraining() {
     // Mettez en œuvre la logique pour réserver une place ici
     console.log('Réserver une place');
   };
+
+  const scheduleNotifications = (events) => {
+    console.log("Scheduling notifications for events:", events);
+    events.forEach((event) => {
+        const notificationTime = new Date(event.start.getTime() - 10 * 60 * 1000); // 10 minutes before the event
+        console.log(notificationTime)
+        const currentTime = new Date();
+
+        // if (notificationTime > currentTime) {
+        //     const timeDifference = notificationTime - currentTime;
+        //     setTimeout(() => {
+        //         showNotification(event.title);
+        //     }, timeDifference);
+        // }
+        
+        const message = "Dans 10 minutes";
+        if (notificationTime.getTime() === currentTime.getTime()) {
+          showNotification(event.title,message);
+      }
+    });
+  };
+
+    const showNotification = (title,costumMessage) => {
+        if (!("Notification" in window)) {
+            console.log("This browser does not support desktop notification");
+        } else {
+            Notification.requestPermission().then(function (permission) {
+                if (permission === "granted") {
+                    const confirmed = window.confirm(`Do you want to receive a notification for "${title}"?`);
+                    if (confirmed) {
+                        try {
+                            const notification = new Notification(title + ''+costumMessage, { requireInteraction: true });
+                            console.log('lasa le notif')
+                            notification.onclick = function () {
+                                Navigate('/dashboard/calendarSeance');
+                            };
+                        } catch (err) {
+                            console.error("Error showing notification:", err);
+                        }
+                    }
+                }
+            });
+        }
+    };
+
 
   return (
     <div style={{ height: '500px' }}>
