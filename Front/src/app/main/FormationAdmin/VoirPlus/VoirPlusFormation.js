@@ -3,10 +3,9 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './voirPlus.css'
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-notifications-component/dist/theme.css';
-import { store } from 'react-notifications-component';
 
 
 const localizer = momentLocalizer(moment);
@@ -30,14 +29,14 @@ const VoirPlusFormation = () => {
             const formattedEvents = res.data.map((seance) => {
                 return {
                 title: `${seance.title} - ${seance.nombreDePlaces} places`,
-                start: new Date(seance.heureStart),
-                end: new Date(seance.heureEnd),
+                start: moment.tz(seance.heureStart, 'Africa/Nairobi').toDate(), // Adjust timezone here
+                end: moment.tz(seance.heureEnd, 'Africa/Nairobi').toDate(), // Adjust timezone here
                 resource: seance.module, // Si vous avez une propriété module à associer
                 // Autres propriétés de séance si nécessaire
                 };
             });
             setEvents(formattedEvents);
-            scheduleNotifications(formattedEvents);
+            formattedEvents.forEach((event) => scheduleNotification(event)); // Schedule notifications
             })
             .catch((err) => {
             console.log(err);
@@ -48,34 +47,51 @@ const VoirPlusFormation = () => {
         fetchFormation();
     }, [idFormation]);
 
-    const scheduleNotifications = (events) => {
-        events.forEach((event) => {
-          const notificationTime = new Date(event.start.getTime() - 0 * 60 * 1000); // 10 minutes before the event
-          const currentTime = new Date();
-      
-          if (notificationTime.getTime() === currentTime.getTime()) {
-            showNotification(event.title, 'Dans 10 minutes');
+    const scheduleNotification = (event) => {
+        if (event.start && event.end) {
+          const notificationTime = moment(event.start).subtract(10, 'minutes'); // 10 minutes before the event
+          const currentTime = moment();
+    
+          console.log(notificationTime);
+    
+          if (notificationTime.isAfter(currentTime)) {
+            const timeDifference = notificationTime.diff(currentTime);
+            setTimeout(() => {
+              showNotification(event.title, 'Dans 10 minutes');
+            }, timeDifference);
+            console.log('ty zao ande aveo')
+          } else {
+            console.log('Event has already passed.');
           }
-        });
+        } else {
+          console.error('Invalid event data:', event);
+        }
       };
       
 
-      const showNotification = (title, message) => {
-        store.addNotification({
-          title: title,
-          message: message,
-          type: 'default', // 'default', 'success', 'info', 'warning', 'danger'
-          container: 'top-right', // 'top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'
-          insert: 'top',
-          animationIn: ['animate__animated', 'animate__fadeIn'],
-          animationOut: ['animate__animated', 'animate__fadeOut'],
-          dismiss: {
-            duration: 5000, // Duration in milliseconds
-            onScreen: true,
-            showIcon: true,
-          },
-        });
-      };      
+      const showNotification = (title, customMessage) => {
+        if (!("Notification" in window)) {
+          console.log("This browser does not support desktop notification");
+        } else {
+          Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+              try {
+                const notification = new Notification(title, {
+                  body: customMessage,
+                  requireInteraction: true,
+                });
+                console.log('lasa le notif')
+                notification.onclick = function () {
+                  console.log("Notification clicked!");
+                  // Handle notification click event here, e.g., redirect to a specific page
+                };
+              } catch (err) {
+                console.error("Error showing notification:", err);
+              }
+            }
+          });
+        }
+      };  
     
     
 

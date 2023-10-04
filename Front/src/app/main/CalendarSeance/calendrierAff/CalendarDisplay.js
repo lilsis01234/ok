@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import axios from 'axios';
 
 const localizer = momentLocalizer(moment);
@@ -11,6 +11,53 @@ function CalendarTraining() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showButtons, setShowButtons] = useState(false);
 
+  const scheduleNotification = (event) => {
+    if (event.start && event.end) {
+      const notificationTime = moment(event.start).subtract(10, 'minutes'); // 10 minutes before the event
+      const currentTime = moment();
+
+      console.log(notificationTime);
+
+      if (notificationTime.isAfter(currentTime)) {
+        const timeDifference = notificationTime.diff(currentTime);
+        setTimeout(() => {
+          showNotification(event.title, 'Dans 10 minutes');
+        }, timeDifference);
+        console.log('ty zao ande aveo')
+      } else {
+        console.log('Event has already passed.');
+      }
+    } else {
+      console.error('Invalid event data:', event);
+    }
+  };
+  
+
+  const showNotification = (title, customMessage) => {
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notification");
+    } else {
+      Notification.requestPermission().then(function (permission) {
+        if (permission === "granted") {
+          try {
+            const notification = new Notification(title, {
+              body: customMessage,
+              requireInteraction: true,
+            });
+            console.log('lasa le notif')
+            notification.onclick = function () {
+              console.log("Notification clicked!");
+              // Handle notification click event here, e.g., redirect to a specific page
+            };
+          } catch (err) {
+            console.error("Error showing notification:", err);
+          }
+        }
+      });
+    }
+  };
+
+
   useEffect(() => {
     // Récupérer les données de l'API backend
     axios.get('http://localhost:4001/api/calendrier/agenda')
@@ -19,12 +66,12 @@ function CalendarTraining() {
         const formattedEvents = response.data.map((event) => {
           return {
             title: `${event.title} - ${event.nombreDePlaces} places`,
-            start: new Date(event.date),
-            end: new Date(event.heureEnd),
+            start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), // Adjust timezone here
+            end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(), // Adjust timezone here
           };
         });
         setEvents(formattedEvents);
-        scheduleNotification(formattedEvents);
+        formattedEvents.forEach((event) => scheduleNotification(event)); // Schedule notifications
       })
       .catch((error) => {
         console.error(error);
@@ -37,75 +84,17 @@ function CalendarTraining() {
   };
 
   const handleParticipateNowClick = () => {
-    // Mettez en œuvre la logique pour participer par appel vidéo ici
     console.log('Participer par appel vidéo maintenant');
   };
 
   const handleReserveClick = () => {
-    // Mettez en œuvre la logique pour réserver une place ici
     console.log('Réserver une place');
   };
 
   const handleSetReminderClick = (event) => {
     scheduleNotification(event);
+    console.log('lasa le rappel')
   };
-
-  // const scheduleNotifications = (events) => {
-  //   console.log("Scheduling notifications for events:", events);
-  //   events.forEach((event) => {
-  //       const notificationTime = new Date(event.start.getTime() - 10 * 60 * 1000); // 10 minutes before the event
-  //       console.log(notificationTime)
-  //       const currentTime = new Date();
-
-  //       // if (notificationTime > currentTime) {
-  //       //     const timeDifference = notificationTime - currentTime;
-  //       //     setTimeout(() => {
-  //       //         showNotification(event.title);
-  //       //     }, timeDifference);
-  //       // }
-
-  //       const message = "Dans 10 minutes";
-  //       if (notificationTime.getTime() === currentTime.getTime()) {
-  //         showNotification(event.title,message);
-  //     }
-  //   });
-  // };
-
-  const scheduleNotification = (event) => {
-    const notificationTime = new Date(event.start.getTime() - 10 * 60 * 1000); // 10 minutes before the event
-    const currentTime = new Date();
-  
-    if (notificationTime > currentTime) {
-      setTimeout(() => {
-        showNotification(event.title, 'Dans 10 minutes');
-      }, notificationTime - currentTime);
-    } else {
-      console.log('Event has already passed.');
-    }
-  };
-
-    const showNotification = (title,costumMessage) => {
-        if (!("Notification" in window)) {
-            console.log("This browser does not support desktop notification");
-        } else {
-            Notification.requestPermission().then(function (permission) {
-                if (permission === "granted") {
-                    const confirmed = window.confirm(`Do you want to receive a notification for "${title}"?`);
-                    if (confirmed) {
-                        try {
-                            const notification = new Notification(title + ''+costumMessage, { requireInteraction: true });
-                            console.log('lasa le notif')
-                            notification.onclick = function () {
-                                Navigate('/dashboard/calendarSeance');
-                            };
-                        } catch (err) {
-                            console.error("Error showing notification:", err);
-                        }
-                    }
-                }
-            });
-        }
-    };
 
 
   return (
