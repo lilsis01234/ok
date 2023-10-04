@@ -24,6 +24,14 @@ const requestRouter = require('../backend/routes/formation/demandeFormation')
 const seanceRouter = require('../backend/routes/formation/seance')
 
 
+const { ExpressPeerServer } = require('peer');
+
+const server = http.createServer(app);
+const peerServer = ExpressPeerServer(server, {
+  debug: true,
+});
+
+app.use('/peerjs', peerServer);
 
 
 
@@ -75,6 +83,7 @@ app.use('/api/calendrier', displayRoutes);
 app.use('/api/formations',formationRouter);
 app.use('/api/demande_formation',requestRouter);
 app.use('/api/seances',seanceRouter)
+app.use('/api/peerjs', peerServer);
 
 
 //Connection à la base de donnée MySQL
