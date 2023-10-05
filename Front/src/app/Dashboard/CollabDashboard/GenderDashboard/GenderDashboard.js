@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme } from '@mui/material/styles';
-import { Paper, Typography} from '@mui/material';
+import { Paper, Typography, Box} from '@mui/material';
 import ReactApexChart from 'react-apexcharts';
 import { useState, useEffect} from 'react';
 import axios from 'axios';
@@ -31,26 +31,11 @@ const GenderDashboard = () => {
         setFemaleCollab(femaleCollab.length);
     }, [data]);
 
-    console.log(data)
-    console.log("Male Collaborateurs :", maleCollab)
-    console.log("Female Collaborateurs :", femaleCollab)
-
-
-    const chartData = {
-        labels: ['Homme', 'Femme'],
-        datasets: [
-            {
-                label: '',
-                data: [maleCollab, femaleCollab],
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 99, 132, 0.5)',
-                ],
-                borderWidth: 1,
-                borderColor: "#9C1D21",
-            }
-        ]
-    }
+    // console.log(data)
+    // console.log("Male Collaborateurs :", maleCollab)
+    // console.log("Female Collaborateurs :", femaleCollab)
+    const series = [maleCollab, femaleCollab]
+    const labels = ['Man', 'Woman']
 
     const chartOptions = {
         chart: {
@@ -69,13 +54,8 @@ const GenderDashboard = () => {
             },
         },
         colors: ['#319795', '#4FD1C5'],
-        labels: ['Homme', 'Femme'],
-        datasets: [
-            {
-                label: '',
-                data: [maleCollab, femaleCollab],
-            }
-        ],
+        labels,
+        series,
         plotOptions: {
             pie: {
                 customScale: 0.9,
@@ -104,12 +84,12 @@ const GenderDashboard = () => {
             enabled: true,
             fillSeriesColor: false,
             theme: 'dark',
-            // custom: ({ seriesIndex, w }) =>
-            //   `<div class="flex items-center h-32 min-h-32 max-h-23 px-12">
-            //       <div class="w-12 h-12 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
-            //       <div class="ml-8 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
-            //       <div class="ml-8 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
-            //   </div>`,
+            custom: ({ seriesIndex, w }) =>
+             `<div class="flex items-center h-32 min-h-32 max-h-23 px-12">
+                <div class="w-12 h-12 rounded-full" style="background-color: ${w.config.colors[seriesIndex]};"></div>
+                <div class="ml-8 text-md leading-none">${w.config.labels[seriesIndex]}:</div>
+                <div class="ml-8 text-md font-bold leading-none">${w.config.series[seriesIndex]}%</div>
+            </div>`,
         },
 
     }
@@ -129,12 +109,12 @@ const GenderDashboard = () => {
                 <ReactApexChart
                     className="flex flex-auto items-center justify-center w-full h-full"
                     options={chartOptions}
-                    series={chartData}
+                    series={series}
                     type={chartOptions.chart.type}
                     height={chartOptions.chart.height}
                 />
             </div>
-            {/* <div className="mt-32">
+            {<div className="mt-32">
                 <div className="-my-12 divide-y">
                     {series.map((dataset, i) => (
                         <div className="grid grid-cols-3 py-12" key={i}>
@@ -145,16 +125,16 @@ const GenderDashboard = () => {
                                 />
                                 <Typography className="ml-12 truncate">{labels[i]}</Typography>
                             </div>
-                            <Typography className="font-medium text-right">
+                            {/* <Typography className="font-medium text-right">
                                 {((uniqueVisitors * dataset) / 100).toLocaleString('en-US')}
-                            </Typography>
+                            </Typography> */}
                             <Typography className="text-right" color="text.secondary">
-                                {dataset}%
+                                {dataset}
                             </Typography>
                         </div>
                     ))}
                 </div>
-            </div> */}
+            </div> }
         </Paper>
     )
 }

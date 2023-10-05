@@ -45,7 +45,7 @@ router.post('/password_request_rest', async(req, res) => {
         await user.save();
 
         //Création du mail pour réinitialiser le mot de passe
-        const baseUrl = 'http://192.168.16.244:3000';
+        const baseUrl = 'http://localhost:3000';
         const resetPasswordLink = `${baseUrl}/reset-password/${token}`
 
         //Contenu du mail 

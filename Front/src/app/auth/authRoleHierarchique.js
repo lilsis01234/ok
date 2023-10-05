@@ -5,7 +5,7 @@ let roleHierarchique = {}
 export const getRoleHierarchique = () => roleHierarchique;
 
 export const fetchRoleHierarchique = () =>  {
-    return axios.get('http://192.168.16.244:4000/api/roleHierarchique/all')
+    return axios.get('http://localhost:4000/api/roleHierarchique/all')
         .then(response => {
             const roleFromBackend = response.data;
             const indexedRole = roleFromBackend.map((role) => ({

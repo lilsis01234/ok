@@ -63,9 +63,14 @@ router.post('/connect', (req, res, next) => {
             // const roleTitle = userRoles.length > 0 ? userRoles[0] :null;
 
             const token = jwt.sign(
-                {},
+                {id : comptes.id},
                 secretKey,
                 {expiresIn : '1h'}
+            )
+            const refresh_token = jwt.sign(
+                {vid : comptes.id},
+                secretKey,
+                {expiresIn : '2h'}
             )
             // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400100})
 
@@ -73,6 +78,7 @@ router.post('/connect', (req, res, next) => {
                 id : comptes.id,
                 compte : comptes,
                 token : token,
+                refresh_token,
                 role : roles.Role.titreRole,
             })
             console.log('Utilisateur connecté avec succés')
@@ -87,30 +93,77 @@ router.post('/connect', (req, res, next) => {
 
 
 //Renouveler le token
-function verifyJWTToken(token) {
-    try {
-        const decoded = jwt.verify(token, secretKey);
-        return decoded;
+// function verifyJWTToken(token) {
+//     try {
+//         const decoded = jwt.verify(token, secretKey);
+//         return decoded;
+//     } catch (error){
+//         return null;
+//     }
+// }
+
+function refreshTokenIsValid(refresh_token){
+    try{
+        jwt.verify(refresh_token, secretKey)
+        return true
     } catch (error){
-        return null;
+        return false;
     }
 }
 
-//Renouveler le token
-router.post('/access-token', (req, res) => {
-    const {acess_token} = req.body;
-
-    const decodedToken = verifyJWTToken(acess_token);
-    if (decodedToken){
-        // const {compte, role} = decodedToken;
-        const newAcessToken = jwt.sign({}, secretKey , {
-            expiresIn : '1h'
-        })
-
-        return res.status(200).json({token : newAcessToken})
+function getUserIdFromRefreshToken(refresh_token){
+    try {
+        const decoded = jwt.verify(refresh_token, secretKey)
+        return decoded.id
+    } catch (error){
+        throw new Error('Erreur lors de l\'extraction de l\'ID utilisateurs du refresh_token')
     }
-    return res.status(401).json({error : 'Token invalide'})
+}
+
+
+
+router.post('/refresh_token', (req, res) => {
+    const refresh_token = req.body.refresh_token
+    
+    if(refreshTokenIsValid(refresh_token)){
+        const userId = getUserIdFromRefreshToken(refresh_token)
+        const token = jwt.sign(
+            {id : userId},
+            secretKey,
+            {expiresIn : '1h'}
+        )
+        const refresh_token = jwt.sign(
+            {id : userId},
+            secretKey,
+            {expiresIn : '2h'}
+        )
+        res.json({token, refresh_token})
+    } else {
+        res.status(401).json({message : 'Refresh Token invalide'})
+    }
+ 
+
 })
+
+
+
+
+
+//Renouveler le token
+// router.post('/access-token', (req, res) => {
+//     const {acess_token} = req.body;
+
+//     const decodedToken = verifyJWTToken(acess_token);
+//     if (decodedToken){
+//         // const {compte, role} = decodedToken;
+//         const newAcessToken = jwt.sign({}, secretKey , {
+//             expiresIn : '1h'
+//         })
+
+//         return res.status(200).json({token : newAcessToken})
+//     }
+//     return res.status(401).json({error : 'Token invalide'})
+// })
 
 
 
@@ -134,6 +187,8 @@ const verifyToken = async (req, res, next) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+
 
 
 

@@ -41,6 +41,15 @@ const navigationConfig = [
     type: 'group',
     icon: 'heroicons-outline:user-group',
     translate: 'COLLABORATEURS',
+    children : [
+      {
+         id : 'collaborateurs.liste',
+         title : 'Collaborator Lists',
+         type: 'item',
+         icon: 'heroicons-outline:user-group',
+         url : 'collaborateurs/all',
+      }
+    ]
   }, 
   {
     id : 'entreprise',
@@ -52,6 +61,7 @@ const navigationConfig = [
           id: 'entreprise.direction',
           title: 'Direction',
           type: 'item',
+          url : '/business/direction/all',
           icon: 'heroicons-outline:briefcase',
           // translate: 'COLLABORATEURS',
         }, {
@@ -67,7 +77,18 @@ const navigationConfig = [
           icon : 'heroicons-outline:user-group',
           translate : 'EQUIPE'
         }, {
-          
+          id : 'entreprise.manage',
+          title : 'Manage Business Structure',
+          type : 'collapse',
+          icon : 'heroicons-outline:briefcase',
+          children : [
+            {
+              id : 'entreprise.direction-manage',
+              title : 'Direction',
+              type : 'item',
+              url : 'business/manage/direction'
+            }
+          ]
         }
     ]
   }

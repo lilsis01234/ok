@@ -8,10 +8,16 @@ import SignOutConfig from '../main/sign-out/SignOutConfig';
 import Error404Page from '../main/404/Error404Page';
 import ExampleConfig from '../main/example/ExampleConfig';
 import dashboardsConfigs from '../main/Dashboard/dashboardsConfig';
+import ContactConfig from '../main/pages/Contacts/ContactAppConfig';
+import DirectionAppConfig from '../main/pages/Direction/DirectionAppConfig';
+import StructureAppConfig from '../main/pages/gererStructure/StructureAppConfig';
 
 const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig,
   ...dashboardsConfigs,
+  ContactConfig,
+  DirectionAppConfig,
+  StructureAppConfig,
 ];
 
 const routes = [
