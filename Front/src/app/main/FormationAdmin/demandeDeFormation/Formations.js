@@ -1,32 +1,12 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-// import ListeFormationAdmin from '../listeFormationsAdmin/listeFormationsAdmin'
 import './demandeFormation.css'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 const Formations = () => {
-  // const navigate = useNavigate();
-  // const [listevisible,setVisible] = useState(false);
-  
-  // useEffect(() => {
-  //   // const token = Cookies.get('jwt');
-  //   const token = localStorage.getItem('jwt');
-  //   if (!token){
-  //       navigate('/');
-  //   }
-
-  //   const role = localStorage.getItem('role'); 
-  //   if (!(role === "Administrateur")){
-  //       navigate('/home');
-  //   }
-  //   }, [navigate])
-    
 
 const Formation = ()=>{
-  // const idrole = localStorage.getItem('idrole');
-  // console.log(idrole);
 
   const[Formation,setFormations] = useState([]);
 
@@ -55,7 +35,6 @@ const Formation = ()=>{
             setRecherche(e.target.value);
           }}
         />
-        {/* <button type="submit">Rechercher</button> */}
       </div>
     </div>
 
