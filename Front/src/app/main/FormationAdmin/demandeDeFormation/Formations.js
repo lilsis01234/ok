@@ -50,7 +50,7 @@ const Formations = () => {
                 Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
               </p>
             ) : (
-              <p className="formateur_name">Formateur inconnu</p>
+              <p className="formateur_name">Formateur externe</p>
             )}
             <button className="voir_plus_button">
               <Link to={`/admin/formation/${formation.id}`}>?</Link>
@@ -69,7 +69,7 @@ const Formations = () => {
                   Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
                 </p>
               ) : (
-                <p className="formateur_name">Formateur inconnu</p>
+                <p className="formateur_name">Formateur externe</p>
               )}
               <button className="voir_plus_button">
                 <Link to={`/admin/formation/${formation.id}`}>?</Link>
