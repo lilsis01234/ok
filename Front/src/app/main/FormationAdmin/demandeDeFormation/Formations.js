@@ -64,46 +64,51 @@ const Formation = ()=>{
     </div>
     </center>
 
-    {Formation.length !== 0 ? (
-      <table className="training_table">
-          <thead>
-              <tr>
-                  <th className="w-100">Auteur</th>
-                  <th className="w-100">Thème</th>
-                  <th className="w-100">Description</th>
-                  <th className="w-100">Organisateur(trice)</th>
-                  <th className="w-100">Voir plus</th>
-              </tr>
-          </thead>
-          <tbody>
-              {recherche === '' || recherche === null ? (Formation.map((formation)=> (
-              <tr key={formation.id}>
-                {formation.Auteur&&<td >{formation.Auteur.nom} {formation.Auteur.prenom}</td>}
-                  <td >{formation.theme}</td>
-                  <td >{formation.description}</td>
-                  {formation.Formateur ? (<td >{formation.Formateur.nom} {formation.Formateur.prenom}</td>):(<td>Formateur inconnu</td>)}
+    <div className="training_container">
+      {Formation.length !== 0 ? (
 
-                  <td ><button className="table_item_icon"><Link to= {`/admin/formation/${formation.id}`}>Voir plus</Link></button></td>
-              </tr>
-              ))) : (
+        recherche === ''||recherche === null ?(
 
-             Formation.filter((formations)=>formations.theme.toLowerCase().includes(recherche.toLowerCase())||formations.description.toLowerCase().includes(recherche.toLowerCase()) ).map((formation) => (
-              <tr key={formation.id}>
-                {formation.Auteur&&<td >{formation.Auteur.nom} {formation.Auteur.prenom}</td>}
-                  <td >{formation.theme}</td>
-                  <td >{formation.description}</td>
-                  {formation.Formateur ? (<td >{formation.Formateur.nom} {formation.Formateur.prenom}</td>):(<td>Formateur inconnu</td>)}
-                  {/* lien formation/idFormation voir plus */}
-                  <td><button className="table_item_icon"><Link to= {`/admin/formation/${formation.id}`}>Voir plus</Link></button></td>
-              </tr>
-              ))
+        Formation.map((formation) => (
+          <div key={formation.id} className="formation_item">
+            <h2 className="formation_title">{formation.theme}</h2>
+            <p className="formation_description">{formation.description}</p>
+            {formation.Formateur ? (
+              <p className="formateur_name">
+                Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
+              </p>
+            ) : (
+              <p className="formateur_name">Formateur inconnu</p>
+            )}
+            <button className="voir_plus_button">
+              <Link to={`/admin/formation/${formation.id}`}>?</Link>
+            </button>
+          </div>
+        ))
+        
+        ):(
+
+          Formation.filter(Formation=>Formation.theme.includes(recherche)||Formation.description.includes(recherche)).map((formation) => (
+            <div key={formation.id} className="formation_item">
+              <h2 className="formation_title">{formation.theme}</h2>
+              <p className="formation_description">{formation.description}</p>
+              {formation.Formateur ? (
+                <p className="formateur_name">
+                  Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
+                </p>
+              ) : (
+                <p className="formateur_name">Formateur inconnu</p>
               )}
-          </tbody>
-      </table>):
-    (
-      <h3>Aucune formation pour le moment</h3>
-    ) 
-    }
+              <button className="voir_plus_button">
+                <Link to={`/admin/formation/${formation.id}`}>?</Link>
+              </button>
+            </div>
+        )))
+
+        ) : (
+        <h3>Aucune formation pour le moment</h3>
+        )}
+    </div>
     </>
   )
 }
