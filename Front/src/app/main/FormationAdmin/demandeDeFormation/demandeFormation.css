@@ -43,7 +43,7 @@
 
   .formation_title {
     font-size: 24px;
-    color: #007bff; /* Couleur bleue */
+    color: #007bff; 
     margin-bottom: 10px;
   }
   
@@ -62,3 +62,45 @@
   .voir_plus_button:hover {
     background-color: #218838; /* Couleur verte foncée au survol */
   }
+
+  .header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header h1 {
+    font-size: 24px;
+    color: #343a40;
+    margin-bottom: 10px;
+  }
+  
+  .search_form {
+    background-color: #ffffff;
+    border-radius: 25px;
+    display: inline-flex;
+    padding: 5px 10px;
+  }
+  
+  .search_form input {
+    border: none;
+    outline: none;
+    width: 200px;
+    font-size: 16px;
+  }
+  
+  .search_form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .search_form button:hover {
+    background-color: #0056b3;
+  }
+  

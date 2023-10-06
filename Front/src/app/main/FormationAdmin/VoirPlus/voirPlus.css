@@ -195,8 +195,8 @@
     text-decoration: none !important;
     background-color: #007bff;
     font-size: 20px;
-    border-radius: 25px; /* Adjust the border-radius to control the roundness of the button */
-    padding: 10px 20px; /* Adjust padding to control the width and height of the button */
+    border-radius: 25px;
+    padding: 10px 20px; 
     display: inline-block;
     margin-left: -20px;
   }
