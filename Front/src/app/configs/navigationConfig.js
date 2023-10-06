@@ -100,6 +100,29 @@ const navigationConfig = [
         icon: 'heroicons-outline:users',
         translate: 'Demandes',
         url : 'dashboards/demandeFormation'
+      },
+      {
+        id: 'formation.ajoutFormation',
+        title: 'Ajouter',
+        type: 'item',
+        icon: 'heroicons-outline:plus',
+        translate: 'Ajouter',
+        url : 'formateur/addFormation',
+      }
+    ]
+  },{
+    id:'module',
+    type:'group',
+    title:'Modules',
+    translate:'Modules',
+    children:[
+      {
+        id:'module.add',
+        type:'item',
+        title:'Ajouter',
+        translate:'Ajouter',
+        icon:'heroicons-outline:plus',
+        url:'formation/addModule'
       }
     ]
   },{
@@ -108,7 +131,6 @@ const navigationConfig = [
     type: 'group',
     icon: 'heroicons-outline:calendar',
     translate: 'Seances',
-    url : 'dashboards/modules',
     children:[
       {
         id: 'module.ajoutSeance',
@@ -119,7 +141,29 @@ const navigationConfig = [
         url : 'dashboards/addSeance',
       },
     ],
-  },
+  },{
+    id:'conge',
+    title: 'Congés',
+    type: 'group',
+    icon: 'heroicons-outline:calendar',
+    translate: 'Congés',
+    children:[
+      {
+        id:'conge.calendrier',
+        type: 'item',
+        title:'Calendrier',
+        icon:'heroicons-outline:calendar',
+        translate:'Calendrier'
+      },
+      {
+        id:'conge.demandes',
+        type: 'item',
+        title:'Demandes',
+        icon:'heroicons-outline:users',
+        translate:'Demandes'
+      },
+    ]
+  }
 ];
 
 export default navigationConfig;
