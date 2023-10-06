@@ -13,7 +13,7 @@ const AjoutFormation = ()=>{
     const formateur = 2
 
     const handleSubmit =(event)=>{
-        event.preventDefault()
+        event.preventDefault();
         axios.post('http://localhost:4001/api/formations/addFormation', {theme,description, duree,auteur,formateur})
         .then(res => {
             console.log(res);
