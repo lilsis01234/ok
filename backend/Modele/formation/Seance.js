@@ -4,6 +4,7 @@ const Module = require('./Module');
 const Collaborateur = require('../../Modele/CollabModel/Collab');
 const ParticipantSeance = require('./ParticipantsSeance');
 const Departement = require('../Structure/TestDepartement');
+const Formation = require('../formation/Formation')
 
 class Seance extends Model {}
 
@@ -26,6 +27,14 @@ Seance.init(
       references: {
         model: Module,
         key: 'id',
+      },
+    },
+    formation:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      references:{
+        model:Formation,
+        key:'id',
       },
     },
     nombreDePlaces: {
