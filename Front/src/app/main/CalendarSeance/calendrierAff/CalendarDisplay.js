@@ -3,6 +3,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment-timezone';
 import axios from 'axios';
+import '../../FormationAdmin/VoirPlus/voirPlus.css'
 
 const localizer = momentLocalizer(moment);
 
@@ -58,6 +59,7 @@ function CalendarTraining() {
   };
 
 
+
   useEffect(() => {
     // Récupérer les données de l'API backend
     axios.get('http://localhost:4001/api/calendrier/agenda')
@@ -81,6 +83,7 @@ function CalendarTraining() {
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
     setShowButtons(true);
+    console.log('zany kitihandry zany')
   };
 
   const handleParticipateNowClick = () => {
@@ -96,9 +99,14 @@ function CalendarTraining() {
     console.log('lasa le rappel')
   };
 
+  const closePopup = () => {
+    setShowButtons(false);
+  };
 
   return (
-    <div style={{ height: '500px' }}>
+    <div className="voirPlusContainer">
+    <div className = "calendarContainer">
+    <div className="calendarWrapper">
       <Calendar
         localizer={localizer}
         events={events}
@@ -108,12 +116,17 @@ function CalendarTraining() {
         style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
       />
       {showButtons && selectedEvent && (
-        <div>
-          <button onClick={handleParticipateNowClick}>Participer par appel vidéo maintenant</button>
-          <button onClick={handleReserveClick}>Réserver une place</button>
-          <button onClick={() => handleSetReminderClick(selectedEvent)}>Me rappeler cette formation</button>
+        <div className="popup">
+        <div className="popupContent">
+            <button className="popupButton" onClick={handleParticipateNowClick}>Participer par appel vidéo</button>
+            <button className="popupButton" onClick={handleReserveClick}>Réserver une place</button>
+            <button className="popupButton" onClick={() => { handleSetReminderClick(selectedEvent); console.log('vokitika'); }}>Me rappeler cette formation</button>
+            <button className="closeButton" onClick={closePopup}>X</button>
         </div>
+      </div>
       )}
+    </div>
+    </div>
     </div>
   );
 }
