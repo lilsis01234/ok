@@ -7,8 +7,9 @@ moment.tz.setDefault('Indian/Antananarivo');
 
 router.post('/agenda', async (req, res) => {
   try {
-    const eventsData = req.body;
+    const eventsData = req.body.events;
     const moduleId = 1; // Set your appropriate module ID here
+    const formation = req.body.idformation;
 
     const agendaEntries = await Promise.all(eventsData.map(async event => {
       const { start, end, title, nombreDePlaces } = event;
@@ -21,6 +22,7 @@ router.post('/agenda', async (req, res) => {
         nombreDePlacesReservees: 0,
         nombreDePlaces: nombreDePlaces,
         title: title,
+        formation,
         approbation: 1
       });
       return agendaEntry;

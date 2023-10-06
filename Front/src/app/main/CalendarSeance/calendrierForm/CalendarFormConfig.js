@@ -8,6 +8,10 @@ const CalendarFormConfig = {
                     path: 'dashboards/addSeance',
                     element: <CalendarForm />,
                 },
+                {
+                    path:'/dashboards/addSeance/:id',
+                    element:<CalendarForm/>
+                }
             ],
 };
 

@@ -3,11 +3,18 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment-timezone';
 import axios from 'axios';
+import { useNavigate,useParams } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
 function CalendarForm() {
   const [events, setEvents] = useState([]);
+  const formation = useParams()
+  console.log(formation)
+
+  const idformation = formation.id
+  
+  const navigate = useNavigate();
 
   const handleSelect = ({ start, end }) => {
     const titre = window.prompt('Nom de l\'événement :');
@@ -27,9 +34,10 @@ function CalendarForm() {
 
   const handleSave = () => {
     axios
-      .post('http://localhost:4001/api/agenda/agenda', events)
+      .post('http://localhost:4001/api/agenda/agenda', {events,idformation})
       .then(response => {
         console.log(response.data);
+        navigate(`/admin/formation/${idformation}`)
       })
       .catch(error => {
         console.error(error);
