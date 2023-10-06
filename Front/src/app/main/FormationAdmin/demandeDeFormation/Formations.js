@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom'
 
 const Formations = () => {
 
-const Formation = ()=>{
-
   const[Formation,setFormations] = useState([]);
 
   const fetchFormation = () => {
@@ -84,18 +82,6 @@ const Formation = ()=>{
         )}
     </div>
     </>
-  )
-}
-
-  return (
-            <div>
-              <div className="collabListes">
-                {/* <button className="visible" onClick={() => setVisible(!listevisible)}>
-                <h1>{listevisible ? 'Voir les demandes de formations' : 'Voir les formations disponibles'}</h1>
-                </button> */}
-               <Formation />
-              </div>
-            </div>
   )
 }
 
