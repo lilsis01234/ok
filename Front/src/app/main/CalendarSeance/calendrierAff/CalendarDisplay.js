@@ -97,6 +97,7 @@ function CalendarTraining() {
   const handleSetReminderClick = (event) => {
     scheduleNotification(event);
     console.log('lasa le rappel')
+    alert('Rappel confirmé')
   };
 
   const closePopup = () => {
