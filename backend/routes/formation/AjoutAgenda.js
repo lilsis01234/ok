@@ -17,7 +17,7 @@ router.post('/agenda', async (req, res) => {
       const agendaEntry = await Agenda.create({
         date: start,
         heureStart: start,
-        heureEnd: end, // Ensure that heureEnd is set correctly
+        heureEnd: end, 
         module: moduleId,
         nombreDePlacesReservees: 0,
         nombreDePlaces: nombreDePlaces,
