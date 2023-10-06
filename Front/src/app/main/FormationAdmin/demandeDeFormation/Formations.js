@@ -45,24 +45,19 @@ const Formation = ()=>{
   const [recherche,setRecherche] = useState(null);
   return (
     <>
-    <center>
-    <div className='content'>
-      <div className='collabListes'>
-        <h1 className="collabListes_title font-bold">Liste des formations</h1>
-          <div className="collabListes_Item">
-            <div className="search_form">
-            <input type='text' placeholder='rechercher ici' onChange={(e) => {
-              setRecherche(e.target.value);
-            }}
-          onKeyUp={(e) => {
-               if (e.key === "Enter") {
-                e.target.focus(); // Maintenir le focus sur l'input après avoir appuyé sur "Enter"
-              }}}/>
-            </div>
-          </div>
+    <div className='header'>
+      <h1>Explorez nos Formations</h1>
+      <div className="search_form">
+        <input
+          type='text'
+          placeholder='Rechercher ici...'
+          onChange={(e) => {
+            setRecherche(e.target.value);
+          }}
+        />
+        {/* <button type="submit">Rechercher</button> */}
       </div>
     </div>
-    </center>
 
     <div className="training_container">
       {Formation.length !== 0 ? (
