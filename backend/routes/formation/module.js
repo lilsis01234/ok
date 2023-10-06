@@ -66,7 +66,7 @@ router.post('/addModule',async(req,res)=>{
         const newModule = await(Module.create({
             titreModule:req.body.titreModule,
             description:req.body.description,
-            formation:req.body.formation,
+            formation:req.body.idformation,
         }))
         const module = await newModule.save();
         res.status(201).json(module);
