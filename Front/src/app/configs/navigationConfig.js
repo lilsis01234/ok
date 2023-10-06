@@ -11,14 +11,6 @@ i18next.addResourceBundle('fr', 'navigation', fr);
 
 
 const navigationConfig = [
-  // {
-  //   id: 'example-component',
-  //   title: 'Example',
-  //   translate: 'EXAMPLE',
-  //   type: 'item',
-  //   icon: 'heroicons-outline:star',
-  //   url: 'example',
-  // },
   {
     id: 'dashboard',
     title: 'Dashboard',
@@ -103,10 +95,18 @@ const navigationConfig = [
       },
       {
         id: 'formation.ajoutFormation',
-        title: 'Ajouter',
+        title: 'Formation',
         type: 'item',
         icon: 'heroicons-outline:plus',
-        translate: 'Ajouter',
+        translate: 'Formation',
+        url : 'formateur/addFormation',
+      },
+      {
+        id: 'formation.ajoutDemandeFormation',
+        title: 'Demande',
+        type: 'item',
+        icon: 'heroicons-outline:plus',
+        translate: 'Demande',
         url : 'formateur/addFormation',
       }
     ]
@@ -161,6 +161,12 @@ const navigationConfig = [
         title:'Demandes',
         icon:'heroicons-outline:users',
         translate:'Demandes'
+      },{
+        id:'conge.ajout',
+        type: 'item',
+        title:'Demande',
+        icon:'heroicons-outline:plus',
+        translate:'Demande'
       },
     ]
   }
