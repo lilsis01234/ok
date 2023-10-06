@@ -81,22 +81,11 @@ router.get('/seancesParFormation/:idformation', async (req, res) => {
         const idformation = req.params.idformation;
  
          //Recherche de la formation ayant cet id
-         const module = await Module.findAll({
+         const seances = await Seance.findAll({
              where : {
                  formation : idformation,
             }
          })
- 
-         if (!module || module.length === 0){
-             return res.status(404).json({message: 'Aucun module trouvé pour cette formation'})
-         }
- 
-         //Récupérations des modules associés à cette formation
-         const seances = await Seance.findAll({
-             where : {module: module.map(module => module.id)},
-             include : {model : Module}
-         })
- 
          res.json(seances);
  
      } catch (error) {
