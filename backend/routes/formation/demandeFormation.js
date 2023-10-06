@@ -19,7 +19,7 @@ const { resourceLimits } = require('worker_threads');
   router.get('/all_confirmed_formations', async (req, res) => {
     const idConsultant = await Role2.findOne ({
       where : {
-        titreRole2: {
+        roleHierarchique: {
           [Sequelize.Op.like]: "formateurExt"
         }
     }})
@@ -84,7 +84,7 @@ router.post('/envoiDirection/:id', async (req, res) => {
 
   const idDirection = await Role2.findOne ({
     where : {
-      titreRole2: {
+      roleHierarchique: {
         [Sequelize.Op.like]: "direction"
       }
   }})
@@ -112,7 +112,7 @@ router.post('/annulationenvoiDirection/:id', async (req, res) => {
 
   const idRrh = await Role2.findOne ({
     where : {
-      titreRole2: {
+      roleHierarchique: {
         [Sequelize.Op.like]: "Rrh"
       }
   }})
@@ -138,7 +138,7 @@ router.post('/annulationenvoiDirection/:id', async (req, res) => {
 router.get('/approuveparRrh', async (req, res) => {
 const idDirection = await Role2.findOne ({
     where : {
-      titreRole2: {
+      roleHierarchique: {
         [Sequelize.Op.like]: "direction"
       }
   }})
@@ -167,7 +167,7 @@ router.post('/approbationDirection/:id', async (req, res) => {
   const formationId = req.params.id;
   const idConsultant = await Role2.findOne ({
     where : {
-      titreRole2: {
+      roleHierarchique: {
         [Sequelize.Op.like]: "formateurext"
       }
   }})
@@ -195,7 +195,7 @@ router.post('/annulerApprobation/:id', async (req, res) => {
   const formationId = req.params.id;
   const idDirection = await Role2.findOne ({
     where : {
-      titreRole2: {
+      roleHierarchique: {
         [Sequelize.Op.like]: "direction"
       }
   }})
@@ -222,7 +222,7 @@ router.post('/approuverpourCoatch/:id', async (req, res) => {
   const formationId = req.params.id;
   const idCoatch = Role2.findOne({
     where:{
-      titreRole2:{
+      roleHierarchique:{
         [sequelize.Op.like]:"Coatch"
       }
     }
@@ -252,7 +252,7 @@ router.post('/annulerapprobation/:id', async (req, res) => {
     const formationId = req.params.id;
     const idCoatch = Role2.findOne({
       where:{
-        titreRole2:{
+        roleHierarchique:{
           [sequelize.Op.like]:"coatch"
         }
       }

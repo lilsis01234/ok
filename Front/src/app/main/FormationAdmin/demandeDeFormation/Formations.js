@@ -35,7 +35,6 @@ const Formations = () => {
         />
       </div>
     </div>
-
     <div className="training_container">
       {Formation.length !== 0 ? (
 
