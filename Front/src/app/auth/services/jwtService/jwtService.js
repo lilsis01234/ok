@@ -77,7 +77,8 @@ class JwtService extends FuseUtils.EventEmitter {
         .then((response) => {
           if (response.data) {
             this.setSession(response.data.token);
-            this.isUserConnected(response.data.compte)
+            this.setRefreshToken(response.data.refresh_token);
+            this.setUserId(response.data.id);
             this.emit('onLogin', response.data.compte);
             return response.data
           } else {
@@ -88,13 +89,15 @@ class JwtService extends FuseUtils.EventEmitter {
 
   signInWithToken = () => {
       const data = {
-        acess_token : this.getAccessToken()
+        refresh_token : this.getAccessRefreshToken()
       }
       return axios
-        .post(jwtServiceConfig.accessToken, data)
+        .post(jwtServiceConfig.refresh_token, data)
         .then((response) => {
-          if (response.data.user) {
+          if (response.data.id) {
             this.setSession(response.data.token);
+            this.setRefreshToken(response.data.refresh_token);
+            this.setUserId(response.data.id);
             return (response.data);
           } else {
             this.logout();
@@ -125,10 +128,31 @@ class JwtService extends FuseUtils.EventEmitter {
     }
   };
 
+  setRefreshToken = (refresh_token) => {
+    if (access_token){
+      localStorage.setItem('refresh_token', refresh_token); 
+    } else {
+      localStorage.removeItem('refresh_token')
+    }
+  }
+
+  setUserId = (id)=> {
+    if (id){
+      localStorage.setItem('user', id)
+    } else {
+      localStorage.removeItem('user')
+    }
+  } 
+
+
+
   logout = () => {
     this.setSession(null);
+    this.setRefreshToken(null);
+    this.setUserId(null);
     this.emit('onLogout', 'Logged out');
   };
+
 
   isAuthTokenValid = (access_token) => {
     if (!access_token) {
@@ -148,17 +172,12 @@ class JwtService extends FuseUtils.EventEmitter {
     return window.localStorage.getItem('jwt_access_token');
   };
 
-  //Récupération des rôles de l'utilisateur connecté
-  isUserConnected = (userInfo) => {
-    if(userInfo){
-        localStorage.setItem('user', userInfo)
-    } else {
-      localStorage.removeItem('user')
-    }
+  getAccessRefreshToken = () => {
+    return window.localStorage.getItem('refresh_token')
   }
 
-  getUserConnected = () => {
-    return window.localStorage.getItem('user')
+  getUserId = () => {
+    return window.localStorage.getItem('user');
   }
 
 

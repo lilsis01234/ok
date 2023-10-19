@@ -33,7 +33,7 @@ function DirectionItem(props) {
 
   console.log(dirigeant)
   
-  let id = direction.id
+  // let id = direction.id
 
 
 

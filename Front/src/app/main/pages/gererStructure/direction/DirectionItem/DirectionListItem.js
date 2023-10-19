@@ -6,6 +6,10 @@ const { Typography } = require("@mui/material");
 const { useState, useEffect } = require("react");
 const { useForm, FormProvider } = require("react-hook-form");
 const { useParams, Link } = require("react-router-dom");
+import { motion } from 'framer-motion';
+import {Button} from '@mui/material';
+import * as yup from 'yup';
+import axios from 'axios';
 
 
 const schema = yup.object().shape({
@@ -15,9 +19,10 @@ const schema = yup.object().shape({
         .min(5, 'The product name must be at least 5 characters'),
 });
 
-function DirectionItem(props) {
+
+function DirectionListItem(props) {
+    const {directionId} = useParams();
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'))
-    const routeParams = useParams;
     const [tabValue, setTabValue] = useState(0);
     const [noDirection, setNoDirection] = useState(false);
 
@@ -32,27 +37,59 @@ function DirectionItem(props) {
     const { reset, watch, control, onChange, fomState } = methods;
     const form = watch();
 
+    const [loading, setLoading] = useState(false);
 
-    useDeepCompareEffect(() => {
+
+    //useDeeepCompareEffect est une variante de useEffect : comparee les valeurs de dépendances spécifiés avant de déclencher l'effet
+    //compare reecursivement les valeurs pour détecter les changements profonds
+    ///utiliser pour executer l'effet uniquement lorque les valeurs réelles changement 
+    useEffect(() => {
         function updatedDirectionState() {
-            const { id } = routeParams;
-            if (id === 'new') {
-                console.log('Ajout d\'un nouvelle direction')
+            if(directionId){
+                if (directionId === 'new') {
+                    console.log('Ajout d\'un nouvelle direction')
+                } else {
+                    console.log('Affichage d\'un  direction existante')
+                    setNoDirection(true);
+                }
             } else {
-                console.log('Affichage d\'un  direction existante')
+                setLoading(true);
             }
-
+           
         }
 
         updatedDirectionState()
-    }, [routeParams])
+    }, [directionId])
 
+
+    //Récupérer la direction depuis la base de données
+    const fetchDirection = () =>{
+        axios.get(`http://localhost:4000/api/direction/view/${directionId}`)
+        .then(response => {
+            setDirection(response.data)
+            setNoDirection(false)
+            setLoading(false)
+        })
+        .catch(error => {
+            setNoDirection(true)
+        })
+    }
+
+    useEffect(() => {
+        fetchDirection();
+    }, [])
+
+
+
+    if(loading){
+        return <FuseLoading/>
+    }
 
     function handleTabChange(event, value) {
         setTabValue(value)
     }
 
-    if (noProduct) {
+    if (noDirection) {
         return (
             <motion.div
                 initial={{ opacity: 0 }}
@@ -60,13 +97,13 @@ function DirectionItem(props) {
                 className="flex flex-col flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There is no such product!
+                    There is no such direction!
                 </Typography>
                 <Button
                     className="mt-24"
                     component = {Link}
                     variant="outlined"
-                    // to="/apps/e-commerce/products"
+                    to="/business/manage/direction"
                     color="inherit"
                 >
                     Go To Directions Page
@@ -77,35 +114,24 @@ function DirectionItem(props) {
 
 
     if(
-        _.isEmpty(form) || (direction && routeParams.id !== direction.id && routeParams.id !== 'new')
+        _.isEmpty(form) || (direction && directionId !== direction.id && directionId !== 'new')
     ){
         return <FuseLoading/>
     }
 
     return (
         <FormProvider {...methods}>
-            <FusePageCarded />
+            <FusePageCarded 
+                header = {<DirectionListItem/>}
+                content = {
+                    <>
+                        <p>Editer la direction</p>
+                    </>
+                }
+            />
         </FormProvider>
     )
 
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+export default DirectionListItem;

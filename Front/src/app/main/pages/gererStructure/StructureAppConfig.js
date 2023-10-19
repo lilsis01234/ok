@@ -1,4 +1,6 @@
 import  {lazy} from 'react';
+import DirectionListItem from './direction/DirectionItem/DirectionListItem';
+
 
 const Direction = lazy(() => import('./direction/Direction'))
 
@@ -10,6 +12,10 @@ const StructureAppConfig  = {
         {
             path : 'business/manage/direction',
             element : <Direction/>
+        }, 
+        {
+            path : 'business/manage/direction/:directionId',
+            element : <DirectionListItem/>
         }
     ]
 }

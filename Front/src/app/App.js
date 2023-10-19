@@ -14,7 +14,7 @@ import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import FuseAuthorization from '@fuse/core/FuseAuthorization';
 import settingsConfig from 'app/configs/settingsConfig';
 import withAppProviders from './withAppProviders';
-import { AuthProvider } from './login/AuthContext';
+import { AuthProvider } from './auth/AuthContext';
 
 // import axios from 'axios';
 /**

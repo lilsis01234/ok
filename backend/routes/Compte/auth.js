@@ -86,9 +86,18 @@ router.post('/connect', (req, res, next) => {
         
         })
        })
-       .catch (error => res.status(500).json({error}));
+    //    .catch (error => res.status(500).json({error}), console.log(error));
+    .catch(error => (
+        res.status(500).json({error}),
+        console.log(error)
+    ))
+       
     })
-    .catch(error => res.status(500).json(error));
+    .catch(error => (
+        res.status(500).json({error}),
+        console.log(error)
+    ))
+       
 })
 
 
@@ -122,6 +131,7 @@ function getUserIdFromRefreshToken(refresh_token){
 
 
 
+
 router.post('/refresh_token', (req, res) => {
     const refresh_token = req.body.refresh_token
     
@@ -137,7 +147,7 @@ router.post('/refresh_token', (req, res) => {
             secretKey,
             {expiresIn : '2h'}
         )
-        res.json({token, refresh_token})
+        res.json({token, refresh_token, id: userId})
     } else {
         res.status(401).json({message : 'Refresh Token invalide'})
     }
@@ -146,6 +156,32 @@ router.post('/refresh_token', (req, res) => {
 })
 
 
+//Récupérer l'info sur l'utilisateurs connecté
+router.get('/user/:id', async(req, res) => {
+    const {id} = req.params;
+
+    try {
+        const compte = await Compte.findOne({
+            where : {
+                id : id,
+            }, 
+            include : [{
+                model : Collab,
+                attributes : ['nom', 'prenom', 'matricule', 'image']
+            }, {
+                model : RoleHierarchique,
+                include : {
+                    model : Role
+                }
+            }]
+        })
+        res.json(compte);
+
+    } catch (error) {
+        console.error('Erruer lors de la récupérations des infos sur les collaborateur:', error);
+        res.status(500).json({error : 'Erreur lors de la récupération des infos sur le serveurs'})
+    }
+})
 
 
 
@@ -187,6 +223,9 @@ const verifyToken = async (req, res, next) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+
+
 
 
 

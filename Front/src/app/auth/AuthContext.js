@@ -42,7 +42,6 @@ function AuthProvider({ children }) {
 
     jwtService.on('onAutoLogout', (message) => {
       pass(message);
-
       dispatch(logoutUser());
     });
 

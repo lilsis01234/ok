@@ -87,6 +87,6 @@ connection.connect((err) =>{
 
 
 //Initialisation du serveur
-app.listen(4001, () => {
-    console.log('Serveur Express en écoute sur le port 4001')
+app.listen(4000, () => {
+    console.log('Serveur Express en écoute sur le port 4000')
 });
