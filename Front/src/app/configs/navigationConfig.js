@@ -83,10 +83,20 @@ const navigationConfig = [
           icon : 'heroicons-outline:briefcase',
           children : [
             {
-              id : 'entreprise.direction-manage',
+              id : 'entreprise.direction-manage-direction',
               title : 'Direction',
               type : 'item',
               url : 'business/manage/direction'
+            },  {
+              id : 'entreprise.direction-manage-departement',
+              title : 'Departement',
+              type : 'item',
+              url : 'business/manage/departement'
+            },  {
+              id : 'entreprise.direction-manage-poste',
+              title : 'Job',
+              type : 'item',
+              url : 'business/manage/job'
             }
           ]
         }

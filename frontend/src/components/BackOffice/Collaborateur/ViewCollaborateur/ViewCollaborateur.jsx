@@ -12,11 +12,7 @@ const ViewCollaborateur = ({ CollabToView }) => {
     const [collab, setCollab] = useState({});
 
     useEffect(() => {
-<<<<<<< HEAD
         axios.get(`http://localhost:4000/api/collaborateur/view/${CollabToView.id}`)
-=======
-        axios.get(`http://localhost:4001/api/collaborateur/view/${CollabToView.id}`)
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((response) => {
                 setCollab(response.data.collaborateur)
             })
@@ -28,10 +24,7 @@ const ViewCollaborateur = ({ CollabToView }) => {
     //Modifier le rendu des dates
     const formattedDateBirth = moment(collab.dateNaissance).format('DD MMM YYYY');
     const formattedDateEmbauche = moment(collab.dateEmbauche).format('DD MMM YYYY');
-<<<<<<< HEAD
     const formattedDateDelivrance = moment(collab.dateDelivrance).format('DD MMM YYYY');
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
 
 
@@ -39,11 +32,7 @@ const ViewCollaborateur = ({ CollabToView }) => {
         <div className="collabView">
             {collab && (
                 <div className="flex flex-col items-center collabView m-15 p-15">
-<<<<<<< HEAD
                     <Avatar src={`http://localhost:4000/${collab.image}`} alt={collab.nom} className="flex self-center m-5 collabView_Photo" />
-=======
-                    <Avatar src={`http://localhost:4001/${collab.image}`} alt={collab.nom} className="flex self-center m-5 collabView_Photo" />
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                     <div className="collabView_Item">
                         <div className="grid grid-cols-12 my-3">
                             <div className="col-span-4">
@@ -59,11 +48,7 @@ const ViewCollaborateur = ({ CollabToView }) => {
                                 <p>{collab.prenom}</p>
                             </div>
                         </div>
-<<<<<<< HEAD
                         <div className="grid grid-cols-12 my-3">
-=======
-                        <div  className="grid grid-cols-12 my-3">
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                             <div className="col-span-4">
                                 <p className="font-bold text-[#9C1D21]">Date de Naissance</p>
                                 <p>{formattedDateBirth}</p>
@@ -97,7 +82,6 @@ const ViewCollaborateur = ({ CollabToView }) => {
                                 <p className="font-bold text-[#9C1D21]">Téléphone</p>
                                 <p>{collab.tel}</p>
                             </div>
-<<<<<<< HEAD
                             <div className="col-span-4">
                                 <p className="font-bold text-[#9C1D21]">Téléphone d'urgence</p>
                                 <p>{collab.telurgence}</p>
@@ -130,11 +114,6 @@ const ViewCollaborateur = ({ CollabToView }) => {
 
                         <div className="grid grid-cols-12 my-3">
                             <div className="col-span-4">
-=======
-                        </div>
-                        <div className="grid grid-cols-12 my-3">
-                            <div className="col-span-4">
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                 <p className="font-bold text-[#9C1D21]">Date d'embauche</p>
                                 <p>{formattedDateEmbauche}</p>
                             </div>
@@ -147,12 +126,9 @@ const ViewCollaborateur = ({ CollabToView }) => {
                                 <p className="font-bold text-[#9C1D21]">Département</p>
                                 <p>{collab.departement1 ? collab.departement1?.nomDepartement : 'Chargement ...'}</p>
                             </div>
-<<<<<<< HEAD
 
                         </div>
                         <div className="grid grid-cols-12 my-3">
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                             <div className="col-span-4">
                                 <p className="font-bold text-[#9C1D21]">Site</p>
                                 <p>{collab.site}</p>
@@ -162,7 +138,6 @@ const ViewCollaborateur = ({ CollabToView }) => {
                                 <p>{collab.entreprise}</p>
                             </div>
                         </div>
-<<<<<<< HEAD
                         <div className="grid grid-cols-12 my-3">
                             <div className="col-span-4">
                                 <p className="font-bold text-[#9C1D21]">Catégorie</p>
@@ -184,30 +159,12 @@ const ViewCollaborateur = ({ CollabToView }) => {
                                     <p>{collab.departements.nomDepartement}</p>
                                 </div>
                             </div>
-=======
-                         {collab.postes && (
-                        <div className="grid grid-cols-12 my-3"> 
-                            <div className="col-span-4">
-                                <p className="font-bold text-[#9C1D21]">Deuxième poste</p>
-                                <p>{collab.postes.titrePoste}</p>
-                            </div>
-                            <div>
-                                <p className="font-bold text-[#9C1D21]">Département </p>
-                                <p>{collab.departements.nomDepartement}</p>
-                            </div>
-                        </div>
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                         )}
                     </div>
 
                 </div>
 
             )}
-<<<<<<< HEAD
-
-=======
-           
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
         </div>
     )

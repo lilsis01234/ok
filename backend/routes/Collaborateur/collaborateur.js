@@ -27,7 +27,7 @@ const Equipe = require('../../Modele/Structure/Equipe');
 const excel = require('exceljs');
 const { type } = require('os');
 
-//Conserver l'image dans le mémoire
+//Conserver le fichier d'import excel dans le mémoire
 const storages = multer.memoryStorage();
 const uploads = multer({ storage: storages })
 

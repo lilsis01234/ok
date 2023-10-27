@@ -1,47 +1,52 @@
-import { Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
+import { MotionConfig } from 'framer-motion';
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
+import { Button, Typography } from '@mui/material';
 import axios from 'axios';
-import Button from '@mui/material/Button';
 
-function DirectionItemHeader({formValues}) {
+function DepartementItemHeader({ formValues }) {
     const methods = useFormContext();
     const { formState, watch, getValues } = methods ? methods : {};
-    const { isValid, isDirty  } = formState ? formState : {}
+    const { isValid, isDirty } = formState ? formState : {}
 
-    const {id} = formValues
-    const {nomDirection} = formValues
-    console.log(id)
+    const { id } = formValues
+    const { nomDepartement } = formValues
+    const { direction } = formValues
+
     const theme = useTheme();
     const navigate = useNavigate();
 
     const data = {
-        nomDirection
+        nomDepartement,
+        direction
     }
 
+    console.log(data)
+
     const handleSaveDirection = async () => {
-        if (id){
+        if (id) {
             try {
-                await axios.put(`http://localhost:4000/api/direction/edit/${id}`, data)
-                alert('Direction Update succesfully')
-                navigate('/business/manage/direction')
-            } catch (error){
+                await axios.put(`http://localhost:4000/api/departement/edit/${id}`, data)
+                alert('Departement Update succesfully')
+                navigate('/business/manage/departement')
+            } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await axios.post('http://localhost:4000/api/direction/new', data)
-                alert('Direction create succesfully')
-                navigate('/business/manage/direction')
-            } catch (error){
+                await axios.post('http://localhost:4000/api/departement/new', data)
+                alert('Departement create succesfully')
+                navigate('/business/manage/departement')
+            } catch (error) {
                 console.log(error)
             }
         }
     }
+
 
 
 
@@ -56,34 +61,34 @@ function DirectionItemHeader({formValues}) {
                         className="flex items-center sm:mb-12"
                         component={Link}
                         role="button"
-                        to="/business/manage/direction"
+                        to="/business/manage/departement"
                         color="inherit"
                     >
-                        <FuseSvgIcon size={20}> 
+                        <FuseSvgIcon size={20}>
                             {theme.direction === 'ltr'
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                         </FuseSvgIcon>
-                        <span className="flex mx-4 font-medium">Direction</span>
+                        <span className="flex mx-4 font-medium">Departement</span>
                     </Typography>
                 </motion.div>
                 <div className="flex items-center max-w-full">
                     <motion.div
-                          className="flex flex-col items-center sm:items-start min-w-0 mx-8 sm:mx-16"
-                          initial={{ x: -20 }}
-                          animate={{ x: 0, transition: { delay: 0.3 } }}
+                        className="flex flex-col items-center sm:items-start min-w-0 mx-8 sm:mx-16"
+                        initial={{ x: -20 }}
+                        animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomDirection || 'New Direction'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Direction Detail </Typography>
-                    </motion.div>   
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomDepartement || 'New Departement'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Departement Detail </Typography>
+                    </motion.div>
                 </div>
             </div>
             <motion.div
-                 className="flex"
-                 initial={{ opacity: 0, x: 20 }}
-                 animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+                className="flex"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
             >
-                <Button 
+                <Button
                      className="whitespace-nowrap mx-4"
                      variant="contained"
                      color="secondary"
@@ -97,4 +102,4 @@ function DirectionItemHeader({formValues}) {
     )
 }
 
-export default DirectionItemHeader
+export default DepartementItemHeader

@@ -2,10 +2,23 @@ import { TextField } from '@mui/material';
 import React from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
-function BasicDirectionInfo(props) {
-  const methods = useFormContext();
-  const {control, formState} =  methods ? methods : {};
-  const {errors} = formState ? formState : {};
+function BasicDirectionInfoTab(props) {
+  // const methods = useFormContext();
+  // console.log(methods)
+  // const {control, formState} =  methods || {};
+  // const {errors} = formState || {};
+
+
+  const { methods, formValues } = props;
+  const { control, formState } = methods || {};
+  const { errors } = formState || {};
+
+  // console.log(methods);
+
+  if(!methods){
+    return null;
+  }
+
 
   return (
     <div>
@@ -18,7 +31,7 @@ function BasicDirectionInfo(props) {
                 <TextField 
                   {...field}
                   className="mt-8 mb-16"
-                  error={!!errors.name}
+                  error={!!errors.nomDirection}
                   required
                   helperText={errors?.nomDirection?.message}
                   label="Direction Name"
@@ -33,4 +46,4 @@ function BasicDirectionInfo(props) {
   )
 }
 
-export default BasicDirectionInfo
+export default BasicDirectionInfoTab

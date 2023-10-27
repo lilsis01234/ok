@@ -10,8 +10,8 @@ import { motion } from 'framer-motion';
 import { Button, Tabs, Tab } from '@mui/material';
 import * as yup from 'yup';
 import axios from 'axios';
-import BasicDirectionInfoTab from './tabs/BasicDirectionInfoTab';
 import DirectionItemHeader from './DirectionItemHeader'
+import BasicDirectionInfoTab from './tabs/BasicDirectionInfoTab';
 
 
 const schema = yup.object().shape({
@@ -37,8 +37,9 @@ function DirectionListItem(props) {
     })
 
     
-    const { reset, watch, control, onChange, fomState } = methods;
+    const { reset, watch, control, onChange, fomState } =  methods || {};
     const form = watch();
+    // console.log(form)
 
 
     useEffect(() => {
@@ -46,6 +47,8 @@ function DirectionListItem(props) {
             try {
                 if (directionId === 'new') {
                     console.log('Ajout d\'un nouvelle direction')
+                    setNoDirection(false)
+
                 } else {
                     console.log('Affichage d\'un  direction existante')
                     axios.get(`http://localhost:4000/api/direction/view/${directionId}`)
@@ -59,7 +62,7 @@ function DirectionListItem(props) {
                 }
             } catch (error) {
                 console.error('Error fetching direction data:', error);
-                setNoProduct(true);
+                setNoDirection(true);
             }
         }
         fetchData();
@@ -115,12 +118,12 @@ function DirectionListItem(props) {
     }
 
 
-    if (
-        _.isEmpty(form) || (direction && directionId !== String(direction.id) && directionId !== 'new')
-        //  (direction && directionId !== String(direction.direction?.id) && directionId !== 'new')
-    ) {
-        return <FuseLoading />
-    }
+    // if (
+    //      _.isEmpty(form) || (direction && directionId !== String(direction.id) && directionId !== 'new')
+    //     //  (direction && directionId !== String(direction.direction?.id) && directionId !== 'new')
+    // ) {
+    //     return <FuseLoading />
+    // }
 
     return (
         <FormProvider {...methods}>
@@ -141,7 +144,7 @@ function DirectionListItem(props) {
                         </Tabs>
                         <div className="p-16 sm:p-24 max-w-3xl">
                             <div className={tabValue !== 0 ? 'hidden' : ''}>
-                                {<BasicDirectionInfoTab />}
+                                <BasicDirectionInfoTab methods={methods} formValues={form}/>
                             </div>
                         </div>
                     </>

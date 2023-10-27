@@ -24,7 +24,7 @@ function DirectionHeader() {
                     <Button
                         className=""
                         component={Link}
-                        // to="/apps/e-commerce/products/new"
+                        to="/business/manage/direction/new"
                         variant="contained"
                         color="secondary"
                         startIcon={<FuseSvgIcon>heroicons-outline:plus</FuseSvgIcon>}
