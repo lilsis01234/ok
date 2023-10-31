@@ -2,7 +2,8 @@ const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../../database/database');
 const TestDepartement = require('../Structure/TestDepartement');
 const TestPoste = require('../Structure/TestPoste');
-const Equipe = require('../Structure/Equipe')
+const Equipe = require('../Structure/Equipe');
+const Projet = require('../Structure/Projet');
 
 class Collab extends Model{};
 
@@ -149,6 +150,9 @@ Collab.belongsTo(TestDepartement, {foreignKey:"departement2", targetKey:'id', on
 
 Collab.belongsTo(Equipe, {foreignKey:"equipe", targetKey:'id',onUpdate:'CASCADE', as:'equipe1'})
 Collab.belongsTo(Equipe, {foreignKey:"equipe2", targetKey:'id', onUpdate:'CASCADE', as:'equipes'})
+
+Collab.belongsTo(Projet, {foreignKey:"", targetKey:'id',onUpdate:'CASCADE', as:'equipe1'})
+Collab.belongsTo(Projet, {foreignKey:"equipe2", targetKey:'id', onUpdate:'CASCADE', as:'equipes'})
 
 
 module.exports = Collab;
