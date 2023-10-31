@@ -85,14 +85,14 @@ const navigationConfig = [
         translate: 'Formations',
         url : 'dashboards/listeFormation'
       },
-      {
-        id: 'formation.demandeformations',
-        title: 'Demandes de formations',
-        type: 'item',
-        icon: 'heroicons-outline:users',
-        translate: 'Demandes',
-        url : 'dashboards/demandeFormation'
-      },
+      // {
+      //   id: 'formation.demandeformations',
+      //   title: 'Demandes de formations',
+      //   type: 'item',
+      //   icon: 'heroicons-outline:users',
+      //   translate: 'Demandes',
+      //   url : 'dashboards/demandeFormation'
+      // },
       {
         id: 'formation.ajoutFormation',
         title: 'Formation',
@@ -107,42 +107,42 @@ const navigationConfig = [
         type: 'item',
         icon: 'heroicons-outline:plus',
         translate: 'Demande',
-        url : 'formateur/addFormation',
+        url : '/dashboards/addDemandeFormation',
       }
-    ]
-  },{
-    id:'module',
-    type:'group',
-    title:'Modules',
-    translate:'Modules',
-    children:[
-      {
-        id:'module.add',
-        type:'item',
-        title:'Ajouter',
-        translate:'Ajouter',
-        icon:'heroicons-outline:plus',
-        url:'formation/addModule'
-      }
-    ]
-  },{
-    id: 'seances',
-    title: 'Seances',
-    type: 'group',
-    icon: 'heroicons-outline:calendar',
-    translate: 'Seances',
-    children:[
-      {
-        id: 'module.ajoutSeance',
-        title: 'Ajouter',
-        type: 'item',
-        icon: 'heroicons-outline:plus',
-        translate: 'Ajouter',
-        url : 'dashboards/addSeance',
-      },
-    ],
-  },{
-    id:'conge',
+    ]},
+  // },{
+  //   id:'module',
+  //   type:'group',
+  //   title:'Modules',
+  //   translate:'Modules',
+  //   children:[
+  //     {
+  //       id:'module.add',
+  //       type:'item',
+  //       title:'Ajouter',
+  //       translate:'Ajouter',
+  //       icon:'heroicons-outline:plus',
+  //       url:'formation/addModule'
+  //     }
+  //   ]
+  // },{
+  //   id: 'seances',
+  //   title: 'Seances',
+  //   type: 'group',
+  //   icon: 'heroicons-outline:calendar',
+  //   translate: 'Seances',
+  //   children:[
+  //     {
+  //       id: 'module.ajoutSeance',
+  //       title: 'Ajouter',
+  //       type: 'item',
+  //       icon: 'heroicons-outline:plus',
+  //       translate: 'Ajouter',
+  //       url : 'dashboards/addSeance',
+  //     },
+  //   ],
+  // },{
+    {id:'conge',
     title: 'Congés',
     type: 'group',
     icon: 'heroicons-outline:calendar',
