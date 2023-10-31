@@ -327,7 +327,7 @@ router.post('/addDemandeFormation',async(req,res)=>{
             theme:req.body.theme,
             description:req.body.description,
             duree:req.body.duree,
-            formateur:req.body.formateur,
+            // formateur:req.body.formateur,
             auteur:req.body.auteur,
             departementAFormer: req.body.departementAFormer,
             personneAFormer:req.body.personneAFormer,
