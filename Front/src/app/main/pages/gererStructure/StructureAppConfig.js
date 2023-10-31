@@ -3,6 +3,7 @@ import DirectionListItem from './direction/DirectionItem/DirectionListItem';
 import Departement from './departement/Departement';
 import DepartementListItem from './departement/DepartementItem/DepartementListItem';
 import Poste from './poste/Poste';
+import PosteListeItem from './poste/PosteItem/PosteListeItem';
 
 
 const Direction = lazy(() => import('./direction/Direction'))
@@ -28,6 +29,9 @@ const StructureAppConfig  = {
         }, {
             path : 'business/manage/job',
             element : <Poste/>
+        }, {
+            path : 'business/manage/job/:posteId',
+            element : <PosteListeItem/>
         }
     ]
 }

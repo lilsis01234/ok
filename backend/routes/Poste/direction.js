@@ -25,7 +25,7 @@ router.get('/all', async(req, res) => {
         res.status(201).json(listDirection);
     }
     catch (error){
-        console.error('Erreur lors de la généeation du liste des direction :', error)
+        console.error('Erreur lors de la génération du liste des direction :', error)
         res.status(500).json({message : 'Erreur lors de la génération des liste des direction'})
     }
 })

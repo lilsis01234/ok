@@ -13,9 +13,9 @@ const { useForm, FormProvider } = require("react-hook-form");
 const { yupResolver } = require("@hookform/resolvers/yup");
 
 const schema = yup.object().shape({
-    nomDirection: yup
+    nomDepartement: yup
         .string()
-        .required('You must enter a direction name')
+        .required('You must enter a departement name')
     // .min(5, 'The product name must be at least 5 characters'),
 });
 
