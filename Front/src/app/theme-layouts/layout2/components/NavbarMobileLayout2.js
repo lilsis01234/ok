@@ -53,11 +53,7 @@ function NavbarMobileLayout2(props) {
         <Navigation layout="vertical" />
 
         <div className="flex flex-0 items-center justify-center py-48 opacity-10">
-<<<<<<< HEAD
           <img className="w-full max-w-64" src="assets/images/logo/logo.svg" alt="footer logo" />
-=======
-          <img className="w-full max-w-64" src="assets/images/logo/logo.png" alt="footer logo" />
->>>>>>> a0671ada562f8c552f54259eed0831908c5501f2
         </div>
       </StyledContent>
     </Root>
