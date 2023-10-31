@@ -54,7 +54,7 @@ function CalendarForm() {
         selectable
         resizable
         onSelectSlot={handleSelect}
-        step={60}
+        step={15}
         style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
       />
       <button type="button" onClick={handleSave}>
