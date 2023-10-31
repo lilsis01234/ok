@@ -20,7 +20,7 @@ function CalendarForm() {
     const titre = window.prompt('Nom de l\'événement :');
     if (titre) {
       const placesString = window.prompt('Nombre de places :');
-      const nombrePlaces = parseInt(placesString, 10) || 0; // Convert to integer or default to 0
+      const nombrePlaces = parseInt(placesString, 10) || 0;
 
       const newEvent = {
         start: new Date(Date.parse(start)),
