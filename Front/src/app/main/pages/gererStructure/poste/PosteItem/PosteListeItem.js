@@ -16,7 +16,7 @@ const { yupResolver } = require("@hookform/resolvers/yup");
 const schema = yup.object().shape({
   titrePoste: yup
     .string()
-    .required('You must enter a job name')
+    .required('You must enter a Fonction name')
   // .min(5, 'The product name must be at least 5 characters'),
 });
 
@@ -56,7 +56,7 @@ function PosteListeItem(props) {
             })
         }
       } catch (error) {
-        console.error('Error fetching job data:', error);
+        console.error('Error fetching Fonction data:', error);
         setNoPoste(true);
       }
     }
@@ -90,7 +90,7 @@ function PosteListeItem(props) {
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There is no such job!
+          There is no such Fonction!
         </Typography>
         <Button
           className="mt-24"
@@ -99,7 +99,7 @@ function PosteListeItem(props) {
           to="/business/manage/departement"
           color="inherit"
         >
-          Go To Jobs Page
+          Go To Fonctions Page
         </Button>
       </motion.div>
     )

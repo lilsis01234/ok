@@ -84,9 +84,9 @@ const navigationConfig = [
               url : 'business/manage/departement'
             },  {
               id : 'entreprise.direction-manage-poste',
-              title : 'Job',
+              title : 'Fonction',
               type : 'item',
-              url : 'business/manage/job'
+              url : 'business/manage/Fonction'
             }
           ]
         } 

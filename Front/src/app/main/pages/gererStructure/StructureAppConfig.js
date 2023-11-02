@@ -27,10 +27,10 @@ const StructureAppConfig  = {
             path : 'business/manage/departement/:departementId',
             element : <DepartementListItem/>
         }, {
-            path : 'business/manage/job',
+            path : 'business/manage/Fonction',
             element : <Poste/>
         }, {
-            path : 'business/manage/job/:posteId',
+            path : 'business/manage/Fonction/:posteId',
             element : <PosteListeItem/>
         }
     ]

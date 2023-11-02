@@ -1,9 +1,11 @@
 import { useTheme } from '@mui/styles';
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
+import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 
 function PosteItemHeader({formValues}) {
     const methods = useFormContext();
@@ -28,16 +30,16 @@ function PosteItemHeader({formValues}) {
         if (id) {
             try {
                 await axios.put(`http://localhost/api/poste/edit/${id}`, data)
-                alert('Job Update succesfully')
-                navigate('/business/manage/job')
+                alert('Fonction Update succesfully')
+                navigate('/business/manage/Fonction')
             } catch (error){
                 console.log(error)
             }
         } else {
             try {
                 await axios.post(`http://localhost/api/poste/new`, data)
-                alert('Job create succesfully')
-                navigate('/business/manage/job')
+                alert('Fonction create succesfully')
+                navigate('/business/manage/Fonction')
             } catch (error){
                 console.log(error)
             }
@@ -56,7 +58,7 @@ return (
                     className="flex items-center sm:mb-12"
                     component={Link}
                     role="button"
-                    to="/business/manage/job"
+                    to="/business/manage/Fonction"
                     color="inherit"
                 >
                     <FuseSvgIcon size={20}>
@@ -64,7 +66,7 @@ return (
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                     </FuseSvgIcon>
-                    <span className="flex mx-4 font-medium">Job</span>
+                    <span className="flex mx-4 font-medium">Fonction</span>
                 </Typography>
             </motion.div>
             <div className="flex items-center max-w-full">
@@ -73,8 +75,8 @@ return (
                     initial={{ x: -20 }}
                     animate={{ x: 0, transition: { delay: 0.3 } }}
                 >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{titrePoste || 'New Poste'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Job Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{titrePoste || 'New Fonction'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Fonction Detail </Typography>
                 </motion.div>
             </div>
             <motion.div
@@ -87,7 +89,7 @@ return (
                      variant="contained"
                      color="secondary"
                     //  disabled={!isDirty  || !isValid}
-                     onClick={handleSaveDirection}
+                     onClick={handleSavePoste}
                 >
                     Save
                 </Button>

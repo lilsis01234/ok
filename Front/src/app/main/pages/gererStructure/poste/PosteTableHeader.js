@@ -8,7 +8,7 @@ const rows = [
         id: 'poste',
         align: 'left',
         disablePadding: false,
-        label: 'Job',
+        label: 'Fonction',
         sort: true
     }, 
     {

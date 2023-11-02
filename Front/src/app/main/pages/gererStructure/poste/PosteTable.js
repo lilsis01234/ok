@@ -68,7 +68,7 @@ function PosteTable(props) {
     }
 
     function handleClick(item) {
-        navigate(`/business/manage/job/${item.id}`);
+        navigate(`/business/manage/Fonction/${item.id}`);
     }
 
 
@@ -108,7 +108,7 @@ function PosteTable(props) {
                 className="flex flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There are no job!
+                    There are no Fonction!
                 </Typography>
             </motion.div>
         );
