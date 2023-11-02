@@ -8,16 +8,27 @@ import SignOutConfig from '../main/sign-out/SignOutConfig';
 import Error404Page from '../main/404/Error404Page';
 import ExampleConfig from '../main/example/ExampleConfig';
 import dashboardsConfigs from '../main/Dashboard/dashboardsConfig';
+
+//ModuleProfile
 import ContactConfig from '../main/pages/Contacts/ContactAppConfig';
 import DirectionAppConfig from '../main/pages/Direction/DirectionAppConfig';
 import StructureAppConfig from '../main/pages/gererStructure/StructureAppConfig';
 
+//Module Formation
+import CalendarConfig from '../main/CalendarSeance/CalendarSeanceConfig';
+import CalendarFormConfig from '../main/CalendarSeance/calendrierForm/CalendarFormConfig';
+import FormationConfig from '../main/FormationAdmin/demandeDeFormation/FormationConfig';
+
+
 const routeConfigs = [
-  ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig,
-  ...dashboardsConfigs,
+  ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
+  ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,
+  //Module Profil
   ContactConfig,
   DirectionAppConfig,
   StructureAppConfig,
+
+
 ];
 
 const routes = [

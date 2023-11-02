@@ -27,7 +27,6 @@ const ViewCollaborateur = ({ CollabToView }) => {
     const formattedDateDelivrance = moment(collab.dateDelivrance).format('DD MMM YYYY');
 
 
-
     return (
         <div className="collabView">
             {collab && (
@@ -126,7 +125,6 @@ const ViewCollaborateur = ({ CollabToView }) => {
                                 <p className="font-bold text-[#9C1D21]">Département</p>
                                 <p>{collab.departement1 ? collab.departement1?.nomDepartement : 'Chargement ...'}</p>
                             </div>
-
                         </div>
                         <div className="grid grid-cols-12 my-3">
                             <div className="col-span-4">
@@ -165,7 +163,6 @@ const ViewCollaborateur = ({ CollabToView }) => {
                 </div>
 
             )}
-
         </div>
     )
 }

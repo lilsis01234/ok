@@ -17,6 +17,22 @@ const archive = require('./routes/Collaborateur/archiveCollab')
 const userProfile = require('./routes/Compte/userProfile');
 const direction = require('./routes/Poste/direction')
 const equipe = require('./routes/Poste/equipe')
+const agendaRoutes = require('../backend/routes/formation/AjoutAgenda')
+const displayRoutes = require('../backend/routes/formation/AfficheAgenda')
+const formationRouter = require('../backend/routes/formation/formation')
+const requestRouter = require('../backend/routes/formation/demandeFormation')
+const seanceRouter = require('../backend/routes/formation/seance')
+const moduleRouter = require('../backend/routes/formation/module')
+
+const { ExpressPeerServer } = require('peer');
+const http = require('http');
+const server = http.createServer(app);
+const peerServer = ExpressPeerServer(server, {
+  debug: true,
+});
+
+app.use('/peerjs', peerServer);
+
 
 
 //importation des configurations$
@@ -40,7 +56,11 @@ app.use(cors({ origin: 'http://192.168.16.46:3000', credentials: true }));
 //Ajout de middleware express.json()
 app.use(express.json())
 
-
+// const socketIO = require('socket.io')(http, {
+//     cors: {
+//         origin: "http://localhost:3000"
+//     }
+// });
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
@@ -58,10 +78,13 @@ app.use('/api/archive', archive); //route pour archiver les collaborateurs
 app.use('/api/user', userProfile); //route pour afficher les profiles des collaborateurs 
 app.use('/api/direction', direction) //route pour afficher les direction
 app.use('/api/equipe', equipe ) //route pour afficher les routes
-
-
-
-
+app.use('/api/agenda', agendaRoutes);
+app.use('/api/calendrier', displayRoutes);
+app.use('/api/formations',formationRouter);
+app.use('/api/demande_formation',requestRouter);
+app.use('/api/seances',seanceRouter)
+app.use('/api/peerjs', peerServer);
+app.use('/api/module', moduleRouter);
 
 
 //Connection à la base de donnée MySQL

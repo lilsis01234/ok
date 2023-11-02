@@ -77,8 +77,6 @@ class JwtService extends FuseUtils.EventEmitter {
         .then((response) => {
           if (response.data) {
             this.setSession(response.data.token);
-            this.setRefreshToken(response.data.refresh_token);
-            this.setUserId(response.data.id);
             this.emit('onLogin', response.data.compte);
             return response.data
           } else {
@@ -89,15 +87,13 @@ class JwtService extends FuseUtils.EventEmitter {
 
   signInWithToken = () => {
       const data = {
-        refresh_token : this.getAccessRefreshToken()
+        acess_token : this.getAccessToken()
       }
       return axios
-        .post(jwtServiceConfig.refresh_token, data)
+        .post(jwtServiceConfig.accessToken, data)
         .then((response) => {
-          if (response.data.id) {
+          if (response.data.user) {
             this.setSession(response.data.token);
-            this.setRefreshToken(response.data.refresh_token);
-            this.setUserId(response.data.id);
             return (response.data);
           } else {
             this.logout();
@@ -128,31 +124,10 @@ class JwtService extends FuseUtils.EventEmitter {
     }
   };
 
-  setRefreshToken = (refresh_token) => {
-    if (access_token){
-      localStorage.setItem('refresh_token', refresh_token); 
-    } else {
-      localStorage.removeItem('refresh_token')
-    }
-  }
-
-  setUserId = (id)=> {
-    if (id){
-      localStorage.setItem('user', id)
-    } else {
-      localStorage.removeItem('user')
-    }
-  } 
-
-
-
   logout = () => {
     this.setSession(null);
-    this.setRefreshToken(null);
-    this.setUserId(null);
     this.emit('onLogout', 'Logged out');
   };
-
 
   isAuthTokenValid = (access_token) => {
     if (!access_token) {
@@ -171,14 +146,6 @@ class JwtService extends FuseUtils.EventEmitter {
   getAccessToken = () => {
     return window.localStorage.getItem('jwt_access_token');
   };
-
-  getAccessRefreshToken = () => {
-    return window.localStorage.getItem('refresh_token')
-  }
-
-  getUserId = () => {
-    return window.localStorage.getItem('user');
-  }
 
 
 }

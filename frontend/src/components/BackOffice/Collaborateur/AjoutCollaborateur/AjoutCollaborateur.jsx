@@ -44,7 +44,6 @@ const AjoutCollaborateur = () => {
 
 
     const [nom, setNom] = useState('');
-    
     const [photo, setPhoto] = useState(null);
 
     const [prenom, setPrenom] = useState('');
@@ -91,7 +90,6 @@ const AjoutCollaborateur = () => {
         { id: 1, nom: 'masculin' },
         { id: 2, nom: 'feminin' }
     ]
-
     //Récupération des listes des Equipes
     const [listeEquipe, setListeEquipe] = useState([])
 
@@ -102,8 +100,6 @@ const AjoutCollaborateur = () => {
             }))
             .catch(err => console.log(err))
     }, [])
-
-
 
     //Récupération de la liste des postes
     const [listePoste, setListePoste] = useState([])
@@ -178,9 +174,6 @@ const AjoutCollaborateur = () => {
             // Banque,
             // RIB,
         }
-
-
-
         axios.post('http://localhost:4000/api/collaborateur/new', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -318,6 +311,7 @@ const AjoutCollaborateur = () => {
                                                     <Option key={poste.id} value={poste.id.toString()}>
                                                         {poste.titrePoste}
                                                     </Option>
+
                                                 ))}
                                             </Select>
                                         </div>

@@ -1,8 +1,8 @@
 const {DataTypes, Model} = require('sequelize');
 const sequelize = require('../../database/database');
-const Collaborateur = require('../CollabModel/Collaborateur');
-const Departement = require('../Structure/PosteDepartement');
-const Rolehierarchique = require('../RoleModel/RoleHierarchique');
+const Collaborateur = require('../../Modele/CollabModel/Collab');
+const Departement = require('../Structure/TestDepartement');
+const Role2 = require('../RoleModel/RoleHierarchique');
 
 class Formation extends Model{}
 
@@ -38,7 +38,7 @@ Formation.init({
         type : DataTypes.INTEGER,
         allowNull : true,
         references : {
-        model : Rolehierarchique,
+        model : Role2,
         key : 'id'
     }
     },
@@ -83,10 +83,10 @@ Formation.init({
       });     
     Formation.belongsTo(Departement, {
         foreignKey: 'departementAFormer',
-        as: 'Departement', 
+        as: 'Departement', // Alias défini ici
     });
-    Formation.belongsTo(Rolehierarchique, {
-        foreignKey: 'destinataireDemande', 
+    Formation.belongsTo(Role2, {
+        foreignKey: 'destinataireDemande', // Alias défini ici
     });
 
     module.exports = Formation;

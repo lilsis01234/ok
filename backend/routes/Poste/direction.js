@@ -19,7 +19,7 @@ router.post('/new', async(req, res)  => {
 })
 
 //Afficher les listes des directions
-router.get('/all', async(req, res) => {
+router.get('/all', async(reqq, res) => {
     try {
         const listDirection = await Direction.findAll();
         res.status(201).json(listDirection);

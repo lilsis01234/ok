@@ -8,26 +8,17 @@ import settingsConfig from 'app/configs/settingsConfig';
 import jwtService from '../auth/services/jwtService';
 
 
-
-// export const setUser = createAsyncThunk('user/setUser', async (user, { dispatch, getState }) => {
-//   try {
-//     if (user.loginRedirectUrl) {
-//       settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example '/apps/academy'
-//     }
-//     const userId = jwtService.getUserId();
-//     const response = await axios.get(`http://localhost/api/auth/user/${userId}`)
-//     user = response.data;
-//     return user;
-//   } catch (error) {
-//     dispatch(showMessage({ message: 'Erreur lors de la récupération des données utilisateur' }))
-//     throw error;
-//   }
-// });
-
+//Création d'un action asynchrone SetUser pour mettre à jour les informations de l'utilisateurs 
 export const setUser = createAsyncThunk('user/setUser', async (user, { dispatch, getState }) => {
+  /*
+    You can redirect the logged-in user to a specific route depending on his role
+    */
+  console.log(user)
   if (user.loginRedirectUrl) {
     settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example '/apps/academy'
   }
+
+  return user;
 });
 
 
@@ -96,14 +87,16 @@ export const updateUserData = (user) => async (dispatch, getState) => {
 };
 
 
+
+
+
 const initialState = {
-  role: ['Administrateur'],
+  role: ['Administrateur'], // guest
   data: {
     displayName: 'John Doe',
     photoURL: 'assets/images/avatars/brian-hughes.jpg',
     shortcuts: ['apps.calendar', 'apps.mailbox', 'apps.contacts', 'apps.tasks'],
   },
-
 };
 
 const userSlice = createSlice({

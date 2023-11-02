@@ -23,7 +23,7 @@ const settingsConfig = {
   /*
     Default redirect url for the logged-in user,
    */
-  loginRedirectUrl: '/example',
+  loginRedirectUrl: '/',
 };
 
 export default settingsConfig;

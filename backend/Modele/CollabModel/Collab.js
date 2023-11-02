@@ -52,7 +52,7 @@ Collab.init({
     },
     CIN : {
         type : DataTypes.STRING(15),
-        unique : true
+        // unique : true
     },
     dateDelivrance : {
         type : DataTypes.DATE

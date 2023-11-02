@@ -32,7 +32,7 @@ const Dashboard = () => {
 <<<<<<< HEAD
             .get("http://localhost:4000/api/collaborateur/all")
 =======
-            .get("http://localhost:4001/api/collaborateur/all")
+            .get("http://localhost:4000/api/collaborateur/all")
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((response) => {
                 setData(response.data);
