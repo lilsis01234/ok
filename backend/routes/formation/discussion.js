@@ -17,8 +17,8 @@ router.get('/all_discussions/:idformation', async(req,res)=>{
                     },
                     {
                         model: Module,
-                        attributes: ['titreModule']
-                    }
+                        attributes: ['id','titreModule']
+                    },
                 ],
                 where:
                     {
