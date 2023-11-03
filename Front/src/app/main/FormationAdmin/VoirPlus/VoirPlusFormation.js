@@ -126,6 +126,7 @@ const VoirPlusFormation = () => {
                     {informations.formation.Formateur && (
                      <p>Formateur: <span className="formateurInfo">{informations.formation.Formateur.nom} {informations.formation.Formateur.prenom}</span></p>
                     )}
+                    <span className="formateurInfo"><Link to={`/discussion/formation/${idFormation.id}`}>Accéder à la discussion</Link></span>
                 </div>
               )}
             <div className='header-container'>
