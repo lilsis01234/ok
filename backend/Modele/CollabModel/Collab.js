@@ -151,9 +151,6 @@ Collab.belongsTo(TestDepartement, {foreignKey:"departement2", targetKey:'id', on
 Collab.belongsTo(Equipe, {foreignKey:"equipe", targetKey:'id',onUpdate:'CASCADE', as:'equipe1'})
 Collab.belongsTo(Equipe, {foreignKey:"equipe2", targetKey:'id', onUpdate:'CASCADE', as:'equipes'})
 
-Collab.belongsTo(Projet, {foreignKey:"", targetKey:'id',onUpdate:'CASCADE', as:'equipe1'})
-Collab.belongsTo(Projet, {foreignKey:"equipe2", targetKey:'id', onUpdate:'CASCADE', as:'equipes'})
-
 
 module.exports = Collab;
 
