@@ -58,4 +58,66 @@
   .form-group button:hover {
     background-color: #45a049;
   }
-  
+
+
+
+  .form2-container {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form2-group {
+    margin-bottom: 20px;
+}
+
+.form2-group label {
+    font-size: 18px;
+    color: #000;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.form2-group input[type="text"],
+.form2-group select {
+    width:100%;
+    padding: 15px;
+    height: 60px;
+    font-size: 16px;
+    border: none;
+    /* border-bottom: 2px solid #ccc; */
+    outline: none;
+    transition: border-color 0.3s ease;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form2-group input[type="text"]:focus,
+.form2-group select:focus {
+    border-color: #4caf50;
+}
+
+.form2-group button {
+    width: 100%;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.form2-group button:hover {
+    background-color: #45a049;
+}
+
+/* Style pour le select */
+.form2-group select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
