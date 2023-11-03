@@ -44,7 +44,7 @@ const FormationConfig = {
                     element:<Discussions/>
                 },
                 {
-                    path:'/addDiscussion',
+                    path:'/addDiscussion/:id',
                     element:<AddDiscussion/>
                 }
             ],

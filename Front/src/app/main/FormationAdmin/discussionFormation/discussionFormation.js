@@ -21,13 +21,12 @@ const Discussions =()=>{
       useEffect(() => {
         fetchDiscussion();
       })
-
     return(
      <>
      <div className="discussion-container">
      <div className="top">
       <h2 className="discussion-heading">Discussions récentes</h2>
-      <Link to="/addDiscussion" className="add-discussion-button">
+      <Link to={`/addDiscussion/${id}`} className="add-discussion-button">
         <BiPencil />
       </Link>
     </div>
