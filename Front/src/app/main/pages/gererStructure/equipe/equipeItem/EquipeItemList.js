@@ -1,0 +1,116 @@
+import { useThemeMediaQuery } from '@fuse/hooks';
+import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form';
+import { Link, useParams } from 'react-router-dom';
+import * as yup from 'yup';
+import { motion } from 'framer-motion';
+import { Typography } from '@mui/material';
+import { Button, Tabs, Tab } from '@mui/material';
+
+const schema = yup.object().shape({
+    nomEquipe: yup
+        .string()
+        .required('You must enter a team name')
+    // .min(5, 'The product name must be at least 5 characters'),
+});
+
+
+function EquipeItemList() {
+    const {equipeId} = useParams();
+    const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'))
+    const [tabValue, setTabValue] = useState(0)
+    const [noEquipe, setnoEquipe] = useState(false);
+
+    const [equipe, setEquipe] = useState([])
+
+    const methods = useForm({
+        mode: 'onChange',
+        defaultValues: {},
+        resolver : yupResolver(schema)
+    })
+
+    const { reset, watch, control, onChange, formState } = methods || {};
+    const form = watch();
+
+    useEffect(() => {
+        async function fetchData(){
+            try {
+                if (equipeId === 'new') {
+                    console.log('Ajout d\'une nouvelle équipe')
+                    setnoEquipe(false)
+                } else {
+                    console.log('Affichage d\'une équipe existante')
+                    axios.get(`http://localhost:4000/api/equipe/view/${equipeId}`)
+                    .then(response => {
+                        setEquipe(response.data)
+                        setnoEquipe(false)
+                        console.log(response.data)
+                    }) 
+                    .catch(error => {
+                        setnoEquipe(true)
+                        console.error(error)
+                    })
+                }
+            } catch (error){
+                console.error('Error fetching Direction data:', error)
+                setnoEquipe(true);
+            }
+        }
+        fetchData();
+    }, [equipeId])
+
+    useEffect(() => {
+        if(equipe && Object.keys(equipe).length > 0){
+            const {id, nomEquipe, projet} = equipe
+            reset({id, nomEquipe, projet})
+        }
+    }, [equipe, reset])
+
+    
+    function handleTabChange(event, value){
+        setTabValue(value)
+    }
+
+
+    if (noEquipe){
+        return (
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 0.1 } }}
+                className="flex flex-col flex-1 items-center justify-center h-full"
+            >
+                <Typography color="text.secondary" variant="h5">
+                    There is no such equipe!
+                </Typography>
+                <Button
+                     className="mt-24"
+                     component={Link}
+                     variant="outlined"
+                     to="/business/manage/team"
+                     color="inherit"
+                >
+                    Go To Teams Page
+                </Button>
+            </motion.div>
+        )
+    }
+
+
+
+
+
+
+
+
+
+
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
+export default EquipeItemList

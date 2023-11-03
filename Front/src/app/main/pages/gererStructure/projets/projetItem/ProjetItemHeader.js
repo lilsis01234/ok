@@ -1,46 +1,47 @@
-import { useTheme } from '@mui/styles';
+import axios from 'axios';
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/styles';
 import { motion } from 'framer-motion';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import { Button, Typography } from '@mui/material';
-import axios from 'axios';
+import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 
-function DepartementItemHeader({ formValues }) {
+function ProjetItemHeader({ formValues }) {
     const methods = useFormContext();
     const { formState, watch, getValues } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
 
     const { id } = formValues
-    const { nomDepartement } = formValues
-    const { direction } = formValues
+    const { nomProjet } = formValues
+    const { departement } = formValues
 
     const theme = useTheme();
     const navigate = useNavigate();
 
     const data = {
-        nomDepartement,
-        direction
+        nomProjet,
+        departement
     }
 
-    // console.log(data)
+    console.log(formValues)
 
-    const handleSaveDirection = async () => {
+    const handleSaveProject = async () => {
         if (id) {
             try {
-                await axios.put(`http://localhost:4000/api/departement/edit/${id}`, data)
-                alert('Departement Update succesfully')
-                navigate('/business/manage/departement')
+                await axios.put(`http://localhost:4000/api/projet/edit/${id}`, data)
+                alert('Project Update succesfully')
+                navigate('/business/manage/project')
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await axios.post('http://localhost:4000/api/departement/new', data)
-                alert('Departement create succesfully')
-                navigate('/business/manage/departement')
-            } catch (error) {
+                await axios.post(`http://localhost:4000/api/projet/new`, data)
+                alert('Project create successfully')
+                navigate('/business/manage/project')
+            }
+            catch (error) {
                 console.log(error)
             }
         }
@@ -60,7 +61,7 @@ function DepartementItemHeader({ formValues }) {
                         className="flex items-center sm:mb-12"
                         component={Link}
                         role="button"
-                        to="/business/manage/departement"
+                        to="/business/manage/project"
                         color="inherit"
                     >
                         <FuseSvgIcon size={20}>
@@ -68,7 +69,7 @@ function DepartementItemHeader({ formValues }) {
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                         </FuseSvgIcon>
-                        <span className="flex mx-4 font-medium">Departement</span>
+                        <span className="flex mx-4 font-medium">Project</span>
                     </Typography>
                 </motion.div>
                 <div className="flex items-center max-w-full">
@@ -77,28 +78,30 @@ function DepartementItemHeader({ formValues }) {
                         initial={{ x: -20 }}
                         animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomDepartement || 'New Departement'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Departement Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomProjet || 'New Project'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Project Detail </Typography>
                     </motion.div>
                 </div>
-            </div>
-            <motion.div
-                className="flex"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-            >
-                <Button
-                     className="whitespace-nowrap mx-4"
-                     variant="contained"
-                     color="secondary"
-                    //  disabled={!isDirty  || !isValid}
-                     onClick={handleSaveDirection}
+                </div>
+
+                <motion.div
+                    className="flex"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
                 >
-                    Save
-                </Button>
-            </motion.div>
+                    <Button
+                        className="whitespace-nowrap mx-4"
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleSaveProject}
+                    >
+                        Save
+                    </Button>
+                </motion.div>
+          
         </div>
     )
 }
 
-export default DepartementItemHeader
+export default ProjetItemHeader
+

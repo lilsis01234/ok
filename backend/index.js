@@ -17,6 +17,7 @@ const archive = require('./routes/Collaborateur/archiveCollab')
 const userProfile = require('./routes/Compte/userProfile');
 const direction = require('./routes/Poste/direction')
 const equipe = require('./routes/Poste/equipe')
+const projet = require('./routes/Poste/projet')
 const agendaRoutes = require('../backend/routes/formation/AjoutAgenda')
 const displayRoutes = require('../backend/routes/formation/AfficheAgenda')
 const formationRouter = require('../backend/routes/formation/formation')
@@ -78,6 +79,7 @@ app.use('/api/archive', archive); //route pour archiver les collaborateurs
 app.use('/api/user', userProfile); //route pour afficher les profiles des collaborateurs 
 app.use('/api/direction', direction) //route pour afficher les direction
 app.use('/api/equipe', equipe ) //route pour afficher les routes
+app.use('/api/projet', projet )
 app.use('/api/agenda', agendaRoutes);
 app.use('/api/calendrier', displayRoutes);
 app.use('/api/formations',formationRouter);

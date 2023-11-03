@@ -87,6 +87,16 @@ const navigationConfig = [
               title : 'Fonction',
               type : 'item',
               url : 'business/manage/Fonction'
+            }, {
+              id : 'entreprise.direction-manage-project',
+              title : 'Project',
+              type : 'item',
+              url : 'business/manage/project'
+            }, {
+              id : 'entreprise.direction-manage-teams',
+              title : 'Team',
+              type : 'item',
+              url : 'business/manage/team'
             }
           ]
         } 

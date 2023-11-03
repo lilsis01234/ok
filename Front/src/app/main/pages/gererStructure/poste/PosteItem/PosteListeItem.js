@@ -1,16 +1,16 @@
 import { useThemeMediaQuery } from '@fuse/hooks';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, Link} from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { Typography } from '@mui/material';
 import { Button, Tabs, Tab } from '@mui/material';
-import { FormProvider } from 'react-hook-form';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 import PosteItemHeader from './PosteItemHeader';
+import BasicPosteInfo from './tabs/BasicPosteInfo';
 
-const { useForm} = require("react-hook-form");
+const { useForm, FormProvider } = require("react-hook-form");
 const { yupResolver } = require("@hookform/resolvers/yup");
 
 const schema = yup.object().shape({
@@ -38,6 +38,10 @@ function PosteListeItem(props) {
   const { reset, watch, control, onChange, fomState } = methods || {};
   const form = watch();
 
+  console.log(form)
+
+
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -48,7 +52,7 @@ function PosteListeItem(props) {
           console.log('Affichage d\'une poste existante')
           axios.get(`http://localhost:4000/api/poste/view/${posteId}`)
             .then(response => {
-              setPoste(response.data.poste)
+              setPoste(response.data)
               setNoPoste(false)
             })
             .catch(error => {
@@ -63,10 +67,11 @@ function PosteListeItem(props) {
     fetchData();
   }, [posteId])
 
+
   useEffect(() => {
     if (poste && Object.keys(poste).length > 0) {
-      const { titrePoste, departement } = departement;
-      reset({ titrePoste, departement })
+      const { id, titrePoste, departement } = poste;
+      reset({ id, titrePoste, departement })
     }
   }, [poste, reset])
 
@@ -99,7 +104,7 @@ function PosteListeItem(props) {
           to="/business/manage/departement"
           color="inherit"
         >
-          Go To Fonctions Page
+          Go To Fonction Page
         </Button>
       </motion.div>
     )
@@ -109,6 +114,26 @@ function PosteListeItem(props) {
     <FormProvider {...methods}>
       <FusePageCarded
         header = {<PosteItemHeader formValues={form}/>}
+        content = {
+          <>
+            <Tabs
+               value={tabValue}
+               onChange={handleTabChange}
+               indicatorColor="secondary"
+               textColor="secondary"
+               variant="scrollable"
+               scrollButtons="auto"
+               classes={{ root: 'w-full h-64 border-b-1' }}
+            >
+              <Tab className="h-64" label="Basic Fonction Info" ></Tab>
+            </Tabs>
+            <div className="p-16 sm:p-24 max-w-3xl">
+              <div className={tabValue !== 0 ? 'hidden' : ''}>
+                  <BasicPosteInfo methods={methods} formValues={form}/>
+              </div>
+            </div>
+          </>
+        }
         scroll={isMobile ? 'normal' : 'content'}
       />
     </FormProvider>

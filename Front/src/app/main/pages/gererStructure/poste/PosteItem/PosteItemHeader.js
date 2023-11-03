@@ -12,32 +12,42 @@ function PosteItemHeader({formValues}) {
     const { formState, watch, getValues } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
 
+    const theme = useTheme();
+    const navigate = useNavigate();
+
     const { id } = formValues
     const {titrePoste} = formValues
     const {departement} = formValues
 
-    const theme = useTheme();
-    const navigate = useNavigate();
+    let departementData = [];
+    if (Array.isArray(departement)) {
+        departementData = departement.map((dep) => dep.id)
+    }
+
 
     const data = {
         titrePoste,
-        departement
+        departement : departementData
     }
 
-    console.log(data)
+   
+
+    // console.log(formValues)
     
     const handleSavePoste = async() => {
         if (id) {
+            console.log(departement)
             try {
-                await axios.put(`http://localhost/api/poste/edit/${id}`, data)
+                await axios.put(`http://localhost:4000/api/poste/${id}/edit`, data)
                 alert('Fonction Update succesfully')
                 navigate('/business/manage/Fonction')
             } catch (error){
                 console.log(error)
             }
         } else {
+            console.log('Ajout nouvelle poste poste')
             try {
-                await axios.post(`http://localhost/api/poste/new`, data)
+                await axios.post(`http://localhost:4000/api/poste/new`, data)
                 alert('Fonction create succesfully')
                 navigate('/business/manage/Fonction')
             } catch (error){
@@ -79,6 +89,7 @@ return (
                         <Typography variant="caption" className="font-medium"> Fonction Detail </Typography>
                 </motion.div>
             </div>
+            </div>
             <motion.div
                 className="flex"
                 initial={{ opacity: 0, x: 20 }}
@@ -94,7 +105,7 @@ return (
                     Save
                 </Button>
             </motion.div>
-        </div>
+        
     </div>
   )
 }
