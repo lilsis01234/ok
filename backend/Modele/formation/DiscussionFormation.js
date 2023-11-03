@@ -55,5 +55,8 @@ DiscussionFormation.belongsTo(Formation, {
 DiscussionFormation.belongsTo(Collaborateur, {
     foreignKey : 'collaborateur'
 })
+DiscussionFormation.belongsTo(Module,{
+    foreignKey:'module'
+})
 
 module.exports = DiscussionFormation;
