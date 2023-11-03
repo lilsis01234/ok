@@ -21,7 +21,8 @@ const Discussions =()=>{
       useEffect(() => {
         fetchDiscussion();
       })
-    return(
+
+     return(
      <>
      <div className="discussion-container">
      <div className="top">
@@ -40,7 +41,7 @@ const Discussions =()=>{
             <p className="discussion-content">{discussions.contenu}</p>
         </div>
     ))}
-</div>
+    </div>
 
 
 
