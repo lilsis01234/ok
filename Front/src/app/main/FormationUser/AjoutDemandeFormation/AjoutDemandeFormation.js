@@ -60,17 +60,17 @@ const AjoutDemandeFormation = () => {
   };
 
   return (
-    <div className="form-container">
+    <div className="form2-container">
       <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="form2-group">
             <label>Thème</label>
             <input type="text" value={theme} onChange={(e) => setTheme(e.target.value)} />
           </div>
-          <div className="form-group">
+          <div className="form2-group">
             <label>Description</label>
             <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>
-          <div className="form-group">
+          <div className="form2-group">
           <label>Destinataire de votre demande</label>
           <select value={destinataire} onChange={(e) => setDestinataire(e.target.value)}>
             <option value="">Sélectionnez un destinataire</option>
@@ -79,7 +79,7 @@ const AjoutDemandeFormation = () => {
             <option value="coatch">Coatch</option>
           </select>
         </div>
-        <div className="form-group">
+        <div className="form2-group">
           <label>Si pour une personne, personne à former:</label>
           <select value={personneAFormer} onChange={(e) => setPersonneAFormer(e.target.value)}>
           {collabs.map((collab)=>(
@@ -89,7 +89,7 @@ const AjoutDemandeFormation = () => {
             ))}
           </select>
         </div>
-        <div className="form-group">
+        <div className="form2-group">
           <label>Si pour un département, département à former:</label>
           <select value={departementAFormer} onChange={(e) => setDepartementAFormer(e.target.value)}>
             {departement.map((departement)=>(
@@ -99,7 +99,7 @@ const AjoutDemandeFormation = () => {
             ))}
           </select>
         </div>
-          <div className="form-group">
+          <div className="form2-group">
             <button type="submit">Ajouter</button>
           </div>
         </form>
