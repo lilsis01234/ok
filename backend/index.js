@@ -1,4 +1,5 @@
 const express = require('express');
+const http = require('http');
 //const mysql = require('mysql');
 const sequelize = require('./database/database');
 const cors = require('cors');
@@ -17,6 +18,20 @@ const archive = require('./routes/Collaborateur/archiveCollab')
 const userProfile = require('./routes/Compte/userProfile');
 const direction = require('./routes/Poste/direction')
 const equipe = require('./routes/Poste/equipe')
+
+
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+
+const discussionEvents = require('./events/Chat/discussionEvents')(io)
+const MembrerEvents = require('./events/Chat/membreEvents')(io)
+const messageEvents = require('./events/Chat/messageEvents')(io)
+
+//Pour le chat
+const discussionChat = require('./routes/Chat/discussion')
+const membrer = require('./routes/Chat/membre')
+const message = require('./routes/Chat/message')
+
 
 
 //importation des configurations$
@@ -48,28 +63,29 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use('/api', api_config) //route pour la configuration 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/departement', departementRouter); //route pour le département
-app.use('/api/poste', posteRouter ); // route pour le router
+app.use('/api/poste', posteRouter); // route pour le router
 app.use('/api/collaborateur', collabRouter); //route pour les collaborateurs
-app.use('/api/compte_collaborateur', compte_collab) ; //route pour les comptes collaborateurs
+app.use('/api/compte_collaborateur', compte_collab); //route pour les comptes collaborateurs
 app.use('/api/auth', login); //route pour l'authentification
 app.use('/api/role', role); //route pour les rôles
-app.use('/api/password', password ); //route pour les mot de passe
+app.use('/api/password', password); //route pour les mot de passe
 app.use('/api/archive', archive); //route pour archiver les collaborateurs 
 app.use('/api/user', userProfile); //route pour afficher les profiles des collaborateurs 
 app.use('/api/direction', direction) //route pour afficher les direction
-app.use('/api/equipe', equipe ) //route pour afficher les routes
+app.use('/api/equipe', equipe) //route pour afficher les routes
 
 
-
-
-
+//route middleware pour les routes middlware
+app.use('/api/chat/discussion', discussionChat)
+app.use('/api/chat/membre', membrer)
+app.use('/api/chat/message', message)
 
 //Connection à la base de donnée MySQL
 sequelize.authenticate()
     .then(() => {
         console.log('Connecté à la base de données MySQL');
     })
-    .catch((err) =>{
+    .catch((err) => {
         console.error('Erreur à la connexion à la base de donnes:', err)
     })
 
@@ -86,7 +102,9 @@ connection.connect((err) =>{
 })*/
 
 
-//Initialisation du serveur
-app.listen(4001, () => {
-    console.log('Serveur Express en écoute sur le port 4001')
-});
+//Initialisation du serveUR
+// app.listen(4001, () => {
+//     console.log('Serveur Express en écoute sur le port 4001')
+// });
+
+module.exports = { app, server, io }
