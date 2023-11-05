@@ -25,6 +25,7 @@ const Seance = require('../Modele/formation/Seance');
 const ParticipantsSeance = require('../Modele/formation/ParticipantsSeance');
 const associationSeance = require('../Modele/formation/associationSeanceCollab');
 
+
 //Module CHAT
 const Discussion = require('../Modele/ChatModel/Discussion')
 const Membre = require('../Modele/ChatModel/Membre')
