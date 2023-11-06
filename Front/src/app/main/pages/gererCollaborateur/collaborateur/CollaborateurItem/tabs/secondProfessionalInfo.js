@@ -49,7 +49,7 @@ function SecondProfessionalInfo(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/project/all")
+      .get("http://localhost:4000/api/projet/all")
       .then((response) => {
         setListeProjet(response.data);
       })
