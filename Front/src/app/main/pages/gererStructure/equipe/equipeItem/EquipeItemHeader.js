@@ -1,47 +1,44 @@
+import { useTheme } from '@mui/styles';
 import axios from 'axios';
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom';
-import { useTheme } from '@mui/styles';
-import { motion } from 'framer-motion';
-import { Button, Typography } from '@mui/material';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
+import { useNavigate } from 'react-router-dom';
 
-function ProjetItemHeader({ formValues }) {
+function EquipeItemHeader({ formValues }) {
     const methods = useFormContext();
+
     const { formState, watch, getValues } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
 
     const { id } = formValues
-    const { nomProjet } = formValues
-    const { departement } = formValues
+    const { nomEquipe } = formValues
+    const { projet } = formValues
 
     const theme = useTheme();
     const navigate = useNavigate();
 
     const data = {
-        nomProjet,
-        departement
+        nomEquipe,
+        projet
     }
 
-    // console.log(formValues)
+    console.log(formValues)
 
-    const handleSaveProject = async () => {
+    const handleSaveEquipe = async () => {
         if (id) {
             try {
-                await axios.put(`http://localhost:4000/api/projet/edit/${id}`, data)
-                alert('Project Update succesfully')
-                navigate('/business/manage/project')
+                await axios.put(`http://localhost:4000/api/equipe/edit/${id}`, data)
+                alert('Team update Succesfully')
+                navigate('/business/manage/team')
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await axios.post(`http://localhost:4000/api/projet/new`, data)
-                alert('Project create successfully')
-                navigate('/business/manage/project')
-            }
-            catch (error) {
+                await axios.post('http://localhost:4000/api/equipe/new', data)
+                alert('Team create successfully')
+                navigate('/business/manage/team')
+            } catch (error) {
                 console.log(error)
             }
         }
@@ -61,7 +58,7 @@ function ProjetItemHeader({ formValues }) {
                         className="flex items-center sm:mb-12"
                         component={Link}
                         role="button"
-                        to="/business/manage/project"
+                        to="/business/manage/team"
                         color="inherit"
                     >
                         <FuseSvgIcon size={20}>
@@ -78,30 +75,29 @@ function ProjetItemHeader({ formValues }) {
                         initial={{ x: -20 }}
                         animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomProjet || 'New Project'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Project Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomEquipe || 'New Team'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Team Detail </Typography>
                     </motion.div>
                 </div>
-                </div>
+            </div>
 
-                <motion.div
-                    className="flex"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+            <motion.div
+                className="flex"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+            >
+                <Button
+                    className="whitespace-nowrap mx-4"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleSaveEquipe}
                 >
-                    <Button
-                        className="whitespace-nowrap mx-4"
-                        variant="contained"
-                        color="secondary"
-                        onClick={handleSaveProject}
-                    >
-                        Save
-                    </Button>
-                </motion.div>
-          
+                    Save
+                </Button>
+            </motion.div>
+
         </div>
     )
 }
 
-export default ProjetItemHeader
-
+export default EquipeItemHeader

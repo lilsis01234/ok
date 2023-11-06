@@ -1,13 +1,14 @@
 import { useThemeMediaQuery } from '@fuse/hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
+import axios  from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
-import * as yup from 'yup';
 import { motion } from 'framer-motion';
 import { Typography } from '@mui/material';
 import { Button, Tabs, Tab } from '@mui/material';
+import * as yup from 'yup';
+import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 
 const schema = yup.object().shape({
     nomEquipe: yup
@@ -18,7 +19,7 @@ const schema = yup.object().shape({
 
 
 function EquipeItemList() {
-    const {equipeId} = useParams();
+    const { equipeId } = useParams();
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'))
     const [tabValue, setTabValue] = useState(0)
     const [noEquipe, setnoEquipe] = useState(false);
@@ -28,14 +29,14 @@ function EquipeItemList() {
     const methods = useForm({
         mode: 'onChange',
         defaultValues: {},
-        resolver : yupResolver(schema)
+        resolver: yupResolver(schema)
     })
 
     const { reset, watch, control, onChange, formState } = methods || {};
     const form = watch();
 
     useEffect(() => {
-        async function fetchData(){
+        async function fetchData() {
             try {
                 if (equipeId === 'new') {
                     console.log('Ajout d\'une nouvelle équipe')
@@ -43,17 +44,17 @@ function EquipeItemList() {
                 } else {
                     console.log('Affichage d\'une équipe existante')
                     axios.get(`http://localhost:4000/api/equipe/view/${equipeId}`)
-                    .then(response => {
-                        setEquipe(response.data)
-                        setnoEquipe(false)
-                        console.log(response.data)
-                    }) 
-                    .catch(error => {
-                        setnoEquipe(true)
-                        console.error(error)
-                    })
+                        .then(response => {
+                            setEquipe(response.data)
+                            setnoEquipe(false)
+                            console.log(response.data)
+                        })
+                        .catch(error => {
+                            setnoEquipe(true)
+                            console.error(error)
+                        })
                 }
-            } catch (error){
+            } catch (error) {
                 console.error('Error fetching Direction data:', error)
                 setnoEquipe(true);
             }
@@ -62,21 +63,21 @@ function EquipeItemList() {
     }, [equipeId])
 
     useEffect(() => {
-        if(equipe && Object.keys(equipe).length > 0){
-            const {id, nomEquipe, projet} = equipe
-            reset({id, nomEquipe, projet})
+        if (equipe && Object.keys(equipe).length > 0) {
+            const { id, nomEquipe, projet } = equipe
+            reset({ id, nomEquipe, projet })
         }
     }, [equipe, reset])
 
-    
-    function handleTabChange(event, value){
+
+    function handleTabChange(event, value) {
         setTabValue(value)
     }
 
 
-    if (noEquipe){
+    if (noEquipe) {
         return (
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 0.1 } }}
                 className="flex flex-col flex-1 items-center justify-center h-full"
@@ -85,11 +86,11 @@ function EquipeItemList() {
                     There is no such equipe!
                 </Typography>
                 <Button
-                     className="mt-24"
-                     component={Link}
-                     variant="outlined"
-                     to="/business/manage/team"
-                     color="inherit"
+                    className="mt-24"
+                    component={Link}
+                    variant="outlined"
+                    to="/business/manage/team"
+                    color="inherit"
                 >
                     Go To Teams Page
                 </Button>
@@ -98,19 +99,33 @@ function EquipeItemList() {
     }
 
 
-
-
-
-
-
-
-
-
-  return (
-    <div>
-      
-    </div>
-  )
+    return (
+        <FormProvider {...methods}>
+            <FusePageCarded
+                content={
+                    <>
+                        <Tabs
+                            value={tabValue}
+                            onChange={handleTabChange}
+                            indicatorColor="secondary"
+                            textColor="secondary"
+                            variant="scrollable"
+                            scrollButtons="auto"
+                            classes={{ root: 'w-full h-64 border-b-1' }}
+                        >
+                            <Tab className="h-64" label="Basic Team Info" />
+                        </Tabs>
+                        <div className="p-16 sm:p-24 max-w-3xl">
+                            <div className={tabValue !== 0 ? 'hidden' : ''}>
+                        
+                            </div>
+                        </div>
+                    </>
+                }
+                scroll={isMobile ? 'normal' : 'content'}
+            />
+        </FormProvider>
+    )
 }
 
 export default EquipeItemList
