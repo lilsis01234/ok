@@ -23,28 +23,16 @@ router.get('/all_formations', async(req,res) => {
             },
             {
               model: Collaborateur,
-              as: 'Collaborateur',
-              attributes: ['nom', 'prenom'],
-            },
-            {
-              model: Collaborateur,
               as: 'Formateur',
               attributes: ['nom', 'prenom'],
             },
-            {
-              model: Departement,
-              as: 'Departement',
-              attributes: ['nomDepartement'], // Supposons que vous voulez seulement le nom du département, ajustez-le en conséquence.
-            },
           ],
-          attributes: ['id', 'theme', 'description', 'auteur', 'personneAFormer', 'formateur', 'departementAFormer'],
+          attributes: ['id', 'theme', 'description', 'auteur','formateur'],
             where:
             {
                 [Sequelize.Op.and]: [
                     { approbation1: 1 }, // Formation sans approbation nécessaire
                     { destinataireDemande: null }, // Formation sans destinataire spécifique
-                    {departementAFormer:null},//Formation sans departement spécifique
-                    {personneAFormer:null},//Formation sans personne spécifique à former
                 ],
             },
     })
@@ -54,97 +42,6 @@ router.get('/all_formations', async(req,res) => {
     }) 
 })
 
-
-//les formations qu'une équipe doit assister 
-router.get('/all_formations_equipe/:idEquipe', async(req,res) => {
-  const idEquipe = req.params.idEquipe
-  Formation.findAll({
-      include: [
-          {
-            model: Collaborateur,
-            as: 'Auteur',
-            attributes: ['nom', 'prenom'],
-          },
-          {
-            model: Role2,
-            as: 'Roledestinataire',
-            attributes: ['titreRole'],
-          },
-          {
-            model: Collaborateur,
-            as: 'Collaborateur',
-            attributes: ['nom', 'prenom'],
-          },
-          {
-            model: Collaborateur,
-            as: 'Formateur',
-            attributes: ['nom', 'prenom'],
-          },
-          {
-            model: Departement,
-            as: 'Departement',
-            attributes: ['nomDepartement'], // Supposons que vous voulez seulement le nom du département, ajustez-le en conséquence.
-          },
-        ],
-        attributes: ['id', 'theme', 'description', 'auteur', 'personneAFormer', 'formateur', 'departementAFormer','destinataireDemande'],
-      where:
-      {
-          approbation1: 1,
-          departementAFormer:idEquipe,//A changer par le model équipe
-      },
-  })
-  .then((formation) => {
-      res.status(200).json(formation)
-      console.log(formation)
-  }) 
-})
-
-//Les formations dont une personne doit assister à cause d'une demande 
-router.get('/all_formations/:idPersonne', async(req,res) => {
-    const idPersonne = req.params.idPersonne
-    Formation.findAll({
-        include: [
-            {
-              model: Collaborateur,
-              as: 'Auteur',
-              attributes: ['nom', 'prenom'],
-            },
-            {
-              model: Role2,
-              attributes: ['roleHierarchique'],
-            },
-            {
-              model: Collaborateur,
-              as: 'Collaborateur',
-              attributes: ['nom', 'prenom'],
-            },
-            {
-              model: Collaborateur,
-              as: 'Formateur',
-              attributes: ['nom', 'prenom'],
-            },
-            {
-              model: Departement,
-              as: 'Departement',
-              attributes: ['nomDepartement'], // Supposons que vous voulez seulement le nom du département, ajustez-le en conséquence.
-            },
-          ],
-          attributes: ['id', 'theme', 'description', 'auteur', 'personneAFormer', 'formateur', 'departementAFormer','destinataireDemande'],
-        where:
-        {
-            approbation1: 1,
-            departementAFormer:null,
-            personneAFormer:idPersonne,
-            destinataireDemande: {
-                [Sequelize.Op.not]: null,
-            },
-        },
-    })
-    .then((formation) => {
-        res.status(200).json(formation)
-        console.log(formation)
-    }) 
-})
 
 //Les modules et séances d'une formation
 router.get('/all_informations/:idformation', async(req,res)=>{
@@ -180,22 +77,11 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                   },
                   {
                       model: Collaborateur,
-                      as: 'Collaborateur',
-                      attributes: ['nom', 'prenom'],
-                  },
-                  {
-                      model: Collaborateur,
                       as: 'Formateur',
                       attributes: ['nom', 'prenom'],
                   },
-                  {
-                      model: Departement,
-                      as: 'Departement',
-                      attributes: ['nomDepartement'],
-                  },
               ],
           });
-          
             
             if (!formation) {
                 return res.status(404).json({ error: 'Formation introuvable' });
@@ -227,7 +113,6 @@ router.get('/all_informations/:idformation', async(req,res)=>{
         res.status(500).send('Internal Server Error');
       }
     });
-    
 
 
 //Les formations organisées par une personne
@@ -246,18 +131,8 @@ router.get('/formations/:idPersonne',async(req,res)=>{
         },
         {
           model: Collaborateur,
-          as: 'Collaborateur',
-          attributes: ['nom', 'prenom'],
-        },
-        {
-          model: Collaborateur,
           as: 'Formateur',
           attributes: ['nom', 'prenom'],
-        },
-        {
-          model: Departement,
-          as: 'Departement',
-          attributes: ['nomDepartement'],
         },
       ],
         where: {
@@ -272,8 +147,6 @@ router.get('/formations/:idPersonne',async(req,res)=>{
             description: formation.description,
             auteur: formation.Auteur ? `${formation.Auteur.nom} ${formation.Auteur.prenom}` : null,
             formateur: formation.Formateur ? `${formation.Formateur.titreRole}` : null,
-            personneAFormer: formation.Collaborateur ? `${formation.Collaborateur.nom} ${formation.Collaborateur.prenom}` : null,
-            departementAFormer: formation.Departement ? formation.Departement.nomDepartement : null,
           };
         }))
         console.log(formation)
