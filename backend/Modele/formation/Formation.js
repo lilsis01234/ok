@@ -42,23 +42,6 @@ Formation.init({
         key : 'id'
     }
     },
-    //A changer par equipe après le model équipe de intranet 244
-    departementAFormer:{
-        type : DataTypes.INTEGER,
-        allowNull : true,
-        references : {
-        model : Departement,
-        key : 'id'
-    }
-    },
-    personneAFormer:{
-        type : DataTypes.INTEGER,
-        allowNull : true,
-        references : {
-        model : Collaborateur,
-        key : 'id'
-    }
-    },
     approbation1:{
         type: DataTypes.BOOLEAN,
         defaultValue: false,
@@ -77,14 +60,6 @@ Formation.init({
         as: 'Auteur',
         onDelete : 'CASCADE'
     })
-    Formation.belongsTo(Collaborateur, {
-        foreignKey: 'personneAFormer',
-        as: 'Collaborateur', 
-      });     
-    Formation.belongsTo(Departement, {
-        foreignKey: 'departementAFormer',
-        as: 'Departement', // Alias défini ici
-    });
     Formation.belongsTo(Role2, {
         foreignKey: 'destinataireDemande', // Alias défini ici
     });
