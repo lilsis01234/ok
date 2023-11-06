@@ -38,7 +38,7 @@ const ModifierProfil = ({ CollabToEdit}) => {
 <<<<<<< HEAD
         axios.put(`http://localhost:4000/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
 =======
-        axios.put(`http://localhost:4001/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
+        axios.put(`http://localhost:4000/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -76,7 +76,7 @@ const ModifierProfil = ({ CollabToEdit}) => {
 <<<<<<< HEAD
                             <Avatar src={`http://localhost:4000/${image}`} className="w-32 h-32 rounded-full"/>
 =======
-                            <Avatar src={`http://localhost:4001/${image}`} className="w-32 h-32 rounded-full"/>
+                            <Avatar src={`http://localhost:4000/${image}`} className="w-32 h-32 rounded-full"/>
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                         )}
                         {selectImage && (

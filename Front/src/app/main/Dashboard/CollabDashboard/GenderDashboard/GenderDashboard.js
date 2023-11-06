@@ -15,7 +15,7 @@ const GenderDashboard = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:4000/api/collaborateur/all")
+            .get("http://192.168.16.244:4000/api/collaborateur/all")
             .then((response) => {
                 setData(response.data);
             })

@@ -1,6 +1,6 @@
 const {DataTypes, Model} = require('sequelize');
 const sequelize = require('../../database/database');
-const Collaborateur = require('../CollabModel/Collaborateur');
+const Collaborateur = require('../../Modele/CollabModel/Collab');
 const Module = require('./Module');
 const Formation = require('./Formation');
 

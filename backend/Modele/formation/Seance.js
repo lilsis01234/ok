@@ -1,9 +1,10 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../../database/database');
 const Module = require('./Module'); 
-const Collaborateur = require('../CollabModel/Collaborateur');
+const Collaborateur = require('../../Modele/CollabModel/Collab');
 const ParticipantSeance = require('./ParticipantsSeance');
 const Departement = require('../Structure/TestDepartement');
+const Formation = require('../formation/Formation')
 
 class Seance extends Model {}
 
@@ -13,11 +14,11 @@ Seance.init(
       type: DataTypes.DATE,
     },
     heureStart: {
-      type: DataTypes.STRING(5),
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     heureEnd: {
-      type: DataTypes.STRING(5),
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     module: {
@@ -26,6 +27,14 @@ Seance.init(
       references: {
         model: Module,
         key: 'id',
+      },
+    },
+    formation:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      references:{
+        model:Formation,
+        key:'id',
       },
     },
     nombreDePlaces: {
@@ -40,6 +49,10 @@ Seance.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
   },
+  title:{
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
   },
   {
     sequelize,

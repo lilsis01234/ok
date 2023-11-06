@@ -8,17 +8,20 @@ import settingsConfig from 'app/configs/settingsConfig';
 import jwtService from '../auth/services/jwtService';
 
 
-
+//Création d'un action asynchrone SetUser pour mettre à jour les informations de l'utilisateurs 
 export const setUser = createAsyncThunk('user/setUser', async (user, { dispatch, getState }) => {
   /*
     You can redirect the logged-in user to a specific route depending on his role
     */
+  console.log(user)
   if (user.loginRedirectUrl) {
     settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example '/apps/academy'
   }
 
   return user;
 });
+
+
 
 export const updateUserSettings = createAsyncThunk(
   'user/updateSettings',
@@ -83,13 +86,12 @@ export const updateUserData = (user) => async (dispatch, getState) => {
     });
 };
 
-const userConnected = jwtService.getUserConnected()
-console.log(userConnected)
+
 
 
 
 const initialState = {
-  role: [], // guest
+  role: ['Administrateur'], // guest
   data: {
     displayName: 'John Doe',
     photoURL: 'assets/images/avatars/brian-hughes.jpg',

@@ -77,7 +77,6 @@ class JwtService extends FuseUtils.EventEmitter {
         .then((response) => {
           if (response.data) {
             this.setSession(response.data.token);
-            this.isUserConnected(response.data.compte)
             this.emit('onLogin', response.data.compte);
             return response.data
           } else {
@@ -147,19 +146,6 @@ class JwtService extends FuseUtils.EventEmitter {
   getAccessToken = () => {
     return window.localStorage.getItem('jwt_access_token');
   };
-
-  //Récupération des rôles de l'utilisateur connecté
-  isUserConnected = (userInfo) => {
-    if(userInfo){
-        localStorage.setItem('user', userInfo)
-    } else {
-      localStorage.removeItem('user')
-    }
-  }
-
-  getUserConnected = () => {
-    return window.localStorage.getItem('user')
-  }
 
 
 }

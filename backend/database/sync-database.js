@@ -12,10 +12,7 @@ const PosteDepartement = require('../Modele/Structure/PosteDepartement')
 const Direction = require('../Modele/Structure/Direction')
 const Projet = require('../Modele/Structure/Projet')
 const Collaborateur = require('../Modele/CollabModel/Collaborateur')
-const Equipe = require('../Modele/Structure/Equipe')
-const Permission = require('../Modele/RoleModel/Permission')
-const RolePermission = require('../Modele/RoleModel/RolePermission')
-const associationRole = require('../Modele/RoleModel/associationPermission')
+const Eqquipe = require('../Modele/Structure/Equipe')
 const association = require('../Modele/Structure/association')
 const Formation = require('../Modele/formation/Formation');
 const CommentaireFormation = require('../Modele/formation/CommentaireFormation');
@@ -23,8 +20,6 @@ const DiscussionFormation = require('../Modele/formation/DiscussionFormation');
 const Module = require('../Modele/formation/Module');
 const Seance = require('../Modele/formation/Seance');
 const ParticipantsSeance = require('../Modele/formation/ParticipantsSeance');
-const associationSeance = require('../Modele/formation/associationSeanceCollab');
-
 
 //Module CHAT
 const Discussion = require('../Modele/ChatModel/Discussion')

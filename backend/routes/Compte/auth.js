@@ -140,20 +140,20 @@ router.post('/refresh_token', (req, res) => {
 
 
 //Renouveler le token
-// router.post('/access-token', (req, res) => {
-//     const {acess_token} = req.body;
+router.post('/access-token', (req, res) => {
+    const { acess_token } = req.body;
 
-//     const decodedToken = verifyJWTToken(acess_token);
-//     if (decodedToken){
-//         // const {compte, role} = decodedToken;
-//         const newAcessToken = jwt.sign({}, secretKey , {
-//             expiresIn : '1h'
-//         })
+    const decodedToken = verifyJWTToken(acess_token);
+    if (decodedToken) {
+        // const {compte, role} = decodedToken;
+        const newAcessToken = jwt.sign({}, secretKey, {
+            expiresIn: '1h'
+        })
 
-//         return res.status(200).json({token : newAcessToken})
-//     }
-//     return res.status(401).json({error : 'Token invalide'})
-// })
+        return res.status(200).json({ token: newAcessToken })
+    }
+    return res.status(401).json({ error: 'Token invalide' })
+})
 
 
 
@@ -178,8 +178,6 @@ const verifyToken = async(req, res, next) => {
         res.status(500).json({ error: err.message });
     }
 };
-
-
 
 
 

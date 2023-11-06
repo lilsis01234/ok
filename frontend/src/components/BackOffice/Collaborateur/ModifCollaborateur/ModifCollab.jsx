@@ -71,7 +71,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
     const [sexe, setSexe] = useState(CollabToEdit?.sexe || '');
     //Récupération de la liste des postes 
     useEffect(() => {
-        axios.get('http://localhost:4001/api/poste/all')
+        axios.get('http://localhost:4000/api/poste/all')
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((res) => {
                 setListePoste(res.data)
@@ -86,7 +86,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
 <<<<<<< HEAD
         axios.get('http://localhost:4000/api/departement/all')
 =======
-        axios.get('http://localhost:4001/api/departement/all')
+        axios.get('http://localhost:4000/api/departement/all')
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((res) => {
                 setListeDepartement(res.data)
@@ -231,7 +231,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
 <<<<<<< HEAD
         axios.put(`http://localhost:4000/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
 =======
-        axios.put(`http://localhost:4001/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
+        axios.put(`http://localhost:4000/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -272,7 +272,7 @@ const ModifCollab = ({ CollabToEdit, onCollabUpdated }) => {
 <<<<<<< HEAD
                             <Avatar src={`http://localhost:4000/${image}`} />
 =======
-                            <Avatar src={`http://localhost:4001/${image}`} />
+                            <Avatar src={`http://localhost:4000/${image}`} />
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                         )}
                         {selectImage && (

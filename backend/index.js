@@ -1,11 +1,14 @@
 const express = require('express');
+const app = express();
+
 const http = require('http');
+const server = http.createServer(app);
 //const mysql = require('mysql');
 const sequelize = require('./database/database');
 const cors = require('cors');
 const path = require('path');
 
-const app = express();
+
 const departementRouter = require('./routes/Poste/departement');
 const posteRouter = require('./routes/Poste/postes');
 const collabRouter = require('./routes/Collaborateur/collaborateur');
@@ -18,9 +21,24 @@ const archive = require('./routes/Collaborateur/archiveCollab')
 const userProfile = require('./routes/Compte/userProfile');
 const direction = require('./routes/Poste/direction')
 const equipe = require('./routes/Poste/equipe')
+const projet = require('./routes/Poste/projet')
+const agendaRoutes = require('../backend/routes/formation/AjoutAgenda')
+const displayRoutes = require('../backend/routes/formation/AfficheAgenda')
+const formationRouter = require('../backend/routes/formation/formation')
+const requestRouter = require('../backend/routes/formation/demandeFormation')
+const seanceRouter = require('../backend/routes/formation/seance')
+const moduleRouter = require('../backend/routes/formation/module')
+
+const { ExpressPeerServer } = require('peer');
 
 
-const server = http.createServer(app);
+const peerServer = ExpressPeerServer(server, {
+    debug: true,
+});
+
+app.use('/peerjs', peerServer);
+
+
 const io = require('socket.io')(server);
 
 const discussionEvents = require('./events/Chat/discussionEvents')(io)
@@ -50,12 +68,16 @@ const connection = mysql.createConnection({
     database : 'testintranet',
 })
 */
-app.use(cors({ origin: 'http://192.168.16.46:3000', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 //Ajout de middleware express.json()
 app.use(express.json())
 
-
+// const socketIO = require('socket.io')(http, {
+//     cors: {
+//         origin: "http://localhost:3000"
+//     }
+// });
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
@@ -73,7 +95,14 @@ app.use('/api/archive', archive); //route pour archiver les collaborateurs
 app.use('/api/user', userProfile); //route pour afficher les profiles des collaborateurs 
 app.use('/api/direction', direction) //route pour afficher les direction
 app.use('/api/equipe', equipe) //route pour afficher les routes
-
+app.use('/api/projet', projet)
+app.use('/api/agenda', agendaRoutes);
+app.use('/api/calendrier', displayRoutes);
+app.use('/api/formations', formationRouter);
+app.use('/api/demande_formation', requestRouter);
+app.use('/api/seances', seanceRouter)
+app.use('/api/peerjs', peerServer);
+app.use('/api/module', moduleRouter);
 
 //route middleware pour les routes middlware
 app.use('/api/chat/discussion', discussionChat)

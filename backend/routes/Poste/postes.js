@@ -42,7 +42,7 @@ router.post('/new', async (req, res) => {
     try {
         const { titrePoste, departement, direction } = req.body;
 
-        //Creation de l'étudiant
+        //Creation du poste
         const newPoste = await TestPoste.create({
             titrePoste
         })
@@ -183,7 +183,7 @@ router.put('/:id/edit', async (req, res) => {
         const departementAajouter = departement.filter((departementId) => !departementActuelle.includes(departementId))
 
 
-        //Identifier les departements avec les associations à supprimer
+        //Identifier les departements avec les associations 
         const departementSupprimer = departementActuelle.filter((departementId) => !departement.includes(departementId))
 
 

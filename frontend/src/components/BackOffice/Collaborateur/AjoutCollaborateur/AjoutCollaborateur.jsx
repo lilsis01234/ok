@@ -5,7 +5,6 @@ import SideBar from '../../SideBarAdmin/SideBar'
 import axios from 'axios'
 import '../../../Other_component/Page.css'
 import './AjoutCollaborateur.css'
-<<<<<<< HEAD
 import { Avatar, Input, Select, Option, Alert } from '@material-tailwind/react'
 import jwt_decode from "jwt-decode";
 
@@ -44,46 +43,21 @@ const AjoutCollaborateur = () => {
 
 
 
-=======
-import { Avatar, Input, Select, Option, Alert} from '@material-tailwind/react'
-
-const AjoutCollaborateur = () => {
-  
-
-    const Site = [
-        { id : 1, nom:'Fivoarana'},
-        { id : 2, nom:'Ivohasina'},
-        { id: 3, nom:'Soazaraina'}
-    ]
-
-    const Entreprise = [
-        {id : 1, nom: 'AdValoremSolution'},
-        {id : 2, nom: 'Marketica'},
-        {id : 3, nom: 'Progressio'},
-    ]
-    
-
-    const navigate = useNavigate();
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     const [nom, setNom] = useState('');
     const [photo, setPhoto] = useState(null);
+
     const [prenom, setPrenom] = useState('');
     const [lot, setLot] = useState('');
     const [quartier, setQuartier] = useState('');
     const [ville, setVille] = useState('');
-<<<<<<< HEAD
 
     const [tel, setTelephone] = useState('');
     const [telurgence, setTelUrgence] = useState('');
 
-=======
-    const [telephone, setTelephone] = useState('');
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     const [matricule, setMatricule] = useState('');
     const [dateNaissance, setdateNaissance] = useState('');
     const [lieuNaissance, setLieuNaissance] = useState('');
     const [dateEmbauche, setdateEmbauche] = useState('');
-<<<<<<< HEAD
 
     const [CIN, setCIN] = useState('');
     const [dateDelivrance, setDateDelivrance] = useState('');
@@ -92,8 +66,6 @@ const AjoutCollaborateur = () => {
     const [statutmatrimoniale, setStatutMatrimoniale] = useState('');
     const [nbEnfant, setNbEnfant] = useState('');
 
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     const [site, setSite] = useState('');
     const [poste, setPoste] = useState('');
     const [sexe, setSexe] = useState('');
@@ -104,7 +76,6 @@ const AjoutCollaborateur = () => {
     const [departement2, setdepartement2] = useState('');
 
     const [entreprise, setEntreprise] = useState('');
-<<<<<<< HEAD
     const [categorie, setCategorie] = useState('');
     const [contrat, setContrat] = useState('');
 
@@ -114,15 +85,11 @@ const AjoutCollaborateur = () => {
 
     const [equipe, setEquipe] = useState('');
     const [equipe2, setEquipe2] = useState('');
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
 
     const Sexe = [
         { id: 1, nom: 'masculin' },
         { id: 2, nom: 'feminin' }
     ]
-
-<<<<<<< HEAD
     //Récupération des listes des Equipes
     const [listeEquipe, setListeEquipe] = useState([])
 
@@ -134,25 +101,14 @@ const AjoutCollaborateur = () => {
             .catch(err => console.log(err))
     }, [])
 
-
-
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     //Récupération de la liste des postes
     const [listePoste, setListePoste] = useState([])
 
     useEffect(() => {
-<<<<<<< HEAD
         axios.get('http://localhost:4000/api/poste/all')
             .then((res) => {
                 setListePoste(res.data)
 
-=======
-        axios.get('http://localhost:4001/api/poste/all')
-            .then((res) => {
-                setListePoste(res.data)
-           
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             })
             .catch(err => console.log(err));
     }, [])
@@ -163,19 +119,11 @@ const AjoutCollaborateur = () => {
     const [listeDepartement, setListeDepartement] = useState([])
 
     useEffect(() => {
-<<<<<<< HEAD
         axios.get('http://localhost:4000/api/departement/all')
             .then((res) => {
                 setListeDepartement(res.data)
             })
             .catch(err => console.log(err))
-=======
-        axios.get('http://localhost:4001/api/departement/all')
-        .then((res) => {
-            setListeDepartement(res.data)
-        })
-        .catch(err => console.log(err))
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     }, [])
 
 
@@ -187,28 +135,19 @@ const AjoutCollaborateur = () => {
         const selectedFile = event.target.files[0];
         setPhoto(selectedFile);
         setSelecteImage(selectedFile);
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const formData = {
-            photo,
-<<<<<<< HEAD
+            photo ,
             matricule,
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             nom,
             prenom,
             dateNaissance,
             lieuNaissance,
             sexe,
-<<<<<<< HEAD
             lot,
             quartier,
             ville,
@@ -220,17 +159,11 @@ const AjoutCollaborateur = () => {
             lieuDelivrance,
             statutmatrimoniale,
             nbEnfant,
-=======
-            matricule,
-            telephone, 
-            email,
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             poste,
             departement,
             poste2,
             departement2,
             entreprise,
-<<<<<<< HEAD
             categorie,
             contrat,
             site,
@@ -240,22 +173,8 @@ const AjoutCollaborateur = () => {
             // numCnaps,
             // Banque,
             // RIB,
-=======
-            site,
-            lot,
-            quartier,
-            ville, 
-            dateEmbauche
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         }
-
-
-
-<<<<<<< HEAD
         axios.post('http://localhost:4000/api/collaborateur/new', formData, {
-=======
-        axios.post('http://localhost:4001/api/collaborateur/new', formData, {
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -279,7 +198,6 @@ const AjoutCollaborateur = () => {
                             <div className="flex flex-col  ml-10 pl-10 ">
                                 <div className="collaborateurAddContent_Form_Photo">
                                     <label >Photo:</label><br></br>
-<<<<<<< HEAD
                                     {selecteImage && (
                                         <Avatar src={URL.createObjectURL(selecteImage)} className="w-32 h-32 rounded-full" />
                                     )}
@@ -295,23 +213,6 @@ const AjoutCollaborateur = () => {
                                     <div className="col-span-4 m-2"><Input type="texte" label="Lieu de Naissance" onChange={(e) => { setLieuNaissance(e.target.value) }} size="lg" /></div>
                                     <div className="col-span-4 m-2">
                                         <Select label="Sexe" onChange={(e) => setSexe(e)}>
-=======
-                                        {selecteImage && (
-                                            <Avatar src={URL.createObjectURL(selecteImage)} className="w-32 h-32 rounded-full"/>
-                                        )}
-                                        <input type='file' onChange={handleImageChange}  accept="image/*" ></input>
-                                </div>
-                                <div className="grid grid-cols-12 p-5" >
-                                    <div className="col-span-4 m-2"> <Input type="text" label="Matricule" onChange={(e) => { setMatricule(e.target.value) }}  size="lg"/></div>
-                                    <div className="col-span-4 m-2"> <Input type="text" label="Nom" onChange={(e) => { setNom(e.target.value) }} size="lg"/></div>
-                                    <div className="col-span-4 m-2"> <Input type="text" label="Prénom" onChange={(e) => { setPrenom(e.target.value) }} size="lg"/></div>
-                                </div>
-                                <div className="grid grid-cols-12 p-5">
-                                    <div className="col-span-4 m-2"> <Input type="date" label="Date de Naissance" onChange={(e) => { setdateNaissance(e.target.value) }}  size="lg"/></div>
-                                    <div className="col-span-4 m-2"><Input type="texte" label="Lieu de Naissance" onChange={(e) => { setLieuNaissance(e.target.value)}} size="lg" /></div>
-                                    <div className="col-span-4 m-2">
-                                        <Select label="Sexe"  onChange={(e) => setSexe(e)}>
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                             {Sexe.map((sexeitem) => (
                                                 <Option key={sexeitem.id} value={sexeitem.nom}>
                                                     {sexeitem.nom}
@@ -319,7 +220,6 @@ const AjoutCollaborateur = () => {
                                             ))}
                                         </Select>
                                     </div>
-<<<<<<< HEAD
                                 </div>
                                 <div className="grid grid-cols-12 p-5">
                                     <div className="col-span-4 m-2"> <Input type="text" label="Lot" onChange={(e) => { setLot(e.target.value) }} size="lg" /></div>
@@ -342,30 +242,10 @@ const AjoutCollaborateur = () => {
                                             {StatutMatrimoniale.map((statumatrimoniale) => (
                                                 <Option key={statumatrimoniale.id} value={statumatrimoniale.id.toString()}>
                                                     {statumatrimoniale.nom}
-=======
-                                </div> 
-                                <div className="grid grid-cols-12 p-5">
-                                    <div className="col-span-4 m-2"> <Input type="text" label="Lot" onChange={(e) => { setLot(e.target.value) }}  size="lg"/></div>
-                                    <div className="col-span-4 m-2"> <Input type="text" label="Quartier" onChange={(e) => { setQuartier(e.target.value) }} size="lg"/></div>
-                                    <div className="col-span-4 m-2"> <Input type="text" label="Ville" onChange={(e) => { setVille(e.target.value) }} size="lg"/></div>
-                                </div>    
-                                <div className="grid grid-cols-12 p-5">
-                                    <div className="col-span-4 m-2"> <Input type="text" label="Téléphone" onChange={(e) => { setTelephone(e.target.value) }}  size="lg"/></div>
-                                    <div className="col-span-4 m-2"> <Input type="text" label="Email" onChange={(e) => { setEmail(e.target.value) }} size="lg"/></div>
-                                </div> 
-                                <div className="grid grid-cols-12 p-5">
-                                    <div className="col-span-4 m-2"> <Input type="date" label="Date d'embauche" onChange={(e) => { setdateEmbauche(e.target.value)}}  size="lg"/></div>
-                                    <div className="col-span-4 m-2">
-                                    <Select label="Poste"  onChange={(e) => setPoste(e)}>
-                                            {listePoste.map((poste) => (
-                                                <Option key={poste.id} value={poste.id.toString()}>
-                                                  {poste.titrePoste}
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                                 </Option>
                                             ))}
                                         </Select>
                                     </div>
-<<<<<<< HEAD
                                     <div className="col-span-4 m-2"> <Input type="number" label="Nombre d'enfant" onChange={(e) => { setNbEnfant(e.target.value) }} size="lg" /></div>
                                 </div>
                                 <div className="grid grid-cols-12 p-5">
@@ -375,22 +255,6 @@ const AjoutCollaborateur = () => {
                                             {Site.map((site) => (
                                                 <Option key={site.id} value={site.nom}>
                                                     {site.nom}
-=======
-                                    <div className="col-span-4 m-2">
-                                        <Select label="Département" onChange={(e) => setDepartement(e)}>
-                                            {listeDepartement.map((departement) => (
-                                                <Option key={departement.id} value={departement.id.toString()}> 
-                                                    {departement.nomDepartement}
-                                                </Option>
-                                            ))}
-                                        </Select>
-                                    </div>               
-                                    <div className="col-span-4 m-2">
-                                    <Select label="Site"  onChange={(e) => setSite(e)}>
-                                            {Site.map((site) => (
-                                                <Option key={site.id} value={site.nom}>
-                                                  {site.nom}
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                                 </Option>
                                             ))}
                                         </Select>
@@ -405,7 +269,6 @@ const AjoutCollaborateur = () => {
                                         </Select>
                                     </div>
                                 </div>
-<<<<<<< HEAD
                                 <div className="grid grid-cols-12 p-5">
                                     <div className="col-span-4 m-2">
                                         <Select label="Poste" onChange={(e) => setPoste(e)}>
@@ -439,33 +302,22 @@ const AjoutCollaborateur = () => {
                                     <div className="col-span-4 m-2"> <Input type="text" label="Catégorie" onChange={(e) => { setCategorie(e.target.value) }} size="lg" /></div>
                                     <div className="col-span-4 m-2"> <Input type="text" label="Contrat" onChange={(e) => { setContrat(e.target.value) }} size="lg" /></div>
                                 </div>
-=======
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                 <div>
                                     <Alert color="amber" className="text-xs">Les informations suivantes sont à compléter au cas où le collaborateur possède une deuxième poste.</Alert>
                                     <div className="grid grid-cols-12 p-5">
                                         <div className="col-span-4 m-2">
-<<<<<<< HEAD
                                             <Select label="Deuxième poste" onChange={(e) => setposte2(e)}>
-=======
-                                            <Select label="Deuxième poste"  onChange={(e) => setposte2(e)}>
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                                 {listePoste.map((poste) => (
                                                     <Option key={poste.id} value={poste.id.toString()}>
                                                         {poste.titrePoste}
                                                     </Option>
-<<<<<<< HEAD
+
                                                 ))}
                                             </Select>
-=======
-                                                 ))}
-                                        </Select>
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                         </div>
                                         <div className="col-span-4 m-2">
                                             <Select label="Département" onChange={(e) => setdepartement2(e)}>
                                                 {listeDepartement.map((departement) => (
-<<<<<<< HEAD
                                                     <Option key={departement.id} value={departement.id.toString()}>
                                                         {departement.nomDepartement}
                                                     </Option>
@@ -483,16 +335,6 @@ const AjoutCollaborateur = () => {
                                         </div>
                                     </div>
                                 </div>
-=======
-                                                    <Option key={departement.id} value={departement.id.toString()}> 
-                                                        {departement.nomDepartement}
-                                                    </Option>
-                                                ))}
-                                        </Select>
-                                        </div>
-                                    </div>
-                                </div> 
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                 <button type='submit' className="collaborateurAddContent_Form_Button">Ajouter</button>
                             </div>
                         </form>

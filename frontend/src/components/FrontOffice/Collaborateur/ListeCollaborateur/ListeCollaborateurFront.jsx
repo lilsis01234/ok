@@ -27,11 +27,7 @@ const ListeCollaborateurFront = () => {
     const [listCollab, setListeCollab] = useState([]);
 
     const fetchCollaborateur = () => {
-<<<<<<< HEAD
         axios.get('http://localhost:4000/api/compte_collaborateur/all')
-=======
-        axios.get('http://localhost:4001/api/compte_collaborateur/all')
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then(res => { setListeCollab(res.data)})
             .catch(err => console.log(err));
     }
@@ -159,11 +155,7 @@ const ListeCollaborateurFront = () => {
                                 )).map((collab,index) => (
                                     <div key={index} className="col-span-4 cursor-pointer" onClick={()=> {ViewModal(collab.id); openViewModal()}}>
                                         <div  className="flex flex-row " >
-<<<<<<< HEAD
                                             <Avatar src={`http://localhost:4000/${collab.Collab.image}`} alt={collab.nom} size="xxl" className="m-3" />
-=======
-                                            <Avatar src={`http://localhost:4001/${collab.Collab.image}`} alt={collab.nom} size="xxl" className="m-3" />
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                             <div className="flex flex-col justify-center">
                                                 <Typography variant="h6">{collab.Collab.prenom} {collab.Collab.nom}</Typography>
                                                 <Typography variant="h6">{collab.Collab.matricule} </Typography>
@@ -181,11 +173,7 @@ const ListeCollaborateurFront = () => {
                                     )).map((collab,index) => (
                                         <div  key={index} className="col-span-4 cursor-pointer"  onClick={()=> {ViewModal(collab.id); openViewModal()}}>
                                         <div className="flex flex-row ">
-<<<<<<< HEAD
                                             <Avatar src={`http://localhost:4000/${collab.Collab.image}`} alt={collab.Collab.nom} size="xxl" className="m-3" />
-=======
-                                            <Avatar src={`http://localhost:4001/${collab.Collab.image}`} alt={collab.Collab.nom} size="xxl" className="m-3" />
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                                             <div className="flex flex-col justify-center">
                                                 <Typography variant="h6">{collab.Collab.prenom} {collab.Collab.nom}</Typography>
                                                 <Typography variant="h6">{collab.Collab.matricule} </Typography>
