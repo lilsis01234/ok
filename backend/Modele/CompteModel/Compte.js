@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../../database/database');
 const Collab = require('../CollabModel/Collab')
-const Role = require('../RoleModel/Role');
+const RoleHierarchique = require('../RoleModel/RoleHierarchique');
 
 class Compte extends Model{}
 
@@ -38,7 +38,7 @@ Compte.belongsTo(Collab, {
     onDelete : 'CASCADE'
 })
 
-Role.hasMany(Compte);
-Compte.belongsTo(Role , {})
+RoleHierarchique.hasMany(Compte);
+Compte.belongsTo(RoleHierarchique , {})
 
 module.exports = Compte;

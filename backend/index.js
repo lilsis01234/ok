@@ -15,8 +15,9 @@ const api_config = require('./config/api_config');
 const password = require('./routes/Compte/motdepasseOublie');
 const archive = require('./routes/Collaborateur/archiveCollab')
 const userProfile = require('./routes/Compte/userProfile');
-const direction = require('./routes/Poste/direction')
-const equipe = require('./routes/Poste/equipe')
+const direction = require('./routes/Poste/direction');
+const equipe = require('./routes/Poste/equipe');
+const actualite = require('./routes/Actualite/Actualité');
 
 
 //importation des configurations$
@@ -35,7 +36,7 @@ const connection = mysql.createConnection({
     database : 'testintranet',
 })
 */
-app.use(cors({ origin: 'http://192.168.16.46:3000', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 //Ajout de middleware express.json()
 app.use(express.json())
@@ -57,7 +58,8 @@ app.use('/api/password', password ); //route pour les mot de passe
 app.use('/api/archive', archive); //route pour archiver les collaborateurs 
 app.use('/api/user', userProfile); //route pour afficher les profiles des collaborateurs 
 app.use('/api/direction', direction) //route pour afficher les direction
-app.use('/api/equipe', equipe ) //route pour afficher les routes
+app.use('/api/equipe', equipe ) //route pour afficher les equipes
+app.use('/api/actualite', actualite ) //route pour afficher les actualités
 
 
 

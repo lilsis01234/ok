@@ -24,6 +24,19 @@ const Module = require('../Modele/formation/Module');
 const Seance = require('../Modele/formation/Seance');
 const ParticipantsSeance = require('../Modele/formation/ParticipantsSeance');
 const associationSeance = require('../Modele/formation/associationSeanceCollab');
+const Actualite =  require('../Modele/ActualityModel/Actualité');
+const Categorie =  require('../Modele/ActualityModel/Categorie');
+const ActuCateg =  require('../Modele/ActualityModel/ActuCateg');
+const associationActuCateg =  require('../Modele/ActualityModel/associationActuCateg');
+const Commentaire =  require('../Modele/ActualityModel/Commentaire');
+const GroupCompte =  require('../Modele/ActualityModel/GroupCompte');
+const associationGroupCompte =  require('../Modele/ActualityModel/associationGroupCompte');
+const Groupe =  require('../Modele/ActualityModel/Groupe');
+const Reaction =  require('../Modele/ActualityModel/Reaction');
+const ActualityImg =  require('../Modele/ActualityModel/ActualityImg');
+const Type = require('../Modele/ActualityModel/Type');
+const ActuType = require('../Modele/ActualityModel/ActuType');
+const associationActuType = require('../Modele/ActualityModel/associationActuType');
 
 
 
@@ -42,7 +55,21 @@ async function syncDatabase(){
         Collaborateur.belongsToMany(Seance, { through: ParticipantsSeance });
         Departement.belongsToMany(Seance,{ through: ParticipantsSeance })
         Seance.belongsToMany(Collaborateur, { through: ParticipantsSeance });
+
+        const { Actualite, Categorie, ActuCateg} = associationActuCateg;
+        Actualite.belongsToMany(Categorie, {through: ActuCateg});
+        Categorie.belongsToMany(Actualite, {through: ActuCateg});
+
+        const { Type, ActuType} = associationActuType;
+        Actualite.belongsToMany(Type, {through: ActuType});
+        Type.belongsToMany(Actualite, {through: ActuType});
+
+        const { Compte, Groupe, GroupCompte} = associationGroupCompte;
+        Compte.belongsToMany(Groupe, {through: GroupCompte});
+        Groupe.belongsToMany(Compte, {through: GroupCompte});
+
         console.log('La base de donnée est synchronisée avec succès')
+
     }  catch (error){
         console.error('Erreur lors de la synchronisation de la base de données :', error )
     } finally {
