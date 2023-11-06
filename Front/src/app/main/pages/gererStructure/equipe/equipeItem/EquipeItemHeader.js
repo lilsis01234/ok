@@ -1,12 +1,14 @@
 import { useTheme } from '@mui/styles';
-import axios from 'axios';
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
+import { Button, Typography } from '@mui/material';
+import axios from 'axios';
 
 function EquipeItemHeader({ formValues }) {
     const methods = useFormContext();
-
     const { formState, watch, getValues } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
 
@@ -22,13 +24,13 @@ function EquipeItemHeader({ formValues }) {
         projet
     }
 
-    console.log(formValues)
+    // console.log(data)
 
     const handleSaveEquipe = async () => {
         if (id) {
             try {
                 await axios.put(`http://localhost:4000/api/equipe/edit/${id}`, data)
-                alert('Team update Succesfully')
+                alert('Team Update succesfully')
                 navigate('/business/manage/team')
             } catch (error) {
                 console.log(error)
@@ -66,7 +68,7 @@ function EquipeItemHeader({ formValues }) {
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                         </FuseSvgIcon>
-                        <span className="flex mx-4 font-medium">Project</span>
+                        <span className="flex mx-4 font-medium">Team</span>
                     </Typography>
                 </motion.div>
                 <div className="flex items-center max-w-full">
@@ -80,22 +82,21 @@ function EquipeItemHeader({ formValues }) {
                     </motion.div>
                 </div>
             </div>
-
             <motion.div
                 className="flex"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
             >
                 <Button
-                    className="whitespace-nowrap mx-4"
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleSaveEquipe}
+                     className="whitespace-nowrap mx-4"
+                     variant="contained"
+                     color="secondary"
+                    //  disabled={!isDirty  || !isValid}
+                     onClick={handleSaveEquipe}
                 >
                     Save
                 </Button>
             </motion.div>
-
         </div>
     )
 }

@@ -18,6 +18,7 @@ import StructureAppConfig from '../main/pages/gererStructure/StructureAppConfig'
 import CalendarConfig from '../main/CalendarSeance/CalendarSeanceConfig';
 import CalendarFormConfig from '../main/CalendarSeance/calendrierForm/CalendarFormConfig';
 import FormationConfig from '../main/FormationAdmin/demandeDeFormation/FormationConfig';
+import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
 
 
 const routeConfigs = [
@@ -27,6 +28,7 @@ const routeConfigs = [
   ContactConfig,
   DirectionAppConfig,
   StructureAppConfig,
+  GererCollaborateurConfig,
 
 
 ];

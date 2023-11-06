@@ -39,6 +39,19 @@ const navigationConfig = [
          type: 'item',
          icon: 'heroicons-outline:user-group',
          url : 'collaborateurs/all',
+      }, , {
+        id : 'collaborator.manage',
+        title : 'Manage Collaborator',
+        type : 'collapse',
+        icon : 'heroicons-outline:user-group', 
+        children : [
+          {
+            id : 'collaborator.manage-collab',
+            title : 'Collaborator',
+            type : 'item',
+            url : 'manage/collaborator'
+          },
+        ] 
       }
     ]
   }, 
@@ -99,10 +112,15 @@ const navigationConfig = [
               url : 'business/manage/team'
             }
           ]
-        } 
+        }
     ]
   }
   ,
+
+
+
+
+
   {
     id: 'formation',
     title: 'Formations',
