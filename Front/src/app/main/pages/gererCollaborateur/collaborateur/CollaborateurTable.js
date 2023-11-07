@@ -112,6 +112,8 @@ function CollaborateurTable(props) {
     );
   }
 
+  console.log(collaborateurData)
+
   return (
     <div className="w-full flex flex-col min-h-full">
       <FuseScrollbars className="grow overflow-x-auto">
@@ -157,9 +159,14 @@ function CollaborateurTable(props) {
                         onChange={(event) => handleCheck(event, n.id)}
                       />
                     </TableCell>
-                    {/* <TableCell className="p-4 md:p-16 " component="th" scope="row">
-                                            {n.nomDirection}
-                                        </TableCell> */}
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.matricule}</TableCell>
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.nom} {n.prenom}</TableCell>
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.dateNaissance}</TableCell>
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.poste1?.titrePoste}</TableCell>
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.departement1?.nomDepartement}</TableCell>
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.projet1?.nomProjet}</TableCell>
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.site}</TableCell>
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.entreprise}</TableCell>
                   </TableRow>
                 );
               })}
