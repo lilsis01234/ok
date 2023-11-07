@@ -24,7 +24,7 @@ function ProjetItemHeader({ formValues }) {
         departement
     }
 
-    console.log(formValues)
+    // console.log(formValues)
 
     const handleSaveProject = async () => {
         if (id) {

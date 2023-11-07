@@ -3,8 +3,6 @@ const Collab = require('../Modele/CollabModel/Collab')
 const Compte = require('../Modele/CompteModel/Compte')
 const InfoSocialCollab = require('../Modele/CollabModel/InfoSocialCollab')
 const ArchiveCollaborateur = require('../Modele/CollabModel/ArchiveCollab')
-const RoleCollab = require('../Modele/RoleModel/Role');
-const RoleHierarchique = require('../Modele/RoleModel/RoleHierarchique')
 const PasswordResetRequest = require('../Modele/CompteModel/PasswordResetRequest');
 const TestPoste = require('../Modele/Structure/TestPoste')
 const TestDepartement = require('../Modele/Structure/TestDepartement')
@@ -14,6 +12,13 @@ const Projet = require('../Modele/Structure/Projet')
 const Collaborateur = require('../Modele/CollabModel/Collaborateur')
 const Eqquipe = require('../Modele/Structure/Equipe')
 const association = require('../Modele/Structure/association')
+
+const RoleCollab = require('../Modele/RoleModel/Role');
+const RoleHierarchique = require('../Modele/RoleModel/RoleHierarchique')
+const Permission = require('../Modele/RoleModel/Permission')
+const associationPermission = require('../Modele/RoleModel/associationPermission')
+
+
 const Formation = require('../Modele/formation/Formation');
 const CommentaireFormation = require('../Modele/formation/CommentaireFormation');
 const DiscussionFormation = require('../Modele/formation/DiscussionFormation');
@@ -48,7 +53,6 @@ async function syncDatabase() {
         const { TestPoste, TestDepartement, PosteDepartement } = association;
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });
-
 
         const { RoleHierarchique, Permission, RolePermission } = associationPermission;
         const { Seance, Collaborateur, ParticipantsSeance, Departement } = associationSeanceCollab;

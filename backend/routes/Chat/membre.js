@@ -1,7 +1,8 @@
 const Membre = require('../../Modele/ChatModel/Membre');
 const Collab = require('../../Modele/CollabModel/Collab');
 const Compte = require('../../Modele/CompteModel/Compte');
-const MembreEvents = require('../../events/Chat/MembreEvents');
+const newLocal = '../../events/Chat/MembreEvents';
+const MembreEvents = require(newLocal);
 const { verifyToken } = require('../Compte/auth');
 
 

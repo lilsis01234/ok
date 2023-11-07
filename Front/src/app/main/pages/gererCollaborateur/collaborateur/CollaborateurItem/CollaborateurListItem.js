@@ -17,6 +17,7 @@ import ContactInfo from './tabs/ContactInfo';
 import MatrimonialeInfo from './tabs/MatrimonialeInfo';
 import ProfessionalInfo from './tabs/ProfessionalInfo';
 import SecondProfessionalInfo from './tabs/secondProfessionalInfo';
+import PictureCollab from './tabs/PictureCollab';
 
 
 const schema = yup.object().shape(
@@ -169,7 +170,7 @@ function CollaborateurListItem(props) {
                             <Tab className="h-64" label="Matrimoniale Info" />
                             <Tab className="h-64" label="Professional Info" />
                             <Tab className="h-64" label="Second Professional Info" />
-                
+                            <Tab className="h-64" label="Pictures" />
                         </Tabs>
                         <div className="p-16 sm:p-24 max-w-3xl">
                             <div className={tabValue !== 0 ? 'hidden' : ''}>
@@ -189,6 +190,9 @@ function CollaborateurListItem(props) {
                             </div>
                             <div className={tabValue !== 5 ? 'hidden' : ''}>
                                 <SecondProfessionalInfo methods={methods} formValues={form}/>
+                            </div>
+                            <div className={tabValue !== 6 ? 'hidden' : ''}>
+                                <PictureCollab methods={methods} formValues={form}/>
                             </div>
 
                         </div>

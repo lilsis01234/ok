@@ -38,7 +38,7 @@ function EquipeItemHeader({ formValues }) {
         } else {
             try {
                 await axios.post('http://localhost:4000/api/equipe/new', data)
-                alert('Team create succesfully')
+                alert('Team create successfully')
                 navigate('/business/manage/team')
             } catch (error) {
                 console.log(error)
