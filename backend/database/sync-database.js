@@ -38,8 +38,6 @@ const ActualityImg =  require('../Modele/ActualityModel/ActualityImg');
 const Type = require('../Modele/ActualityModel/Type');
 const ActuType = require('../Modele/ActualityModel/ActuType');
 const associationActuType = require('../Modele/ActualityModel/associationActuType');
-const Permission = require('../Modele/RoleModel/Permission');
-const associationPermission = require('../Modele/RoleModel/associationPermission');
 const associationSeanceCollab = require('../Modele/formation/associationSeanceCollab');
 
 

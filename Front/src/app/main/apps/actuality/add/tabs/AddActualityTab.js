@@ -226,21 +226,21 @@ function AddActualityTab() {
 
     console.log(dataForm);
 
-    // const serveurApi = 'http://localhost:4000/api/actualite/new';
-    // axios.post(serveurApi, dataForm, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // })
-    //     .then(res => {
+     const serveurApi = 'http://localhost:4000/api/actualite/new';
+     axios.post(serveurApi, dataForm, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+        .then(res => {
 
-    //       if (res.data) {
-    //           console.log('reponse : ', res.data);
-    //           window.location.reload();
-    //       }
+          if (res.data) {
+              console.log('reponse : ', res.data);
+              window.location.reload();
+          }
 
-    //     })
-    //     .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
       
   }
 
