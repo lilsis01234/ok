@@ -17,6 +17,10 @@ const FormationCollab = sequelize.define('FormationCollab', {
         type: DataTypes.INTEGER,
         allowNull: false, 
     },
+    approbation:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false
+    }
 }, {
   timestamps : false  
 })
