@@ -17,10 +17,6 @@ const FormationEq= sequelize.define('FormationEq', {
         type: DataTypes.INTEGER,
         allowNull: false, // Selon votre structure
     },
-    approbation:{
-        type:DataTypes.BOOLEAN,
-        allowNull:false
-    }
 }, {
   timestamps : false  
 })
