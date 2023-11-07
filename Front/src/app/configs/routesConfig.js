@@ -21,6 +21,9 @@ import CalendarFormConfig from '../main/CalendarSeance/calendrierForm/CalendarFo
 import FormationConfig from '../main/FormationAdmin/demandeDeFormation/FormationConfig';
 import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
 
+//Module d'actualité
+import appsConfigs from '../main/apps/appsConfigs';
+
 
 const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
@@ -30,7 +33,8 @@ const routeConfigs = [
   DirectionAppConfig,
   StructureAppConfig,
   GererCollaborateurConfig,
-
+//Module d'actualité
+  ...appsConfigs
 
 ];
 

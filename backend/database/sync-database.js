@@ -25,14 +25,23 @@ const DiscussionFormation = require('../Modele/formation/DiscussionFormation');
 const Module = require('../Modele/formation/Module');
 const Seance = require('../Modele/formation/Seance');
 const ParticipantsSeance = require('../Modele/formation/ParticipantsSeance');
-const associationSeanceCollab = require('../Modele/formation/associationSeanceCollab')
+const Actualite =  require('../Modele/ActualityModel/Actualité');
+const Categorie =  require('../Modele/ActualityModel/Categorie');
+const ActuCateg =  require('../Modele/ActualityModel/ActuCateg');
+const associationActuCateg =  require('../Modele/ActualityModel/associationActuCateg');
+const Commentaire =  require('../Modele/ActualityModel/Commentaire');
+const GroupCompte =  require('../Modele/ActualityModel/GroupCompte');
+const associationGroupCompte =  require('../Modele/ActualityModel/associationGroupCompte');
+const Groupe =  require('../Modele/ActualityModel/Groupe');
+const Reaction =  require('../Modele/ActualityModel/Reaction');
+const ActualityImg =  require('../Modele/ActualityModel/ActualityImg');
+const Type = require('../Modele/ActualityModel/Type');
+const ActuType = require('../Modele/ActualityModel/ActuType');
+const associationActuType = require('../Modele/ActualityModel/associationActuType');
+const Permission = require('../Modele/RoleModel/Permission');
+const associationPermission = require('../Modele/RoleModel/associationPermission');
+const associationSeanceCollab = require('../Modele/formation/associationSeanceCollab');
 
-//Module CHAT
-const Discussion = require('../Modele/ChatModel/Discussion')
-const Membre = require('../Modele/ChatModel/Membre')
-const Message = require('../Modele/ChatModel/Message')
-const PieceJointeMessage = require('../Modele/ChatModel/PieceJointeMessage')
-const associationChat = require('../Modele/ChatModel/associationChat')
 
 
 
@@ -52,14 +61,22 @@ async function syncDatabase() {
         Departement.belongsToMany(Seance, { through: ParticipantsSeance })
         Seance.belongsToMany(Collaborateur, { through: ParticipantsSeance });
 
-        const { Compte, Discussion, Membre } = associationChat;
-        Compte.belongsTo(Discussion, { through: Membre })
-        Discussion.belongsTo(Compte, { through: Membre })
+        const { Actualite, Categorie, ActuCateg} = associationActuCateg;
+        Actualite.belongsToMany(Categorie, {through: ActuCateg});
+        Categorie.belongsToMany(Actualite, {through: ActuCateg});
 
+        const { Type, ActuType} = associationActuType;
+        Actualite.belongsToMany(Type, {through: ActuType});
+        Type.belongsToMany(Actualite, {through: ActuType});
+
+        const { Compte, Groupe, GroupCompte} = associationGroupCompte;
+        Compte.belongsToMany(Groupe, {through: GroupCompte});
+        Groupe.belongsToMany(Compte, {through: GroupCompte});
 
         console.log('La base de donnée est synchronisée avec succès')
-    } catch (error) {
-        console.error('Erreur lors de la synchronisation de la base de données :', error)
+
+    }  catch (error){
+        console.error('Erreur lors de la synchronisation de la base de données :', error )
     } finally {
         sequelize.close();
     }

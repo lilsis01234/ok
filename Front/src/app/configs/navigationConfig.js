@@ -118,7 +118,72 @@ const navigationConfig = [
   ,
 
 
-
+  {
+    id: 'actuality',
+    title: "Modules d'actualités",
+    subtitle: "Gestion d'actualités",
+    type: 'group',
+    icon: 'heroicons-outline:home',
+    children: [
+      {
+        id: 'actuality.list',
+        title: "Tous les actualités",
+        type: 'item',
+        icon: 'heroicons-outline:newspaper',
+        url: 'apps/actuality/list',
+      },
+      {
+        id: 'actuality.add',
+        title: "Ajout d'actulité",
+        type: 'item',
+        icon: 'heroicons-outline:document-add',
+        url: '/apps/addActuality',
+      },
+      {
+        id: 'comment',
+        title: "Commentaire",
+        type: 'item',
+        icon: 'heroicons-outline:chat-alt',
+        url: '/apps/edit-comments',
+      },
+      {
+        id: 'categorie',
+        title: 'Categorie',
+        type: 'item',
+        icon: 'heroicons-outline:clipboard-list',
+        url: '/apps/categorie',
+      },
+      {
+        id: 'type',
+        title: 'Type',
+        type: 'item',
+        icon: 'material-outline:article',
+        url: '/apps/type',
+      },
+      {
+        id: 'frontend',
+        title: 'Front office',
+        icon: 'heroicons-outline:check-circle',
+        type: 'collapse',
+        children: [
+          {
+            id: 'actuality.flux',
+            title: "Flux d'actualités",
+            type: 'item',
+            icon: 'heroicons-outline:menu-alt-2',
+            url: '/apps/timeline',
+          },
+          {
+            id: 'actuality-content',
+            title: 'Actualité',
+            type: 'item',
+            icon: 'heroicons-outline:clipboard-list',
+            url: '/apps/front-actuality',
+          }
+        ],
+      }
+    ],
+  },
 
 
   {

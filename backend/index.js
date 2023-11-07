@@ -28,6 +28,7 @@ const formationRouter = require('../backend/routes/formation/formation')
 const requestRouter = require('../backend/routes/formation/demandeFormation')
 const seanceRouter = require('../backend/routes/formation/seance')
 const moduleRouter = require('../backend/routes/formation/module')
+const actualite = require('./routes/Actualite/Actualité')
 
 const { ExpressPeerServer } = require('peer');
 
@@ -103,6 +104,7 @@ app.use('/api/demande_formation', requestRouter);
 app.use('/api/seances', seanceRouter)
 app.use('/api/peerjs', peerServer);
 app.use('/api/module', moduleRouter);
+app.use('/api/actualite', actualite ) //route pour les actualités
 
 //route middleware pour les routes middlware
 app.use('/api/chat/discussion', discussionChat)
