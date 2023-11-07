@@ -30,10 +30,7 @@ router.get('/all_formations', async(req,res) => {
           attributes: ['id', 'theme', 'description', 'auteur','formateur'],
             where:
             {
-                [Sequelize.Op.and]: [
-                    { approbation1: 1 }, // Formation sans approbation nécessaire
-                    { destinataireDemande: null }, // Formation sans destinataire spécifique
-                ],
+              destinataireDemande: null
             },
     })
     .then((formation) => {
@@ -162,7 +159,6 @@ router.post('/addFormation',async(req,res)=>{
             duree:req.body.duree,
             formateur:req.body.formateur,
             auteur:req.body.auteur,
-            approbation1:1
         }))
         const formation = await newFormation.save();
         res.status(201).json(formation);
