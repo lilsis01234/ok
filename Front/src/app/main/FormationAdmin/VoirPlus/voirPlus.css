@@ -1,0 +1,203 @@
+.voirPlusContainer {
+  background-color: #f5f5f5; /* Background color of the main container */
+  padding: 20px;
+}
+
+/* Calendar container styles */
+.calendarContainer {
+  margin: 20px 0;
+}
+
+/* Selected event styles */
+.rbc-event {
+  background-color: #4caf50 !important; /* Color of selected events */
+  border: none !important; /* Remove borders for selected events */
+}
+.rbc-label {
+    font-weight: bold; /* Bolden the days of the week */
+    color: #333; /* Text color for the days of the week */
+  }
+  
+  /* Style the month header */
+  .rbc-toolbar-label {
+    font-size: 18px; /* Font size of the month header */
+    font-weight: bold; /* Bolden the month header */
+    color: #0a0a0a; /* Text color for the month header */
+  }
+  
+  .rbc-header {
+    font-weight: bold; /* Bolden the days of the week */
+    color: #333; /* Text color for the days of the week */
+  }
+
+  .rbc-toolbar button {
+    background-color: #021438; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    margin: 0 3px; 
+    padding: 8px 12px; 
+    cursor: pointer; 
+  }
+  
+  .rbc-toolbar button:hover {
+    background-color: #032a3c; 
+    color: white; 
+
+  }
+
+    .rbc-month-row + .rbc-month-row,
+    .rbc-month-row + .rbc-month-row + .rbc-month-row,
+    .rbc-day-bg + .rbc-day-bg {
+    border-top: none;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: none !important;
+
+    }
+
+
+  .rbc-date-cell {
+    border: 1px solid #ffffff;
+    border-radius: 5px; 
+    background-color: #ffffff;
+    color: #333;
+  }
+  
+.infos {
+    background-color: #f8f9fa; 
+    border: 1px solid #ccc; 
+    border-radius: 10px; 
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  }
+ 
+  .infos p {
+    font-size: 16px; 
+    color: #333;
+    margin-bottom: 10px; 
+  }
+
+  .formateurInfo {
+    font-weight: bold; 
+    color: #007bff;
+  }
+
+.collabListes_title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+  
+  .calendarContainer {
+    margin: 50px 0;
+  }
+  
+  .calendarWrapper {
+    /* Calendar wrapper styles */
+    height: 500px;
+  }
+  
+  .customCalendar {
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff; /* Background color of the calendar */
+    border: none ; 
+    border-radius: 15px; 
+    overflow: hidden; 
+  }
+
+.popup {
+    /* Popup styles */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popupContent {
+    /* Popup content styles */
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .popupButton {
+    /* Button styles within the popup */
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: #369eca;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .popupButton:hover {
+    background-color: #0b5d8a;
+  }
+  
+  .closeButton {
+    /* Close button styles */
+    background-color: #8d0e05;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .closeButton:hover {
+    background-color: #d32f2f;
+  }
+
+  .moduleBox {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  
+  .moduleTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .moduleDescription {
+    font-size: 14px; 
+    color: #555; 
+  }
+
+  .header-container{
+      display: flex;
+      justify-content: space-between;
+  }
+
+  .header-container button a{
+    color: white !important;
+    text-decoration: none !important;
+    background-color: #007bff;
+    font-size: 20px;
+    border-radius: 25px;
+    padding: 10px 20px; 
+    display: inline-block;
+    margin-left: -20px;
+  }
+  

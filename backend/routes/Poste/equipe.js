@@ -58,6 +58,8 @@ router.get('/view/:id', async(req, res) => {
         if (!equipe) {
             return res.status(404).json({error : 'Equipe introuvable'})
         }
+
+        res.status(200).json({equipe})
     }
     catch (error){
         console.error('Erreur lors de la récupération de l\'equipe')

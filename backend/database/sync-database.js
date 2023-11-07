@@ -12,18 +12,14 @@ const PosteDepartement = require('../Modele/Structure/PosteDepartement')
 const Direction = require('../Modele/Structure/Direction')
 const Projet = require('../Modele/Structure/Projet')
 const Collaborateur = require('../Modele/CollabModel/Collaborateur')
-const Equipe = require('../Modele/Structure/Equipe')
-const Permission = require('../Modele/RoleModel/Permission')
-const RolePermission = require('../Modele/RoleModel/RolePermission')
-const associationRole = require('../Modele/RoleModel/associationPermission')
+const Eqquipe = require('../Modele/Structure/Equipe')
 const association = require('../Modele/Structure/association')
 const Formation = require('../Modele/formation/Formation');
 const CommentaireFormation = require('../Modele/formation/CommentaireFormation');
-const DiscussionFormation= require('../Modele/formation/DiscussionFormation');
+const DiscussionFormation = require('../Modele/formation/DiscussionFormation');
 const Module = require('../Modele/formation/Module');
 const Seance = require('../Modele/formation/Seance');
 const ParticipantsSeance = require('../Modele/formation/ParticipantsSeance');
-const associationSeance = require('../Modele/formation/associationSeanceCollab');
 const Actualite =  require('../Modele/ActualityModel/Actualité');
 const Categorie =  require('../Modele/ActualityModel/Categorie');
 const ActuCateg =  require('../Modele/ActualityModel/ActuCateg');
@@ -37,23 +33,28 @@ const ActualityImg =  require('../Modele/ActualityModel/ActualityImg');
 const Type = require('../Modele/ActualityModel/Type');
 const ActuType = require('../Modele/ActualityModel/ActuType');
 const associationActuType = require('../Modele/ActualityModel/associationActuType');
+const Permission = require('../Modele/RoleModel/Permission');
+const associationPermission = require('../Modele/RoleModel/associationPermission');
+const associationSeanceCollab = require('../Modele/formation/associationSeanceCollab');
+
 
 
 
 
 //Synchronisation de la base de donnée 
-async function syncDatabase(){
-    try{
-        await sequelize.sync({force : false}); 
+async function syncDatabase() {
+    try {
+        await sequelize.sync({ force: false });
         const { TestPoste, TestDepartement, PosteDepartement } = association;
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });
 
-        const {RoleHierarchique, Permission, RolePermission} = associationRole;
-        const { Seance, Collaborateur, ParticipantsSeance,Departement } = associationSeance;
+
+        const { RoleHierarchique, Permission, RolePermission } = associationPermission;
+        const { Seance, Collaborateur, ParticipantsSeance, Departement } = associationSeanceCollab;
 
         Collaborateur.belongsToMany(Seance, { through: ParticipantsSeance });
-        Departement.belongsToMany(Seance,{ through: ParticipantsSeance })
+        Departement.belongsToMany(Seance, { through: ParticipantsSeance })
         Seance.belongsToMany(Collaborateur, { through: ParticipantsSeance });
 
         const { Actualite, Categorie, ActuCateg} = associationActuCateg;

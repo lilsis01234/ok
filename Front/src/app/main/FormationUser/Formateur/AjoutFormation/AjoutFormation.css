@@ -1,0 +1,61 @@
+/* styles.css */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+    color: #000;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .form-group input {
+    width: 600px;
+    padding: 16px;
+    font-size: 16px;
+    background-color: #fff;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    height: 80px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input:focus + label,
+  .form-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #4caf50;
+    background-color: #fff;
+    padding: 0 8px;
+  }
+  
+  .form-group button {
+    width: 600px;
+    background-color: #061845;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .form-group button:hover {
+    background-color: #45a049;
+  }
+  

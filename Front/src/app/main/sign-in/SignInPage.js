@@ -6,16 +6,16 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import _ from '@lodash';
+import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 // import { useEffect } from 'react';
-import { useAuth } from '../../login/AuthContext';
-
+import jwtService from '../../auth/services/jwtService';
 
 /**
  * Form Validation Schema
@@ -35,51 +35,34 @@ const defaultValues = {
 };
 
 function SignInPage() {
-  const { isAuthenticated, login, logout } = useAuth();
-  const { handleSubmit, control, formState: { errors } } = useForm({
+  const navigate = useNavigate()
+  const { control, formState, handleSubmit, setError } = useForm({
     mode: 'onChange',
     defaultValues,
     resolver: yupResolver(schema),
-  })
+  });
 
-  const onSubmit = async (data) => {
-    try {
-      await login(data.email, data.password)
-    } catch (error) {
-      console.error('Erreur lors de la connexion:', error)
-    }
-  }
-
-
-
-  // const navigate = useNavigate()
-  // const { control, formState, handleSubmit, setError } = useForm({
-  //   mode: 'onChange',
-  //   defaultValues,
-  //   resolver: yupResolver(schema),
-  // });
-
-  // const { isValid, dirtyFields, errors } = formState;
+  const { isValid, dirtyFields, errors } = formState;
 
   // useEffect(() => {
   //   setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
   //   setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
   // }, [setValue]);
 
-  // function onSubmit({ email, password }) {
-  //   jwtService
-  //     .signInWithEmailAndPassword(email, password)
-  //     .then((user) => {
-  //       // No need to do anything, user data will be set at app/auth/AuthContext
-  //       navigate('/home')
-  //     })
-  //     .catch((error) => {
-  //       setError('generic', {
-  //         type: 'manual',
-  //         message: error.message,
-  //       });
-  //     });
-  // }
+  function onSubmit({ email, password }) {
+    jwtService
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        // No need to do anything, user data will be set at app/auth/AuthContext
+       navigate('/home')
+      })
+      .catch((error) => {
+          setError('generic', {
+            type: 'manual',
+            message: error.message,
+          });
+      });
+  }
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
@@ -164,7 +147,7 @@ function SignInPage() {
               color="secondary"
               className=" w-full mt-16"
               aria-label="Sign in"
-              // disabled={_.isEmpty(dirtyFields) || !isValid}
+              disabled={_.isEmpty(dirtyFields) || !isValid}
               type="submit"
               size="large"
             >

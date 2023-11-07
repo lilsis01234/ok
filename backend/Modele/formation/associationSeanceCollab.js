@@ -1,5 +1,5 @@
 const Seance = require('./Seance');
-const Collaborateur = require('../CollabModel/Collaborateur');
+const Collaborateur = require('../../Modele/CollabModel/Collab');
 const ParticipantsSeance = require('./ParticipantsSeance');
 const Departement = require('../Structure/TestDepartement');
 
