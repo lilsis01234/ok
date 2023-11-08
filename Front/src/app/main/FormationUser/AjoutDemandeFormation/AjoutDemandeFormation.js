@@ -90,7 +90,7 @@ const AjoutDemandeFormation = () => {
           </select>
         </div>
         <div className="form2-group">
-          <label>Si pour des départements, départements à former:</label>
+          <label>Si pour une équipe, équipe à former:</label>
           <select multiple value={departementAFormer} onChange={(e) => setDepartementAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
             {departement.map((dept) => (
               <option key={dept.id} value={dept.id}>

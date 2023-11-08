@@ -50,7 +50,7 @@ const VoirPlusFormation = () => {
 
     const scheduleNotification = (event) => {
       if (event.start && event.end) {
-        const notificationTime = moment(event.start).subtract(10, 'minutes'); // 10 minutes before the event
+        const notificationTime = moment(event.start).subtract(10, 'minutes'); 
         const currentTime = moment();
   
         console.log(notificationTime);

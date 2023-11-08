@@ -59,7 +59,6 @@ function CalendarTraining() {
   };
 
 
-
   useEffect(() => {
     // Récupérer les données de l'API backend
     axios.get('http://localhost:4001/api/calendrier/agenda')
@@ -113,6 +112,7 @@ function CalendarTraining() {
         events={events}
         startAccessor="start"
         endAccessor="end"
+        step={15}
         onSelectEvent={handleEventSelect}
         style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
       />
