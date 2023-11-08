@@ -10,7 +10,7 @@ const Discussions =()=>{
     const[discussion,setDiscussion]=useState([]);
 
     const fetchDiscussion = () => {
-        axios.get(`http://localhost:4001/api/discussion/all_discussions/${id}`)
+        axios.get(`http://localhost:4001/api/discussions/all_discussions/${id}`)
           .then(res => {
             console.log(res.data)
             setDiscussion(res.data)
