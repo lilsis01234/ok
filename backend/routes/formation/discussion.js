@@ -118,4 +118,19 @@ router.post('/nouveauDiscussion', upload.array('pieceJointes', 5), async (req, r
     }
 });
 
+router.delete('/:id/deleteDiscussion', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedDiscussion = await DiscussionFormation.findByPk(id);
+        if (!deletedDiscussion) {
+            return res.status(404).json({ error: 'discussion introuvable' });
+        }
+        await deletedDiscussion.destroy();
+        res.sendStatus(204);
+    }
+    catch (error) {
+        console.error('Erreur lors de la suppression du poste :', error)
+        res.status(500).json({ message: 'Erreur lors de la suppression du poste' })
+    }
+})
 module.exports = router;

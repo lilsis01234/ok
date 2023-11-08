@@ -51,6 +51,15 @@ const Discussions = () => {
         }
     };
 
+    const handleDelete=async (id)=>{
+        try{
+            await axios.delete(`http://localhost:4001/api/discussions/${id}/deleteDiscussion`)
+            window.location.reload()
+        }catch(err) {
+            console.log(err)
+        }
+    }
+
     return (
         <>
             <div className="discussion-container">
@@ -63,6 +72,7 @@ const Discussions = () => {
                 {discussion.map((discussions, index) => (
                     <div className="discussion-item" key={index}>
                         <div className="meta-info">
+                            <button onClick={(e)=>{handleDelete(discussions.id)}}>Supprimer</button>
                             <h1 className="module-title">Module {discussions.Module.titreModule}</h1>
                             <h1 className="collab-name">{discussions.Collab.nom} {discussions.Collab.prenom}</h1>
                         </div>
