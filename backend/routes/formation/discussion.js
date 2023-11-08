@@ -38,9 +38,9 @@ router.get('/all_discussions/:idformation', async(req,res)=>{
                 sujet:req.body.sujet,
                 contenu:req.body.contenu,
                 formateur:req.body.formateur,
-                formation:req.body.formation,
+                formation:req.body.formationId,
                 collaborateur:req.body.collaborateur,
-                module:req.body.module,
+                module:req.body.modulechoosen,
             }))
             //fichier à ajouter par multer à regarder sur l'appli dokotera 
             //recueil des fichiers par boucle
