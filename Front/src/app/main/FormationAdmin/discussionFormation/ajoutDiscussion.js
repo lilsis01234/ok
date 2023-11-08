@@ -14,6 +14,7 @@ const AjoutDiscussion = () => {
     const collaborateur=2;
     const [modulechoosen,setModuleChoosen] = useState('');
     const [module, setModule] = useState([]);
+    const [selectedFiles, setSelectedFiles] = useState([]);
 
     const GetModule = ()=>{
         axios.get(`http://localhost:4001/api/modules/modules/${formationId}`)
@@ -28,16 +29,25 @@ const AjoutDiscussion = () => {
         GetModule()
     })
 
+    const handleFileChange = (event) => {
+        setSelectedFiles(event.target.files);
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:4001/api/discussions/nouveauDiscussion', {
-            sujet,
-            contenu,
-            formateur,
-            formationId,
-            collaborateur,
-            modulechoosen
-        })
+        const formData = new FormData();
+        formData.append("sujet",sujet);
+        formData.append("contenu",contenu);
+        formData.append("formateur",formateur);
+        formData.append("formationId",formationId);
+        formData.append("collaborateur",collaborateur);
+        formData.append("modulechoosen",modulechoosen);
+
+        for (const file of selectedFiles) {
+            formData.append("pieceJointes", file);
+        }
+
+        axios.post('http://localhost:4001/api/discussions/nouveauDiscussion', formData)
         .then((res) => {
             console.log(res);
             navigate(`/discussion/formation/${formationId}`); // Remplacez par le chemin vers lequel vous souhaitez rediriger après l'ajout.
@@ -65,6 +75,13 @@ const AjoutDiscussion = () => {
                     </option>
                     ))}
                     </select>
+                </div>
+                <div className="form-group">
+                <input
+                    type="file"
+                    multiple
+                    onChange={handleFileChange}
+                />
                 </div>
                 <div className="form-group">
                     <button type="submit">Ajouter</button>
