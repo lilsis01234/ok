@@ -62,7 +62,7 @@ app.use(express.json())
 //         origin: "http://localhost:3000"
 //     }
 // });
-
+app.use('/uploads2', express.static(path.join(__dirname, 'uploads2')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 //utilisation des routes middleware
