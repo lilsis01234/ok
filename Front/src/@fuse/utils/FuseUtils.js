@@ -330,10 +330,12 @@ class FuseUtils {
      * If auth array is not defined
      * Pass and allow
      */
+
     if (authArr === null || authArr === undefined) {
       // console.info("auth is null || undefined:", authArr);
       return true;
     }
+     
     if (authArr.length === 0) {
       /**
        * if auth array is empty means,

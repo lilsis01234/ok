@@ -1,5 +1,5 @@
 import FuseUtils from '@fuse/utils';
-import AppContext from 'app/AppContext';  //Pour partager les données entre différents composants sans passer dans des
+import AppContext from 'app/AppContext';  //Pour partager les données entre différents composants sans passer dans des props
 import { Component } from 'react';
 import { matchRoutes } from 'react-router-dom';
 import withRouter from '@fuse/core/withRouter'; //Composant HOC
@@ -13,7 +13,8 @@ import {
 class FuseAuthorization extends Component {
   constructor(props, context) {
     super(props);
-    const { routes } = context; 
+    const { routes } = context; //pour accéder aux données spécifiques partagés entre les composants 
+    //Initialisation de l'état local du composant FuseAuthorization
     this.state = {
       accessGranted: true,  //accessGranted pour suivre l'accès des utilisateurs
       routes,
@@ -26,7 +27,7 @@ class FuseAuthorization extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {   
+  shouldComponentUpdate(nextProps, nextState) {   //Methode de cycle de vie de React appelé la mise à jour du composant
     return nextState.accessGranted !== this.state.accessGranted;
   }
 

@@ -2,11 +2,14 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
 import JwtService from '../../auth/services/jwtService';
+import { useNavigate } from 'react-router-dom';
 
 function SignOutPage() {
+  const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
       JwtService.logout();
+      navigate('/')
     }, 1000);
   }, []);
 
@@ -17,7 +20,7 @@ function SignOutPage() {
           <img className="w-48 mx-auto" src="assets/images/logo/logo.png" alt="logo" />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight text-center">
-            You have signed out!
+          Vous avez été déconnecté !
           </Typography>
         </div>
       </Paper>
