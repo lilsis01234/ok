@@ -14,4 +14,4 @@ Permission.init({
     modelName : 'Permission'
 })
 
-module.exports = RoleHierarchique;
+module.exports = Permission;

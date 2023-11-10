@@ -8,8 +8,10 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StyledEngineProvider } from '@mui/material/styles';
 import routes from 'app/configs/routesConfig';
+
 import store from './store';
 import AppContext from './AppContext';
+import RolePermissionInitializer from './auth/RolePermissionInitializer';
 
 const withAppProviders = (Component) => (props) => {
   const WrapperComponent = () => (
@@ -20,6 +22,8 @@ const withAppProviders = (Component) => (props) => {
     >
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Provider store={store}>
+           {/* Pour charger les roles et les permissions enregistré dans la base de donnée */}
+          <RolePermissionInitializer />
           <StyledEngineProvider injectFirst>
             <Component {...props} />
           </StyledEngineProvider>
