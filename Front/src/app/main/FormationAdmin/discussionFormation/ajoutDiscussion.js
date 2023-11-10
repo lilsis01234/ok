@@ -7,17 +7,22 @@ const AjoutDiscussion = () => {
     const navigate = useNavigate();
     const [sujet, setSujet] = useState('');
     const [contenu, setContenu] = useState('');
-    const formateur=2;
+    const formateurprep= localStorage.getItem('user');
+    const parsedFormateur = JSON.parse(formateurprep);
+    const formateur = parsedFormateur.id;
+
     const formation =useParams();
     const formationId = formation.id;
-    // console.log(formation.id)
-    const collaborateur=2;
+
+    const auteur = localStorage.getItem('user'); 
+    const parsedAuteur = JSON.parse(auteur);
+    const collaborateur = parsedAuteur.id;
     const [modulechoosen,setModuleChoosen] = useState('');
     const [module, setModule] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     const GetModule = ()=>{
-        axios.get(`http://localhost:4001/api/modules/modules/${formationId}`)
+        axios.get(`http://localhost:4001/api/module/modules/${formationId}`)
         .then((res)=>{
             // console.log(res.data)
             setModule(res.data)
@@ -26,8 +31,8 @@ const AjoutDiscussion = () => {
     }
 
     useEffect(()=>{
-        GetModule()
-    })
+        GetModule();
+    },[formationId])
 
     const handleFileChange = (event) => {
         setSelectedFiles(event.target.files);
