@@ -26,7 +26,7 @@ function DirectionItemHeader({formValues}) {
     const handleSaveDirection = async () => {
         if (id){
             try {
-                await axios.put(`http://localhost:4000/api/direction/edit/${id}`, data)
+                await axios.put(`http://localhost:4001/api/direction/edit/${id}`, data)
                 alert('Direction Update succesfully')
                 navigate('/business/manage/direction')
             } catch (error){
@@ -34,7 +34,7 @@ function DirectionItemHeader({formValues}) {
             }
         } else {
             try {
-                await axios.post('http://localhost:4000/api/direction/new', data)
+                await axios.post('http://localhost:4001/api/direction/new', data)
                 alert('Direction create succesfully')
                 navigate('/business/manage/direction')
             } catch (error){

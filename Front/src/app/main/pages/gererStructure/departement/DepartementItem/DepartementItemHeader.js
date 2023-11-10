@@ -29,7 +29,7 @@ function DepartementItemHeader({ formValues }) {
     const handleSaveDirection = async () => {
         if (id) {
             try {
-                await axios.put(`http://localhost:4000/api/departement/edit/${id}`, data)
+                await axios.put(`http://localhost:4001/api/departement/edit/${id}`, data)
                 alert('Departement Update succesfully')
                 navigate('/business/manage/departement')
             } catch (error) {
@@ -37,7 +37,7 @@ function DepartementItemHeader({ formValues }) {
             }
         } else {
             try {
-                await axios.post('http://localhost:4000/api/departement/new', data)
+                await axios.post('http://localhost:4001/api/departement/new', data)
                 alert('Departement create succesfully')
                 navigate('/business/manage/departement')
             } catch (error) {

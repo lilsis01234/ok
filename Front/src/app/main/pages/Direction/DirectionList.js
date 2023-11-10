@@ -17,7 +17,7 @@ function DirectionList() {
     }
 
     const fetchDirection = () => {
-        axios.get('http://localhost:4000/api/direction/all')
+        axios.get('http://localhost:4001/api/direction/all')
             .then((response) => {
                 setDirection(response.data)
             })

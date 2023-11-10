@@ -27,7 +27,7 @@ function ProjetTable(props) {
 
 
     const fetchProject = () => {
-        axios.get('http://localhost:4000/api/projet/all')
+        axios.get('http://localhost:4001/api/projet/all')
             .then((response) => {
                 setProjetData(response.data)
             })

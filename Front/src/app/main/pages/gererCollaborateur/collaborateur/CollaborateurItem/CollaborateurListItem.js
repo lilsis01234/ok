@@ -75,7 +75,7 @@ function CollaborateurListItem(props) {
 
                 } else {
                     console.log('Affichage d\'une collaborateur existante')
-                    axios.get(`http://localhost:4000/api/collaborateur/view/${directionId}`)
+                    axios.get(`http://localhost:4001/api/collaborateur/view/${directionId}`)
                         .then(response => {
                             setCollab(response.data.collab)
                             setNoCollab(false)

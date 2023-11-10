@@ -47,7 +47,7 @@ function DepartementListItem(props) {
                 }
                 else {
                     console.log('Affichage d\'un  departement existante')
-                    axios.get(`http://localhost:4000/api/departement/view/${departementId}`)
+                    axios.get(`http://localhost:4001/api/departement/view/${departementId}`)
                         .then(response => {
                             setDepartement(response.data.departement)
                             setNoDepartement(false)

@@ -24,7 +24,7 @@ function PosteTable(props) {
     });
 
     const fetchPoste = () => {
-        axios.get('http://localhost:4000/api/poste/all')
+        axios.get('http://localhost:4001/api/poste/all')
             .then((response) => {
                 setPosteData(response.data)
             }).catch((err) => {

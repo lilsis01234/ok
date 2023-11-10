@@ -21,7 +21,7 @@ function EquipeTable(props) {
     });
 
     const fetchEquipe = () => {
-        axios.get('http://localhost:4000/api/equipe/all')
+        axios.get('http://localhost:4001/api/equipe/all')
             .then((response) => {
                 setEquipeData(response.data)
             })

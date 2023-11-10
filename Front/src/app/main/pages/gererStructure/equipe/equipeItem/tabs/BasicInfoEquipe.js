@@ -11,7 +11,7 @@ function BasicInfoEquipe(props) {
     const [listeProjet, setListeProjet] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/projet/all')
+        axios.get('http://localhost:4001/api/projet/all')
             .then((response) => {
                 setListeProjet(response.data)
 
