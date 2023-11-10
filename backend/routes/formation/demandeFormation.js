@@ -331,8 +331,7 @@ router.post('/addDemandeFormation',async(req,res)=>{
             auteur:req.body.auteur,
             departementAFormer: req.body.departementAFormer,
             personneAFormer:req.body.personneAFormer,
-            destinataireDemande:req.body.destinataireDemande,
-            approbation1:0,
+            destinataireDemande:req.body.destinataire,
         }))
         const demandeFormation = await newFormation.save();
         res.status(201).json(demandeFormation);
