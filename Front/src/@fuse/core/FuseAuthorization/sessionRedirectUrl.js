@@ -13,4 +13,4 @@ export const setSessionRedirectUrl = (url) => {
 //Supprimer L'url de redirection stocké dans session Storage
 export const resetSessionRedirectUrl = (url) => {
   window.sessionStorage.removeItem(sessionStorageKey);
-};
+}; 

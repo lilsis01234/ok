@@ -16,6 +16,8 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 // import { useEffect } from 'react';
 import jwtService from '../../auth/services/jwtService';
+import { useDispatch } from 'react-redux';
+
 
 /**
  * Form Validation Schema
@@ -36,6 +38,7 @@ const defaultValues = {
 
 function SignInPage() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { control, formState, handleSubmit, setError } = useForm({
     mode: 'onChange',
     defaultValues,
@@ -53,8 +56,10 @@ function SignInPage() {
     jwtService
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        // No need to do anything, user data will be set at app/auth/AuthContext
-       navigate('/home')
+        // No need to do anything, user data will be set at app/auth/AuthContex
+        console.log('Utilisateur authentifié avec succès')
+        window.location.reload();
+        navigate('/dashboards/collaborateur')
       })
       .catch((error) => {
           setError('generic', {
@@ -71,7 +76,7 @@ function SignInPage() {
           <img className="w-48" src="assets/images/logo/logo.png" alt="logo" />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
-            Sign in
+           Se connecter
           </Typography>
           {/* <div className="flex items-baseline mt-2 font-medium">
             <Typography>Don't have an account?</Typography>
@@ -112,7 +117,7 @@ function SignInPage() {
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Password"
+                  label="Mot de Passe"
                   type="password"
                   error={!!errors.password}
                   helperText={errors?.password?.message}
@@ -130,7 +135,7 @@ function SignInPage() {
                 render={({ field }) => (
                   <FormControl>
                     <FormControlLabel
-                      label="Remember me"
+                      label="Se souvenir de moi"
                       control={<Checkbox size="small" {...field} />}
                     />
                   </FormControl>
@@ -138,7 +143,7 @@ function SignInPage() {
               />
 
               <Link className="text-md font-medium" to="/pages/auth/forgot-password">
-                Forgot password?
+                Mot de passe oublié?
               </Link>
             </div>
 
@@ -151,7 +156,7 @@ function SignInPage() {
               type="submit"
               size="large"
             >
-              Sign in
+              Se connecter
             </Button>
 
             {/* <div className="flex items-center mt-32">

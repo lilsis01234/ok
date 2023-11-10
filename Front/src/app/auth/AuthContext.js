@@ -9,14 +9,13 @@ import jwtService from './services/jwtService';
 const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(undefined); //Pour déterminer si un utilisateur est connecté 
-  const [waitAuthCheck, setWaitAuthCheck] = useState(true); //Determine si l'application est en attente de vérification d'authentification
-  const dispatch = useDispatch(); //permet d'envoyer des actions au store Redux 
+  const [isAuthenticated, setIsAuthenticated] = useState(undefined);
+  const [waitAuthCheck, setWaitAuthCheck] = useState(true);
+  const dispatch = useDispatch();
 
-  //Pour connecter l'utilisateur automatiques
   useEffect(() => {
     jwtService.on('onAutoLogin', () => {
-      dispatch(showMessage({ message: 'Signing in with JWT' }));
+      dispatch(showMessage({ message: 'Connecté' }));
 
       /**
        * Sign in and retrieve user data with stored token
@@ -24,7 +23,7 @@ function AuthProvider({ children }) {
       jwtService
         .signInWithToken()
         .then((user) => {
-          success(user, 'Signed in with JWT');
+          success(user, 'Connecté');
         })
         .catch((error) => {
           pass(error.message);
@@ -32,17 +31,18 @@ function AuthProvider({ children }) {
     });
 
     jwtService.on('onLogin', (user) => {
-      success(user, 'Signed in');
+      success(user, 'Connecté');
     });
 
     jwtService.on('onLogout', () => {
-      pass('Signed out');
+      pass('Déconnecté');
 
       dispatch(logoutUser());
     });
 
     jwtService.on('onAutoLogout', (message) => {
       pass(message);
+
       dispatch(logoutUser());
     });
 

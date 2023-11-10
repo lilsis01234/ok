@@ -12,6 +12,14 @@ const ParticipantsSeance = sequelize.define('ParticipantsSeance', {
     online:{
       type:DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    seance:{
+      type:DataTypes.INTEGER,
+      allowNull:false
+    },
+    collaborateur: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     }
 }, {
   timestamps : false  

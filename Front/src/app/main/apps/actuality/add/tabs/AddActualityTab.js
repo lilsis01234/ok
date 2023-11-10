@@ -365,13 +365,13 @@ function AddActualityTab() {
     // })
     //     .then(res => {
 
-    //       if (res.data) {
-    //           console.log('reponse : ', res.data);
-    //           window.location.reload();
-    //       }
+        //   if (res.data) {
+        //       console.log('reponse : ', res.data);
+        //       window.location.reload();
+        //   }
 
-    //     })
-    //     .catch(err => console.log(err));
+        // })
+        // .catch(err => console.log(err));
       
   }
 

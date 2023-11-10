@@ -29,6 +29,7 @@ const requestRouter = require('../backend/routes/formation/demandeFormation')
 const seanceRouter = require('../backend/routes/formation/seance')
 const moduleRouter = require('../backend/routes/formation/module')
 const actualite = require('./routes/Actualite/Actualité')
+const discussionRouter = require('../backend/routes/formation/discussion')
 
 const { ExpressPeerServer } = require('peer');
 
@@ -69,7 +70,7 @@ const connection = mysql.createConnection({
     database : 'testintranet',
 })
 */
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: 'http://192.168.16.46:3000', credentials: true }));
 
 //Ajout de middleware express.json()
 app.use(express.json())
@@ -99,9 +100,10 @@ app.use('/api/equipe', equipe) //route pour afficher les routes
 app.use('/api/projet', projet)
 app.use('/api/agenda', agendaRoutes);
 app.use('/api/calendrier', displayRoutes);
-app.use('/api/formations', formationRouter);
-app.use('/api/demande_formation', requestRouter);
-app.use('/api/seances', seanceRouter)
+app.use('/api/formations',formationRouter);
+app.use('/api/demande_formation',requestRouter);
+app.use('/api/discussion',discussionRouter);
+app.use('/api/seances',seanceRouter)
 app.use('/api/peerjs', peerServer);
 app.use('/api/module', moduleRouter);
 app.use('/api/actualite', actualite ) //route pour les actualités

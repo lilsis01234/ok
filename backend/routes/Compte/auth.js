@@ -31,7 +31,7 @@ router.post('/connect', (req, res, next) => {
                     model: Role
                 }
             }],
-
+           
         })
         .then(comptes => {
             if (!comptes) {
@@ -60,17 +60,19 @@ router.post('/connect', (req, res, next) => {
                             }
                             // const roleTitle = userRoles.length > 0 ? userRoles[0] :null;
 
+                            const { password, ...comptesWithoutPassword } = comptes.toJSON(); 
+
                             const token = jwt.sign({ id: comptes.id },
                                 secretKey, { expiresIn: '1h' }
                             )
-                            const refresh_token = jwt.sign({ vid: comptes.id },
+                            const refresh_token = jwt.sign({ id: comptes.id },
                                     secretKey, { expiresIn: '2h' }
                                 )
                                 // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400100})
 
                             res.status(200).json({
                                 id: comptes.id,
-                                compte: comptes,
+                                compte: comptesWithoutPassword,
                                 token: token,
                                 refresh_token,
                                 role: roles.Role.titreRole,
@@ -80,21 +82,21 @@ router.post('/connect', (req, res, next) => {
 
                         })
                 })
-                .catch(error => res.status(500).json({ error }));
+                .catch(error => res.status(401).json({ error }));
         })
-        .catch(error => res.status(500).json(error));
+        .catch(error => res.status(401).json(error));
 })
 
 
 //Renouveler le token
-// function verifyJWTToken(token) {
-//     try {
-//         const decoded = jwt.verify(token, secretKey);
-//         return decoded;
-//     } catch (error){
-//         return null;
-//     }
-// }
+function verifyJWTToken(token) {
+    try {
+        const decoded = jwt.verify(token, secretKey);
+        return decoded;
+    } catch (error){
+        return null;
+    }
+}
 
 function refreshTokenIsValid(refresh_token) {
     try {
@@ -139,19 +141,50 @@ router.post('/refresh_token', (req, res) => {
 
 
 
-//Renouveler le token
-router.post('/access-token', (req, res) => {
-    const { acess_token } = req.body;
+//Renouveler le token et vérifier que l'un des deux token est toujours valide
+router.post('/access-token', async(req, res) => {
+    const { acess_token, refresh_token} = req.body;
 
     const decodedToken = verifyJWTToken(acess_token);
-    if (decodedToken) {
-        // const {compte, role} = decodedToken;
-        const newAcessToken = jwt.sign({}, secretKey, {
-            expiresIn: '1h'
-        })
+    const decodedRefreshToken = refreshTokenIsValid(refresh_token)
 
-        return res.status(200).json({ token: newAcessToken })
+    if(decodedRefreshToken){
+        if (decodedToken) {
+            const id = decodedToken.id;
+            const newAcessToken = jwt.sign({id}, secretKey, {
+                expiresIn: '1h'
+            })
+    
+            const refresh_token = jwt.sign({id},
+                secretKey, { expiresIn: '2h' }
+            )
+    
+            const compte = await Compte.findByPk(id, {
+                include : [{
+                    model : RoleHierarchique,
+                    include : [{
+                        model : Role
+                    }]
+                }], 
+                include : [{
+                    model : Collab,
+                    attributes: ['nom', 'prenom', 'matricule', 'image']
+                }],
+                attributes : ['email', 'collaborateur', 'lastResetRequest', 'RoleHierarchiqueId']
+            })
+            console.log(compte)
+    
+    
+            return res.status(200).json({ 
+                id,
+                compte,
+                token: newAcessToken,
+                refresh_token, 
+                role : compte.RoleHierarchique?.Role?.titreRole
+            })
+        }
     }
+    console.log('Token invalide')
     return res.status(401).json({ error: 'Token invalide' })
 })
 

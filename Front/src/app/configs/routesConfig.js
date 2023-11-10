@@ -7,7 +7,8 @@ import SignUpConfig from '../main/sign-up/SignUpConfig';
 import SignOutConfig from '../main/sign-out/SignOutConfig';
 import Error404Page from '../main/404/Error404Page';
 import ExampleConfig from '../main/example/ExampleConfig';
-import dashboardsConfigs from '../main/Dashboard/dashboardsConfig';
+import dashboardsConfigs from '../Dashboard/dashboardsConfig';
+
 
 //ModuleProfile
 import ContactConfig from '../main/pages/Contacts/ContactAppConfig';
@@ -41,7 +42,7 @@ const routes = [
   ...FuseUtils.generateRoutesFromConfigs(routeConfigs, settingsConfig.defaultAuth),
   {
     path: '/',
-    element: <Navigate to="/example" />,
+    element: <Navigate to="/sign-in" />,
     auth : settingsConfig.defaultAuth
   },
   {

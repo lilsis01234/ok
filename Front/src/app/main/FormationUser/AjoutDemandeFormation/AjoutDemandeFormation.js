@@ -16,7 +16,7 @@ const AjoutDemandeFormation = () => {
 
 
   const fetchDepartement = () => {
-    axios.get('http://localhost:4000/api/departement/all')
+    axios.get('http://localhost:4001/api/equipe/all')
       .then((response) => {
         setDepartementData(response.data);
         console.log(response.data); // Log the response.data after setting the state
@@ -60,17 +60,17 @@ const AjoutDemandeFormation = () => {
   };
 
   return (
-    <div className="form-container">
+    <div className="form2-container">
       <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="form2-group">
             <label>Thème</label>
             <input type="text" value={theme} onChange={(e) => setTheme(e.target.value)} />
           </div>
-          <div className="form-group">
+          <div className="form2-group">
             <label>Description</label>
             <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>
-          <div className="form-group">
+          <div className="form2-group">
           <label>Destinataire de votre demande</label>
           <select value={destinataire} onChange={(e) => setDestinataire(e.target.value)}>
             <option value="">Sélectionnez un destinataire</option>
@@ -79,29 +79,30 @@ const AjoutDemandeFormation = () => {
             <option value="coatch">Coatch</option>
           </select>
         </div>
-        <div className="form-group">
-          <label>Si pour une personne, personne à former:</label>
-          <select value={personneAFormer} onChange={(e) => setPersonneAFormer(e.target.value)}>
-          {collabs.map((collab)=>(
-            <>
-            <option value={collab.id}>{collab.nom} {collab.prenom}</option>
-            </>
+        <div className="form2-group">
+          <label>Si pour des personnes, personnes à former:</label>
+          <select multiple value={personneAFormer} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+            {collabs.map((collab) => (
+              <option key={collab.id} value={collab.id}>
+                {collab.nom} {collab.prenom}
+              </option>
             ))}
           </select>
         </div>
-        <div className="form-group">
-          <label>Si pour un département, département à former:</label>
-          <select value={departementAFormer} onChange={(e) => setDepartementAFormer(e.target.value)}>
-            {departement.map((departement)=>(
-            <>
-            <option value={departement.id}>{departement.nomDepartement}</option>
-            </>
+        <div className="form2-group">
+          <label>Si pour des départements, départements à former:</label>
+          <select multiple value={departementAFormer} onChange={(e) => setDepartementAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+            {departement.map((dept) => (
+              <option key={dept.id} value={dept.id}>
+                {dept.nomDepartement}
+              </option>
             ))}
           </select>
         </div>
-          <div className="form-group">
+
+        <div className="form2-group">
             <button type="submit">Ajouter</button>
-          </div>
+        </div>
         </form>
       </div>
     )

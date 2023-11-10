@@ -2,17 +2,24 @@ const router = require('express').Router();
 const cookieParser = require('cookie-parser')
 router.use(cookieParser());
 
-const Collaborateur = require('../../Modele/Collaborateur');
+const Collaborateur = require('../../Modele/CollabModel/Collab');
 const DiscussionFormation = require('../../Modele/formation/DiscussionFormation');
+const Module = require('../../Modele/formation/Module');
 
 router.get('/all_discussions/:idformation', async(req,res)=>{
     const formationId = req.params.idformation;
         try {
             const discussionFormation = await DiscussionFormation.findAll({
-                include: {
-                    model: Collaborateur,
-                    attributes: ['nom', 'prenom']
-                },
+                include: [
+                    {
+                        model: Collaborateur,
+                        attributes: ['nom', 'prenom']
+                    },
+                    {
+                        model: Module,
+                        attributes: ['id','titreModule']
+                    },
+                ],
                 where:
                     {
                         formation: formationId,
