@@ -107,7 +107,7 @@ app.use('/api/discussions',discussionRouter);
 app.use('/api/seances',seanceRouter)
 app.use('/api/peerjs', peerServer);
 app.use('/api/module', moduleRouter);
-app.use('/api/actualite', actualite ) //route pour les actualités
+app.use('/api/actualite', actualite );
 app.use('/api/roleHierarchique',roleHierarchique);
 
 //route middleware pour les routes middlware
