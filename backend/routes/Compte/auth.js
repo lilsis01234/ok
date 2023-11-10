@@ -24,7 +24,7 @@ router.post('/connect', (req, res, next) => {
             where: { email: req.body.email },
             include: [{
                 model: Collab,
-                attributes: ['nom', 'prenom', 'matricule', 'image']
+                attributes: ['id','nom', 'prenom', 'matricule', 'image']
             }, {
                 model: RoleHierarchique,
                 include: {
@@ -168,7 +168,7 @@ router.post('/access-token', async(req, res) => {
                 }], 
                 include : [{
                     model : Collab,
-                    attributes: ['nom', 'prenom', 'matricule', 'image']
+                    attributes: ['id','nom', 'prenom', 'matricule', 'image']
                 }],
                 attributes : ['email', 'collaborateur', 'lastResetRequest', 'RoleHierarchiqueId']
             })
