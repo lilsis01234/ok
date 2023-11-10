@@ -17,7 +17,7 @@ const ListeEquipe = () => {
     const itemsPerPage = 15;
 
     const fetchEquipe = () => {
-        axios.get("http://localhost:4000/api/equipe/all")
+        axios.get("http://localhost:4001/api/equipe/all")
             .then((response) => {
                 setlListEquipe(response.data)
             })

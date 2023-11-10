@@ -9,7 +9,7 @@ const AjoutEquipe = ({onEquipeAdded}) => {
     const [listDepartement, setListDepartement] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/departement/all')
+        axios.get('http://localhost:4001/api/departement/all')
         .then((response) => {
             setListDepartement(response.data)
         }).catch((error) => {
@@ -24,7 +24,7 @@ const AjoutEquipe = ({onEquipeAdded}) => {
             departement
         }
 
-        axios.post('http://localhost:4000/api/equipe/new', formData)
+        axios.post('http://localhost:4001/api/equipe/new', formData)
         .then((response) => {
             alert('Equipe ajouter avec succès')
             onEquipeAdded()

@@ -108,10 +108,12 @@ app.use('/api/agenda', agendaRoutes);
 app.use('/api/calendrier', displayRoutes);
 app.use('/api/formations',formationRouter);
 app.use('/api/demande_formation',requestRouter);
-app.use('/api/discussion',discussionRouter);
+app.use('/api/discussions',discussionRouter);
 app.use('/api/seances',seanceRouter)
 app.use('/api/peerjs', peerServer);
 app.use('/api/module', moduleRouter);
+app.use('/api/actualite', actualite );
+app.use('/api/roleHierarchique',roleHierarchique);
 
 //Module actualité
 app.use('/api/actualite', actualite ) 

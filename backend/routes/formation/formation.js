@@ -30,7 +30,7 @@ router.get('/all_formations', async(req,res) => {
           attributes: ['id', 'theme', 'description', 'auteur','formateur'],
             where:
             {
-              destinataireDemande: null
+              destinataireDemande: null,
             },
     })
     .then((formation) => {
@@ -159,6 +159,7 @@ router.post('/addFormation',async(req,res)=>{
             duree:req.body.duree,
             formateur:req.body.formateur,
             auteur:req.body.auteur,
+            formateurExt:req.body.formateurExt
         }))
         const formation = await newFormation.save();
         res.status(201).json(formation);
@@ -167,5 +168,6 @@ router.post('/addFormation',async(req,res)=>{
         console.error(err)
     }
 })
+
 
 module.exports = router;

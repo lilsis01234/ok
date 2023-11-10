@@ -3,6 +3,7 @@ const sequelize = require('../../database/database');
 const Collaborateur = require('../../Modele/CollabModel/Collab');
 const Departement = require('../Structure/TestDepartement');
 const Role2 = require('../RoleModel/RoleHierarchique');
+const RoleHierarchique = require('../RoleModel/RoleHierarchique');
 
 class Formation extends Model{}
 
@@ -26,6 +27,10 @@ Formation.init({
         key : 'id'
     }
     },
+    formateurExt:{
+        type:DataTypes.STRING(250),
+        allowNull:true,
+    },
     auteur:{
         type : DataTypes.INTEGER,
         allowNull : false,
@@ -38,7 +43,7 @@ Formation.init({
         type : DataTypes.INTEGER,
         allowNull : true,
         references : {
-        model : Role2,
+        model : RoleHierarchique,
         key : 'id'
     }
     },
@@ -56,7 +61,7 @@ Formation.init({
         as: 'Auteur',
         onDelete : 'CASCADE'
     })
-    Formation.belongsTo(Role2, {
+    Formation.belongsTo(RoleHierarchique, {
         foreignKey: 'destinataireDemande', // Alias défini ici
     });
 

@@ -8,9 +8,9 @@ const ViewCollaborateur = ({CollabToView}) => {
 
     useEffect(() => {
 <<<<<<< HEAD
-      axios.get(`http://localhost:4000/api/user/${CollabToView.id}/profile`)
+      axios.get(`http://localhost:4001/api/user/${CollabToView.id}/profile`)
 =======
-      axios.get(`http://localhost:4000/api/user/${CollabToView.id}/profile`)
+      axios.get(`http://localhost:4001/api/user/${CollabToView.id}/profile`)
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         .then(response => {
             setCollab(response.data)
@@ -31,9 +31,9 @@ const ViewCollaborateur = ({CollabToView}) => {
       <Card className="w-96">
         <CardHeader floated={false} className="h-80 flex items-center justify-center">
 <<<<<<< HEAD
-            <img src={`http://localhost:4000/${collab.Collab.image}`} alt={collab.nom} />
+            <img src={`http://localhost:4001/${collab.Collab.image}`} alt={collab.nom} />
 =======
-            <img src={`http://localhost:4000/${collab.Collab.image}`} alt={collab.nom} />
+            <img src={`http://localhost:4001/${collab.Collab.image}`} alt={collab.nom} />
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         </CardHeader>
         <CardBody className="text-center pt-10 ">

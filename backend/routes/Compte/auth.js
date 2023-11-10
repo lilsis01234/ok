@@ -22,18 +22,18 @@ const secretKey = crypto.randomBytes(32).toString('hex');
 //Route pour se connecter
 router.post('/connect', (req, res, next) => {
     Compte.findOne({
-        where: { email: req.body.email },
-        include: [{
-            model: Collab,
-            attributes: ['nom', 'prenom', 'matricule', 'image']
-        }, {
-            model: RoleHierarchique,
-            include: {
-                model: Role,
-            }
-        }],
-
-    })
+            where: { email: req.body.email },
+            include: [{
+                model: Collab,
+                attributes: ['id','nom', 'prenom', 'matricule', 'image']
+            }, {
+                model: RoleHierarchique,
+                include: {
+                    model: Role
+                }
+            }],
+           
+        })
         .then(comptes => {
             if (!comptes) {
                 return res.status(401).json({ message: 'Identifiant non trouvé' })
@@ -164,17 +164,15 @@ router.post('/access-token', async (req, res) => {
             )
 
             const compte = await Compte.findByPk(id, {
-                include: [{
-                    model: RoleHierarchique,
-                    include: [
-
-                        {
-                            model: Role
-                        }]
-                }],
-                include: [{
-                    model: Collab,
-                    attributes: ['nom', 'prenom', 'matricule', 'image']
+                include : [{
+                    model : RoleHierarchique,
+                    include : [{
+                        model : Role
+                    }]
+                }], 
+                include : [{
+                    model : Collab,
+                    attributes: ['id','nom', 'prenom', 'matricule', 'image']
                 }],
                 attributes: ['email', 'collaborateur', 'lastResetRequest', 'RoleHierarchiqueId']
             })

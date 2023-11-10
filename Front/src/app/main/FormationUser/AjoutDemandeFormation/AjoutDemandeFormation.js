@@ -8,26 +8,42 @@ const AjoutDemandeFormation = () => {
   const [theme, setTheme] = useState('');
   const [description, setDescription] = useState('');
   const [destinataire, setDestinataire] = useState('');
-  const [personneAFormer, setPersonneAFormer] = useState('');
-  const [departementAFormer, setDepartementAFormer] = useState('');
-  const auteur =2; 
-  const[departement,setDepartementData]=useState([]);
+  const [personneAFormer, setPersonneAFormer] = useState(null);
+  const [equipeAFormer, setEquipeAFormer] = useState(null);
+  const[equipe,setEquipeData]=useState([]);
   const[collabs,setCollabs]=useState([]);
+  const [roleHierarchique,setRoleHierarchique]= useState([]);
+  const auteurPrep =localStorage.getItem('user'); 
 
+  console.log(auteurPrep);
+    const parsedAuteur = JSON.parse(auteurPrep);
+    const auteur = parsedAuteur.id;
+    const duree = "indefini";
+    console.log(auteur);
 
-  const fetchDepartement = () => {
+  const fetchEquipe = () => {
     axios.get('http://localhost:4001/api/equipe/all')
       .then((response) => {
-        setDepartementData(response.data);
-        console.log(response.data); // Log the response.data after setting the state
+        setEquipeData(response.data);
       })
       .catch((err) => {
         console.error(err);
       });
   };
   
+  const fetchRoleHierarchique = ()=>{
+    axios.get('http://localhost:4001/api/roleHierarchique/all')
+    .then((response)=>{
+      setRoleHierarchique(response.data);
+      console.log(response.data)
+    })
+    .catch((err)=>{
+      console.error(err)
+    })
+  }
+
   const fetchCollab = () => {
-    axios.get('http://localhost:4000/api/collaborateur/all')
+    axios.get('http://localhost:4001/api/collaborateur/all')
       .then((response) => {
         setCollabs(response.data);
         console.log(response.data); // Log the response.data after setting the state
@@ -36,21 +52,25 @@ const AjoutDemandeFormation = () => {
         console.error(err);
       });
   };
+
  useEffect(() => {
-  fetchDepartement()
+  fetchEquipe()
   fetchCollab()
+  fetchRoleHierarchique()
 }, []) 
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(destinataire)
     axios
-      .post('http://localhost:4000/api/demande_formations/addDemandeFormation', {
+      .post('http://localhost:4001/api/demande_formation/addDemandeFormation', {
         theme,
         description,
         auteur,
         destinataire,
-        departementAFormer,
+        equipeAFormer,
         personneAFormer,
+        duree
       })
       .then((res) => {
         console.log(res);
@@ -70,16 +90,20 @@ const AjoutDemandeFormation = () => {
             <label>Description</label>
             <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>
+
           <div className="form2-group">
           <label>Destinataire de votre demande</label>
-          <select value={destinataire} onChange={(e) => setDestinataire(e.target.value)}>
-            <option value="">Sélectionnez un destinataire</option>
-            <option value="formateur">Formateur</option>
-            <option value="rh">RH</option>
-            <option value="coatch">Coatch</option>
+          <select value={destinataire} onChange={(e) =>{console.log(e.target.value) 
+                                                        setDestinataire(e.target.value)}}>
+            {roleHierarchique.map((role) => (
+              <option key={role.id} value={role.id}>
+                {role.roleHierarchique}
+              </option>
+            ))}
           </select>
-        </div>
-        <div className="form2-group">
+         </div>
+
+         <div className="form2-group">
           <label>Si pour des personnes, personnes à former:</label>
           <select multiple value={personneAFormer} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
             {collabs.map((collab) => (
@@ -90,11 +114,11 @@ const AjoutDemandeFormation = () => {
           </select>
         </div>
         <div className="form2-group">
-          <label>Si pour des départements, départements à former:</label>
-          <select multiple value={departementAFormer} onChange={(e) => setDepartementAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
-            {departement.map((dept) => (
-              <option key={dept.id} value={dept.id}>
-                {dept.nomDepartement}
+          <label>Si pour une équipe, équipe à former:</label>
+          <select multiple value={equipeAFormer} onChange={(e) => setEquipeAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+            {equipe.map((eq) => (
+              <option key={eq.id} value={eq.id}>
+                {eq.nomEquipe	}
               </option>
             ))}
           </select>

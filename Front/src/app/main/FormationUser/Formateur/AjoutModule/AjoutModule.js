@@ -15,7 +15,7 @@ const AjoutModule = () => {
   const handleSubmit = (event)=>{
     event.preventDefault();
 
-    axios.post('http://localhost:4000/api/module/addModule',{titreModule,description,idformation})
+    axios.post('http://localhost:4001/api/module/addModule',{titreModule,description,idformation})
     .then((res) =>{console.log(res.data)
       navigate(`/admin/formation/${idformation}`)}
     )

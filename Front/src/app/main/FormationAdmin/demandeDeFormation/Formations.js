@@ -9,7 +9,7 @@ const Formations = () => {
   const[Formation,setFormations] = useState([]);
 
   const fetchFormation = () => {
-    axios.get('http://localhost:4000/api/formations/all_formations')
+    axios.get('http://localhost:4001/api/formations/all_formations')
       .then(res => {setFormations(res.data)
       })
       .catch(err => console.log(err));
@@ -42,7 +42,7 @@ const Formations = () => {
 
         Formation.map((formation) => (
           <div key={formation.id} className="formation_item">
-            <h2 className="formation_title">{formation.theme}</h2>
+           <h2 className="formation_title"><Link to={`/admin/formation/${formation.id}`}>{formation.theme}</Link></h2>
             <p className="formation_description">{formation.description}</p>
             {formation.Formateur ? (
               <p className="formateur_name">
@@ -59,9 +59,14 @@ const Formations = () => {
         
         ):(
 
-          Formation.filter(Formation=>Formation.theme.includes(recherche)||Formation.description.includes(recherche)).map((formation) => (
+          Formation.filter((formation) => (
+            formation.theme.toLowerCase().includes(recherche.toLowerCase()) ||
+            formation.description.toLowerCase().includes(recherche.toLowerCase()) ||
+            (formation.Formateur && formation.Formateur.nom && formation.Formateur.nom.toLowerCase().includes(recherche.toLowerCase()))||
+            (formation.Formateur && formation.Formateur.prenom && formation.Formateur.prenom.toLowerCase().includes(recherche.toLowerCase()))
+          )).map((formation) => (
             <div key={formation.id} className="formation_item">
-              <h2 className="formation_title">{formation.theme}</h2>
+               <h2 className="formation_title"><Link to={`/admin/formation/${formation.id}`}>{formation.theme}</Link></h2>
               <p className="formation_description">{formation.description}</p>
               {formation.Formateur ? (
                 <p className="formateur_name">

@@ -83,7 +83,7 @@ function ModernComingSoonPage() {
 
 
 const fetchTypes = () => {
-  axios.get('http://localhost:4000/api/actualite/type/all')
+  axios.get('http://localhost:4001/api/actualite/type/all')
     .then(res => {setListType(res.data)})
     .catch(err => console.log(err));
 }
@@ -101,7 +101,7 @@ const handleSubmit = async (e) => { e.preventDefault();
     const dataForm = { nom };
   
   
-    const serveurApi = 'http://localhost:4000/api/actualite/type/new';
+    const serveurApi = 'http://localhost:4001/api/actualite/type/new';
     axios.post(serveurApi, dataForm)
         .then(res => {
           if (res.data) {
@@ -119,7 +119,7 @@ const handleSubmit = async (e) => { e.preventDefault();
 
 const deleteType = (id) => {
 
-  axios.delete(`http://localhost:4000/api/actualite/type/${id}/delete`)
+  axios.delete(`http://localhost:4001/api/actualite/type/${id}/delete`)
 
   .then(() => {
     const updatedType = listeType.filter(type => type.id !== id);
@@ -148,7 +148,7 @@ const handleEdit = (e) => {
 
   if(nom) {
     
-    axios.put(`http://localhost:4000/api/actualite/type/${id}/edit`, dataForm)
+    axios.put(`http://localhost:4001/api/actualite/type/${id}/edit`, dataForm)
   
     .then((res) => {
         console.log(res.data);

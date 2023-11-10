@@ -41,7 +41,7 @@ router.get('/modules/:formationId', async(req, res) => {
         const formations = await Formation.findAll({
             where : {
                 id : idFormation,
-                approbation : 1}
+               }
         })
 
         if (!formations || formations.length === 0){

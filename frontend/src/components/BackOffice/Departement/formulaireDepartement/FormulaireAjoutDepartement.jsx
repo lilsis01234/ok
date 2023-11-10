@@ -24,7 +24,7 @@ const FormulaireDepartement = ({isEditing, departementToEdit, onAddDepartement, 
     }
 
     if(isEditing){
-      axios.put(`http://localhost:4000/api/departement/edit/${departementToEdit.id}`, formData)
+      axios.put(`http://localhost:4001/api/departement/edit/${departementToEdit.id}`, formData)
       .then((response) => {
         onUpdateDepartement(response.data)
         alert('Département modifier avec succés')
@@ -34,7 +34,7 @@ const FormulaireDepartement = ({isEditing, departementToEdit, onAddDepartement, 
       });
       setEditing(true);
     } else {
-      axios.post('http://localhost:4000/api/departement/new', formData)
+      axios.post('http://localhost:4001/api/departement/new', formData)
       .then((response) => {
         onAddDepartement(response.data)
         alert('Département ajouter avec succés')

@@ -37,9 +37,9 @@ const ArchiveCollaborateur = ({ CollabToArchive }) => {
 
 
 <<<<<<< HEAD
-    axios.post(`http://localhost:4000/api/archive/collab/${CollabToArchive.id}`, formData)
+    axios.post(`http://localhost:4001/api/archive/collab/${CollabToArchive.id}`, formData)
 =======
-    axios.post(`http://localhost:4000/api/archive/collab/${CollabToArchive.id}`, formData)
+    axios.post(`http://localhost:4001/api/archive/collab/${CollabToArchive.id}`, formData)
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
       .then((response) => {
         alert('Collaborateur archivé avec succès')
@@ -57,10 +57,10 @@ const ArchiveCollaborateur = ({ CollabToArchive }) => {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col justify-center items-center">
 <<<<<<< HEAD
-          <Avatar src={`http://localhost:4000/${image}`} size="xxl" className="m-5" />
+          <Avatar src={`http://localhost:4001/${image}`} size="xxl" className="m-5" />
           <div className='flex flex-col items-center'>
 =======
-            <Avatar src={`http://localhost:4000/${image}`} size="xxl" className="m-5"/>
+            <Avatar src={`http://localhost:4001/${image}`} size="xxl" className="m-5"/>
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             <label className="p-5 text-center font-['Poppins']">Pour quelle raison voulez vous supprimer {nom} {prenom}?</label>
             <Input variant="static" type="text" onChange={(e) => { setStatut(e.target.value) }} value={statut} size="lg" />

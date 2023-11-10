@@ -9,7 +9,7 @@ function DirectionItem(props) {
   const [dirigeantData, setDirigeantData] = useState([]);
 
   const fetchDirigeant = () => {
-    axios.get('http://localhost:4000/api/collaborateur/dirigeant')
+    axios.get('http://localhost:4001/api/collaborateur/dirigeant')
       .then((response) => {
         setDirigeantData(response.data)
       })
@@ -53,7 +53,7 @@ function DirectionItem(props) {
         {dirigeant.map((dirigeant) => {
           <>
             <div className="flex items-center mt-24 -space-x-6">
-              <Avatar alt="member" src={`http://localhost:4000/${dirigeant.image}`} />
+              <Avatar alt="member" src={`http://localhost:4001/${dirigeant.image}`} />
             </div>
             <div className="flex items-center mt-24 text-md font-md">
               <Typography color="text.secondary">{dirigeant.nom} {dirigeant.prenom}</Typography>

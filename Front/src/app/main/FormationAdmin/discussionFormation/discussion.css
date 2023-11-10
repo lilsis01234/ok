@@ -72,3 +72,35 @@
     color: white !important;
   }
   
+  .file-list {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .file-link{
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 20%;
+  }
+  
+  .fichier:hover {
+    background-color: #e2e2e2;
+  }
+  .fichier{
+    display: block;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .fichier svg{
+    height: 70px;
+    width: 100px;
+    background-color: rgb(169, 16, 16);
+    border-radius: 5px;
+  }
+  
+  

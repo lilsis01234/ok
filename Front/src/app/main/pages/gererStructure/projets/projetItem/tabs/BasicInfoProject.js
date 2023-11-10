@@ -15,7 +15,7 @@ function BasicInfoProject(props) {
 
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/departement/all')
+        axios.get('http://localhost:4001/api/departement/all')
             .then((response) => {
                 setListeDepartement(response.data)
 

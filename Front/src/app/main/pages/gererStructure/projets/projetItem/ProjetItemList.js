@@ -48,7 +48,7 @@ function ProjetItemList(props) {
                     setNoProjet(false)
                 } else {
                     console.log('Affichage d\'un projet existante')
-                    axios.get(`http://localhost:4000/api/projet/view/${projectId}`)
+                    axios.get(`http://localhost:4001/api/projet/view/${projectId}`)
                        .then(response => {
                            setProjet(response.data.projet)
                         //    console.log(response.data.projet)

@@ -16,7 +16,7 @@ function ProfessionalInfo(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/poste/all")
+      .get("http://localhost:4001/api/poste/all")
       .then((response) => {
         setListePoste(response.data);
       })
@@ -27,7 +27,7 @@ function ProfessionalInfo(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/departement/all")
+      .get("http://localhost:4001/api/departement/all")
       .then((response) => {
         setListeDepartement(response.data);
       })
@@ -38,7 +38,7 @@ function ProfessionalInfo(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/equipe/all")
+      .get("http://localhost:4001/api/equipe/all")
       .then((response) => {
         setListeEquipe(response.data);
       })
@@ -49,7 +49,7 @@ function ProfessionalInfo(props) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/projet/all")
+      .get("http://localhost:4001/api/projet/all")
       .then((response) => {
         setListeProjet(response.data);
       })

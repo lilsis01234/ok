@@ -59,10 +59,9 @@ function CalendarTraining() {
   };
 
 
-
   useEffect(() => {
     // Récupérer les données de l'API backend
-    axios.get('http://localhost:4000/api/calendrier/agenda')
+    axios.get('http://localhost:4001/api/calendrier/agenda')
       .then((response) => {
         // Formatter les données pour les rendre compatibles avec React Big Calendar
         const formattedEvents = response.data.map((event) => {
@@ -94,11 +93,11 @@ function CalendarTraining() {
     console.log('Réserver une place');
   };
 
-  const handleSetReminderClick = (event) => {
-    scheduleNotification(event);
-    console.log('lasa le rappel')
-    alert('Rappel confirmé')
-  };
+  // const handleSetReminderClick = (event) => {
+  //   scheduleNotification(event);
+  //   console.log('lasa le rappel')
+  //   alert('Rappel confirmé')
+  // };
 
   const closePopup = () => {
     setShowButtons(false);
@@ -113,6 +112,7 @@ function CalendarTraining() {
         events={events}
         startAccessor="start"
         endAccessor="end"
+        step={15}
         onSelectEvent={handleEventSelect}
         style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
       />
@@ -121,7 +121,7 @@ function CalendarTraining() {
         <div className="popupContent">
             <button className="popupButton" onClick={handleParticipateNowClick}>Participer par appel vidéo</button>
             <button className="popupButton" onClick={handleReserveClick}>Réserver une place</button>
-            <button className="popupButton" onClick={() => { handleSetReminderClick(selectedEvent); console.log('vokitika'); }}>Me rappeler cette formation</button>
+            {/* <button className="popupButton" onClick={() => { handleSetReminderClick(selectedEvent); console.log('vokitika'); }}>Me rappeler cette formation</button> */}
             <button className="closeButton" onClick={closePopup}>X</button>
         </div>
       </div>

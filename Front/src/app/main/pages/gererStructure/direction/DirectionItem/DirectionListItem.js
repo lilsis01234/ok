@@ -51,7 +51,7 @@ function DirectionListItem(props) {
 
                 } else {
                     console.log('Affichage d\'un  direction existante')
-                    axios.get(`http://localhost:4000/api/direction/view/${directionId}`)
+                    axios.get(`http://localhost:4001/api/direction/view/${directionId}`)
                         .then(response => {
                             setDirection(response.data.direction)
                             setNoDirection(false)
