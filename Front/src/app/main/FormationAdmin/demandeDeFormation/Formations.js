@@ -9,7 +9,7 @@ const Formations = () => {
   const[Formation,setFormations] = useState([]);
 
   const fetchFormation = () => {
-    axios.get('http://localhost:4000/api/formations/all_formations')
+    axios.get('http://localhost:4001/api/formations/all_formations')
       .then(res => {setFormations(res.data)
       })
       .catch(err => console.log(err));

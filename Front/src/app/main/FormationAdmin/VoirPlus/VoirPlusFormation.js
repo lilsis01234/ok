@@ -18,7 +18,7 @@ const VoirPlusFormation = () => {
     const [showButtons, setShowButtons] = useState(false);
 
     const fetchFormation = () => {
-        axios.get(`http://localhost:4000/api/formations/all_informations/${idFormation.id}`)
+        axios.get(`http://localhost:4001/api/formations/all_informations/${idFormation.id}`)
             .then(res => {
                 setInformations(res.data);
             })
@@ -26,7 +26,7 @@ const VoirPlusFormation = () => {
                 console.log(err);
             });
 
-            axios.get(`http://localhost:4000/api/seances/seancesParFormation/${idFormation.id}`)
+            axios.get(`http://localhost:4001/api/seances/seancesParFormation/${idFormation.id}`)
             .then((res) => {
             const formattedEvents = res.data.map((seance) => {
                 return {
