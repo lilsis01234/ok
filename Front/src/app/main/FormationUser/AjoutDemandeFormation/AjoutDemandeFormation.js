@@ -25,7 +25,6 @@ const AjoutDemandeFormation = () => {
     axios.get('http://localhost:4001/api/equipe/all')
       .then((response) => {
         setEquipeData(response.data);
-        // console.log(response.data); // Log the response.data after setting the state
       })
       .catch((err) => {
         console.error(err);
@@ -53,6 +52,7 @@ const AjoutDemandeFormation = () => {
         console.error(err);
       });
   };
+
  useEffect(() => {
   fetchEquipe()
   fetchCollab()
@@ -101,9 +101,9 @@ const AjoutDemandeFormation = () => {
               </option>
             ))}
           </select>
-        </div>
+         </div>
 
-        <div className="form2-group">
+         <div className="form2-group">
           <label>Si pour des personnes, personnes à former:</label>
           <select multiple value={personneAFormer} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
             {collabs.map((collab) => (
