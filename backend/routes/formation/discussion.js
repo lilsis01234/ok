@@ -83,9 +83,8 @@ router.get('/downloaded/:filename', (req, res) => {
         contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
     } else if (fileExtension === '.pdf') {
         contentType = 'application/pdf';
-    } // Add more content types for other file formats if needed
+    }
 
-    // Set response headers
     res.setHeader('Content-Type', contentType);
 
     // Create a readable stream from the file and pipe it to the response

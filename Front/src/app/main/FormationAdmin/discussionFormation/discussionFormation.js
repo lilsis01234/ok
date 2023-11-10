@@ -4,8 +4,9 @@ import axios from "axios";
 import './discussion.css';
 import { Link } from "react-router-dom";
 import { BiPencil } from "react-icons/bi";
-import { FaFilePdf, FaFileWord, FaFile, FaImage } from "react-icons/fa";
-
+import { FaFilePdf, FaFileWord, FaFile, FaImage,FaFilePowerpoint,FaFileExcel,FaFileArchive,FaFileCsv } from "react-icons/fa";
+import {BsFiletypeSql} from "react-icons/bs";
+import { AiOutlineFileGif } from "react-icons/ai";
 
 const Discussions = () => {
     const { id } = useParams();
@@ -42,12 +43,33 @@ const Discussions = () => {
         const fileExtension = fileName.split('.').pop().toLowerCase();
         if (fileExtension === 'pdf') {
             return <FaFilePdf />;
-        } else if (fileExtension === 'docx' || fileExtension === 'doc') {
+        } 
+        else if (fileExtension === 'docx' || fileExtension === 'doc') {
             return <FaFileWord />;
-        } else if (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'gif') {
+        } 
+        else if (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'gif') {
             return <FaImage />;
-        } else {
-            return <FaFile />;
+        } 
+        else if(fileExtension === 'sql'){
+            return <BsFiletypeSql />;
+        }
+        else if(fileExtension === 'pptx'){
+            return <FaFilePowerpoint/>
+        }
+        else if (fileExtension === 'rar'){
+            return <FaFileArchive/>
+        }
+        else if(fileExtension === 'csv'){
+            return <FaFileCsv/>
+        }
+        else if (fileExtension === 'xlsx'){
+            return <FaFileExcel/>
+        }
+        else if(fileExtension === 'gif'){
+            return <AiOutlineFileGif/>
+        }
+        else{
+            return<FaFile/>
         }
     };
 
