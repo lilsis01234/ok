@@ -20,7 +20,7 @@ function ActualitiesTable(props) {
 
 //Récupération de la liste des actualités
 const fetchActualities = () => {
-  axios.get('http://localhost:4000/api/actualite/all')
+  axios.get('http://localhost:4001/api/actualite/all')
     .then(res => {setListActuality(res.data)})
     .catch(err => console.log(err));
 }

@@ -61,7 +61,7 @@ function CalendarTraining() {
 
   useEffect(() => {
     // Récupérer les données de l'API backend
-    axios.get('http://localhost:4000/api/calendrier/agenda')
+    axios.get('http://localhost:4001/api/calendrier/agenda')
       .then((response) => {
         // Formatter les données pour les rendre compatibles avec React Big Calendar
         const formattedEvents = response.data.map((event) => {
