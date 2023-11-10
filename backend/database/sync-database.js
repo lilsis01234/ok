@@ -42,7 +42,6 @@ const ActuTag = require('../Modele/ActualityModel/ActuTag');
 const associationActuTag = require('../Modele/ActualityModel/associationActuTag');
 const Permission = require('../Modele/RoleModel/Permission');
 const associationPermission = require('../Modele/RoleModel/associationPermission');
-const associationSeanceCollab = require('../Modele/formation/associationSeanceCollab');
 
 
 const EquipeSeance = require('../Modele/formation/EquipeSeance');
@@ -62,11 +61,7 @@ async function syncDatabase() {
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });
 
-        const { RoleHierarchique, Permission, RolePermission } = associationPermission;
-
-        Collaborateur.belongsToMany(Seance, { through: ParticipantsSeance });
-        Departement.belongsToMany(Seance, { through: ParticipantsSeance })
-        Seance.belongsToMany(Collaborateur, { through: ParticipantsSeance });
+        const { RoleHierarchique, Permission, RolePermission } = associationPermission
 
         const { Actualite, Categorie, ActuCateg} = associationActuCateg;
         Actualite.belongsToMany(Categorie, {through: ActuCateg});
