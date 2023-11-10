@@ -2,6 +2,7 @@ import './api/auth-api';
 import './api/notifications-api';
 import history from '@history';
 import mock from './mock';
+import './api/profile-api';
 
 mock.onAny().passThrough();
 

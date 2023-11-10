@@ -9,7 +9,6 @@ import { CheckBox } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { Typography } from '@mui/material';
 import _ from 'lodash'
-import DepartementTableHeader from '../departement/DepartementTableHeader';
 import PosteTableHeader from './PosteTableHeader';
 
 function PosteTable(props) {
@@ -68,9 +67,9 @@ function PosteTable(props) {
         setSelected([]);
     }
 
-    // function handleClick(item) {
-    //     navigate(`/business/manage/job/${item.id}/`);
-    // }
+    function handleClick(item) {
+        navigate(`/business/manage/Fonction/${item.id}`);
+    }
 
 
     function handleCheck(event, id) {
@@ -109,7 +108,7 @@ function PosteTable(props) {
                 className="flex flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There are no job!
+                    There are no Fonction!
                 </Typography>
             </motion.div>
         );
@@ -155,7 +154,7 @@ function PosteTable(props) {
                                         tabIndex={-1}
                                         key={n.id}
                                         selected={isSelected}
-                                    // onClick={(event) => handleClick(n)}
+                                        onClick={(event) => handleClick(n)}
                                     >
                                         <TableCell className="w-40 md:w-64 text-center" padding="none">
                                             <CheckBox

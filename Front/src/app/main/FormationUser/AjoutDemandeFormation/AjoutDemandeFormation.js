@@ -27,7 +27,7 @@ const AjoutDemandeFormation = () => {
   };
   
   const fetchCollab = () => {
-    axios.get('http://localhost:4001/api/collaborateur/all')
+    axios.get('http://localhost:4000/api/collaborateur/all')
       .then((response) => {
         setCollabs(response.data);
         console.log(response.data); // Log the response.data after setting the state
@@ -44,7 +44,7 @@ const AjoutDemandeFormation = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post('http://localhost:4001/api/demande_formations/addDemandeFormation', {
+      .post('http://localhost:4000/api/demande_formations/addDemandeFormation', {
         theme,
         description,
         auteur,

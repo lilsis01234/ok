@@ -65,7 +65,7 @@ function DepartementTableHeader(props) {
                                 background: (theme) => theme.palette.background.default,
                             }}>
                             <IconButton
-                                aria-owns={selectedDirectionIds ? 'selectedProductsMenu' : null}
+                                aria-owns={selectedDirectionIds ? 'selectedDepaertementMenu' : null}
                                 aria-haspopup="true"
                                 onClick={openSelectedDepartementMenu}
                                 size="large"
@@ -83,7 +83,7 @@ function DepartementTableHeader(props) {
                                         onClick={() => {
                                             dispatch(removeProducts(selectedDirectionIds));
                                             props.onMenuItemClick();
-                                            closeSelectedDirectionMenu();
+                                            closeSelectedDepartementMenu();
                                         }}
                                     >
                                         <ListItemIcon className="min-w-40">

@@ -2,7 +2,7 @@ import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import jwtServiceConfig from './jwtServiceConfig';
-import { useNavigate } from 'react-router-dom';
+
 
 /* eslint-disable camelcase */
 
@@ -12,6 +12,7 @@ class JwtService extends FuseUtils.EventEmitter {
     this.handleAuthentication();
   }
 
+ 
 
   //Methode pour vérifier si l'utilisateur est connecté
   setInterceptors = () => {
@@ -67,7 +68,7 @@ class JwtService extends FuseUtils.EventEmitter {
   // };
 
   //Pour se connecter 
-  signInWithEmailAndPassword = (email, password) => {
+  signInWithEmailAndPassword = async (email, password) => {
     const formData = {
       email : email,
       password : password
@@ -77,24 +78,34 @@ class JwtService extends FuseUtils.EventEmitter {
         .then((response) => {
           if (response.data) {
             this.setSession(response.data.token);
+            localStorage.setItem('jwt_refresh_token', response.data.refresh_token);
             this.emit('onLogin', response.data.compte);
-            return response.data
+            return response.data.compte
           } else {
-            throw new Error(response.data.error);
+            console.error(response.data.error)
           }
+        })
+        .catch((error) => {
+          this.logout();
+          console.error(error)
+          return (new Error('Echec de connexion avec le token.'));
         });
+
   };
 
-  signInWithToken = () => {
+  signInWithToken = async () => {
       const data = {
-        acess_token : this.getAccessToken()
+        acess_token : this.getAccessToken(),
+        refresh_token : this.getRefreshToken()
       }
       return axios
         .post(jwtServiceConfig.accessToken, data)
         .then((response) => {
-          if (response.data.user) {
+          console.log(response.data)
+          if (response.data.compte) {
             this.setSession(response.data.token);
-            return (response.data);
+            localStorage.setItem('jwt_refresh_token', response.data.refresh_token);
+            console.log('Connexion à partir du token réussie')
           } else {
             this.logout();
             return (new Error('Failed to login with token.'));
@@ -103,7 +114,7 @@ class JwtService extends FuseUtils.EventEmitter {
         .catch((error) => {
           this.logout();
           console.error(error)
-          return (new Error('Failed to login with token.'));
+          return (new Error('Echec de connexion avec le token.'));
         });
   
   };
@@ -126,7 +137,10 @@ class JwtService extends FuseUtils.EventEmitter {
 
   logout = () => {
     this.setSession(null);
-    this.emit('onLogout', 'Logged out');
+    localStorage.removeItem('jwt_refresh_token');
+    this.emit('onLogout', 'Logged out')
+    localStorage.clear();
+    window.location.reload();
   };
 
   isAuthTokenValid = (access_token) => {
@@ -145,6 +159,10 @@ class JwtService extends FuseUtils.EventEmitter {
 
   getAccessToken = () => {
     return window.localStorage.getItem('jwt_access_token');
+  };
+
+  getRefreshToken = () => {
+    return window.localStorage.getItem('jwt_refresh_token');
   };
 
 

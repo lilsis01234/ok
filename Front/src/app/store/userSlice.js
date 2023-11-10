@@ -8,16 +8,19 @@ import settingsConfig from 'app/configs/settingsConfig';
 import jwtService from '../auth/services/jwtService';
 
 
+
+
 //Création d'un action asynchrone SetUser pour mettre à jour les informations de l'utilisateurs 
 export const setUser = createAsyncThunk('user/setUser', async (user, { dispatch, getState }) => {
   /*
     You can redirect the logged-in user to a specific route depending on his role
     */
-  console.log(user)
+
   if (user.loginRedirectUrl) {
     settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example '/apps/academy'
   }
-
+  // console.log(user)
+  localStorage.setItem('user', JSON.stringify(user))
   return user;
 });
 
@@ -88,16 +91,36 @@ export const updateUserData = (user) => async (dispatch, getState) => {
 
 
 
+const storedUser = localStorage.getItem('user');    
+const userConnected = JSON.parse(storedUser)
+console.log(userConnected)
+
+let initialState
+if (userConnected) {
+  initialState = {
+    role : userConnected.RoleHierarchique?.roleHierarchique,
+    data : {
+      displayName : userConnected.Collab?.nom + ' ' + userConnected.Collab?.prenom,
+      photoUrl : `http://localhost:4000/${userConnected.Collab?.image}`,
+      email : userConnected.email
+    }
+  }
+} else {
+  initialState = {
+    role : [],
+    data : {}
+  }
+}
 
 
-const initialState = {
-  role: ['Administrateur'], // guest
-  data: {
-    displayName: 'John Doe',
-    photoURL: 'assets/images/avatars/brian-hughes.jpg',
-    shortcuts: ['apps.calendar', 'apps.mailbox', 'apps.contacts', 'apps.tasks'],
-  },
-};
+// const initialState = {
+//   role: [], // guest
+//   data: {
+//     displayName: 'John Doe',
+//     photoURL: 'assets/images/avatars/brian-hughes.jpg',
+//     shortcuts: ['apps.calendar', 'apps.mailbox', 'apps.contacts', 'apps.tasks'],
+//   },
+// };
 
 const userSlice = createSlice({
   name: 'user',

@@ -1,5 +1,4 @@
 import { useTheme } from '@mui/styles';
-import { MotionConfig } from 'framer-motion';
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,7 +24,7 @@ function DepartementItemHeader({ formValues }) {
         direction
     }
 
-    console.log(data)
+    // console.log(data)
 
     const handleSaveDirection = async () => {
         if (id) {

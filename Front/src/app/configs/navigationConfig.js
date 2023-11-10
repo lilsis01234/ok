@@ -32,7 +32,28 @@ const navigationConfig = [
     title: 'Collaborateur',
     type: 'group',
     icon: 'heroicons-outline:user-group',
-    translate: 'COLLABORATEURS',
+    translate: 'COLLABORATEURS', children : [
+      {
+         id : 'collaborateurs.liste',
+         title : 'Collaborator Lists',
+         type: 'item',
+         icon: 'heroicons-outline:user-group',
+         url : 'collaborateurs/all',
+      }, , {
+        id : 'collaborator.manage',
+        title : 'Manage Collaborator',
+        type : 'collapse',
+        icon : 'heroicons-outline:user-group', 
+        children : [
+          {
+            id : 'collaborator.manage-collab',
+            title : 'Collaborator',
+            type : 'item',
+            url : 'manage/collaborator'
+          },
+        ] 
+      }
+    ]
   }, 
   {
     id : 'entreprise',
@@ -58,10 +79,113 @@ const navigationConfig = [
           type : 'item',
           icon : 'heroicons-outline:user-group',
           translate : 'EQUIPE'
-        },
+        }, {
+          id : 'entreprise.manage',
+          title : 'Manage Business Structure',
+          type : 'collapse',
+          icon : 'heroicons-outline:briefcase',
+          children : [
+            {
+              id : 'entreprise.direction-manage-direction',
+              title : 'Direction',
+              type : 'item',
+              url : 'business/manage/direction'
+            },  {
+              id : 'entreprise.direction-manage-departement',
+              title : 'Departement',
+              type : 'item',
+              url : 'business/manage/departement'
+            },  {
+              id : 'entreprise.direction-manage-poste',
+              title : 'Fonction',
+              type : 'item',
+              url : 'business/manage/Fonction'
+            }, {
+              id : 'entreprise.direction-manage-project',
+              title : 'Project',
+              type : 'item',
+              url : 'business/manage/project'
+            }, {
+              id : 'entreprise.direction-manage-teams',
+              title : 'Team',
+              type : 'item',
+              url : 'business/manage/team'
+            }
+          ]
+        }
     ]
   }
   ,
+
+
+  {
+    id: 'actuality',
+    title: "Modules d'actualités",
+    subtitle: "Gestion d'actualités",
+    type: 'group',
+    icon: 'heroicons-outline:home',
+    children: [
+      {
+        id: 'actuality.list',
+        title: "Tous les actualités",
+        type: 'item',
+        icon: 'heroicons-outline:newspaper',
+        url: 'apps/actuality/list',
+      },
+      {
+        id: 'actuality.add',
+        title: "Ajout d'actulité",
+        type: 'item',
+        icon: 'heroicons-outline:document-add',
+        url: '/apps/addActuality',
+      },
+      {
+        id: 'comment',
+        title: "Commentaire",
+        type: 'item',
+        icon: 'heroicons-outline:chat-alt',
+        url: '/apps/edit-comments',
+      },
+      {
+        id: 'categorie',
+        title: 'Categorie',
+        type: 'item',
+        icon: 'heroicons-outline:clipboard-list',
+        url: '/apps/categorie',
+      },
+      {
+        id: 'type',
+        title: 'Type',
+        type: 'item',
+        icon: 'material-outline:article',
+        url: '/apps/type',
+      },
+      {
+        id: 'frontend',
+        title: 'Front office',
+        icon: 'heroicons-outline:check-circle',
+        type: 'collapse',
+        children: [
+          {
+            id: 'actuality.flux',
+            title: "Flux d'actualités",
+            type: 'item',
+            icon: 'heroicons-outline:menu-alt-2',
+            url: '/apps/timeline',
+          },
+          {
+            id: 'actuality-content',
+            title: 'Actualité',
+            type: 'item',
+            icon: 'heroicons-outline:clipboard-list',
+            url: '/apps/front-actuality',
+          }
+        ],
+      }
+    ],
+  },
+
+
   {
     id: 'formation',
     title: 'Formations',

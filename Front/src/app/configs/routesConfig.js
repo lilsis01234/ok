@@ -7,21 +7,42 @@ import SignUpConfig from '../main/sign-up/SignUpConfig';
 import SignOutConfig from '../main/sign-out/SignOutConfig';
 import Error404Page from '../main/404/Error404Page';
 import ExampleConfig from '../main/example/ExampleConfig';
-import dashboardsConfigs from '../main/Dashboard/dashboardsConfig';
+import dashboardsConfigs from '../Dashboard/dashboardsConfig';
+
+
+//ModuleProfile
+import ContactConfig from '../main/pages/Contacts/ContactAppConfig';
+import DirectionAppConfig from '../main/pages/Direction/DirectionAppConfig';
+import StructureAppConfig from '../main/pages/gererStructure/StructureAppConfig';
+
+//Module Formation
 import CalendarConfig from '../main/CalendarSeance/CalendarSeanceConfig';
 import CalendarFormConfig from '../main/CalendarSeance/calendrierForm/CalendarFormConfig';
 import FormationConfig from '../main/FormationAdmin/demandeDeFormation/FormationConfig';
+import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
+
+//Module d'actualité
+import appsConfigs from '../main/apps/appsConfigs';
+
 
 const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
-  ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig
+  ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,
+  //Module Profil
+  ContactConfig,
+  DirectionAppConfig,
+  StructureAppConfig,
+  GererCollaborateurConfig,
+//Module d'actualité
+  ...appsConfigs
+
 ];
 
 const routes = [
   ...FuseUtils.generateRoutesFromConfigs(routeConfigs, settingsConfig.defaultAuth),
   {
     path: '/',
-    element: <Navigate to="/example" />,
+    element: <Navigate to="/sign-in" />,
     auth : settingsConfig.defaultAuth
   },
   {
