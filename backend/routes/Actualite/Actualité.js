@@ -8,6 +8,7 @@ const Collab = require('../../Modele/CollabModel/Collab');
 const ActualityImg = require('../../Modele/ActualityModel/ActualityImg');
 const Categorie = require('../../Modele/ActualityModel/Categorie');
 const Type = require('../../Modele/ActualityModel/Type');
+const Tag = require('../../Modele/ActualityModel/Tag');
 const fs = require('fs');
 
 //Configuration du stockages des fichiers uploader
@@ -37,6 +38,25 @@ router.post('/categorie/new', async (req, res) => {
         res.status(201).json({ message: 'Erreur lors de la création d\'une categorie actualitée' });
     }
 })
+
+
+//Ajouter une nouvelle étiquettes d'actualité
+router.post('/tag/new', async (req, res) => {
+    try {
+        const newTag = await Tag.create({ nom: req.body.nom });
+
+        const savedTag = await newTag.save();
+
+        res.status(200).json(savedTag);
+
+    }
+    catch (err) {
+        console.error('Erreur lors de la création d\'une étiquette d\'actualitée: ', err);
+        res.status(201).json({ message: 'Erreur lors de la création d\'une étiquette d\'actualitée' });
+    }
+})
+
+
 
 //Ajouter une nouvelle type d'actualité
 router.post('/type/new', async (req, res) => {
@@ -122,6 +142,19 @@ router.get('/type/all', async (req, res) => {
         const categorie = await Type.findAll();
 
         res.status(200).json(categorie);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
+    }
+})
+
+//Afficher les listes de tous les étiquettes d'actualités
+router.get('/tag/all', async (req, res) => {
+    try {
+        const Tags = await Tag.findAll();
+
+        res.status(200).json(Tags);
     }
     catch (error) {
         console.error(error);
@@ -259,6 +292,35 @@ router.put('/type/:id/edit', async (req, res) => {
     }
 })
 
+
+
+//Mettre à jour un étiquette existant 
+router.put('/tag/:id/edit', async (req, res) => {
+
+    const { id } = req.params;
+
+    try {
+        const updateTag = await Tag.findByPk(id);
+
+        if (!updateTag) {
+            return res.status(404).json({ error: 'Tag introuvable' });
+        }
+
+        const updatedTag = await updateTag.update({
+            nom: req.body.nom,
+        })
+
+
+        res.status(201).json({success: 'la Tag a belle et bien mise à jour'})
+    }
+    catch (error) {
+        console.error('Erreur lors de la mise à jour de la Tag d\'actualité', error);
+        res.status(500).json({ error: 'Erreur lors de la mise à jour de la Tag d\'actualité' });
+    }
+})
+
+
+
 //Mettre à jour un Actualité existant 
 router.put('/:id/edit', upload.single('image'), async (req, res) => {
 
@@ -326,6 +388,23 @@ router.delete('/type/:id/delete', async (req, res) => {
     }
 })
 
+//Supprimer une étiquette
+router.delete('/tag/:id/delete', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deleteTag = await Tag.findByPk(id);
+        if (!deleteTag) {
+            return res.status(404).json({ error: 'Tag introuvable' });
+        }
+        await deleteTag.destroy();
+        res.sendStatus(204);
+    }
+    catch (error) {
+        console.error('Erreur lors de la suppression de la Tag d\'actualité :', error)
+        res.status(500).json({ message: 'Erreur lors de la suppression de la Tag d\'actualité' })
+    }
+})
+
 
 //Supprimer une actualité 
 router.delete('/:id/delete', async (req, res) => {
@@ -361,7 +440,6 @@ router.delete('/image/:imageId', async (req, res) => {
       }
   
       // Supprimez l'enregistrement de l'image de la base de données.
-    //   await ActualityImg.findByIdAndRemove(imageId);
       await ActualityImg.destroy({
         where: {
           id: imageId

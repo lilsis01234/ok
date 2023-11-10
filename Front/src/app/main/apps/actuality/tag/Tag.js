@@ -33,7 +33,7 @@ const style = {
 };
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
+    '&:nth-of-tag(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
     // hide last border
@@ -60,36 +60,36 @@ function ModernComingSoonPage() {
   const [boutonDesable, setBoutonDesable] = useState(true);
   const [nomInput, setNomInput] = useState('');
   const [newName, setNewName] = useState('');
-  const [listeCategorie, setListCategorie] = useState([]);
-  const [nouveauCategorie, setNouveauCategorie] = useState('');
-  const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
+  const [listeTag, setListTag] = useState([]);
+  const [nouveauTag, setNouveauTag] = useState('');
+  const [tagIdToDelete, setTagIdToDelete] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [idCategorieEdit, setidCategorieEdit] = useState('');
+  const [idTagEdit, setidTagEdit] = useState('');
   const [nomToEdit, setNomToEdit] = useState('');
 
 
   const formRef = useRef(null);
   
   const openDeleteModal = (id) => {
-    setCategoryIdToDelete(id);
+    setTagIdToDelete(id);
     setIsDeleteModalOpen(true);
   };
 
   const closeDeleteModal = () => {
-    setCategoryIdToDelete(null);
+    setTagIdToDelete(null);
     setIsDeleteModalOpen(false);
   };
 
 
-const fetchCategories = () => {
-  axios.get('http://localhost:4000/api/actualite/categorie/all')
-    .then(res => {setListCategorie(res.data)})
+const fetchTags = () => {
+  axios.get('http://localhost:4000/api/actualite/tag/all')
+    .then(res => {setListTag(res.data)})
     .catch(err => console.log(err));
 }
 
 useEffect(() => {
-  fetchCategories();
+  fetchTags();
 }, [])
 
 const handleSubmit = async (e) => { e.preventDefault();
@@ -101,12 +101,12 @@ const handleSubmit = async (e) => { e.preventDefault();
     const dataForm = { nom };
   
   
-    const serveurApi = 'http://localhost:4000/api/actualite/categorie/new';
+    const serveurApi = 'http://localhost:4000/api/actualite/tag/new';
     axios.post(serveurApi, dataForm)
         .then(res => {
           if (res.data) {
-              setNouveauCategorie(res.data.nom);
-              setListCategorie([...listeCategorie, res.data]);
+              setNouveauTag(res.data.nom);
+              setListTag([...listeTag, res.data]);
               setNomInput('');
           }
         })
@@ -117,13 +117,13 @@ const handleSubmit = async (e) => { e.preventDefault();
 
 }
 
-const deleteCategory = (id) => {
+const deleteTag = (id) => {
 
-  axios.delete(`http://localhost:4000/api/actualite/categorie/${id}/delete`)
+  axios.delete(`http://localhost:4000/api/actualite/tag/${id}/delete`)
 
   .then(() => {
-    const updatedCategories = listeCategorie.filter(categorie => categorie.id !== id);
-    setListCategorie(updatedCategories);
+    const updatedTag = listeTag.filter(tag => tag.id !== id);
+    setListTag(updatedTag);
     closeDeleteModal();
   })
 
@@ -134,26 +134,26 @@ const deleteCategory = (id) => {
 
 }
 
-const editCategorie = (id, nom) => {
+const editTag = (id, nom) => {
   setNomToEdit(nom);
   setIsEditing(true);
-  setidCategorieEdit(id);
+  setidTagEdit(id);
 }
 
 const handleEdit = (e) => {
 
-  const id = idCategorieEdit;
+  const id = idTagEdit;
   const nom = newName;
   const dataForm = { nom };
 
   if(nom) {
     
-    axios.put(`http://localhost:4000/api/actualite/categorie/${id}/edit`, dataForm)
+    axios.put(`http://localhost:4000/api/actualite/tag/${id}/edit`, dataForm)
   
     .then((res) => {
         console.log(res.data);
         setNewName('');
-        fetchCategories();
+        fetchTags();
         setIsEditing(false);
       })
   
@@ -178,10 +178,10 @@ const cancelEdit = () => {
             <img className="w-48" src="assets/images/logo/logo.svg" alt="logo" />
 
             <Typography className="mt-32 text-3xl font-extrabold tracking-tight leading-tight">
-              Categorie d'actualités :
+              Tag d'actualités :
             </Typography>
             <Typography className="mt-2">
-            Une formulaire de gestion qui permet aux utilisateurs d'ajouter des catégories.
+            Une formulaire de gestion qui permet aux utilisateurs d'ajouter des tags d'actualités.
             </Typography>
 
             {isEditing ? (
@@ -195,8 +195,8 @@ const cancelEdit = () => {
                   name="nom"
                   id="nom"
                   className="mb-24"
-                  label="Nouvelle nom de la categorie"
-                  type="text"
+                  label="Nouvelle nom de la tag"
+                  tag="text"
                   variant="outlined"
                   value={newName}
                   onChange={(e) => {setNewName(e.target.value);setBoutonDesable(false);}}
@@ -210,7 +210,7 @@ const cancelEdit = () => {
                       aria-label="Register"
                       size="large"
                       onClick={handleEdit}
-                      disabled={boutonDesable ? true : undefined}
+                      disabled={boutonDesable ? "disabled" : undefined}
                   >
                       Mettre à jour
                   </Button>
@@ -238,8 +238,8 @@ const cancelEdit = () => {
                             name="nom"
                             id="nom"
                             className="mb-24"
-                            label="Nom de la categorie"
-                            type="text"
+                            label="Nom de la tag"
+                            tag="text"
                             variant="outlined"
                             required
                             value={nomInput}
@@ -247,11 +247,12 @@ const cancelEdit = () => {
                             fullWidth
                           />
                           <Button
+                          type="submit"
                           variant="contained"
                           color="secondary"
                           className=" w-full mt-4 mb-32"
                           aria-label="Register"
-                          type="submit"
+                          tag="submit"
                           size="large"
                           disabled={boutonDesable ? true : undefined}
                           >
@@ -272,7 +273,7 @@ const cancelEdit = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                {listeCategorie.map((n) => (
+                {listeTag.map((n) => (
                     <StyledTableRow 
                     key={n.id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -281,7 +282,7 @@ const cancelEdit = () => {
                     {n.nom}
                     </StyledTableCell >
                     <StyledTableCell  align="center">
-                        <IconButton aria-label="edit" color="secondary"  onClick={ () => editCategorie(n.id, n.nom)} >
+                        <IconButton aria-label="edit" color="secondary"  onClick={ () => editTag(n.id, n.nom)} >
                             <EditIcon />
                         </IconButton>
                         <IconButton aria-label="delete" color="error" onClick={ () => openDeleteModal(n.id)} >
@@ -298,7 +299,7 @@ const cancelEdit = () => {
         <Box
           sx={style}
         >
-          <p>Êtes-vous sûr de vouloir supprimer cette catégorie ?</p>
+          <p>Êtes-vous sûr de vouloir supprimer cet tag d'actualité ?</p>
           <div className='mt-10 float-right'>
             <Button variant="contained" onClick={closeDeleteModal} color="primary" className='mr-7'>
               Annuler
@@ -306,7 +307,7 @@ const cancelEdit = () => {
             <Button
               variant="contained"
               onClick={() => {
-                deleteCategory(categoryIdToDelete);
+                deleteTag(tagIdToDelete);
                 setNomInput('');
               }}
               color="error"
