@@ -30,6 +30,7 @@ const seanceRouter = require('../backend/routes/formation/seance')
 const moduleRouter = require('../backend/routes/formation/module')
 const actualite = require('./routes/Actualite/Actualité')
 const discussionRouter = require('../backend/routes/formation/discussion')
+const roleHierarchique = require('../backend/routes/Role/RoleHierarchique')
 
 const { ExpressPeerServer } = require('peer');
 
@@ -107,6 +108,7 @@ app.use('/api/seances',seanceRouter)
 app.use('/api/peerjs', peerServer);
 app.use('/api/modules', moduleRouter);
 app.use('/api/actualite', actualite ) //route pour les actualités
+app.use('/api/roleHierarchique',roleHierarchique);
 
 //route middleware pour les routes middlware
 app.use('/api/chat/discussion', discussionChat)
@@ -121,7 +123,6 @@ sequelize.authenticate()
     .catch((err) => {
         console.error('Erreur à la connexion à la base de donnes:', err)
     })
-
 
 
 /*
