@@ -8,6 +8,7 @@ const FrontActuality = lazy(() => import('./front/FrontActuality'));
 const Comment = lazy(() => import('./commentaire/Comment'));
 const Categorie = lazy(() => import('./categorie/Categorie'));
 const Type = lazy(() => import('./type/Type'));
+const Tag = lazy(() => import('./tag/Tag'));
 
 const actualityAppConfig = {
   settings: {
@@ -47,6 +48,10 @@ const actualityAppConfig = {
     {
       path: `/apps/type`,
       element: <Type />
+    },
+    {
+      path: `/apps/tag`,
+      element: <Tag />
     }
   ],
 };
