@@ -16,13 +16,11 @@ const storage = multer.diskStorage({
         cb(null, 'uploads2/');
     },
     filename: function (req, file, cb) {
-        var date = new Date();
-        const uniqueSuffix = date.getDate()+'-'+ date.getMonth() + '-'+ date.getFullYear();
-        const extension = file.originalname.split('.').pop();
-        cb(null, 'formation-' + uniqueSuffix + '.' + extension);
+        cb(null, file.originalname);
     }
 });
 const upload = multer({ storage: storage });
+
 
 router.get('/all_discussions/:idformation', async (req, res) => {
     const formationId = req.params.idformation;
@@ -104,7 +102,6 @@ router.post('/nouveauDiscussion', upload.array('pieceJointes', 5), async (req, r
         const newDiscussion = await DiscussionFormation.create({
             sujet: req.body.sujet,
             contenu: req.body.contenu,
-            formateur: req.body.formateur,
             formation: req.body.formationId,
             collaborateur: req.body.collaborateur,
             module: req.body.modulechoosen,

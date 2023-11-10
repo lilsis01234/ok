@@ -106,7 +106,7 @@ app.use('/api/demande_formation',requestRouter);
 app.use('/api/discussions',discussionRouter);
 app.use('/api/seances',seanceRouter)
 app.use('/api/peerjs', peerServer);
-app.use('/api/modules', moduleRouter);
+app.use('/api/module', moduleRouter);
 app.use('/api/actualite', actualite ) //route pour les actualités
 app.use('/api/roleHierarchique',roleHierarchique);
 

@@ -106,11 +106,11 @@ const VoirPlusFormation = () => {
       console.log('Réserver une place');
     };
   
-    const handleSetReminderClick = (event) => {
-      scheduleNotification(event);
-      console.log('lasa le rappel')
-      alert('Rappel confirmé')
-    };
+    // const handleSetReminderClick = (event) => {
+    //   scheduleNotification(event);
+    //   console.log('lasa le rappel')
+    //   alert('Rappel confirmé')
+    // };
 
     const closePopup = () => {
       setShowButtons(false);
@@ -173,7 +173,7 @@ const VoirPlusFormation = () => {
              <div className="popupContent">
                 <button className="popupButton" onClick={handleParticipateNowClick}>Participer par appel vidéo</button>
                 <button className="popupButton" onClick={handleReserveClick}>Réserver une place</button>
-                <button className="popupButton" onClick={() => { handleSetReminderClick(selectedEvent); console.log('vokitika'); }}>Me rappeler cette formation</button>
+                {/* <button className="popupButton" onClick={() => { handleSetReminderClick(selectedEvent); console.log('vokitika'); }}>Me rappeler cette formation</button> */}
                 <button className="closeButton" onClick={closePopup}>X</button>
              </div>
            </div>
