@@ -9,7 +9,7 @@ const AjoutDirection = () => {
         e.preventDefault();
         const formData = {nomDirection}
 
-        axios.post('http://localhost:4000/api/direction/new', formData)
+        axios.post('http://localhost:4001/api/direction/new', formData)
             .then((response) => {
                 alert('Direction ajouter avec succès')
             })

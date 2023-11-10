@@ -83,7 +83,7 @@ const ListePoste = () => {
 
     //Récupération de la liste des postes 
     const fetchPoste = () => {
-        axios.get('http://localhost:4000/api/poste/all')
+        axios.get('http://localhost:4001/api/poste/all')
             .then((res) => {
                 setListePoste(res.data)
             })

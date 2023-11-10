@@ -94,7 +94,7 @@ const AjoutCollaborateur = () => {
     const [listeEquipe, setListeEquipe] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/equipe/all')
+        axios.get('http://localhost:4001/api/equipe/all')
             .then(((res) => {
                 setListeEquipe(res.data)
             }))
@@ -105,7 +105,7 @@ const AjoutCollaborateur = () => {
     const [listePoste, setListePoste] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/poste/all')
+        axios.get('http://localhost:4001/api/poste/all')
             .then((res) => {
                 setListePoste(res.data)
 
@@ -119,7 +119,7 @@ const AjoutCollaborateur = () => {
     const [listeDepartement, setListeDepartement] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/departement/all')
+        axios.get('http://localhost:4001/api/departement/all')
             .then((res) => {
                 setListeDepartement(res.data)
             })
@@ -174,7 +174,7 @@ const AjoutCollaborateur = () => {
             // Banque,
             // RIB,
         }
-        axios.post('http://localhost:4000/api/collaborateur/new', formData, {
+        axios.post('http://localhost:4001/api/collaborateur/new', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

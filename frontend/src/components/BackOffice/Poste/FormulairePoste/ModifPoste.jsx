@@ -9,7 +9,7 @@ const ModifPoste = ({ posteToEdit, onPosteUpdated }) => {
     const [departementList, setDepartementList] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/departement/all')
+        axios.get('http://localhost:4001/api/departement/all')
             .then(response => {
                 setDepartementList(response.data);
             })
@@ -61,7 +61,7 @@ const ModifPoste = ({ posteToEdit, onPosteUpdated }) => {
             return;
         }
 
-        axios.put(`http://localhost:4000/api/poste/${posteToEdit.id}/edit`, formData)
+        axios.put(`http://localhost:4001/api/poste/${posteToEdit.id}/edit`, formData)
             .then((response) => {
                 onPosteUpdated();
                 alert('Département modifier avec succès')

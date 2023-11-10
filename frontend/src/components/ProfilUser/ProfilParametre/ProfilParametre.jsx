@@ -34,9 +34,9 @@ const ProfilParametre = () => {
 
   
 <<<<<<< HEAD
-        axios.put(`http://localhost:4000/api/compte_collaborateur/${idProfile}/edit`, formData)
+        axios.put(`http://localhost:4001/api/compte_collaborateur/${idProfile}/edit`, formData)
 =======
-        axios.put(`http://localhost:4000/api/compte_collaborateur/${idProfile}/edit`, formData)
+        axios.put(`http://localhost:4001/api/compte_collaborateur/${idProfile}/edit`, formData)
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
         .then((response) => {
           alert('Mot de Passe modifié avec succès')

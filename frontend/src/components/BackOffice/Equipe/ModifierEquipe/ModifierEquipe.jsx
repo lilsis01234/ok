@@ -10,7 +10,7 @@ const ModifierEquipe = ({equipeToEdit, onUpdateEquipe}) => {
 
     //Récupérer les listes des directions
     useEffect(() => {
-        axios.get('http://localhost:4000/api/departement/all')
+        axios.get('http://localhost:4001/api/departement/all')
             .then((response) => {
                 setListeDeparetment(response.data)
             })
@@ -26,7 +26,7 @@ const ModifierEquipe = ({equipeToEdit, onUpdateEquipe}) => {
             departement,
         }
 
-        axios.put(`http://localhost:4000/api/equipe/edit/${equipeToEdit.id}`, formData)
+        axios.put(`http://localhost:4001/api/equipe/edit/${equipeToEdit.id}`, formData)
             .then((response) => {
                 alert('Equipe modifié avec succés')
                 onUpdateEquipe()

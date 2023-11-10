@@ -14,9 +14,9 @@ const NewCollaborateurList = () => {
     useEffect(()=> {
         axios
 <<<<<<< HEAD
-            .get("http://localhost:4000/api/collaborateur/newCollab")
+            .get("http://localhost:4001/api/collaborateur/newCollab")
 =======
-            .get("http://localhost:4000/api/collaborateur/newCollab")
+            .get("http://localhost:4001/api/collaborateur/newCollab")
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((response) => {
                 setData(response.data);
@@ -66,9 +66,9 @@ const NewCollaborateurList = () => {
                 <tr key={index} onClick={() => {viewCollab(collaborateur.id); openModal()}}>
                     <td>
 <<<<<<< HEAD
-                        <Avatar src={`http://localhost:4000/${collaborateur.image}`} alt="avatar" withBorder={false} size="xs" className="rounded-full w-16 h-16 object-cover collab_photo"/>
+                        <Avatar src={`http://localhost:4001/${collaborateur.image}`} alt="avatar" withBorder={false} size="xs" className="rounded-full w-16 h-16 object-cover collab_photo"/>
 =======
-                        <Avatar src={`http://localhost:4000/${collaborateur.image}`} alt="avatar" withBorder={false} size="xs" className="rounded-full w-16 h-16 object-cover collab_photo"/>
+                        <Avatar src={`http://localhost:4001/${collaborateur.image}`} alt="avatar" withBorder={false} size="xs" className="rounded-full w-16 h-16 object-cover collab_photo"/>
 >>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                     </td>
                     <td className="table_item_matricule">{collaborateur.matricule}</td>
