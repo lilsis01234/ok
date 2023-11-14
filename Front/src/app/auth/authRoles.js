@@ -19,7 +19,7 @@ let roles = {
 export const getRoles = () => roles;
 
 export const fetchRoles = () => {
-  return axios.get('http://localhost:4000/api/role/all_role')
+  return axios.get('http://localhost:4001/api/role/all_role')
           .then(response => {
               const roleFromBackend = response.data;
               const indexedRole = roleFromBackend.map((role) => ({
