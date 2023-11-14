@@ -19,13 +19,21 @@ const navigationConfig = [
     translate: 'DASHBOARDS',
     children : [
       {
+        id: 'dashboard.dashboard',
+        title: 'Dashboard',
+        type: 'item',
+        icon: 'heroicons-outline:dashboard',
+        translate: 'Dashboard',
+        url : 'dashboards/dashboards'
+      },
+      {
         id: 'dashboard.collaborateur',
         title: 'Collaborateur',
         type: 'item',
         icon: 'heroicons-outline:user-group',
         translate: 'COLLABORATEURS',
         url : 'dashboards/collaborateur'
-      }
+      }      
     ],
   }, {
     id: 'collaborateur',
