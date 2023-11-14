@@ -3,7 +3,7 @@ import FusePageSimple from '@fuse/core/FusePageSimple';
 function Dashboard(){
     return (
         <FusePageSimple
-      content={
+        content={
         <div className="w-full px-24 md:px-32 pb-24">
             <div className='block'>
                 <div className='flex'>
