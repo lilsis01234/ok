@@ -93,8 +93,8 @@ const Discussions = () => {
                 </div>
                 {discussion.map((discussions, index) => (
                     <div className="discussion-item" key={index}>
+                        <button onClick={(e)=>{handleDelete(discussions.id)}}>Supprimer</button>
                         <div className="meta-info">
-                            <button onClick={(e)=>{handleDelete(discussions.id)}}>Supprimer</button>
                             <h1 className="module-title">Module {discussions.Module.titreModule}</h1>
                             <h1 className="collab-name">{discussions.Collab.nom} {discussions.Collab.prenom}</h1>
                         </div>
