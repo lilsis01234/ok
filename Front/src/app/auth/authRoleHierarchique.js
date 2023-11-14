@@ -4,22 +4,27 @@ let roleHierarchique = {}
 
 export const getRoleHierarchique = () => roleHierarchique;
 
-export const fetchRoleHierarchique = async () =>  {
+export const fetchRoleHierarchique = async () => {
     try {
-        const response = await axios.get('http://192.168.16.244:4001/api/roleHierarchique/all');
+        const response = await axios.get('http://localhost:4000/api/roleHierarchique/all');
         const roleFromBackend = response.data;
-        const indexedRole = roleFromBackend.map((role) => ({
-            id: role.roleHierarchique,
-            role: role.roleHierarchique
-        }));
+        if (roleFromBackend) {
+            const indexedRole = roleFromBackend.map((role) => ({
+                id: role.roleHierarchique,
+                role: role.roleHierarchique
+            }));
 
-        roleHierarchique = {
-            ...roleHierarchique,
-            indexedRole
-        };
+            roleHierarchique = { 
+                ...roleHierarchique,
+                indexedRole
+            };
+            // console.log(roleHierarchique);
+        } else {
+            console.error('Aucun rôle hierarchique récupéré depuis le backend.');
+        }
         console.log(roleHierarchique);
     } catch (error) {
-        console.error('Erreur lors de la récupération des rôles hierarchiques');
+        console.error('Erreur lors de la récupération des rôles hierarchiques', error);
     }
 }
 

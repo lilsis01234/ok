@@ -7,6 +7,7 @@ require('dotenv').config();
 const crypto = require('crypto');
 const Role = require('../../Modele/RoleModel/Role');
 const Compte = require('../../Modele/CompteModel/Compte');
+// const { RoleHierarchique, Permission } = require('../../Modele/RoleModel/associationPermission')
 const RoleHierarchique = require('../../Modele/RoleModel/RoleHierarchique');
 const Collab = require('../../Modele/CollabModel/Collab');
 
@@ -47,12 +48,12 @@ router.post('/connect', (req, res, next) => {
                     const userRoleId = comptes.RoleHierarchiqueId;
 
                     RoleHierarchique.findOne({
-                            where: { id: userRoleId },
-                            attributes: ['roleHierarchique'],
-                            include: [{
-                                model: Role,
-                            }]
-                        })
+                        where: { id: userRoleId },
+                        attributes: ['roleHierarchique'],
+                        include: [{
+                            model: Role,
+                        }]
+                    })
                         .then((roles) => {
                             const userRoles = roles ? [roles.roleHierarchique] : [];
                             if (userRoles.length === 0) {
@@ -60,15 +61,15 @@ router.post('/connect', (req, res, next) => {
                             }
                             // const roleTitle = userRoles.length > 0 ? userRoles[0] :null;
 
-                            const { password, ...comptesWithoutPassword } = comptes.toJSON(); 
+                            const { password, ...comptesWithoutPassword } = comptes.toJSON();
 
                             const token = jwt.sign({ id: comptes.id },
                                 secretKey, { expiresIn: '1h' }
                             )
                             const refresh_token = jwt.sign({ id: comptes.id },
-                                    secretKey, { expiresIn: '2h' }
-                                )
-                                // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400100})
+                                secretKey, { expiresIn: '2h' }
+                            )
+                            // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400100})
 
                             res.status(200).json({
                                 id: comptes.id,
@@ -82,7 +83,10 @@ router.post('/connect', (req, res, next) => {
 
                         })
                 })
-                .catch(error => res.status(401).json({ error }));
+                .catch(error =>{ 
+                    res.status(401).json({error})
+                    console.log(error)
+            });
         })
         .catch(error => res.status(401).json(error));
 })
@@ -93,7 +97,7 @@ function verifyJWTToken(token) {
     try {
         const decoded = jwt.verify(token, secretKey);
         return decoded;
-    } catch (error){
+    } catch (error) {
         return null;
     }
 }
@@ -142,23 +146,23 @@ router.post('/refresh_token', (req, res) => {
 
 
 //Renouveler le token et vérifier que l'un des deux token est toujours valide
-router.post('/access-token', async(req, res) => {
-    const { acess_token, refresh_token} = req.body;
+router.post('/access-token', async (req, res) => {
+    const { acess_token, refresh_token } = req.body;
 
     const decodedToken = verifyJWTToken(acess_token);
     const decodedRefreshToken = refreshTokenIsValid(refresh_token)
 
-    if(decodedRefreshToken){
+    if (decodedRefreshToken) {
         if (decodedToken) {
             const id = decodedToken.id;
-            const newAcessToken = jwt.sign({id}, secretKey, {
+            const newAcessToken = jwt.sign({ id }, secretKey, {
                 expiresIn: '1h'
             })
-    
-            const refresh_token = jwt.sign({id},
+
+            const refresh_token = jwt.sign({ id },
                 secretKey, { expiresIn: '2h' }
             )
-    
+
             const compte = await Compte.findByPk(id, {
                 include : [{
                     model : RoleHierarchique,
@@ -170,17 +174,17 @@ router.post('/access-token', async(req, res) => {
                     model : Collab,
                     attributes: ['id','nom', 'prenom', 'matricule', 'image']
                 }],
-                attributes : ['email', 'collaborateur', 'lastResetRequest', 'RoleHierarchiqueId']
+                attributes: ['email', 'collaborateur', 'lastResetRequest', 'RoleHierarchiqueId']
             })
             console.log(compte)
-    
-    
-            return res.status(200).json({ 
+
+
+            return res.status(200).json({
                 id,
                 compte,
                 token: newAcessToken,
-                refresh_token, 
-                role : compte.RoleHierarchique?.Role?.titreRole
+                refresh_token,
+                role: compte.RoleHierarchique?.Role?.titreRole
             })
         }
     }
@@ -190,7 +194,7 @@ router.post('/access-token', async(req, res) => {
 
 
 
-const verifyToken = async(req, res, next) => {
+const verifyToken = async (req, res, next) => {
     try {
         let token = req.header("Authorization");
 

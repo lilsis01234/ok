@@ -128,14 +128,13 @@ const navigationConfig = [
 
   {
     id: 'actuality',
-    title: "Modules d'actualités",
-    subtitle: "Gestion d'actualités",
+    title: "Actualités",
     type: 'group',
     icon: 'heroicons-outline:home',
     children: [
       {
         id: 'actuality.list',
-        title: "Tous les actualités",
+        title: "toutes les actualités",
         type: 'item',
         icon: 'heroicons-outline:newspaper',
         url: 'apps/actuality/list',
@@ -167,6 +166,13 @@ const navigationConfig = [
         type: 'item',
         icon: 'material-outline:article',
         url: '/apps/type',
+      },
+      {
+        id: 'tag',
+        title: 'éthiquette',
+        type: 'item',
+        icon: 'material-outline:article',
+        url: '/apps/tag',
       },
       {
         id: 'frontend',

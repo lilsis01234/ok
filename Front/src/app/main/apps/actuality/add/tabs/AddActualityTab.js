@@ -21,6 +21,11 @@ import IconButton from '@mui/material/IconButton';
 import { Autocomplete } from '@mui/material';
 import Link from '@mui/material/Link';
 
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 
 function AddActualityTab() {
@@ -29,9 +34,22 @@ function AddActualityTab() {
   const [imgMiseEnAvant, setImgMiseEnAvant] = useState('');
   const [listeCategorie, setListCategorie] = useState([]);
   const [listeType, setListType] = useState([]);
+  const [listeTag, setListTag] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedTag, setSelectedTag] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [idImageToChange, setidImageToChange] = useState(null);
+  const [isInputCategVisible, setIsInputCategVisible] = useState(false);
+  const [isInputTypeVisible, setIsInputTypeVisible] = useState(false);
+  const [isInputTagVisible, setIsInputTagVisible] = useState(false);
+  const [newCategName, setnewCategName] = useState('');
+  const [newTypeName, setnewTypeName] = useState('');
+  const [newTagName, setnewTagName] = useState('');
+  const [boutonDesableCateg, setBoutonDesableCateg] = useState(true);
+  const [boutonDesableType, setBoutonDesableType] = useState(true);
+  const [boutonDesableTag, setBoutonDesableTag] = useState(true);
+  const [isChecked, setChecked] = useState(false);
+
 
   const handleTypesChange = (event, newValues) => {
     setSelectedTypes(newValues);
@@ -49,6 +67,14 @@ function AddActualityTab() {
     return selectedCategory.map((categorie) => categorie.id).join(',');
   };
 
+  const handleTagChange = (event, newValues) => {
+    setSelectedTag(newValues);
+  };
+
+  const getSelectedTagIds = () => {
+    return selectedTag.map((categorie) => categorie.id).join(',');
+  };
+
 
   const fetchCategories = () => {
     axios.get('http://localhost:4001/api/actualite/categorie/all')
@@ -61,11 +87,101 @@ function AddActualityTab() {
     .then(res => {setListType(res.data)})
     .catch(err => console.log(err));
   }
+
+  const fetchTags = () => {
+    axios.get('http://localhost:4000/api/actualite/tag/all')
+    .then(res => {setListTag(res.data)})
+    .catch(err => console.log(err));
+  }
   
   useEffect(() => {
     fetchCategories();
     fetchTypes();
+    fetchTags();
   }, [])
+
+
+  const handleLinkClickAddCateg = (e) => {
+    e.preventDefault();
+    setIsInputCategVisible(true);
+  };
+
+
+  const handleAddCategClick = async (e) => { e.preventDefault();
+
+    if (newCategName) {
+
+    const ApiPostCateg = 'http://localhost:4000/api/actualite/categorie/new';
+    const nom = newCategName;
+    const dataForm = { nom };
+    axios.post(ApiPostCateg, dataForm)
+        .then(res => {
+          if (res.data) {
+              setListCategorie([...listeCategorie, res.data]);
+              setnewCategName('');
+              setIsInputCategVisible(false);
+          }
+        })
+        .catch(err => console.log(err)); 
+      } else {
+        setBoutonDesableCateg(true);
+      }
+    
+  };
+
+  const handleLinkClickAddType = (e) => {
+    e.preventDefault();
+    setIsInputTypeVisible(true);
+  };
+
+  const handleAddTypeClick = async (e) => { e.preventDefault();
+
+    if (newTypeName) {
+
+    const ApiPostType = 'http://localhost:4000/api/actualite/type/new';
+    const nom = newTypeName;
+    const dataForm = { nom };
+    axios.post(ApiPostType, dataForm)
+        .then(res => {
+          if (res.data) {
+              setListType([...listeType, res.data]);
+              setnewTypeName('');
+              setIsInputTypeVisible(false);
+          }
+        })
+        .catch(err => console.log(err)); 
+      } else {
+        setBoutonDesableType(true);
+      }
+    
+  };
+
+  const handleLinkClickAddTag = (e) => {
+    e.preventDefault();
+    setIsInputTagVisible(true);
+  };
+
+  const handleAddTagClick = async (e) => { e.preventDefault();
+
+    if (newTagName) {
+
+    const ApiPostTag = 'http://localhost:4000/api/actualite/tag/new';
+    const nom = newTagName;
+    const dataForm = { nom };
+    axios.post(ApiPostTag, dataForm)
+        .then(res => {
+          if (res.data) {
+              setListTag([...listeTag, res.data]);
+              setnewTagName('');
+              setIsInputTagVisible(false);
+          }
+        })
+        .catch(err => console.log(err)); 
+      } else {
+        setBoutonDesableTag(true);
+      }
+    
+  };
 
   
   const imageHandler = () => {
@@ -130,6 +246,10 @@ function AddActualityTab() {
     
   }
 
+  const accordionStyle = {
+    marginBottom: 0,
+  };
+
 
   const imageHandlerMea = () => {
     const input = document.createElement('input');
@@ -192,8 +312,14 @@ function AddActualityTab() {
   };
 
 
+
+
+  const handleCheckboxChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
+
   const formRef = useRef(null);
-  const isCheckboxChecked = useRef(false);
 
   const handleSubmit = async (e) => {
 
@@ -206,9 +332,11 @@ function AddActualityTab() {
     const etat = formData.get('etat');
     const category = getSelectedCategoryIds().split(',');
     const type = getSelectedTypeIds().split(',');
+    const tag = getSelectedTagIds().split(',');
     const contenu = wysiwygContent;
     const date_publication = '2023-10-27';
     const imageMiseEnAvant = imgMiseEnAvant;
+    const commentaire = isChecked;
 
 
     const dataForm = {
@@ -220,27 +348,30 @@ function AddActualityTab() {
       visibilite,
       category,
       type,
-      imageMiseEnAvant
+      tag,
+      imageMiseEnAvant,
+      commentaire
 
     };
 
     console.log(dataForm);
 
-     const serveurApi = 'http://localhost:4001/api/actualite/new';
-     axios.post(serveurApi, dataForm, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-        .then(res => {
 
-          if (res.data) {
-              console.log('reponse : ', res.data);
-              window.location.reload();
-          }
+    // const serveurApi = 'http://localhost:4000/api/actualite/new';
+    // axios.post(serveurApi, dataForm, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // })
+    //     .then(res => {
 
-        })
-        .catch(err => console.log(err));
+        //   if (res.data) {
+        //       console.log('reponse : ', res.data);
+        //       window.location.reload();
+        //   }
+
+        // })
+        // .catch(err => console.log(err));
       
   }
 
@@ -278,10 +409,10 @@ function AddActualityTab() {
             <Card
               component={motion.div}
               variants={item}
-              className="w-full overflow-hidden min-h-384 mb-32"
+              className="w-full overflow-hidden min-h-480 mb-32"
             >
-                <ReactQuill className="h-full" theme="snow" value={wysiwygContent} onChange={handleWysiwygChange} modules={modules} />
-              </Card>
+              <ReactQuill className="h-full" theme="snow" value={wysiwygContent} onChange={handleWysiwygChange} modules={modules} />
+            </Card>
               <Card
               component={motion.div}
               variants={item}
@@ -301,6 +432,128 @@ function AddActualityTab() {
             </Card>
           </div>
           <div className="flex flex-col w-full md:w-320 md:rtl:ml-32 ml-32">
+          <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 pt-24 mb-32">
+              <div className="flex justify-between items-center pb-16">
+                <Typography className="text-2xl font-semibold leading-tight">
+                  Propriétés
+                </Typography>
+              </div>
+
+              <CardContent className="p-0 mb-16">    
+                <FormControl required fullWidth>
+                  <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
+                     Etiquettes
+                  </FormLabel>
+                  <Autocomplete
+                    multiple
+                    options={listeTag}
+                    getOptionLabel={(option) => option.nom}
+                    value={selectedTag}
+                    onChange={handleTagChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </FormControl>
+                <Link color="inherit" href="#" onClick={ handleLinkClickAddTag} >
+                  Ajouter une étiquettes
+                </Link>
+                {isInputTagVisible && ( 
+                <div className="relative mt-7 flex">
+                  <TextField 
+                    variant="outlined" 
+                    size="small" 
+                    fullWidth 
+                    value={newTagName}
+                    onChange={(e) => {setnewTagName(e.target.value);setBoutonDesableTag(false);}} 
+                  />
+                  <Button
+                    type="button"
+                    variant="contained"
+                    color="secondary"
+                    className="absolute top-0 right-0 h-full rounded-l-none rounded-r"
+                    disabled={boutonDesableTag ? true : undefined}
+                    onClick={handleAddTagClick}
+                  >
+                    Ajouter
+                  </Button>
+                </div>
+                )}   
+                <FormControl className="mt-24" required fullWidth>
+                  <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
+                    Catégories
+                  </FormLabel>
+                  <Autocomplete
+                    multiple
+                    options={listeCategorie}
+                    getOptionLabel={(option) => option.nom}
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </FormControl>
+                <Link color="inherit" href="#" onClick={ handleLinkClickAddCateg} >
+                  Ajouter une catégorie
+                </Link>
+                {isInputCategVisible && ( 
+                <div className="relative mt-7 flex">
+                  <TextField 
+                    type='text'
+                    variant="outlined" 
+                    size="small" 
+                    fullWidth
+                    value={newCategName}
+                    onChange={(e) => {setnewCategName(e.target.value);setBoutonDesableCateg(false);}}
+                  />
+                  <Button
+                    type="button"
+                    variant="contained"
+                    color="secondary"
+                    className="absolute top-0 right-0 h-full rounded-l-none rounded-r"
+                    disabled={boutonDesableCateg ? true : undefined}
+                    onClick={handleAddCategClick}
+                  >
+                    Ajouter
+                  </Button>
+                </div>
+                )}
+                <FormControl className="mt-24" required fullWidth>
+                    <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
+                      Types
+                    </FormLabel>
+                    <Autocomplete
+                      multiple
+                      options={listeType}
+                      getOptionLabel={(option) => option.nom}
+                      value={selectedTypes}
+                      onChange={handleTypesChange}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                </FormControl>
+                <Link color="inherit" href="#" onClick={handleLinkClickAddType} >
+                  Ajouter un type
+                </Link>
+                {isInputTypeVisible && ( 
+                <div className="relative mt-7 flex">
+                  <TextField 
+                    variant="outlined" 
+                    size="small" 
+                    fullWidth
+                    value={newTypeName}
+                    onChange={(e) => {setnewTypeName(e.target.value);setBoutonDesableType(false);}}
+                  />
+                  <Button
+                    type="button"
+                    variant="contained"
+                    color="secondary"
+                    className="absolute top-0 right-0 h-full rounded-l-none rounded-r"
+                    onClick={handleAddTypeClick}
+                    disabled={boutonDesableType ? true : undefined}
+                  >
+                    Ajouter
+                  </Button>
+                </div>
+                )}
+              </CardContent>
+            </Card> 
             <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 pt-24 mb-32">
               <div className="flex justify-between items-center pb-16">
                 <Typography className="text-2xl font-semibold leading-tight">
@@ -321,7 +574,7 @@ function AddActualityTab() {
                     }
                   { imgMiseEnAvant ? ( <div>
                     <img src={imgMiseEnAvant} alt="image" className="mt-32" />
-                    <Link color="inherit" href="javascript:void(0)" onClick={() => {deleteImg(idImageToChange)}} >
+                    <Link color="inherit" href="#" onClick={(e) => {e.preventDefault();deleteImg(idImageToChange);}} >
                       Supprimer l'image
                     </Link>
                   </div>
@@ -332,7 +585,7 @@ function AddActualityTab() {
             <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 pt-24 mb-32">
               <div className="flex justify-between items-center pb-16">
                 <Typography className="text-2xl font-semibold leading-tight">
-                    État et visibilité
+                  Récapitulatif
                 </Typography>
               </div>
 
@@ -357,42 +610,7 @@ function AddActualityTab() {
                 </FormControl>
               </CardContent>
             </Card>
-            <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 pt-24 mb-32">
-              <div className="flex justify-between items-center pb-16">
-                <Typography className="text-2xl font-semibold leading-tight">
-                    Catégories et type
-                </Typography>
-              </div>
-
-              <CardContent className="p-0">    
-                <FormControl className="mb-16" required fullWidth>
-                  <FormLabel htmlFor="categorie" className="font-medium text-14" component="legend">
-                    Categorie
-                  </FormLabel>
-                    <Autocomplete
-                      multiple
-                      options={listeCategorie}
-                      getOptionLabel={(option) => option.nom}
-                      value={selectedCategory}
-                      onChange={handleCategoryChange}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                </FormControl>
-                <FormControl className="mb-16" required fullWidth>
-                  <FormLabel htmlFor="types" className="font-medium text-14" component="legend">
-                    Types
-                  </FormLabel>
-                    <Autocomplete
-                      multiple
-                      options={listeType}
-                      getOptionLabel={(option) => option.nom}
-                      value={selectedTypes}
-                      onChange={handleTypesChange}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                </FormControl>
-              </CardContent>
-            </Card>
+            
             <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 pt-24">
               <div className="flex justify-between items-center pb-16">
                 <Typography className="text-2xl font-semibold leading-tight">
@@ -403,14 +621,7 @@ function AddActualityTab() {
                 <FormControl className="mb-16" fullWidth>
                   <FormGroup>
                     <FormControlLabel
-                      control={
-                        <Checkbox
-                          name="commentaire"
-                          onChange={() => {
-                            isCheckboxChecked.current = !isCheckboxChecked.current;
-                          }}
-                        />
-                      }
+                      control={<Checkbox checked={isChecked} onChange={handleCheckboxChange} />}
                       label="Autoriser les commentaires"
                     />
                   </FormGroup>

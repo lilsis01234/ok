@@ -14,9 +14,7 @@ const Eqquipe = require('../Modele/Structure/Equipe')
 const association = require('../Modele/Structure/association')
 
 const RoleCollab = require('../Modele/RoleModel/Role');
-const RoleHierarchique = require('../Modele/RoleModel/RoleHierarchique')
-const Permission = require('../Modele/RoleModel/Permission')
-const associationPermission = require('../Modele/RoleModel/associationPermission')
+const RoleHierarchique = require('../Modele/RoleModel/RoleHierarchique');
 
 
 const Formation = require('../Modele/formation/Formation');
@@ -39,6 +37,11 @@ const ActualityImg =  require('../Modele/ActualityModel/ActualityImg');
 const Type = require('../Modele/ActualityModel/Type');
 const ActuType = require('../Modele/ActualityModel/ActuType');
 const associationActuType = require('../Modele/ActualityModel/associationActuType');
+const Tag = require('../Modele/ActualityModel/Tag');
+const ActuTag = require('../Modele/ActualityModel/ActuTag');
+const associationActuTag = require('../Modele/ActualityModel/associationActuTag');
+const Permission = require('../Modele/RoleModel/Permission');
+const associationPermission = require('../Modele/RoleModel/associationPermission');
 
 
 const EquipeSeance = require('../Modele/formation/EquipeSeance');
@@ -58,7 +61,7 @@ async function syncDatabase() {
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });
 
-        const { RoleHierarchique, Permission, RolePermission } = associationPermission;
+        const { RoleHierarchique, Permission, RolePermission } = associationPermission
 
         const { Actualite, Categorie, ActuCateg} = associationActuCateg;
         Actualite.belongsToMany(Categorie, {through: ActuCateg});
@@ -67,6 +70,10 @@ async function syncDatabase() {
         const { Type, ActuType} = associationActuType;
         Actualite.belongsToMany(Type, {through: ActuType});
         Type.belongsToMany(Actualite, {through: ActuType});
+
+        const { Tag, ActuTag} = associationActuTag;
+        Actualite.belongsToMany(Tag, {through: ActuTag});
+        Tag.belongsToMany(Actualite, {through: ActuTag});
 
         const { Compte, Groupe, GroupCompte} = associationGroupCompte;
         Compte.belongsToMany(Groupe, {through: GroupCompte});
