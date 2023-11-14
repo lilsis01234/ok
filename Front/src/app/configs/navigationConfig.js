@@ -22,7 +22,7 @@ const navigationConfig = [
         id: 'dashboard.dashboard',
         title: 'Dashboard',
         type: 'item',
-        icon: 'heroicons-outline:dashboard',
+        icon: 'heroicons-outline:home',
         translate: 'Dashboard',
         url : 'dashboards/dashboards'
       },
@@ -213,7 +213,7 @@ const navigationConfig = [
         id: 'formation.formations',
         title: 'Formations',
         type: 'item',
-        icon: 'heroicons-outline:users',
+        icon: 'heroicons-outline:academic-cap',
         translate: 'Formations',
         url : 'dashboards/listeFormation'
       },
