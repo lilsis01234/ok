@@ -51,6 +51,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                         formation: formationId,
                     },
             });
+
             const seances = await Seance.findAll({
               where: {
                   module: modules,
@@ -60,7 +61,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                       model: Module, 
                       attributes: ['id', 'titreModule', 'description'],                   },
               ],
-          });
+            });
           
             const formation = await Formation.findByPk(formationId, {
               include: [
@@ -111,7 +112,7 @@ router.get('/formations/:idPersonne',async(req,res)=>{
           as: 'Formateur',
           attributes: ['nom', 'prenom'],
         },
-      ],
+        ],
         where: {
             formateur: idPersonne,
         }
@@ -139,7 +140,8 @@ router.post('/addFormation',async(req,res)=>{
             duree:req.body.duree,
             formateur:req.body.formateur,
             auteur:req.body.auteur,
-            formateurExt:req.body.formateurExt
+            formateurExt:req.body.formateurExt,
+            approbation:1
         }))
         const formation = await newFormation.save();
         res.status(201).json(formation);
