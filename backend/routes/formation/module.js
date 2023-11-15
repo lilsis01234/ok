@@ -39,7 +39,8 @@ router.get('/modules/:formationId', async(req, res) => {
 
         //Recherche de la formation ayant cet id
         const formations = await Formation.findAll({
-            where : {
+            where : 
+               {
                 id : idFormation,
                }
         })
@@ -74,7 +75,6 @@ router.post('/addModule',async(req,res)=>{
     catch(err){
         console.error(err)
     }
-
 })
 
 module.exports = router;
