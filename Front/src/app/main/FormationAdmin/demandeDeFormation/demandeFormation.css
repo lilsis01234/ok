@@ -45,6 +45,7 @@
     font-size: 24px;
     color: #007bff; 
     margin-bottom: 10px;
+    text-decoration: none !important;
   }
   
   .formation_description {
@@ -57,6 +58,10 @@
     font-size: 14px;
     color: #888;
     margin-bottom: 10px;
+  }
+  
+  a{
+    text-decoration: none !important;
   }
   
   .voir_plus_button:hover {
@@ -104,7 +109,9 @@
     background-color: #0056b3;
   }
   
-
+  .lien{
+    text-decoration: none !important;
+  }
 
 .training-request-container {
   background-color: #ffffff; 
