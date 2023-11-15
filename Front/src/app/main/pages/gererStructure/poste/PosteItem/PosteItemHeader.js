@@ -38,7 +38,7 @@ function PosteItemHeader({formValues}) {
         if (id) {
             console.log(departement)
             try {
-                await axios.put(`http://localhost:4001/api/poste/${id}/edit`, data)
+                await axios.put(`http://localhost:4000/api/poste/${id}/edit`, data)
                 alert('Fonction Update succesfully')
                 navigate('/business/manage/Fonction')
             } catch (error){
@@ -47,7 +47,7 @@ function PosteItemHeader({formValues}) {
         } else {
             console.log('Ajout nouvelle poste poste')
             try {
-                await axios.post(`http://localhost:4001/api/poste/new`, data)
+                await axios.post(`http://localhost:4000/api/poste/new`, data)
                 alert('Fonction create succesfully')
                 navigate('/business/manage/Fonction')
             } catch (error){

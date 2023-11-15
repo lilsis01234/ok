@@ -30,7 +30,7 @@ const ContactApp = ()=> {
     }
 
     const fetchCollaborateur = () => {
-      axios.get('http://localhost:4001/api/compte_collaborateur/all')
+      axios.get('http://localhost:4000/api/compte_collaborateur/all')
         .then(res => { setListeCollab(res.data)})
           .catch(err => console.log(err));
         }

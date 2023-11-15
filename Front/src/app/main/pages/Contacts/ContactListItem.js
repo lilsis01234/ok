@@ -15,7 +15,7 @@ function ContactListItem(props) {
                 to={`/collaborateurs/all/${id}`}
            >
             <ListItemAvatar>
-                <Avatar src={`http://localhost:4001/${collab.Collab?.image}`}></Avatar>
+                <Avatar src={`http://localhost:4000/${collab.Collab?.image}`}></Avatar>
             </ListItemAvatar>
             <ListItemText
                   classes={{ root: 'm-0', primary: 'font-medium leading-5 truncate' }}

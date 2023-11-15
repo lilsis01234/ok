@@ -45,7 +45,7 @@ function EquipeItemList() {
         } else {
           console.log("Affichage d'une équipe existante");
           axios
-            .get(`http://localhost:4001/api/equipe/view/${equipeId}`)
+            .get(`http://localhost:4000/api/equipe/view/${equipeId}`)
             .then(response => {
               setEquipe(response.data.equipe);
               console.log(response.data.equipe);

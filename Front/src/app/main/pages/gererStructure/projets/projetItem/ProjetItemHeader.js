@@ -29,7 +29,7 @@ function ProjetItemHeader({ formValues }) {
     const handleSaveProject = async () => {
         if (id) {
             try {
-                await axios.put(`http://localhost:4001/api/projet/edit/${id}`, data)
+                await axios.put(`http://localhost:4000/api/projet/edit/${id}`, data)
                 alert('Project Update succesfully')
                 navigate('/business/manage/project')
             } catch (error) {
@@ -37,7 +37,7 @@ function ProjetItemHeader({ formValues }) {
             }
         } else {
             try {
-                await axios.post(`http://localhost:4001/api/projet/new`, data)
+                await axios.post(`http://localhost:4000/api/projet/new`, data)
                 alert('Project create successfully')
                 navigate('/business/manage/project')
             }

@@ -24,7 +24,7 @@ function CollaborateurTable(props) {
 
   const fetchCollaborateur = () => {
     axios
-      .get("http://localhost:4001/api/collaborateur/all")
+      .get("http://localhost:4000/api/collaborateur/all")
       .then((response) => {
         setCollaborateurData(response.data);
       })
