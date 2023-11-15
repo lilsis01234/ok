@@ -13,13 +13,15 @@ const AjoutDemandeFormation = () => {
   const[equipes,setEquipeData]=useState([]);
   const[collabs,setCollabs]=useState([]);
   const [roleHierarchique,setRoleHierarchique]= useState([]);
-  const auteurPrep =localStorage.getItem('user'); 
 
+  const auteurPrep =localStorage.getItem('user'); 
   console.log(auteurPrep);
-    const parsedAuteur = JSON.parse(auteurPrep);
-    const auteur = parsedAuteur.id;
-    const duree = "indefini";
-    console.log(auteur);
+  const parsedAuteur = JSON.parse(auteurPrep);
+  const auteur = parsedAuteur.id;
+  console.log(auteur);
+
+  
+  const duree = "indefini";
 
   const fetchEquipe = () => {
     axios.get('http://localhost:4000/api/equipe/all')
