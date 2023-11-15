@@ -42,7 +42,7 @@ const Formations = () => {
 
         Formation.map((formation) => (
           <div key={formation.id} className="formation_item">
-           <h2 className="formation_title"><Link to={`/admin/formation/${formation.id}`}>{formation.theme}</Link></h2>
+           <Link to={`/admin/formation/${formation.id}`}><h2 className="formation_title">{formation.theme}</h2></Link>
             <p className="formation_description">{formation.description}</p>
             {formation.Formateur ? (
               <p className="formateur_name">
@@ -51,6 +51,8 @@ const Formations = () => {
             ) : (
               <p className="formateur_name">Formateur externe</p>
             )}
+            <Link to={`/discussion/formation/${formation.id}`}><span className="lien">Accéder à la discussion</span></Link>
+
             <button className="voir_plus_button">
               <Link to={`/admin/formation/${formation.id}`}>?</Link>
             </button>

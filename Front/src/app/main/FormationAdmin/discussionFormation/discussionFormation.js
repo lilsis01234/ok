@@ -87,20 +87,29 @@ const Discussions = () => {
             <div className="discussion-container">
                 <div className="top">
                     <h2 className="discussion-heading">Discussions récentes</h2>
+                    
                     <Link to={`/addDiscussion/${id}`} className="add-discussion-button">
                         <BiPencil />
                     </Link>
+                
                 </div>
                 {discussion.map((discussions, index) => (
+
                     <div className="discussion-item" key={index}>
+
                         <button onClick={(e)=>{handleDelete(discussions.id)}}>Supprimer</button>
+                        
                         <div className="meta-info">
                             <h1 className="module-title">Module {discussions.Module.titreModule}</h1>
                             <h1 className="collab-name">{discussions.Collab.nom} {discussions.Collab.prenom}</h1>
                         </div>
+                        
                         <h2 className="discussion-title">{discussions.sujet}</h2>
+                        
                         <p className="discussion-content">{discussions.contenu}</p>
+                        
                         <div className="file-list">
+                            
                             {discussions.fichier !== null && discussions.fichier.split(', ').map((filePath, idx) => (
                                 <div key={idx} className="file-link">
                                     <button className='fichier' onClick={() => viewFile(filePath.split('\\').pop())}>
@@ -109,7 +118,10 @@ const Discussions = () => {
                                     </button>
                                 </div>
                             ))}
+                        
                         </div>
+                        
+                        <button><Link to={`/repondre/${discussions.id}`}>Répondre</Link></button>
                     </div>
                 ))}
             </div>
