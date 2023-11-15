@@ -19,7 +19,7 @@ const DemandeFormations = () => {
   
   return (
     <div className="training-request-container">
-      <Typography className="collabListes_title font-bold">Demandes de formations</Typography>
+      <h1 className="collabListes_title font-bold">Demandes de formations</h1>
       {DemandeFormations.map((demande, index) => (
         <div key={index} className="training-request-item">
           <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
