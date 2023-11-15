@@ -8,6 +8,7 @@ const AjoutModule = lazy(()=>import('../../FormationUser/Formateur/AjoutModule/A
 const CalendarForm = lazy(() => import('../../CalendarSeance/calendrierForm/CalendarForm'))
 const Discussions = lazy(()=>import('../discussionFormation/discussionFormation'))
 const AddDiscussion= lazy(()=>import('../discussionFormation/ajoutDiscussion'))
+const VoirPlusDemande = lazy(()=>import('../demandeDeFormation/VoirPlusDemandeFormation'))
 
 const FormationConfig = {
     routes: [
@@ -46,6 +47,10 @@ const FormationConfig = {
                 {
                     path:'/addDiscussion/:id',
                     element:<AddDiscussion/>
+                },
+                {
+                    path:'/voirPlus/demande/:id',
+                    element:<VoirPlusDemande/>
                 }
             ],
 };
