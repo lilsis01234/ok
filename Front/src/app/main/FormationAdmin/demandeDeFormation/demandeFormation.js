@@ -24,6 +24,8 @@ const DemandeFormations = () => {
           <h2 className="theme">{demande.theme}</h2>
           {/* <p className="description">{demande.description}</p> */}
           <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link>
+          <button onClick={Approuver(demande.id)}>Approuver</button>
+          <button onClick={Desapprouver(demande.id)}>Approuver</button>
         </div>
       ))}
     </div>
