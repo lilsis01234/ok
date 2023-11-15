@@ -104,3 +104,43 @@
     background-color: #0056b3;
   }
   
+
+
+.training-request-container {
+  background-color: #ffffff; 
+  padding: 50px; 
+  width: 75%; 
+  margin: 0 auto; 
+  margin-top: 2%;
+  border-radius: 25px;
+}
+
+.collabListes_title {
+  font-size: 2em; 
+  margin-bottom: 20px;
+  color: #333; 
+}
+
+.training-request-item {
+  background-color: #fff; 
+  border: 2px solid #f1f1f1;
+  margin-bottom: 20px; 
+  padding: 20px; 
+  border-radius: 25px;
+}
+
+.name {
+  font-size: 1.5em;
+  color: #479df9; 
+}
+
+.theme {
+  font-size: 1.2em;
+  color: #4caf50; 
+}
+
+.description {
+  font-size: 1em; 
+  color: #3d3b3b !important;
+  text-decoration: none !important; 
+}
