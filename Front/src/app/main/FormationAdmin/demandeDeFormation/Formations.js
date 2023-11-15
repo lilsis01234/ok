@@ -107,6 +107,8 @@ const Formations = () => {
                     (
                       <Typography className="formateur_name">Formateur externe</Typography>
                     )}
+                  
+                    <Link to={`/discussion/formation/${formation.id}`}><span className="lien">Accéder à la discussion</span></Link>
                     
                     <button className="voir_plus_button">
                       <Link to={`/admin/formation/${formation.id}`}>?</Link>
