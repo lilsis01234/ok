@@ -61,24 +61,24 @@ const navigationConfig = [
     type : 'group',
     translate : 'ENTREPRISE',
     children : [
-        {
+       {
           id: 'entreprise.direction',
           title: 'Direction',
           type: 'item',
           icon: 'heroicons-outline:briefcase',
-          // translate: 'COLLABORATEURS',
+          url : 'dashboards/collaborateur'
         }, {
           id: 'entreprise.departement',
           title: 'Department',
           type: 'item',
           icon: 'heroicons-outline:briefcase',
-          translate : 'DEPARTEMENT'
+          url : 'dashboards/collaborateur'
         }, {
           id : 'entreprise.projet',
           title : 'Team',
           type : 'item',
           icon : 'heroicons-outline:user-group',
-          translate : 'EQUIPE'
+          url : 'dashboards/collaborateur'
         }, {
           id : 'entreprise.manage',
           title : 'Manage Business Structure',

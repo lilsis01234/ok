@@ -43,7 +43,7 @@ function UserNavbarHeader(props) {
             backgroundColor: 'background.paper',
             color: 'text.secondary',
           }}
-            className="avatar text-32 font-bold w-96 h-96">{user.data?.displayName[0]}</Avatar>
+            className="avatar text-32 font-bold w-96 h-96">{user.data?.displayName ? user.data.displayName[0] : '?'}</Avatar>
         )}
 
       </div>
