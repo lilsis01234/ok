@@ -54,6 +54,7 @@ router.get('/temporary-link/:filename', (req, res) => {
 
 
 router.get('/view/:filename', (req, res) => {
+
     const filePath = path.join(__dirname, '../../', 'uploads2', req.params.filename);
     // Set appropriate content type based on file extension
     const fileExtension = path.extname(filePath).toLowerCase();
@@ -70,18 +71,19 @@ router.get('/view/:filename', (req, res) => {
     // Create a readable stream from the file and pipe it to the response
     const fileStream = fs.createReadStream(filePath);
     fileStream.pipe(res);
+
 });
 
 
 router.get('/downloaded/:filename', (req, res) => {
     const filePath = path.join(__dirname,'../../', 'uploads2', req.params.filename);
-
     // Set appropriate content type based on file extension
     const fileExtension = path.extname(filePath).toLowerCase();
     let contentType = 'application/octet-stream';
     if (fileExtension === '.docx') {
         contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-    } else if (fileExtension === '.pdf') {
+    } 
+    else if (fileExtension === '.pdf') {
         contentType = 'application/pdf';
     }
 
@@ -129,4 +131,5 @@ router.delete('/:id/deleteDiscussion', async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la suppression du poste' })
     }
 })
+
 module.exports = router;
