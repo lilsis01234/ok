@@ -20,7 +20,7 @@ const AjoutFormation = ()=>{
 
     const handleSubmit =(event)=>{
         event.preventDefault();
-        axios.post('http://localhost:4001/api/formations/addFormation', {theme,description, duree,auteur,formateur})
+        axios.post('http://localhost:4000/api/formations/addFormation', {theme,description, duree,auteur,formateur})
         .then(res => {
             console.log(res);
             navigate('/dashboards/listeFormation');
