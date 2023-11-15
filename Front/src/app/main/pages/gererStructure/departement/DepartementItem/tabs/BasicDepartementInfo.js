@@ -11,7 +11,7 @@ function BasicDepartementInfo(props) {
     const [listeDirection, setListeDirection] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4001/api/direction/all')
+        axios.get('http://localhost:4000/api/direction/all')
             .then((response) => {
                 setListeDirection(response.data)
 

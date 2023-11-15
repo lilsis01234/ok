@@ -22,7 +22,7 @@ const AjoutDemandeFormation = () => {
     console.log(auteur);
 
   const fetchEquipe = () => {
-    axios.get('http://localhost:4001/api/equipe/all')
+    axios.get('http://localhost:4000/api/equipe/all')
       .then((response) => {
         setEquipeData(response.data);
       })
@@ -32,7 +32,7 @@ const AjoutDemandeFormation = () => {
   };
   
   const fetchRoleHierarchique = ()=>{
-    axios.get('http://localhost:4001/api/roleHierarchique/all')
+    axios.get('http://localhost:4000/api/roleHierarchique/all')
     .then((response)=>{
       setRoleHierarchique(response.data);
       console.log(response.data)
@@ -43,7 +43,7 @@ const AjoutDemandeFormation = () => {
   }
 
   const fetchCollab = () => {
-    axios.get('http://localhost:4001/api/collaborateur/all')
+    axios.get('http://localhost:4000/api/collaborateur/all')
       .then((response) => {
         setCollabs(response.data);
         console.log(response.data); // Log the response.data after setting the state
@@ -63,7 +63,7 @@ const AjoutDemandeFormation = () => {
     event.preventDefault();
     console.log(destinataire)
     axios
-      .post('http://localhost:4001/api/demande_formation/addDemandeFormation', {
+      .post('http://localhost:4000/api/demande_formation/addDemandeFormation', {
         theme,
         description,
         auteur,

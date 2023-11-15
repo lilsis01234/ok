@@ -71,7 +71,7 @@ const message = require('./routes/Chat/message')
 
 
 //Protection contre les attaques cors
-app.use(cors({ origin: 'http://192.168.16.46:3000', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 //Ajout de middleware express.json()
 app.use(express.json())

@@ -9,11 +9,17 @@ const ActualityImg = require('../../Modele/ActualityModel/ActualityImg');
 const Categorie = require('../../Modele/ActualityModel/Categorie');
 const Type = require('../../Modele/ActualityModel/Type');
 const Tag = require('../../Modele/ActualityModel/Tag');
+const ActCateg = require('../../Modele/ActualityModel/ActuCateg');
+const ActType = require('../../Modele/ActualityModel/ActuType');
+const ActTag = require('../../Modele/ActualityModel/ActuTag');
 const fs = require('fs');
 
 //Configuration du stockages des fichiers uploader
 const storage = multer.diskStorage({
-    destination: 'uploads',
+    destination: (req, file, cb) => {
+        const destination = 'uploads/';
+        cb(null, destination.replace(/\\/g, '/'));
+    },
     filename: (req, file, cb) => {
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
         const ext = path.extname(file.originalname);
@@ -22,6 +28,93 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage });
+
+
+
+// Ajouter une nouvelle actualité
+router.post('/new', async (req, res) => {
+    try {
+        
+        const newActuality = await Actualite.create({
+            titre: req.body.titre,
+            contenu: req.body.contenu,
+            date_publication: req.body.date_publication,
+            image: req.body.image,
+            extrait: req.body.extrait,
+            etat: req.body.etat,
+            visibilite: req.body.visibilite,
+            compte_id: req.body.compte_id
+        })
+
+        
+        const savedActuality = await newActuality.save();
+
+        const category = req.body.category;
+        const type = req.body.type;
+        const tag = req.body.tag;
+
+        if (category.length > 0 && !category.every(element => element === "")) {
+
+            for (const categoryId of category) {
+
+                const categoryInstance = await Categorie.findByPk(categoryId)
+
+                if (!categoryInstance) {
+                    console.log('actualitecategory non sauvegardé', categoryId)
+                }
+
+                const actualitecategory = await ActCateg.create({
+                    act_id: savedActuality.id,
+                    categ_id: categoryId
+                })
+            }
+
+        }
+        if  (type.length > 0 && !type.every(element => element === "")) {
+
+            for (const typeId of type) {
+
+                const typeInstance = await Type.findByPk(typeId)
+
+                if (!typeInstance) {
+                    console.log('actualitetype non sauvegardé', typeId)
+                }
+
+                const actualitetype = await ActType.create({
+                    act_id: savedActuality.id,
+                    type_id: typeId
+                })
+            }
+
+        }
+        if  (tag.length > 0 && !tag.every(element => element === "")) {
+
+            for (const tagId of tag) {
+
+                const tagInstance = await Tag.findByPk(tagId)
+
+                if (!tagInstance) {
+                    console.log('actualitetag non sauvegardé', tagId)
+                }
+
+                const actualitetag = await ActTag.create({
+                    act_id: savedActuality.id,
+                    tag_id: tagId
+                })
+            }
+
+        }
+
+
+        res.status(200).json(savedActuality)
+
+    }
+    catch (err) {
+        console.error('Erreur lors de la création d\'une actualité: ', err);
+        res.status(201).json({ message: 'Erreur lors de la création d\'une actualité' });
+    }
+})
+
 
 //Ajouter une nouvelle categorie d'actualité
 router.post('/categorie/new', async (req, res) => {
@@ -80,7 +173,7 @@ router.post('/image',upload.single('nom'), async (req, res) => {
 
         const nom = req.file;
         const newActualityImg = await ActualityImg.create({
-            nom: nom ? nom.path : null,
+            nom: nom ? nom.path.replace(/\\/g, '/') : null,
         })
 
         const savedActualityImg = await newActualityImg.save();
@@ -91,34 +184,6 @@ router.post('/image',upload.single('nom'), async (req, res) => {
     catch (err) {
         console.error('Erreur lors de la création d\'image actualité: ', err);
         res.status(201).json({ message: 'Erreur lors de la création d\'image d\'actualité' });
-    }
-})
-
-
-//Ajouter une nouvelle actualité
-router.post('/new', upload.single('image'), async (req, res) => {
-    try {
-        const image = req.file;
-
-        const newActuality = await Actualite.create({
-            titre: req.body.titre,
-            contenu: req.body.contenu,
-            date_publication: req.body.date_publication,
-            image: image ? image.path : null,
-            extrait: req.body.extrait,
-            etat: req.body.etat,
-            visibilite: req.body.visibilite,
-            compte_id: req.body.compte_id
-        })
-
-        const savedActuality = await newActuality.save();
-
-        res.status(200).json(savedActuality)
-
-    }
-    catch (err) {
-        console.error('Erreur lors de la création d\'une actualité: ', err);
-        res.status(201).json({ message: 'Erreur lors de la création d\'une actualité' });
     }
 })
 

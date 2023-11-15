@@ -13,7 +13,7 @@ const Discussions = () => {
     const [discussion, setDiscussion] = useState([]);
 
     const fetchDiscussion = () => {
-        axios.get(`http://localhost:4001/api/discussions/all_discussions/${id}`)
+        axios.get(`http://localhost:4000/api/discussions/all_discussions/${id}`)
             .then(res => {
                 console.log(res.data)
                 setDiscussion(res.data)
@@ -26,7 +26,7 @@ const Discussions = () => {
     }, [id]);
 
     // const displayFile = (fileName) => {
-    //     const temporaryLink = `http://localhost:4001/api/discussions/temporary-link/${encodeURIComponent(fileName)}`;
+    //     const temporaryLink = `http://localhost:4000/api/discussions/temporary-link/${encodeURIComponent(fileName)}`;
     
     //     return (
     //         <a href={temporaryLink} target="_blank" rel="noopener noreferrer">
@@ -36,7 +36,7 @@ const Discussions = () => {
     // };
     
     const viewFile = (fileName) => {
-        window.open(`http://localhost:4001/api/discussions/view/${encodeURIComponent(fileName)}`, '_blank');
+        window.open(`http://localhost:4000/api/discussions/view/${encodeURIComponent(fileName)}`, '_blank');
     };
 
     const getFileIcon = (fileName) => {
@@ -75,7 +75,7 @@ const Discussions = () => {
 
     const handleDelete=async (id)=>{
         try{
-            await axios.delete(`http://localhost:4001/api/discussions/${id}/deleteDiscussion`)
+            await axios.delete(`http://localhost:4000/api/discussions/${id}/deleteDiscussion`)
             window.location.reload()
         }catch(err) {
             console.log(err)

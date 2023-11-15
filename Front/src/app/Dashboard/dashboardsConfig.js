@@ -1,7 +1,9 @@
 import CollabDashboardConfig from "./CollabDashboard/CollabDashboardConfig";
+import DashboardAccueilConfig from "./DashboardAccueil/DashboardAccueilConfig";
 
 const dashboardsConfigs = [
-    CollabDashboardConfig
+    CollabDashboardConfig,
+    DashboardAccueilConfig  
 ]
 
 export default dashboardsConfigs;

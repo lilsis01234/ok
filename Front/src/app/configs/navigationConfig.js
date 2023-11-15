@@ -25,6 +25,13 @@ const navigationConfig = [
         icon: 'heroicons-outline:user-group',
         translate: 'COLLABORATEURS',
         url : 'dashboards/collaborateur'
+      },
+      {
+        id : 'accueil',
+        title : 'Accueil',
+        type : 'item',
+        icon: 'heroicons-outline:template',
+        url : 'dashboards/accueil'
       }
     ],
   }, {
@@ -50,7 +57,7 @@ const navigationConfig = [
             title : 'Collaborator',
             type : 'item',
             url : 'manage/collaborator'
-          },
+          }
         ] 
       }
     ]

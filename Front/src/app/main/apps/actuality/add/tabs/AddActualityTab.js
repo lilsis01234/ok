@@ -20,12 +20,9 @@ import ImageIcon from '@mui/icons-material/Image';
 import IconButton from '@mui/material/IconButton';
 import { Autocomplete } from '@mui/material';
 import Link from '@mui/material/Link';
-
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import parse from 'html-react-parser';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
 
 
 function AddActualityTab() {
@@ -49,6 +46,7 @@ function AddActualityTab() {
   const [boutonDesableType, setBoutonDesableType] = useState(true);
   const [boutonDesableTag, setBoutonDesableTag] = useState(true);
   const [isChecked, setChecked] = useState(false);
+  const [dateActuelle, setDateActuelle] = useState('');
 
 
   const handleTypesChange = (event, newValues) => {
@@ -77,13 +75,13 @@ function AddActualityTab() {
 
 
   const fetchCategories = () => {
-    axios.get('http://localhost:4001/api/actualite/categorie/all')
+    axios.get('http://localhost:4000/api/actualite/categorie/all')
       .then(res => {setListCategorie(res.data)})
       .catch(err => console.log(err));
   }
   
   const fetchTypes = () => {
-    axios.get('http://localhost:4001/api/actualite/type/all')
+    axios.get('http://localhost:4000/api/actualite/type/all')
     .then(res => {setListType(res.data)})
     .catch(err => console.log(err));
   }
@@ -125,6 +123,7 @@ function AddActualityTab() {
         .catch(err => console.log(err)); 
       } else {
         setBoutonDesableCateg(true);
+        setIsInputCategVisible(false);
       }
     
   };
@@ -152,6 +151,7 @@ function AddActualityTab() {
         .catch(err => console.log(err)); 
       } else {
         setBoutonDesableType(true);
+        setIsInputTypeVisible(false);
       }
     
   };
@@ -179,6 +179,7 @@ function AddActualityTab() {
         .catch(err => console.log(err)); 
       } else {
         setBoutonDesableTag(true);
+        setIsInputTagVisible(false);
       }
     
   };
@@ -193,7 +194,7 @@ function AddActualityTab() {
       if (file) {
         const formData = new FormData();
         formData.append('nom', file);    
-        const serveurApiImg = 'http://localhost:4001/api/actualite/image';      
+        const serveurApiImg = 'http://localhost:4000/api/actualite/image';      
         axios.post(serveurApiImg, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -202,7 +203,7 @@ function AddActualityTab() {
           .then(res => {
 
             if (res.data.nom) {
-                  const img = `<img src="http://localhost:4001/${res.data.nom}" alt="image téléchargée" />`;
+                  const img = `<div><img src="http://localhost:4000/${res.data.nom}" alt="image téléchargée" /></div>`;
                   setWysiwygContent(wysiwygContent + img);
             }
 
@@ -216,7 +217,7 @@ function AddActualityTab() {
 
   const changeImageHandlerMea = (id) => {
 
-      axios.delete(`http://localhost:4001/api/actualite/image/${id}`)
+      axios.delete(`http://localhost:4000/api/actualite/image/${id}`)
     
       .then((res) => {
         console.log(res.data);
@@ -233,7 +234,7 @@ function AddActualityTab() {
 
   const deleteImg = (id) => {
 
-      axios.delete(`http://localhost:4001/api/actualite/image/${id}`)
+      axios.delete(`http://localhost:4000/api/actualite/image/${id}`)
     
       .then((res) => {
         console.log(res.data);
@@ -261,7 +262,7 @@ function AddActualityTab() {
       if (file) {
         const formData = new FormData();
         formData.append('nom', file);    
-        const serveurApiImg = 'http://localhost:4001/api/actualite/image';      
+        const serveurApiImg = 'http://localhost:4000/api/actualite/image';      
         axios.post(serveurApiImg, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -270,7 +271,8 @@ function AddActualityTab() {
           .then(res => {
 
             if (res.data.nom) {
-                  const imgMea = `http://localhost:4001/${res.data.nom}`;
+                  // const imgMea = `http://localhost:4000/${res.data.nom}`;
+                  const imgMea = res.data.nom;
                   setImgMiseEnAvant(imgMea);
                   setidImageToChange(res.data.id);
             }
@@ -283,6 +285,8 @@ function AddActualityTab() {
     input.click();
   };
   
+  
+      
 
   const modules = {
     toolbar: {
@@ -295,7 +299,7 @@ function AddActualityTab() {
       ['clean'] 
       ]
   }
-  };
+};
   
 
   const container = {
@@ -311,11 +315,16 @@ function AddActualityTab() {
     show: { opacity: 1, y: 0 },
   };
 
-
-
-
   const handleCheckboxChange = (event) => {
     setChecked(event.target.checked);
+  };
+
+  const obtenirDateActuelle = () => {
+    const maintenant = new Date();
+    const annee = maintenant.getFullYear();
+    const mois = (maintenant.getMonth() + 1).toString().padStart(2, '0');
+    const jour = maintenant.getDate().toString().padStart(2, '0');
+    setDateActuelle(`${annee}-${mois}-${jour}`);
   };
 
 
@@ -333,9 +342,9 @@ function AddActualityTab() {
     const category = getSelectedCategoryIds().split(',');
     const type = getSelectedTypeIds().split(',');
     const tag = getSelectedTagIds().split(',');
-    const contenu = wysiwygContent;
-    const date_publication = '2023-10-27';
-    const imageMiseEnAvant = imgMiseEnAvant;
+    const contenu =  wysiwygContent;
+    const date_publication = dateActuelle;
+    const image = imgMiseEnAvant;
     const commentaire = isChecked;
 
 
@@ -349,29 +358,27 @@ function AddActualityTab() {
       category,
       type,
       tag,
-      imageMiseEnAvant,
-      commentaire
+      image
 
     };
 
     console.log(dataForm);
 
+    const dispatch = useDispatch();
 
-    // const serveurApi = 'http://localhost:4000/api/actualite/new';
-    // axios.post(serveurApi, dataForm, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // })
-    //     .then(res => {
+    const serveurApi = 'http://localhost:4000/api/actualite/new';
+    axios.post(serveurApi, dataForm)
+        .then(res => {
 
-        //   if (res.data) {
-        //       console.log('reponse : ', res.data);
-        //       window.location.reload();
-        //   }
+          if (res.data) {
+              console.log('reponse : ', res.data);
+              window.location.reload();
+              dispatch(showMessage({ message: 'Actualité sauvegardée' }));
 
-        // })
-        // .catch(err => console.log(err));
+          }
+
+        })
+        .catch(err => console.log(err));
       
   }
 
@@ -387,7 +394,7 @@ function AddActualityTab() {
           <Typography className="text-3xl font-semibold tracking-tight leading-8 mb-24 mt-16">
                 Ajouter un nouvel article
           </Typography>
-          <Button type="submit" className="py-10 px-32" variant="contained" color="secondary" size="small" aria-label="post">
+          <Button type="submit" className="py-10 px-32" variant="contained" color="secondary" size="small" aria-label="post" onClick={obtenirDateActuelle}>
             Publier
           </Button>
         </div>
@@ -573,7 +580,7 @@ function AddActualityTab() {
                   </Button>
                     }
                   { imgMiseEnAvant ? ( <div>
-                    <img src={imgMiseEnAvant} alt="image" className="mt-32" />
+                    <img src={`http://localhost:4000/${imgMiseEnAvant}`} alt="image" className="mt-32" />
                     <Link color="inherit" href="#" onClick={(e) => {e.preventDefault();deleteImg(idImageToChange);}} >
                       Supprimer l'image
                     </Link>
@@ -625,7 +632,7 @@ function AddActualityTab() {
                       label="Autoriser les commentaires"
                     />
                   </FormGroup>
-                </FormControl>                     
+                </FormControl>                 
               </CardContent>
             </Card>
           </div>

@@ -14,7 +14,7 @@ const ContactView = () => {
     const { id } = useParams();
 
     const fetchCollaborateur = () => {
-        axios.get(`http://localhost:4001/api/user/${id}/profile`)
+        axios.get(`http://localhost:4000/api/user/${id}/profile`)
             .then(response => {
                 setData(response.data)
             })
@@ -57,7 +57,7 @@ const ContactView = () => {
                                         color: 'text.secondary',
                                     }}
                                     className="w-128 h-128 text-64 font-bold"
-                                    src={`http://localhost:4001/${data.Collab?.image}`}
+                                    src={`http://localhost:4000/${data.Collab?.image}`}
                                 >
 
                                 </Avatar>

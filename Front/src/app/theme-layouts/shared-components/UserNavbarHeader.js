@@ -31,13 +31,13 @@ function UserNavbarHeader(props) {
   return (
     <Root className="user relative flex flex-col items-center justify-center p-16 pb-14 shadow-0">
       <div className="flex items-center justify-center mb-24">
-        {user.data.photoURL ? (
+        {user.data.photo ? (
           <Avatar 
             sx={{
             backgroundColor: 'background.paper',
             color: 'text.secondary',
           }}
-            className="avatar text-32 font-bold w-96 h-96" alt="user photo" src={user.data?.photoURL} />
+            className="avatar text-32 font-bold w-96 h-96" alt="user photo" src={`http://localhost:4000/${user.data.photo.image}`} />
         ) : (
           <Avatar sx={{
             backgroundColor: 'background.paper',

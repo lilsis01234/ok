@@ -40,7 +40,7 @@ function CollaborateurItemHeader({formValues}) {
     const handleSaveCollaborateur = async () => {
         if (id){
             try {
-                await axios.put(`http://localhost:4001/api/collaborateur/edit/${id}`, data)
+                await axios.put(`http://localhost:4000/api/collaborateur/edit/${id}`, data)
                 alert('Collaborator Update succesfully')
                 navigate('/manage/collaborator')
             } catch (error){
@@ -48,7 +48,7 @@ function CollaborateurItemHeader({formValues}) {
             }
         } else {
             try {
-                await axios.post('http://localhost:4001/api/collaborateur/new', data)
+                await axios.post('http://localhost:4000/api/collaborateur/new', data)
                 alert('Collaborator create succesfully')
                 navigate('/manage/collaborator')
             } catch (error){

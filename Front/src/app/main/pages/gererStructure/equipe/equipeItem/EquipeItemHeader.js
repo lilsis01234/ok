@@ -29,7 +29,7 @@ function EquipeItemHeader({ formValues }) {
     const handleSaveEquipe = async () => {
         if (id) {
             try {
-                await axios.put(`http://localhost:4001/api/equipe/edit/${id}`, data)
+                await axios.put(`http://localhost:4000/api/equipe/edit/${id}`, data)
                 alert('Team Update succesfully')
                 navigate('/business/manage/team')
             } catch (error) {
@@ -37,7 +37,7 @@ function EquipeItemHeader({ formValues }) {
             }
         } else {
             try {
-                await axios.post('http://localhost:4001/api/equipe/new', data)
+                await axios.post('http://localhost:4000/api/equipe/new', data)
                 alert('Team create successfully')
                 navigate('/business/manage/team')
             } catch (error) {
