@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import './demandeFormation.css'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { Typography} from '@mui/material'
+
 
 const Formations = () => {
 
@@ -43,13 +45,13 @@ const Formations = () => {
         Formation.map((formation) => (
           <div key={formation.id} className="formation_item">
            <Link to={`/admin/formation/${formation.id}`}><h2 className="formation_title">{formation.theme}</h2></Link>
-            <p className="formation_description">{formation.description}</p>
+            <Typography className="formation_description">{formation.description}</Typography>
             {formation.Formateur ? (
-              <p className="formateur_name">
+              <Typography className="formateur_name">
                 Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
-              </p>
+              </Typography>
             ) : (
-              <p className="formateur_name">Formateur externe</p>
+              <Typography className="formateur_name">Formateur externe</Typography>
             )}
             <Link to={`/discussion/formation/${formation.id}`}><span className="lien">Accéder à la discussion</span></Link>
 
@@ -69,13 +71,13 @@ const Formations = () => {
           )).map((formation) => (
             <div key={formation.id} className="formation_item">
                <h2 className="formation_title"><Link to={`/admin/formation/${formation.id}`}>{formation.theme}</Link></h2>
-              <p className="formation_description">{formation.description}</p>
+              <Typography className="formation_description">{formation.description}</Typography>
               {formation.Formateur ? (
-                <p className="formateur_name">
+                <Typography className="formateur_name">
                   Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
-                </p>
+                </Typography>
               ) : (
-                <p className="formateur_name">Formateur externe</p>
+                <Typography className="formateur_name">Formateur externe</Typography>
               )}
               <button className="voir_plus_button">
                 <Link to={`/admin/formation/${formation.id}`}>?</Link>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Typography} from '@mui/material'
+
 
 function VoirPlusDemande() {
   const param = useParams();
@@ -29,8 +31,8 @@ function VoirPlusDemande() {
           demandes.demandes.map((demande) => (
             <div key={demande.id}>
               <h1>{demande.Auteur.nom} {demande.Auteur.prenom}</h1>
-              <p>{demande.theme}</p>
-              <p>{demande.description}</p>
+              <Typography>{demande.theme}</Typography>
+              <Typography>{demande.description}</Typography>
             </div>
           ))}
 

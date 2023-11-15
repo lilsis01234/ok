@@ -7,6 +7,9 @@ import { BiPencil } from "react-icons/bi";
 import { FaFilePdf, FaFileWord, FaFile, FaImage,FaFilePowerpoint,FaFileExcel,FaFileArchive,FaFileCsv } from "react-icons/fa";
 import {BsFiletypeSql} from "react-icons/bs";
 import { AiOutlineFileGif } from "react-icons/ai";
+import { Typography} from '@mui/material'
+
+
 
 const Discussions = () => {
     const { id } = useParams();
@@ -86,7 +89,7 @@ const Discussions = () => {
         <>
             <div className="discussion-container">
                 <div className="top">
-                    <h2 className="discussion-heading">Discussions récentes</h2>
+                    <Typography className="discussion-heading">Discussions récentes</Typography>
                     
                     <Link to={`/addDiscussion/${id}`} className="add-discussion-button">
                         <BiPencil />
@@ -100,13 +103,13 @@ const Discussions = () => {
                         <button onClick={(e)=>{handleDelete(discussions.id)}}>Supprimer</button>
                         
                         <div className="meta-info">
-                            <h1 className="module-title">Module {discussions.Module.titreModule}</h1>
-                            <h1 className="collab-name">{discussions.Collab.nom} {discussions.Collab.prenom}</h1>
+                            <Typography className="module-title">Module {discussions.Module.titreModule}</Typography>
+                            <Typography className="collab-name">{discussions.Collab.nom} {discussions.Collab.prenom}</Typography>
                         </div>
                         
-                        <h2 className="discussion-title">{discussions.sujet}</h2>
+                        <Typography className="discussion-title">{discussions.sujet}</Typography>
                         
-                        <p className="discussion-content">{discussions.contenu}</p>
+                        <Typography className="discussion-content">{discussions.contenu}</Typography>
                         
                         <div className="file-list">
                             
@@ -114,7 +117,7 @@ const Discussions = () => {
                                 <div key={idx} className="file-link">
                                     <button className='fichier' onClick={() => viewFile(filePath.split('\\').pop())}>
                                         {getFileIcon(filePath.split('\\').pop())}
-                                        <p>{filePath.split('\\').pop()}</p>
+                                        <Typography>{filePath.split('\\').pop()}</Typography>
                                     </button>
                                 </div>
                             ))}

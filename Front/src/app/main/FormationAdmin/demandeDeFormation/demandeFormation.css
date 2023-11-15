@@ -6,7 +6,7 @@
 }
 .visible h1{
     color: white !important;
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
 }
   
 .formation_item {
@@ -29,7 +29,7 @@
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    font-size: 24px;
+    /* font-size: 24px; */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -42,20 +42,20 @@
   }
 
   .formation_title {
-    font-size: 24px;
+    /* font-size: 24px; */
     color: #007bff; 
     margin-bottom: 10px;
     text-decoration: none !important;
   }
   
   .formation_description {
-    font-size: 16px;
+    /* font-size: 16px; */
     color: #333;
     margin-bottom: 10px;
   }
   
   .formateur_name {
-    font-size: 14px;
+    /* font-size: 14px; */
     color: #888;
     margin-bottom: 10px;
   }
@@ -76,7 +76,7 @@
   }
   
   .header h1 {
-    font-size: 24px;
+    /* font-size: 24px; */
     color: #343a40;
     margin-bottom: 10px;
   }
@@ -92,7 +92,7 @@
     border: none;
     outline: none;
     width: 200px;
-    font-size: 16px;
+    /* font-size: 16px; */
   }
   
   .search_form button {
@@ -123,7 +123,7 @@
 }
 
 .collabListes_title {
-  font-size: 2em; 
+  /* font-size: 2em;  */
   margin-bottom: 20px;
   color: #333; 
 }
@@ -137,17 +137,17 @@
 }
 
 .name {
-  font-size: 1.5em;
+  /* font-size: 1.5em; */
   color: #479df9; 
 }
 
 .theme {
-  font-size: 1.2em;
+  /* font-size: 1.2em; */
   color: #4caf50; 
 }
 
 .description {
-  font-size: 1em; 
+  /* font-size: 1em;  */
   color: #3d3b3b !important;
   text-decoration: none !important; 
 }

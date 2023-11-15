@@ -3,7 +3,7 @@
 }
 
 .discussion-heading {
-    font-size: 2rem;
+    /* font-size: 2rem; */
     color: rgb(36, 36, 64);
     margin-bottom: 20px;
 }
@@ -24,31 +24,31 @@
 }
 
 .module-title {
-    font-size: 1.8rem;
+    /* font-size: 1.8rem; */
     color: #4caf50;
 }
 
 .collab-name {
-    font-size: 1.6rem;
+    /* font-size: 1.6rem; */
     color: rgb(97, 161, 213);
     text-decoration-style: solid;
 }
 
 .discussion-title {
-    font-size: 1.9rem;
+    /* font-size: 1.9rem; */
     color: #333;
     margin-bottom: 10px;
 }
 
 .discussion-content {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     color: #555;
 }
 
 .add-discussion-button {
     background-color: rgb(36, 36, 64);
     color: #ffffff;
-    font-size:30px;
+    /* font-size:30px; */
     border-radius: 10px;
     padding: 10px 20px;
     text-decoration: none;
