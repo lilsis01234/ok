@@ -11,6 +11,8 @@ function CalendarTraining() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showButtons, setShowButtons] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user.id)
 
   const scheduleNotification = (event) => {
     if (event.start && event.end) {
@@ -61,7 +63,7 @@ function CalendarTraining() {
 
   useEffect(() => {
     // Récupérer les données de l'API backend
-    axios.get('http://localhost:4001/api/calendrier/agenda')
+    axios.get('http://localhost:4000/api/calendrier/agenda')
       .then((response) => {
         // Formatter les données pour les rendre compatibles avec React Big Calendar
         const formattedEvents = response.data.map((event) => {
@@ -91,6 +93,7 @@ function CalendarTraining() {
 
   const handleReserveClick = () => {
     console.log('Réserver une place');
+    
   };
 
   // const handleSetReminderClick = (event) => {
