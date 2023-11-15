@@ -61,7 +61,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                       model: Module, 
                       attributes: ['id', 'titreModule', 'description'],                   },
               ],
-            });
+              });
           
             const formation = await Formation.findByPk(formationId, {
               include: [
