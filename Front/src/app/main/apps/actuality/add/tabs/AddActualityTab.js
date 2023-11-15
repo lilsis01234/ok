@@ -89,7 +89,7 @@ function AddActualityTab() {
   }
 
   const fetchTags = () => {
-    axios.get('http://localhost:4000/api/actualite/tag/all')
+    axios.get('http://localhost:4001/api/actualite/tag/all')
     .then(res => {setListTag(res.data)})
     .catch(err => console.log(err));
   }
@@ -111,7 +111,7 @@ function AddActualityTab() {
 
     if (newCategName) {
 
-    const ApiPostCateg = 'http://localhost:4000/api/actualite/categorie/new';
+    const ApiPostCateg = 'http://localhost:4001/api/actualite/categorie/new';
     const nom = newCategName;
     const dataForm = { nom };
     axios.post(ApiPostCateg, dataForm)
@@ -138,7 +138,7 @@ function AddActualityTab() {
 
     if (newTypeName) {
 
-    const ApiPostType = 'http://localhost:4000/api/actualite/type/new';
+    const ApiPostType = 'http://localhost:4001/api/actualite/type/new';
     const nom = newTypeName;
     const dataForm = { nom };
     axios.post(ApiPostType, dataForm)
@@ -165,7 +165,7 @@ function AddActualityTab() {
 
     if (newTagName) {
 
-    const ApiPostTag = 'http://localhost:4000/api/actualite/tag/new';
+    const ApiPostTag = 'http://localhost:4001/api/actualite/tag/new';
     const nom = newTagName;
     const dataForm = { nom };
     axios.post(ApiPostTag, dataForm)
@@ -357,7 +357,7 @@ function AddActualityTab() {
     console.log(dataForm);
 
 
-    // const serveurApi = 'http://localhost:4000/api/actualite/new';
+    // const serveurApi = 'http://localhost:4001/api/actualite/new';
     // axios.post(serveurApi, dataForm, {
     //   headers: {
     //     'Content-Type': 'multipart/form-data',
@@ -391,6 +391,7 @@ function AddActualityTab() {
             Publier
           </Button>
         </div>
+        
         <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 py-24 mb-24">
           <TextField
             name="titre"
@@ -401,11 +402,14 @@ function AddActualityTab() {
             fullWidth
           />
         </Card>
+        
         <div className="md:flex">
           <div className="flex flex-col flex-1 relative">
+
             <IconButton onClick={imageHandler}  className="p-8 absolute top-0 right-0 rounded-none rounded-tr-2xl hover:text-blue-700" variant="contained" size="small">
               <ImageIcon />
             </IconButton>
+
             <Card
               component={motion.div}
               variants={item}
@@ -413,6 +417,7 @@ function AddActualityTab() {
             >
               <ReactQuill className="h-full" theme="snow" value={wysiwygContent} onChange={handleWysiwygChange} modules={modules} />
             </Card>
+
               <Card
               component={motion.div}
               variants={item}
@@ -431,6 +436,7 @@ function AddActualityTab() {
               />
             </Card>
           </div>
+
           <div className="flex flex-col w-full md:w-320 md:rtl:ml-32 ml-32">
           <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 pt-24 mb-32">
               <div className="flex justify-between items-center pb-16">

@@ -19,13 +19,21 @@ const navigationConfig = [
     translate: 'DASHBOARDS',
     children : [
       {
+        id: 'dashboard.dashboard',
+        title: 'Dashboard',
+        type: 'item',
+        icon: 'heroicons-outline:home',
+        translate: 'Dashboard',
+        url : 'dashboards/dashboards'
+      },
+      {
         id: 'dashboard.collaborateur',
         title: 'Collaborateur',
         type: 'item',
         icon: 'heroicons-outline:user-group',
         translate: 'COLLABORATEURS',
         url : 'dashboards/collaborateur'
-      }
+      }      
     ],
   }, {
     id: 'collaborateur',
@@ -211,7 +219,7 @@ const navigationConfig = [
         id: 'formation.formations',
         title: 'Formations',
         type: 'item',
-        icon: 'heroicons-outline:users',
+        icon: 'heroicons-outline:academic-cap',
         translate: 'Formations',
         url : 'dashboards/listeFormation'
       },
