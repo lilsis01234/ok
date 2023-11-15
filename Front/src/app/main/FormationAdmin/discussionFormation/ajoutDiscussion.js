@@ -22,7 +22,7 @@ const AjoutDiscussion = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     const GetModule = ()=>{
-        axios.get(`http://localhost:4001/api/module/modules/${formationId}`)
+        axios.get(`http://localhost:4000/api/module/modules/${formationId}`)
         .then((res)=>{
             // console.log(res.data)
             setModule(res.data)
@@ -52,7 +52,7 @@ const AjoutDiscussion = () => {
             formData.append("pieceJointes", file);
         }
 
-        axios.post('http://localhost:4001/api/discussions/nouveauDiscussion', formData)
+        axios.post('http://localhost:4000/api/discussions/nouveauDiscussion', formData)
         .then((res) => {
             console.log(res);
             navigate(`/discussion/formation/${formationId}`); // Remplacez par le chemin vers lequel vous souhaitez rediriger après l'ajout.
