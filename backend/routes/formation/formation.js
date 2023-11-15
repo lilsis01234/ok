@@ -59,7 +59,8 @@ router.get('/all_informations/:idformation', async(req,res)=>{
               include: [
                   {
                       model: Module, 
-                      attributes: ['id', 'titreModule', 'description'],                   },
+                      attributes: ['id', 'titreModule', 'description'],                   
+                  },
               ],
               });
           
