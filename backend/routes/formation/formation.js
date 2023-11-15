@@ -62,7 +62,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                       attributes: ['id', 'titreModule', 'description'],                   
                   },
               ],
-              });
+            });
           
             const formation = await Formation.findByPk(formationId, {
               include: [
@@ -81,13 +81,16 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                       attributes: ['nom', 'prenom'],
                   },
               ],
-          });
+            });
             
             if (!formation) {
                 return res.status(404).json({ error: 'Formation introuvable' });
             }
+
             res.status(200).json({formation,modules,seances});
-        } catch (error) {
+        
+        } 
+        catch (error) {
             console.error('Erreur lors de la récupération des informations de la formation :', error);
             res.status(500).json({ message: 'Erreur lors de la récupération des informations de la formation' });
         }
