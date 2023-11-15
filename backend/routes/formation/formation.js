@@ -8,7 +8,7 @@ const Collaborateur = require('../../Modele/CollabModel/Collab');
 const Seance = require('../../Modele/formation/Seance');
 const Module = require('../../Modele/formation/Module');
 const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
-const Departement = require('../../Modele/Structure/TestDepartement')
+// const Departement = require('../../Modele/Structure/TestDepartement')
 const Sequelize = require('sequelize');
 
 
@@ -31,6 +31,7 @@ router.get('/all_formations', async(req,res) => {
             where:
             {
               destinataireDemande: null,
+              approbation:1
             },
     })
     .then((formation) => {
@@ -88,27 +89,6 @@ router.get('/all_informations/:idformation', async(req,res)=>{
             console.error('Erreur lors de la récupération des informations de la formation :', error);
             res.status(500).json({ message: 'Erreur lors de la récupération des informations de la formation' });
         }
-    });
-
-
-    //demandes de formations d'une personne
-    router.get('/mesDemandes/:idPersonne', async (req, res) => {
-      const idPersonne = req.params.idPersonne;
-    
-      try {
-        const formations = await Formation.findAll({
-          where: {
-            [Sequelize.Op.and]: [
-              { auteur: idPersonne },
-              { destinataireDemande: { [Sequelize.Op.not]: null } }, // Add this condition
-            ],
-          },
-        });
-        res.json(formations);
-      } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-      }
     });
 
 
