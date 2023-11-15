@@ -135,8 +135,8 @@ sequelize.authenticate()
 
 
 //Initialisation du serveUR
-// app.listen(4001, () => {
-//     console.log('Serveur Express en écoute sur le port 4001')
+// app.listen(4000, () => {
+//     console.log('Serveur Express en écoute sur le port 4000')
 // });
 
 module.exports = { app, server, io }

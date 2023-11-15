@@ -223,14 +223,14 @@ const navigationConfig = [
         translate: 'Formations',
         url : 'dashboards/listeFormation'
       },
-      // {
-      //   id: 'formation.demandeformations',
-      //   title: 'Demandes de formations',
-      //   type: 'item',
-      //   icon: 'heroicons-outline:users',
-      //   translate: 'Demandes',
-      //   url : 'dashboards/demandeFormation'
-      // },
+      {
+        id: 'formation.demandeformations',
+        title: 'Demandes de formations',
+        type: 'item',
+        icon: 'heroicons-outline:users',
+        translate: 'Demandes',
+        url : 'dashboards/demandeFormation'
+      },
       {
         id: 'formation.ajoutFormation',
         title: 'Formation',

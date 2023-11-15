@@ -77,19 +77,19 @@ function AddActualityTab() {
 
 
   const fetchCategories = () => {
-    axios.get('http://localhost:4001/api/actualite/categorie/all')
+    axios.get('http://localhost:4000/api/actualite/categorie/all')
       .then(res => {setListCategorie(res.data)})
       .catch(err => console.log(err));
   }
   
   const fetchTypes = () => {
-    axios.get('http://localhost:4001/api/actualite/type/all')
+    axios.get('http://localhost:4000/api/actualite/type/all')
     .then(res => {setListType(res.data)})
     .catch(err => console.log(err));
   }
 
   const fetchTags = () => {
-    axios.get('http://localhost:4001/api/actualite/tag/all')
+    axios.get('http://localhost:4000/api/actualite/tag/all')
     .then(res => {setListTag(res.data)})
     .catch(err => console.log(err));
   }
@@ -111,7 +111,7 @@ function AddActualityTab() {
 
     if (newCategName) {
 
-    const ApiPostCateg = 'http://localhost:4001/api/actualite/categorie/new';
+    const ApiPostCateg = 'http://localhost:4000/api/actualite/categorie/new';
     const nom = newCategName;
     const dataForm = { nom };
     axios.post(ApiPostCateg, dataForm)
@@ -138,7 +138,7 @@ function AddActualityTab() {
 
     if (newTypeName) {
 
-    const ApiPostType = 'http://localhost:4001/api/actualite/type/new';
+    const ApiPostType = 'http://localhost:4000/api/actualite/type/new';
     const nom = newTypeName;
     const dataForm = { nom };
     axios.post(ApiPostType, dataForm)
@@ -165,7 +165,7 @@ function AddActualityTab() {
 
     if (newTagName) {
 
-    const ApiPostTag = 'http://localhost:4001/api/actualite/tag/new';
+    const ApiPostTag = 'http://localhost:4000/api/actualite/tag/new';
     const nom = newTagName;
     const dataForm = { nom };
     axios.post(ApiPostTag, dataForm)
@@ -193,7 +193,7 @@ function AddActualityTab() {
       if (file) {
         const formData = new FormData();
         formData.append('nom', file);    
-        const serveurApiImg = 'http://localhost:4001/api/actualite/image';      
+        const serveurApiImg = 'http://localhost:4000/api/actualite/image';      
         axios.post(serveurApiImg, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -202,7 +202,7 @@ function AddActualityTab() {
           .then(res => {
 
             if (res.data.nom) {
-                  const img = `<img src="http://localhost:4001/${res.data.nom}" alt="image téléchargée" />`;
+                  const img = `<img src="http://localhost:4000/${res.data.nom}" alt="image téléchargée" />`;
                   setWysiwygContent(wysiwygContent + img);
             }
 
@@ -216,7 +216,7 @@ function AddActualityTab() {
 
   const changeImageHandlerMea = (id) => {
 
-      axios.delete(`http://localhost:4001/api/actualite/image/${id}`)
+      axios.delete(`http://localhost:4000/api/actualite/image/${id}`)
     
       .then((res) => {
         console.log(res.data);
@@ -233,7 +233,7 @@ function AddActualityTab() {
 
   const deleteImg = (id) => {
 
-      axios.delete(`http://localhost:4001/api/actualite/image/${id}`)
+      axios.delete(`http://localhost:4000/api/actualite/image/${id}`)
     
       .then((res) => {
         console.log(res.data);
@@ -261,7 +261,7 @@ function AddActualityTab() {
       if (file) {
         const formData = new FormData();
         formData.append('nom', file);    
-        const serveurApiImg = 'http://localhost:4001/api/actualite/image';      
+        const serveurApiImg = 'http://localhost:4000/api/actualite/image';      
         axios.post(serveurApiImg, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -270,7 +270,7 @@ function AddActualityTab() {
           .then(res => {
 
             if (res.data.nom) {
-                  const imgMea = `http://localhost:4001/${res.data.nom}`;
+                  const imgMea = `http://localhost:4000/${res.data.nom}`;
                   setImgMiseEnAvant(imgMea);
                   setidImageToChange(res.data.id);
             }
@@ -357,7 +357,7 @@ function AddActualityTab() {
     console.log(dataForm);
 
 
-    // const serveurApi = 'http://localhost:4001/api/actualite/new';
+    // const serveurApi = 'http://localhost:4000/api/actualite/new';
     // axios.post(serveurApi, dataForm, {
     //   headers: {
     //     'Content-Type': 'multipart/form-data',

@@ -6,6 +6,7 @@ const ParticipantsSeanceCollab = require('../../Modele/formation/ParticipantsSea
 const ParticipantsSeanceEquipe = require('../../Modele/formation/EquipeSeance');
 const Collab = require('../../Modele/CollabModel/Collab');
 const Seance = require('../../Modele/formation/Seance');
+const Equipe = require('../../Modele/Structure/Equipe');
 
 router.post('/addCollabSeancePres', async(req,res)=>{
     try {
@@ -70,7 +71,7 @@ router.get('/allEquipeSeance', async(req,res)=>{
                 include:
                 [
                     {
-                        model:Collab,
+                        model:Equipe,
                         attributes: ['nom', 'prenom'],
                     },
                     {
@@ -88,3 +89,4 @@ router.get('/allEquipeSeance', async(req,res)=>{
 
     }
 })
+

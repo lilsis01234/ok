@@ -7,7 +7,7 @@ export const getAuthPermission = () => permission;
 
 export const fetchAuthPermission = async () => {
     try {
-        const response = axios.get('http://localhost/4001/api/permission/all')
+        const response = axios.get('http://localhost/4000/api/permission/all')
         const permissionFormBackEnd = response.data;
         if (permissionFormBackEnd) {
             const indexedPermission = permissionFormBackEnd.map((permission) => ({
