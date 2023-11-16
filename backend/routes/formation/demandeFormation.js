@@ -6,6 +6,7 @@ router.use(cookieParser());
 // const Collab = require('../../Modele/CollabModel/Collab');
 const {  Formation2,Collab2,FormationCollab } = require('../../Modele/formation/associationFormationCollab');
 const {  Formation,Equipe2,FormationEq } = require('../../Modele/formation/associationFormationDep');
+const RoleHierarchique = require('../../Modele/RoleModel/RoleHierarchique');
 
 router.get('/all', async(req,res)=>{
     try{
@@ -92,6 +93,53 @@ router.get('/demande/:idDemande', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
+router.get('/all_demande/:id', async(req,res)=>{
+    const id = req.params.id
+    try{
+        const mesDemandes = await Formation.findAll({
+            include:{
+                model: RoleHierarchique,
+                attributes:['roleHierarchique']
+            },
+            where:{
+                destinataireDemande: { [Sequelize.Op.not]: null },
+                auteur:id
+            }
+        })
+        res.status(200).json(mesDemandes)
+    }
+    catch(err){
+        console.error(err)
+    }
+})
+
+//Approbation
+router.post('/approuver/:id', async(req,res)=>{
+  const formationId = req.params.id;
+    try{
+        const updatedFormation = await Formation.update(
+            {
+                approbation: 1,
+            },
+            {
+                where: {
+                    id: formationId
+                }
+            }
+        )        
+    
+        if (updatedFormation[0] === 0) {
+            return res.status(404).json({ message: "Formation not found." });
+        }
+  
+        return res.status(200).json({ message: "Formation approved successfully." });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "An error occurred while approving the formation." });
+    }
+    
+})
 
 // ajout demande de formation
 
