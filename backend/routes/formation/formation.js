@@ -40,6 +40,32 @@ router.get('/all_formations', async(req,res) => {
     }) 
 })
 
+router.get('/all/admin', async(req,res)=>{
+    Formation.findAll({
+        include: [
+            {
+              model: Collaborateur,
+              as: 'Auteur',
+              attributes: ['nom', 'prenom'],
+            },
+            {
+              model: Collaborateur,
+              as: 'Formateur',
+              attributes: ['nom', 'prenom'],
+            },
+          ],
+          attributes: ['id', 'theme', 'description', 'auteur','formateur','formateurExt','destinataireDemande'],
+            where:
+            {
+              approbation:1,
+              destinataireDemande:{ [Sequelize.Op.not]: null }
+            },
+    })
+    .then((formation) => {
+        res.status(200).json(formation)
+        console.log(formation)
+    }) 
+})
 
 //Les modules et séances d'une formation
 router.get('/all_informations/:idformation', async(req,res)=>{
