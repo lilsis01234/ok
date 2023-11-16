@@ -39,8 +39,9 @@ function MesDemandes (){
                 : 
                 <Typography>Pas encore approuvé</Typography>
               }
-              
+
               <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link>
+              <button>Supprimer</button>
             </div>
         
         ))}
