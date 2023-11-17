@@ -10,7 +10,7 @@ const HomeDashboardConfig = {
     },
     routes : [
         {
-            path : 'dashboards/dashboards',
+            path : '/acceuil',
             element : <Dashboard/>
         }
     ]

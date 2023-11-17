@@ -6,6 +6,7 @@ import imageTest from '../../../../Front/src/image_test.jpg';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import EventCountdown from './EventCountDown/EventCountdown';
 
 
 const Dashboard = () => {
@@ -26,9 +27,11 @@ const Dashboard = () => {
                   </div>
                   <div className="flex-auto w-full rounded-sm h-48 bg-grey-100 text-center mt-10">
                     <Paper className='h-48 w-full'>
-                      <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-700 mt-10">
+                      {/* <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-700 mt-10">
                         Soon will be Christmas Day 🎉🎆
-                      </Typography>
+                      </Typography> */}
+                      <EventCountdown/>
+
                     </Paper>
                   </div>
 
