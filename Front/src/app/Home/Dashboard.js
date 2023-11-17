@@ -17,7 +17,7 @@ import Slider from "react-slick";
 
 const Dashboard = () => {
 
-  const sary = ['DSC_0162.JPG','image_test.jpg','Olivier014.jpg','Olivier028.jpg','Olivier047.jpg','Olivier059.jpg'];
+  const sary = ['DSC_0162.JPG','image_test.jpg','Olivier014.jpg','Olivier028.jpg','Olivier047.jpg','Olivier059.jpg','DSC_0076.JPG','DSC_0097.JPG','DSC_0568.JPG','DSC_0569.JPG','DSC_0570.JPG'];
 
   function SlideCard(){
     const settings = {
@@ -27,7 +27,7 @@ const Dashboard = () => {
      slidesToScroll: 1,
      autoplay:true,
     };
-    
+
     return(
       <>
       {/* affichage du slider */}
