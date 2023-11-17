@@ -27,6 +27,7 @@ const Dashboard = () => {
      slidesToScroll: 1,
      autoplay:true,
     };
+    
     return(
       <>
       {/* affichage du slider */}
