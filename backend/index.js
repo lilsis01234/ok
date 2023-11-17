@@ -56,7 +56,6 @@ const discussionRouter = require('../backend/routes/formation/discussion')
 //Module Actualité
 const actualite = require('./routes/Actualite/Actualité')
 
-
 //Module Chat
 const io = require('socket.io')(server);
 
@@ -78,11 +77,11 @@ app.use(express.json())
 
 //pour les fonctionnalités télecharger des photos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+app.use('/photo', express.static(path.join(__dirname, 'photoCollab')))
 
 //utilisation des routes middleware
 //Config
 app.use('/api', api_config) 
-
 
 
 //Module Profle

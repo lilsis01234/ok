@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../database/database');
-
+const Collab2 = require('../CollabModel/Collab');
+const Formation2 = require('./Formation');
 
 const FormationCollab = sequelize.define('FormationCollab', {
     id : {
@@ -17,12 +18,12 @@ const FormationCollab = sequelize.define('FormationCollab', {
         type: DataTypes.INTEGER,
         allowNull: false, 
     },
-    approbation:{
-        type:DataTypes.BOOLEAN,
-        allowNull:false
-    }
 }, {
   timestamps : false  
 })
+
+FormationCollab.belongsTo(Formation2, { foreignKey: 'formation' });
+FormationCollab.belongsTo(Collab2, { foreignKey: 'collaborateur' });
+
 
 module.exports = FormationCollab;

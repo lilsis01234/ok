@@ -9,8 +9,40 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import EventCountdown from './EventCountDown/EventCountdown';
 import { Card, CardContent } from '@mui/material';
 import { motion } from 'framer-motion';
+import Sary from "../../sary.png";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+
 
 const Dashboard = () => {
+
+  const sary = ['DSC_0162.JPG','image_test.jpg','Olivier014.jpg','Olivier028.jpg','Olivier047.jpg','Olivier059.jpg'];
+
+  function SlideCard(){
+    const settings = {
+     infinite: true,
+     speed: 300,
+     slidesToShow: 1,
+     slidesToScroll: 1,
+     autoplay:true,
+    };
+    return(
+      <>
+      {/* affichage du slider */}
+        <Slider {...settings}>
+        {sary.map(photo =>(
+          <>
+          <div className="flex-auto mb-32">
+            <img src={`http://localhost:4000/photo/${photo}`} className="rounded-xl" alt="Sahaza Group" />
+          </div>
+          </>
+        ))
+        }
+        </Slider>  
+      </>
+    )
+  }
 
   const item = {
     hidden: { opacity: 0, y: 40 },
@@ -27,9 +59,7 @@ const Dashboard = () => {
 
                 {/* Column 1 */}
                 <div className="flex flex-col w-full md:w-1/2 px-16">
-                  <div className="flex-auto mb-32">
-                    <img src={imageTest} className="rounded-xl" alt="Sahaza Group" />
-                  </div>
+                  <SlideCard/>
                   <div className="flex-auto w-full rounded-sm h-48 bg-grey-100 text-center mb-32">
                     <Paper className='h-48 w-full'>
                       {/* <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-700 mt-10">
@@ -43,7 +73,7 @@ const Dashboard = () => {
                   <div className="flex-auto w-full h-98 rounded-sm bg-grey-100 text-center mb-32">
                     <Paper className='w-full h-98 aspect-w-1'>
                       <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-700">
-                        Anniversaires du mois🎉🎆
+                        Anniversaires du mois
                       </Typography>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pellentesque lacus id enim lobortis imperdiet. Sed mauris massa, tincidunt efficitur lorem vitae, tristique lacinia velit. Donec dignissim suscipit ex, vehicula finibus magna congue nec. Donec tempus vitae felis vel dapibus. Ut hendrerit vitae magna nec malesuada.
                     </Paper>
@@ -59,18 +89,21 @@ const Dashboard = () => {
 
                 {/* Column 2 */}
                 <div className="flex flex-col w-full md:w-1/4 px-16">
-                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-32 overflow-hidden aspect-w-1">
-                    <div className="text-center mt-8">
-                      <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-400 mt-60">
+                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-32 overflow-hidden aspect-w-1 justify-center align-center">
+                  <center><img src={Sary} alt="logo_sahaza" className='h-72 w-68' /></center>
+                    <div className="text-center">
+                      <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-400">
                         Mot du jour
                       </Typography>
                     </div>
+
                     <Typography
                       className="flex items-baseline justify-center w-full mt-20 mb-24"
                       color="text.secondary"
                     >
                       <b className="px-8">Exemple de mot du jour</b>
                     </Typography>
+
                   </Paper>
 
                   <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-32 overflow-hidden aspect-w-1">
@@ -86,6 +119,7 @@ const Dashboard = () => {
                       <b className="px-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pellentesque lacus id enim lobortis imperdiet. Sed mauris massa, tincidunt efficitur lorem vitae, tristique lacinia velit. Donec dignissim suscipit ex, vehicula finibus magna congue nec. Donec tempus vitae felis vel dapibus. Ut hendrerit vitae magna nec malesuada.</b>
                     </Typography>
                   </Paper>
+
                   <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-32 overflow-hidden aspect-w-1">
                     <div className="text-center mt-8">
                       <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-green-400">
@@ -126,6 +160,7 @@ const Dashboard = () => {
 
 
                   <div className="flex-auto">Graphe 3 sites</div>
+
                   <div className="flex-auto">Citation sur SAHAZA GROUP</div>
                   <div className="flex-auto">Resultats des compétitions</div>
                 </div>

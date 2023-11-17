@@ -6,6 +6,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment-timezone';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-notifications-component/dist/theme.css';
+import { Typography} from '@mui/material'
 
 
 const localizer = momentLocalizer(moment);
@@ -121,10 +122,10 @@ const VoirPlusFormation = () => {
             <h1 className="collabListes_title font-bold">Détails sur la formation</h1>
             {informations.formation && (
                 <div className='infos'>
-                    <p>Thème: {informations.formation.theme}</p>
-                    <p>Description: {informations.formation.description}</p>
+                    <Typography>Thème: {informations.formation.theme}</Typography>
+                    <Typography>Description: {informations.formation.description}</Typography>
                     {informations.formation.Formateur && (
-                     <p>Formateur: <span className="formateurInfo">{informations.formation.Formateur.nom} {informations.formation.Formateur.prenom}</span></p>
+                     <Typography>Formateur: <span className="formateurInfo">{informations.formation.Formateur.nom} {informations.formation.Formateur.prenom}</span></Typography>
                     )}
                     <span className="formateurInfo"><Link to={`/discussion/formation/${idFormation.id}`}>Accéder à la discussion</Link></span>
                 </div>

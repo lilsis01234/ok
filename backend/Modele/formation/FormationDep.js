@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../database/database');
-
+const Equipe2 = require('../Structure/Equipe')
+const Formation = require('../formation/Formation')
 
 const FormationEq= sequelize.define('FormationEq', {
     id : {
@@ -11,18 +12,17 @@ const FormationEq= sequelize.define('FormationEq', {
     },
     formation: {
         type: DataTypes.INTEGER,
-        allowNull: false, // Selon votre structure
+        allowNull: false, 
     },
     equipe: {
         type: DataTypes.INTEGER,
-        allowNull: false, // Selon votre structure
+        allowNull: false, 
     },
-    approbation:{
-        type:DataTypes.BOOLEAN,
-        allowNull:false
-    }
 }, {
   timestamps : false  
 })
+
+FormationEq.belongsTo(Formation, { foreignKey: 'formation' });
+FormationEq.belongsTo(Equipe2, { foreignKey: 'equipe' });
 
 module.exports = FormationEq;

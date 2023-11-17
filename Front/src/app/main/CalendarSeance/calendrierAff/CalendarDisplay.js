@@ -11,6 +11,8 @@ function CalendarTraining() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showButtons, setShowButtons] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user.id)
 
   const scheduleNotification = (event) => {
     if (event.start && event.end) {
@@ -91,6 +93,7 @@ function CalendarTraining() {
 
   const handleReserveClick = () => {
     console.log('Réserver une place');
+    
   };
 
   // const handleSetReminderClick = (event) => {

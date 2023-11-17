@@ -47,6 +47,10 @@ Formation.init({
         key : 'id'
     }
     },
+    approbation:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false
+    },
     },{
         sequelize,
         modelName : 'Formation'

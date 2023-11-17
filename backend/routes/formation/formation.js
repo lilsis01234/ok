@@ -8,7 +8,7 @@ const Collaborateur = require('../../Modele/CollabModel/Collab');
 const Seance = require('../../Modele/formation/Seance');
 const Module = require('../../Modele/formation/Module');
 const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
-const Departement = require('../../Modele/Structure/TestDepartement')
+// const Departement = require('../../Modele/Structure/TestDepartement')
 const Sequelize = require('sequelize');
 
 
@@ -31,6 +31,7 @@ router.get('/all_formations', async(req,res) => {
             where:
             {
               destinataireDemande: null,
+              approbation:1
             },
     })
     .then((formation) => {
@@ -39,6 +40,32 @@ router.get('/all_formations', async(req,res) => {
     }) 
 })
 
+router.get('/all/admin', async(req,res)=>{
+    Formation.findAll({
+        include: [
+            {
+              model: Collaborateur,
+              as: 'Auteur',
+              attributes: ['nom', 'prenom'],
+            },
+            {
+              model: Collaborateur,
+              as: 'Formateur',
+              attributes: ['nom', 'prenom'],
+            },
+          ],
+          attributes: ['id', 'theme', 'description', 'auteur','formateur','formateurExt','destinataireDemande'],
+            where:
+            {
+              approbation:1,
+              destinataireDemande:{ [Sequelize.Op.not]: null }
+            },
+    })
+    .then((formation) => {
+        res.status(200).json(formation)
+        console.log(formation)
+    }) 
+})
 
 //Les modules et séances d'une formation
 router.get('/all_informations/:idformation', async(req,res)=>{
@@ -50,6 +77,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                         formation: formationId,
                     },
             });
+
             const seances = await Seance.findAll({
               where: {
                   module: modules,
@@ -57,9 +85,10 @@ router.get('/all_informations/:idformation', async(req,res)=>{
               include: [
                   {
                       model: Module, 
-                      attributes: ['id', 'titreModule', 'description'],                   },
+                      attributes: ['id', 'titreModule', 'description'],                   
+                  },
               ],
-          });
+            });
           
             const formation = await Formation.findByPk(formationId, {
               include: [
@@ -78,37 +107,19 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                       attributes: ['nom', 'prenom'],
                   },
               ],
-          });
+            });
             
             if (!formation) {
                 return res.status(404).json({ error: 'Formation introuvable' });
             }
+
             res.status(200).json({formation,modules,seances});
-        } catch (error) {
+        
+        } 
+        catch (error) {
             console.error('Erreur lors de la récupération des informations de la formation :', error);
             res.status(500).json({ message: 'Erreur lors de la récupération des informations de la formation' });
         }
-    });
-
-
-    //demandes de formations d'une personne
-    router.get('/mesDemandes/:idPersonne', async (req, res) => {
-      const idPersonne = req.params.idPersonne;
-    
-      try {
-        const formations = await Formation.findAll({
-          where: {
-            [Sequelize.Op.and]: [
-              { auteur: idPersonne },
-              { destinataireDemande: { [Sequelize.Op.not]: null } }, // Add this condition
-            ],
-          },
-        });
-        res.json(formations);
-      } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-      }
     });
 
 
@@ -131,7 +142,7 @@ router.get('/formations/:idPersonne',async(req,res)=>{
           as: 'Formateur',
           attributes: ['nom', 'prenom'],
         },
-      ],
+        ],
         where: {
             formateur: idPersonne,
         }
@@ -159,7 +170,8 @@ router.post('/addFormation',async(req,res)=>{
             duree:req.body.duree,
             formateur:req.body.formateur,
             auteur:req.body.auteur,
-            formateurExt:req.body.formateurExt
+            formateurExt:req.body.formateurExt,
+            approbation:1
         }))
         const formation = await newFormation.save();
         res.status(201).json(formation);
