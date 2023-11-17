@@ -46,7 +46,7 @@ const DemandeFormations = () => {
 
       <MesDemandes/>
 
-      {role === "SuperAdministrateur" &&
+      {role === "SuperAdministrateur" || role === "rh" &&
       (
       <>
       <Typography>Les demandes de formation</Typography>
