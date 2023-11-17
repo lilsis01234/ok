@@ -10,9 +10,39 @@ import { motion } from 'framer-motion';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Sary from "../../sary.png";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 
 const Dashboard = () => {
+
+  const sary = ['DSC_0162.JPG','image_test.jpg','Olivier014.jpg','Olivier028.jpg','Olivier047.jpg','Olivier059.jpg'];
+
+  function SlideCard(){
+    const settings = {
+     infinite: true,
+     speed: 300,
+     slidesToShow: 1,
+     slidesToScroll: 1,
+     autoplay:true,
+    };
+    return(
+      <>
+      {/* affichage du slider */}
+        <Slider {...settings}>
+        {sary.map(photo =>(
+          <>
+          <div className="flex-auto mb-32">
+            <img src={`http://localhost:4000/photo/${photo}`} className="rounded-xl" alt="Sahaza Group" />
+          </div>
+          </>
+        ))
+        }
+        </Slider>  
+      </>
+    )
+  }
 
   const item = {
     hidden: { opacity: 0, y: 40 },
@@ -29,9 +59,7 @@ const Dashboard = () => {
 
                 {/* Column 1 */}
                 <div className="flex flex-col w-full md:w-1/2 px-16">
-                  <div className="flex-auto mb-32">
-                    <img src={imageTest} className="rounded-xl" alt="Sahaza Group" />
-                  </div>
+                  <SlideCard/>
                   <div className="flex-auto w-full rounded-sm h-48 bg-grey-100 text-center mb-32">
                     <Paper className='h-48 w-full'>
                       <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-700">
