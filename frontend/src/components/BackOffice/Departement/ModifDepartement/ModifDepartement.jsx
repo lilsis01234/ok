@@ -12,7 +12,7 @@ const ModifDepartement = ({departementToEdit, onUpdateDepartement}) => {
   
   //Récupérer les listes des directions
   useEffect(() => {
-    axios.get('http://localhost:4001/api/direction/all')
+    axios.get('http://localhost:4000/api/direction/all')
       .then((response) => {
         setListeDirection(response.data)
       
@@ -32,7 +32,7 @@ const ModifDepartement = ({departementToEdit, onUpdateDepartement}) => {
       direction
     }
 
-    axios.put(`http://localhost:4001/api/departement/edit/${departementToEdit.id}`, formData)
+    axios.put(`http://localhost:4000/api/departement/edit/${departementToEdit.id}`, formData)
       .then((response) => {
         alert('Departement modifié avec succés')
         onUpdateDepartement()

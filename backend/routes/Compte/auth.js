@@ -69,7 +69,7 @@ router.post('/connect', (req, res, next) => {
                             const refresh_token = jwt.sign({ id: comptes.id },
                                 secretKey, { expiresIn: '2h' }
                             )
-                            // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400100})
+                            // res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 86400000})
 
                             res.status(200).json({
                                 id: comptes.id,

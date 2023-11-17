@@ -13,7 +13,7 @@ const AjoutDepartement = ({onDepartementAdded}) => {
     const [listeDirection, setListeDirection] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4001/api/direction/all')
+        axios.get('http://localhost:4000/api/direction/all')
             .then((response) => {
                 setListeDirection(response.data)
             })
@@ -29,7 +29,7 @@ const AjoutDepartement = ({onDepartementAdded}) => {
             direction
         }
 
-        axios.post('http://localhost:4001/api/departement/new', formData)
+        axios.post('http://localhost:4000/api/departement/new', formData)
             .then((response) => {
                 alert('Département ajouter avec succès')
                 onDepartementAdded()

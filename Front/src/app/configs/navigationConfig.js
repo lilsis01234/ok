@@ -56,7 +56,7 @@ const navigationConfig = [
             title : 'Collaborator',
             type : 'item',
             url : 'manage/collaborator'
-          },
+          }
         ] 
       }
     ]

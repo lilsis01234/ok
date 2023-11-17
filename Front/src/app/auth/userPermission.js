@@ -13,7 +13,7 @@ export const fetchUserPermission = async () => {
         const userConnected = JSON.parse(user)
         const id = userConnected.id
 
-        const response = await axios.get(`http://localhost:4001/api/permission/user/${id}`)
+        const response = await axios.get(`http://localhost:4000/api/permission/user/${id}`)
         const permissionFromBackend = response.data;
 
         if(Array.isArray(permissionFromBackend)){
