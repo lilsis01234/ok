@@ -23,7 +23,7 @@ const Dashboard = () => {
       content={
         <>
           <div className="flex justify-center w-full p-24 sm:p-32">
-            <div className="w-full md:px-32">
+            <div className="w-full">
               <div className="md:flex">
 
                 {/* Column 1 */}
