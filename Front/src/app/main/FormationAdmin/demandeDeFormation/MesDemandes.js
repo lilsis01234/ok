@@ -33,14 +33,17 @@ function MesDemandes (){
               <Typography className="description">{demande.description}</Typography>
               <Typography>Destinataire : {demande.RoleHierarchique.roleHierarchique}</Typography>
               
-              {demande.approbation === true ? (
-                <Typography>Approuvé</Typography>
-                ) : demande.approbation === null ? (
-                <Typography>Pas encore approuvé</Typography>
-                ) : (
-                <Typography>Désapprouvé</Typography>
-                )
-              }
+              <Typography
+                className={`${
+                    demande.approbation === true ? 'text-green-500' :
+                    demande.approbation === null ? 'text-yellow-800' :
+                    'text-red-500'
+                }`}
+                >
+                {demande.approbation === true ? 'APPROUVÉE ' :
+                demande.approbation === null ? 'PAS ENCORE APPROUVÉE ' :
+                'REFUSÉE'}
+              </Typography>
 
 
               <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link>
