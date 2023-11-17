@@ -49,7 +49,7 @@ Formation.init({
     },
     approbation:{
         type:DataTypes.BOOLEAN,
-        allowNull:false
+        allowNull:true,
     },
     },{
         sequelize,
@@ -70,4 +70,3 @@ Formation.init({
     });
 
     module.exports = Formation;
-// // // module.exports = Formation;

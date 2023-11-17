@@ -46,16 +46,17 @@ const DemandeFormations = () => {
 
       <MesDemandes/>
 
-      {role === "SuperAdministrateur" || role === "rh" &&
+      {(role === 'SuperAdministrateur' || role === 'rh') &&
       (
       <>
       <Typography>Les demandes de formation</Typography>
+      
       {DemandeFormations.map((demande, index) => (
         <div key={index} className="training-request-item">
           <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
           <Typography className="theme">{demande.theme}</Typography>
-          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link>
-          <button onClick={()=>{Approuver(demande.id)}}>Approuver</button>
+          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link><br></br>
+          <button onClick={()=>{Approuver(demande.id)}}>Approuver</button><br></br>
           <button onClick={()=>{Desapprouver(demande.id)}}>Desapprouver</button>
         </div>
       ))}
