@@ -132,6 +132,7 @@ const Formations = () => {
                 <Typography>
                   <h2>Les formations de l'entreprise</h2>
                 </Typography>
+                
               </>
             )}
           <div className="training_container">
