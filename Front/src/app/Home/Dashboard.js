@@ -6,9 +6,9 @@ import imageTest from '../../../../Front/src/image_test.jpg';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import EventCountdown from './EventCountDown/EventCountdown';
+import { Card, CardContent } from '@mui/material';
 import { motion } from 'framer-motion';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Sary from "../../sary.png";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -63,9 +63,11 @@ const Dashboard = () => {
                   <SlideCard/>
                   <div className="flex-auto w-full rounded-sm h-48 bg-grey-100 text-center mb-32">
                     <Paper className='h-48 w-full'>
-                      <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-700">
-                        Soon will be Christmas Day 
-                      </Typography>
+                      {/* <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-700 mt-10">
+                        Soon will be Christmas Day 🎉🎆
+                      </Typography> */}
+                      <EventCountdown/>
+
                     </Paper>
                   </div>
 

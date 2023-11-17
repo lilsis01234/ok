@@ -16,7 +16,15 @@ const SliderNouveauxCollabs = () => {
   
       //Récupération de la liste des collaborateurs
       const fetchCollaborateur = () => {
+<<<<<<< HEAD
+<<<<<<< HEAD
         axios.get('http://localhost:4000/api/collaborateur/all_collaborateurs')
+=======
+        axios.get('http://localhost:4000/api/collaborateur/all_collaborateurs')
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
+=======
+        axios.get('http://localhost:4000/api/collaborateur/all_collaborateurs')
+>>>>>>> main
           .then(res => {setListCollab(res.data)})
           .catch(err => console.log(err));
       }
@@ -56,7 +64,15 @@ const SliderNouveauxCollabs = () => {
                <section className="homeSlide contentWidth">
                <div className="box d_flex top" key={index}> 
                     <div className='img_new_collab'>
+<<<<<<< HEAD
+<<<<<<< HEAD
                        <img src={`http://localhost:4000/${collab.image}`} alt={collab.nom} className="w-75 h-80 object-cover" />
+=======
+                       <img src={`http://localhost:4000/${collab.image}`} alt={collab.nom} className="w-75 h-80 object-cover" />
+>>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
+=======
+                       <img src={`http://localhost:4000/${collab.image}`} alt={collab.nom} className="w-75 h-80 object-cover" />
+>>>>>>> main
                     </div>
                     <div className='info_new_collab'>
                        <Typography variant="h1" className="text-center text-3xl p-5 nom">{collab.nom} {collab.prenom}</Typography>
