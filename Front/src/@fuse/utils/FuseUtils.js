@@ -325,6 +325,7 @@ class FuseUtils {
     });
   }
 
+
   static hasPermission(authArr, userRole) {
     /**
      * If auth array is not defined
@@ -360,6 +361,35 @@ class FuseUtils {
             */
     return authArr.includes(userRole);
   }
+
+
+  // static hasPermission(authArr, userRole, userRoleHierarchique, userPermission){
+  //   if(authArr === null || authArr === undefined){
+  //     return true;
+  //   }
+
+  //   if(authArr.length === 0){
+  //     return true;
+  //   }
+
+  //   if(userRole && Array.isArray(userRole)){
+  //     const hasValidRole = authArr.some((r) => userRole.includes(r))
+  //     const hasValidPermission = authArr.some((p) => userPermission && userPermission.includes(p))
+  //     const hasValidRoleHierarchique = userRoleHierarchique ? authArr.some((r2) => userRoleHierarchique.includes(r2)) : true;
+
+      
+  //     return hasValidRole || hasValidPermission || hasValidRoleHierarchique
+
+  //   }
+
+  //   const hasValidRole = authArr.includes(userRole)
+  //   const hasValidPermission = authArr.includes(userPermission)
+  //   const hasValidRoleHierarchique = userRoleHierarchique ?  userRoleHierarchique.includes(r2) : true;
+
+  //   return hasValidRole || hasValidPermission || hasValidRoleHierarchique
+
+
+  // }
 
   static filterRecursive(data, predicate) {
     // if no data is sent in, return null, otherwise transform the data

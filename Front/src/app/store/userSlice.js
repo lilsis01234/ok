@@ -101,8 +101,8 @@ if (userConnected) {
     role : userConnected.RoleHierarchique?.roleHierarchique,
     data : {
       displayName : userConnected.Collab?.nom + ' ' + userConnected.Collab?.prenom,
-      photoUrl : `http://localhost:4000/${userConnected.Collab?.image}`,
-      email : userConnected.email
+      email : userConnected.email,
+      photo : userConnected.Collab,
     }
   }
 } else {

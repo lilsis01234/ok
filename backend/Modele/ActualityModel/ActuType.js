@@ -3,6 +3,13 @@ const sequelize = require('../../database/database');
 
 
 const ActuType = sequelize.define('ActuType', {
+    
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+    },
 
     type_id: {
         type: DataTypes.INTEGER,
