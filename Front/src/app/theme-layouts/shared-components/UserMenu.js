@@ -44,7 +44,7 @@ function UserMenu(props) {
         {user.data.photo ? (
           <Avatar className="md:mx-4" alt="user photo" src={`http://localhost:4000/${user.data.photo.image}`} />
         ) : (
-          <Avatar className="md:mx-4">{user.data?.displayName[0]}</Avatar>
+          <Avatar className="md:mx-4">{user.data?.displayName ? user.data.displayName[0] : '?'}</Avatar>
         )}
       </Button>
 

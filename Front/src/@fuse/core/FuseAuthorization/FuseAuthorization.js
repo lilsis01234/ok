@@ -40,13 +40,17 @@ class FuseAuthorization extends Component {
   //Appeler chaque fois que prop change
   //Vérifie si l'utilisateur a la permission d'accéder à la route actuelle en utilisant les routes défines dans les routes et les roles utilisateurs 
   static getDerivedStateFromProps(props, state) { //state : état actuelle du composant
-    const { location, userRole } = props; //extrait les location et les roles 
+    // const { location, userRole, userRoleHierarchique, userPermission} = props; //extrait les location et les roles 
+    const { location, userRole} = props;
     const { pathname } = location;
 
     const matchedRoutes = matchRoutes(state.routes, pathname);  //faire correspondre le route de pathname avec celle de la state
 
     const matched = matchedRoutes ? matchedRoutes[0] : false;
 
+
+
+    // const userHasPermission = FuseUtils.hasPermission(matched.route.auth, userRole, userRoleHierarchique, userPermission);
     const userHasPermission = FuseUtils.hasPermission(matched.route.auth, userRole); //verifie l'authorisation de l'utilisateurs
 
     const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404']; 
@@ -68,7 +72,8 @@ class FuseAuthorization extends Component {
         User is guest
         Redirect to Login Page
         */
-    if (!userRole || userRole.length === 0) {
+    // if (!userRole || userRole.length === 0 || !userRoleHierarchique || userRoleHierarchique.length === 0) {
+    if (!userRole || userRole.length === 0 ) {
       setTimeout(() => history.push('/sign-in'), 0);
     } else {
       /*

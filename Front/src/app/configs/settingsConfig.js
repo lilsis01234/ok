@@ -20,6 +20,9 @@ const settingsConfig = {
    *** The individual route configs which has auth option won't be overridden.
    */
   defaultAuth: ['SuperAdministrateur'],
+  // defaultRoleHierarchique : ['SuperAdministrateur'],
+  // defaultPermision : ['Toutes'],
+
   /*
     Default redirect url for the logged-in user,
    */

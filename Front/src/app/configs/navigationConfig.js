@@ -19,20 +19,21 @@ const navigationConfig = [
     translate: 'DASHBOARDS',
     children : [
       {
+        id: 'dashboard.dashboard',
+        title: 'Dashboard',
+        type: 'item',
+        icon: 'heroicons-outline:home',
+        translate: 'Dashboard',
+        url : 'dashboards/dashboards'
+      },
+      {
         id: 'dashboard.collaborateur',
         title: 'Collaborateur',
         type: 'item',
         icon: 'heroicons-outline:user-group',
         translate: 'COLLABORATEURS',
         url : 'dashboards/collaborateur'
-      },
-      {
-        id : 'accueil',
-        title : 'Accueil',
-        type : 'item',
-        icon: 'heroicons-outline:template',
-        url : 'dashboards/accueil'
-      }
+      }      
     ],
   }, {
     id: 'collaborateur',
@@ -68,24 +69,24 @@ const navigationConfig = [
     type : 'group',
     translate : 'ENTREPRISE',
     children : [
-        {
+       {
           id: 'entreprise.direction',
           title: 'Direction',
           type: 'item',
           icon: 'heroicons-outline:briefcase',
-          // translate: 'COLLABORATEURS',
+          url : 'dashboards/collaborateur'
         }, {
           id: 'entreprise.departement',
           title: 'Department',
           type: 'item',
           icon: 'heroicons-outline:briefcase',
-          translate : 'DEPARTEMENT'
+          url : 'dashboards/collaborateur'
         }, {
           id : 'entreprise.projet',
           title : 'Team',
           type : 'item',
           icon : 'heroicons-outline:user-group',
-          translate : 'EQUIPE'
+          url : 'dashboards/collaborateur'
         }, {
           id : 'entreprise.manage',
           title : 'Manage Business Structure',
@@ -218,7 +219,7 @@ const navigationConfig = [
         id: 'formation.formations',
         title: 'Formations',
         type: 'item',
-        icon: 'heroicons-outline:users',
+        icon: 'heroicons-outline:academic-cap',
         translate: 'Formations',
         url : 'dashboards/listeFormation'
       },

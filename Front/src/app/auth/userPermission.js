@@ -13,10 +13,10 @@ export const fetchUserPermission = async () => {
         const userConnected = JSON.parse(user)
         const id = userConnected.id
 
-        const response = await axios.get(`http://192.168.16.46:4000/api/permission/user/${id}`)
+        const response = await axios.get(`http://localhost:4001/api/permission/user/${id}`)
         const permissionFromBackend = response.data;
 
-        if(permissionFromBackend){
+        if(Array.isArray(permissionFromBackend)){
             const indexedPermission = permissionFromBackend.map((permission) => ({
                 id : permission.permission,
                 permission : permission.permissions
