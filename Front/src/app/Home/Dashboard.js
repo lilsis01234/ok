@@ -66,6 +66,8 @@ const Dashboard = () => {
                       {/* <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-700 mt-10">
                         Soon will be Christmas Day 🎉🎆
                       </Typography> */}
+                    <Typography className='text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-700 mt-10'>Noel est dans</Typography>
+
                       <EventCountdown/>
 
                     </Paper>
