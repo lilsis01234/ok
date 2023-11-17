@@ -88,8 +88,8 @@ const Dashboard = () => {
 
                 {/* Column 2 */}
                 <div className="flex flex-col w-full md:w-1/4 px-16">
-                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-32 overflow-hidden aspect-w-1 justify-center align-center">
-                  <center><img src={Sary} alt="logo_sahaza" className='h-72 w-68' /></center>
+                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-32 overflow-hidden aspect-w-1 justify-center items-center">
+                  <img src={Sary} alt="logo_sahaza" className='h-72 w-68' />
                     <div className="text-center">
                       <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-400">
                         Mot du jour
