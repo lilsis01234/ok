@@ -20,7 +20,7 @@ router.get('/all', async(req,res)=>{
             ],
             where: {
                 destinataireDemande: { [Sequelize.Op.not]: null },
-                approbation: 0,
+                approbation: null,
             }
         })
         res.status(200).json(demandes)
@@ -45,7 +45,7 @@ router.get('/demande/:idDemande', async (req, res) => {
             ],
             where: {
                 destinataireDemande: { [Sequelize.Op.not]: null },
-                approbation: 0,
+                approbation: null,
                 id: idDemande,
             },
         });
@@ -152,7 +152,7 @@ router.post('/addDemandeFormation', async (req, res) => {
             duree: req.body.duree,
             auteur: req.body.auteur,
             destinataireDemande: req.body.destinataire,
-            approbation:0
+            approbation:null
         });
 
         const demandeFormationId = newDemande.id;
