@@ -50,22 +50,25 @@ const Dashboard = () => {
                 </div>
 
                 {/* Column 2 */}
-                <div className="flex flex-col w-full md:w-1/4 ml-10">
-                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-6 ml-10 overflow-hidden aspect-w-1">
+                <div className="flex flex-col w-full md:w-1/4 pl-12">
+                  
+                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-6 p-30 overflow-hidden aspect-w-1">
                     <div className="text-center mt-8">
                       <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-400 mt-60">
                         Mot du jour
                       </Typography>
                     </div>
+
                     <Typography
                       className="flex items-baseline justify-center w-full mt-20 mb-24"
                       color="text.secondary"
                     >
                       <b className="px-8">Exemple de mot du jour</b>
                     </Typography>
+
                   </Paper>
 
-                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-6 overflow-hidden aspect-w-1 ml-10 mt-10">
+                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-6 overflow-hidden aspect-w-1 p-24 mt-10">
                     <div className="text-center mt-8">
                       <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-green-400">
                         Actualités
@@ -78,7 +81,7 @@ const Dashboard = () => {
                       <b className="px-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pellentesque lacus id enim lobortis imperdiet. Sed mauris massa, tincidunt efficitur lorem vitae, tristique lacinia velit. Donec dignissim suscipit ex, vehicula finibus magna congue nec. Donec tempus vitae felis vel dapibus. Ut hendrerit vitae magna nec malesuada.</b>
                     </Typography>
                   </Paper>
-                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-6 overflow-hidden aspect-w-1 ml-10 mt-10">
+                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-6 overflow-hidden aspect-w-1 p-30 mt-10">
                     <div className="text-center mt-8">
                       <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-green-400">
                         Actualités
