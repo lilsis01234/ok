@@ -83,7 +83,7 @@ function ModernComingSoonPage() {
 
 
 const fetchTags = () => {
-  axios.get('http://localhost:4000/api/actualite/tag/all')
+  axios.get('http://localhost:4000/api/tag/all')
     .then(res => {setListTag(res.data)})
     .catch(err => console.log(err));
 }
@@ -101,7 +101,7 @@ const handleSubmit = async (e) => { e.preventDefault();
     const dataForm = { nom };
   
   
-    const serveurApi = 'http://localhost:4000/api/actualite/tag/new';
+    const serveurApi = 'http://localhost:4000/api/tag/new';
     axios.post(serveurApi, dataForm)
         .then(res => {
           if (res.data) {
@@ -119,7 +119,7 @@ const handleSubmit = async (e) => { e.preventDefault();
 
 const deleteTag = (id) => {
 
-  axios.delete(`http://localhost:4000/api/actualite/tag/${id}/delete`)
+  axios.delete(`http://localhost:4000/api/tag/${id}`)
 
   .then(() => {
     const updatedTag = listeTag.filter(tag => tag.id !== id);
@@ -148,7 +148,7 @@ const handleEdit = (e) => {
 
   if(nom) {
     
-    axios.put(`http://localhost:4000/api/actualite/tag/${id}/edit`, dataForm)
+    axios.put(`http://localhost:4000/api/tag/${id}`, dataForm)
   
     .then((res) => {
         console.log(res.data);
@@ -264,7 +264,7 @@ const cancelEdit = () => {
 
           </div>
         </div>
-        <TableContainer>
+        <TableContainer className="max-h-512">
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>

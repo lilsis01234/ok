@@ -1,18 +1,15 @@
 const router = require('express').Router();
-const multer = require('multer'); //Package pour gérer l'upload des contenus multimédias
+const multer = require('multer');
 const path = require('path');
-
-const Actualite = require('../../Modele/ActualityModel/Actualité');
 const Compte = require('../../Modele/CompteModel/Compte');
 const Collab = require('../../Modele/CollabModel/Collab');
 const ActualityImg = require('../../Modele/ActualityModel/ActualityImg');
-const Categorie = require('../../Modele/ActualityModel/Categorie');
 const Type = require('../../Modele/ActualityModel/Type');
 const Tag = require('../../Modele/ActualityModel/Tag');
-const ActCateg = require('../../Modele/ActualityModel/ActuCateg');
 const ActType = require('../../Modele/ActualityModel/ActuType');
 const ActTag = require('../../Modele/ActualityModel/ActuTag');
 const fs = require('fs');
+const { Actualite, Categorie} = require('../../Modele/ActualityModel/associationActuCateg');
 
 //Configuration du stockages des fichiers uploader
 const storage = multer.diskStorage({
@@ -116,57 +113,6 @@ router.post('/new', async (req, res) => {
 })
 
 
-//Ajouter une nouvelle categorie d'actualité
-router.post('/categorie/new', async (req, res) => {
-    try {
-        const newCategorie = await Categorie.create({ nom: req.body.nom });
-
-        const savedCategorie = await newCategorie.save();
-
-        res.status(200).json(savedCategorie);
-
-    }
-    catch (err) {
-        console.error('Erreur lors de la création d\'une categorie actualitée: ', err);
-        res.status(201).json({ message: 'Erreur lors de la création d\'une categorie actualitée' });
-    }
-})
-
-
-//Ajouter une nouvelle étiquettes d'actualité
-router.post('/tag/new', async (req, res) => {
-    try {
-        const newTag = await Tag.create({ nom: req.body.nom });
-
-        const savedTag = await newTag.save();
-
-        res.status(200).json(savedTag);
-
-    }
-    catch (err) {
-        console.error('Erreur lors de la création d\'une étiquette d\'actualitée: ', err);
-        res.status(201).json({ message: 'Erreur lors de la création d\'une étiquette d\'actualitée' });
-    }
-})
-
-
-
-//Ajouter une nouvelle type d'actualité
-router.post('/type/new', async (req, res) => {
-    try {
-        const newType = await Type.create({ nom: req.body.nom });
-
-        const savedType = await newType.save();
-
-        res.status(200).json(savedType);
-
-    }
-    catch (err) {
-        console.error('Erreur lors de la création d\'une type actualitée: ', err);
-        res.status(201).json({ message: 'Erreur lors de la création d\'une type actualitée' });
-    }
-})
-
 //Ajouter une nouvelle images d'actualités
 router.post('/image',upload.single('nom'), async (req, res) => {
     try {
@@ -188,61 +134,6 @@ router.post('/image',upload.single('nom'), async (req, res) => {
 })
 
 
-//Afficher les listes de tous les categories d'actualités
-router.get('/categorie/all', async (req, res) => {
-    try {
-        const categorie = await Categorie.findAll();
-
-        res.status(200).json(categorie);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
-    }
-})
-
-//Afficher les listes de tous les categories d'actualités
-router.get('/type/all', async (req, res) => {
-    try {
-        const categorie = await Type.findAll();
-
-        res.status(200).json(categorie);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
-    }
-})
-
-//Afficher les listes de tous les étiquettes d'actualités
-router.get('/tag/all', async (req, res) => {
-    try {
-        const Tags = await Tag.findAll();
-
-        res.status(200).json(Tags);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
-    }
-})
-
-
-//Afficher seulement une categorie
-router.get('/categorie/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const category = await Categorie.findByPk(id);
-        if (!category) {
-            return res.status(404).json({ error: 'categorie introuvable' });
-        }
-        res.json({ category });
-    }
-    catch (err) {
-        console.error('Erreur lors de la récupération de la categorie', err);
-        res.status(500).json({ error: 'Erreur lors de la récupération de la categorie' })
-    }
-})
 
 
 //Afficher les listes de tous les actualités
@@ -263,6 +154,7 @@ router.get('/all', async (req, res) => {
         res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
     }
 })
+
 
 
 //Afficher la listes des 10 derniers collaborateurs
@@ -286,7 +178,7 @@ router.get('/new-actualities', async (req, res) => {
 
 
 //Afficher seulement un collaborateur
-router.get('/view/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const actuality = await Actualite.findByPk(id, {
@@ -306,88 +198,9 @@ router.get('/view/:id', async (req, res) => {
     }
 })
 
-//Mettre à jour une categorie existant 
-router.put('/categorie/:id/edit', async (req, res) => {
-
-    const { id } = req.params;
-
-    try {
-        const updateCategorie = await Categorie.findByPk(id);
-
-        if (!updateCategorie) {
-            return res.status(404).json({ error: 'Categorie introuvable' });
-        }
-
-        const updatedCategorie = await updateCategorie.update({
-            nom: req.body.nom,
-        })
-
-
-        res.status(201).json({success: 'la categorie a belle et bien mise à jour'})
-    }
-    catch (error) {
-        console.error('Erreur lors de la mise à jour de la categorie d\'actualité', error);
-        res.status(500).json({ error: 'Erreur lors de la mise à jour de la categorie d\'actualité' });
-    }
-})
-
-
-//Mettre à jour une type existant 
-router.put('/type/:id/edit', async (req, res) => {
-
-    const { id } = req.params;
-
-    try {
-        const updateType = await Type.findByPk(id);
-
-        if (!updateType) {
-            return res.status(404).json({ error: 'Type introuvable' });
-        }
-
-        const updatedType = await updateType.update({
-            nom: req.body.nom,
-        })
-
-
-        res.status(201).json({success: 'la Type a belle et bien mise à jour'})
-    }
-    catch (error) {
-        console.error('Erreur lors de la mise à jour de la Type d\'actualité', error);
-        res.status(500).json({ error: 'Erreur lors de la mise à jour de la Type d\'actualité' });
-    }
-})
-
-
-
-//Mettre à jour un étiquette existant 
-router.put('/tag/:id/edit', async (req, res) => {
-
-    const { id } = req.params;
-
-    try {
-        const updateTag = await Tag.findByPk(id);
-
-        if (!updateTag) {
-            return res.status(404).json({ error: 'Tag introuvable' });
-        }
-
-        const updatedTag = await updateTag.update({
-            nom: req.body.nom,
-        })
-
-
-        res.status(201).json({success: 'la Tag a belle et bien mise à jour'})
-    }
-    catch (error) {
-        console.error('Erreur lors de la mise à jour de la Tag d\'actualité', error);
-        res.status(500).json({ error: 'Erreur lors de la mise à jour de la Tag d\'actualité' });
-    }
-})
-
-
 
 //Mettre à jour un Actualité existant 
-router.put('/:id/edit', upload.single('image'), async (req, res) => {
+router.put('/:id', upload.single('image'), async (req, res) => {
 
     const image = req.file;
     const { id } = req.params;
@@ -418,61 +231,9 @@ router.put('/:id/edit', upload.single('image'), async (req, res) => {
     }
 })
 
-//Supprimer une categorie 
-router.delete('/categorie/:id/delete', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deleteCategorie = await Categorie.findByPk(id);
-        if (!deleteCategorie) {
-            return res.status(404).json({ error: 'Categorie introuvable' });
-        }
-        await deleteCategorie.destroy();
-        res.sendStatus(204)
-    }
-    catch (error) {
-        console.error('Erreur lors de la suppression de la categorie d\'actualité :', error)
-        res.status(500).json({ message: 'Erreur lors de la suppression de la categorie d\'actualité' })
-    }
-})
-
-
-//Supprimer une type 
-router.delete('/type/:id/delete', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deleteType = await Type.findByPk(id);
-        if (!deleteType) {
-            return res.status(404).json({ error: 'Type introuvable' });
-        }
-        await deleteType.destroy();
-        res.sendStatus(204)
-    }
-    catch (error) {
-        console.error('Erreur lors de la suppression de la Type d\'actualité :', error)
-        res.status(500).json({ message: 'Erreur lors de la suppression de la Type d\'actualité' })
-    }
-})
-
-//Supprimer une étiquette
-router.delete('/tag/:id/delete', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deleteTag = await Tag.findByPk(id);
-        if (!deleteTag) {
-            return res.status(404).json({ error: 'Tag introuvable' });
-        }
-        await deleteTag.destroy();
-        res.sendStatus(204);
-    }
-    catch (error) {
-        console.error('Erreur lors de la suppression de la Tag d\'actualité :', error)
-        res.status(500).json({ message: 'Erreur lors de la suppression de la Tag d\'actualité' })
-    }
-})
-
 
 //Supprimer une actualité 
-router.delete('/:id/delete', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const deleteActuality = await Actualite.findByPk(id);

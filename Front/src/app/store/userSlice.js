@@ -103,6 +103,7 @@ if (userConnected) {
       displayName : userConnected.Collab?.nom + ' ' + userConnected.Collab?.prenom,
       email : userConnected.email,
       photo : userConnected.Collab,
+      CompteId : userConnected.id,
     }
   }
 } else {

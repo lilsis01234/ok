@@ -72,7 +72,7 @@ const EventCountdown = () => {
     return (
         <div>
             <Countdown date={targetDate}  />
-            <Countdown date={events[currentEventIndex]?.date} onComplete={handleCountdownEnd} />
+            {/* <Countdown date={events[currentEventIndex]?.date} onComplete={handleCountdownEnd} /> */}
         </div>
     )
 }
