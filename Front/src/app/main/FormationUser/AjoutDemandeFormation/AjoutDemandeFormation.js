@@ -8,18 +8,20 @@ const AjoutDemandeFormation = () => {
   const [theme, setTheme] = useState('');
   const [description, setDescription] = useState('');
   const [destinataire, setDestinataire] = useState('');
-  const [personneAFormer, setPersonneAFormer] = useState(null);
-  const [equipeAFormer, setEquipeAFormer] = useState(null);
-  const[equipe,setEquipeData]=useState([]);
+  const [collaborateurs, setPersonneAFormer] = useState(null);
+  const [equipe, setEquipeAFormer] = useState(null);
+  const[equipes,setEquipeData]=useState([]);
   const[collabs,setCollabs]=useState([]);
   const [roleHierarchique,setRoleHierarchique]= useState([]);
-  const auteurPrep =localStorage.getItem('user'); 
 
+  const auteurPrep =localStorage.getItem('user'); 
   console.log(auteurPrep);
-    const parsedAuteur = JSON.parse(auteurPrep);
-    const auteur = parsedAuteur.id;
-    const duree = "indefini";
-    console.log(auteur);
+  const parsedAuteur = JSON.parse(auteurPrep);
+  const auteur = parsedAuteur.id;
+  console.log(auteur);
+
+  
+  const duree = "indefini";
 
   const fetchEquipe = () => {
     axios.get('http://localhost:4000/api/equipe/all')
@@ -68,8 +70,8 @@ const AjoutDemandeFormation = () => {
         description,
         auteur,
         destinataire,
-        equipeAFormer,
-        personneAFormer,
+        equipe,
+        collaborateurs,
         duree
       })
       .then((res) => {
@@ -105,7 +107,7 @@ const AjoutDemandeFormation = () => {
 
          <div className="form2-group">
           <label>Si pour des personnes, personnes à former:</label>
-          <select multiple value={personneAFormer} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+          <select multiple value={collaborateurs} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
             {collabs.map((collab) => (
               <option key={collab.id} value={collab.id}>
                 {collab.nom} {collab.prenom}
@@ -115,8 +117,8 @@ const AjoutDemandeFormation = () => {
         </div>
         <div className="form2-group">
           <label>Si pour une équipe, équipe à former:</label>
-          <select multiple value={equipeAFormer} onChange={(e) => setEquipeAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
-            {equipe.map((eq) => (
+          <select multiple value={equipe} onChange={(e) => setEquipeAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+            {equipes.map((eq) => (
               <option key={eq.id} value={eq.id}>
                 {eq.nomEquipe	}
               </option>

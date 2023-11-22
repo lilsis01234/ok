@@ -13,18 +13,16 @@ i18next.addResourceBundle('fr', 'navigation', fr);
 const navigationConfig = [
   {
     id: 'dashboard',
-    title: 'Dashboard',
+    title: 'TABLEAU DE BORD',
     type: 'group',
     icon: 'heroicons-outline:home',
-    translate: 'DASHBOARDS',
     children : [
       {
         id: 'dashboard.dashboard',
-        title: 'Dashboard',
+        title: 'Acceuil',
         type: 'item',
         icon: 'heroicons-outline:home',
-        translate: 'Dashboard',
-        url : 'dashboards/dashboards'
+        url : '/acceuil'
       },
       {
         id: 'dashboard.collaborateur',
@@ -223,14 +221,14 @@ const navigationConfig = [
         translate: 'Formations',
         url : 'dashboards/listeFormation'
       },
-      // {
-      //   id: 'formation.demandeformations',
-      //   title: 'Demandes de formations',
-      //   type: 'item',
-      //   icon: 'heroicons-outline:users',
-      //   translate: 'Demandes',
-      //   url : 'dashboards/demandeFormation'
-      // },
+      {
+        id: 'formation.demandeformations',
+        title: 'Demandes de formations',
+        type: 'item',
+        icon: 'heroicons-outline:users',
+        translate: 'Demandes',
+        url : 'dashboards/demandeFormation'
+      },
       {
         id: 'formation.ajoutFormation',
         title: 'Formation',

@@ -54,7 +54,10 @@ const moduleRouter = require('../backend/routes/formation/module')
 const discussionRouter = require('../backend/routes/formation/discussion')
 
 //Module Actualité
-const actualite = require('./routes/Actualite/Actualité')
+const actualite = require('./routes/Actualite/Actualité');
+const categorie = require('./routes/Actualite/Categorie');
+const tag = require('./routes/Actualite/Tag');
+const type = require('./routes/Actualite/Type');
 
 
 //Module Chat
@@ -78,11 +81,11 @@ app.use(express.json())
 
 //pour les fonctionnalités télecharger des photos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+app.use('/photo', express.static(path.join(__dirname, 'photoCollab')))
 
 //utilisation des routes middleware
 //Config
 app.use('/api', api_config) 
-
 
 
 //Module Profle
@@ -112,11 +115,13 @@ app.use('/api/discussions',discussionRouter);
 app.use('/api/seances',seanceRouter)
 app.use('/api/peerjs', peerServer);
 app.use('/api/module', moduleRouter);
-app.use('/api/actualite', actualite );
 app.use('/api/roleHierarchique',roleHierarchique);
 
 //Module actualité
-app.use('/api/actualite', actualite ) 
+app.use('/api/actualite', actualite );
+app.use('/api/categorie',categorie );
+app.use('/api/type',type );
+app.use('/api/tag',tag );
 
 //Module chat
 app.use('/api/chat/discussion', discussionChat)
@@ -135,8 +140,8 @@ sequelize.authenticate()
 
 
 //Initialisation du serveUR
-// app.listen(4001, () => {
-//     console.log('Serveur Express en écoute sur le port 4001')
+// app.listen(4000, () => {
+//     console.log('Serveur Express en écoute sur le port 4000')
 // });
 
 module.exports = { app, server, io }

@@ -47,6 +47,10 @@ Formation.init({
         key : 'id'
     }
     },
+    approbation:{
+        type:DataTypes.BOOLEAN,
+        allowNull:true,
+    },
     },{
         sequelize,
         modelName : 'Formation'
@@ -66,4 +70,3 @@ Formation.init({
     });
 
     module.exports = Formation;
-// // // module.exports = Formation;

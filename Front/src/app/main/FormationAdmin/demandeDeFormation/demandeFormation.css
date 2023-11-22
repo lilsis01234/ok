@@ -6,7 +6,7 @@
 }
 .visible h1{
     color: white !important;
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
 }
   
 .formation_item {
@@ -29,7 +29,7 @@
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    font-size: 24px;
+    /* font-size: 24px; */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -42,21 +42,26 @@
   }
 
   .formation_title {
-    font-size: 24px;
+    /* font-size: 24px; */
     color: #007bff; 
     margin-bottom: 10px;
+    text-decoration: none !important;
   }
   
   .formation_description {
-    font-size: 16px;
+    /* font-size: 16px; */
     color: #333;
     margin-bottom: 10px;
   }
   
   .formateur_name {
-    font-size: 14px;
+    /* font-size: 14px; */
     color: #888;
     margin-bottom: 10px;
+  }
+  
+  a{
+    text-decoration: none !important;
   }
   
   .voir_plus_button:hover {
@@ -71,7 +76,7 @@
   }
   
   .header h1 {
-    font-size: 24px;
+    /* font-size: 24px; */
     color: #343a40;
     margin-bottom: 10px;
   }
@@ -87,7 +92,7 @@
     border: none;
     outline: none;
     width: 200px;
-    font-size: 16px;
+    /* font-size: 16px; */
   }
   
   .search_form button {
@@ -104,3 +109,45 @@
     background-color: #0056b3;
   }
   
+  .lien{
+    text-decoration: none !important;
+  }
+
+.training-request-container {
+  background-color: #ffffff; 
+  padding: 50px; 
+  width: 75%; 
+  margin: 0 auto; 
+  margin-top: 2%;
+  border-radius: 25px;
+}
+
+.collabListes_title {
+  /* font-size: 2em;  */
+  margin-bottom: 20px;
+  color: #333; 
+}
+
+.training-request-item {
+  background-color: #fff; 
+  border: 2px solid #f1f1f1;
+  margin-bottom: 20px; 
+  padding: 20px; 
+  border-radius: 25px;
+}
+
+.name {
+  /* font-size: 1.5em; */
+  color: #479df9; 
+}
+
+.theme {
+  /* font-size: 1.2em; */
+  color: #4caf50; 
+}
+
+.description {
+  /* font-size: 1em;  */
+  color: #3d3b3b !important;
+  text-decoration: none !important; 
+}
