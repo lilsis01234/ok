@@ -29,7 +29,7 @@ function ContactInfo(props) {
             error={!!errors.tel}
             required
             helperText={errors?.tel?.message}
-            label="Phone"
+            label="Téléphone"
             autoFocus
             id="tel"
             variant="outlined"
@@ -46,7 +46,8 @@ function ContactInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.tel2}
             helperText={errors?.tel2?.message}
-            label="Second Phone"
+            value={field.value || ''}
+            label="Deuxième téléphone"
             autoFocus
             id="tel2"
             variant="outlined"
@@ -63,7 +64,7 @@ function ContactInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.telurgence}
             helperText={errors?.telurgence?.message}
-            label="Emergency phone"
+            label="Téléphone d'urgence"
             autoFocus
             id="tel"
             variant="outlined"

@@ -1,9 +1,11 @@
-import { TextField } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
+import { Radio, RadioGroup, TextField } from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import moment from 'moment';
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 
 function BasicInfo(props) {
@@ -11,7 +13,7 @@ function BasicInfo(props) {
   const { control, formState } = methods || {};
   const { errors } = formState || {};
 
-  // console.log(methods);
+  console.log(methods);
 
   if (!methods) {
     return null;
@@ -29,7 +31,7 @@ function BasicInfo(props) {
             error={!!errors.nom}
             required
             helperText={errors?.nom?.message}
-            label="Name"
+            label="Nom"
             autoFocus
             id="name"
             variant="outlined"
@@ -47,7 +49,7 @@ function BasicInfo(props) {
             error={!!errors.prenom}
             required
             helperText={errors?.prenom?.message}
-            label="Last Name"
+            label="Prénom"
             autoFocus
             id="prenom"
             variant="outlined"
@@ -58,16 +60,22 @@ function BasicInfo(props) {
       <Controller
         name="dateNaissance"
         control={control}
+        defaultValue={formValues.dateNaissance ? moment(formValues.dateNaissance).toDate() : moment().toDate()}
         render={({ field }) => (
-          <DatePicker
-            {...field}
-            renderInput={(params) => <TextField {...params} />}
-            label="Birth Day"
-            required
-            error={!!errors.dateNaissance}
-            helperText={errors?.dateNaissance?.message}
-            fullWidth
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              {...field}
+              value={field.value ? moment(field.value).toDate() : null}
+              onChange={(date) => {
+                field.onChange(date);
+              }}
+              label="Date de Naissance"
+              required
+              error={!!errors.dateNaissance}
+              helperText={errors?.dateNaissance?.message}
+              fullWidth
+            />
+          </LocalizationProvider>
         )}
       />
       <Controller
@@ -80,7 +88,7 @@ function BasicInfo(props) {
             error={!!errors.lieuNaissance}
             required
             helperText={errors?.lieuNaissance?.message}
-            label="Birth Place"
+            label="Lieu de Naissance"
             autoFocus
             id="lieuNaissance"
             variant="outlined"
@@ -92,16 +100,23 @@ function BasicInfo(props) {
         name="sexe"
         control={control}
         render={({ field }) => (
-          <div>
+          <RadioGroup
+            row
+            value={field.value}
+            onChange={(e) => field.onChange(e.target.value)}
+            label="Sexe"
+          >
             <FormControlLabel
-              control={<Checkbox {...field} value="Masculin" />}
-              label="Male"
+              control={<Radio />}
+              label="Masculin"
+              value="Masculin"
             />
             <FormControlLabel
-              control={<Checkbox {...field} value="Féminin" />}
-              label="Female"
+              control={<Radio />}
+              label="Féminin"
+              value="Féminin"
             />
-          </div>
+          </RadioGroup>
         )}
       />
     </div>

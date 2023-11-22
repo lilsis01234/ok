@@ -20,6 +20,7 @@ import SecondProfessionalInfo from './tabs/secondProfessionalInfo';
 import PictureCollab from './tabs/PictureCollab';
 
 
+
 const schema = yup.object().shape(
     {
     matricule: yup
@@ -63,7 +64,7 @@ function CollaborateurListItem(props) {
     
     const { reset, watch, control, onChange, fomState } =  methods || {};
     const form = watch();
-    // console.log(form)
+    console.log(form)
 
 
     useEffect(() => {
@@ -75,9 +76,10 @@ function CollaborateurListItem(props) {
 
                 } else {
                     console.log('Affichage d\'une collaborateur existante')
-                    axios.get(`http://localhost:4000/api/collaborateur/view/${directionId}`)
+                    axios.get(`http://localhost:4000/api/collaborateur/view/${collaborateurId}`)
                         .then(response => {
-                            setCollab(response.data.collab)
+                            console.log(response.data.collaborateur)
+                            setCollab(response.data.collaborateur)
                             setNoCollab(false)
                         })
                         .catch(error => {
@@ -126,16 +128,16 @@ function CollaborateurListItem(props) {
                 className="flex flex-col flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There is no such collab!
+                    Il n'y a pas de collaborateur de ce type !
                 </Typography>
                 <Button
                     className="mt-24"
                     component={Link}
                     variant="outlined"
-                    to="manage/collaborator"
+                    to="/manage/collaborator"
                     color="inherit"
                 >
-                    Go To Collab Page
+                   Retourner à la liste des collaborateurs
                 </Button>
             </motion.div>
         )
@@ -164,13 +166,13 @@ function CollaborateurListItem(props) {
                             scrollButtons="auto"
                             classes={{ root: 'w-full h-64 border-b-1' }}
                         >
-                            <Tab className="h-64" label="Basic Info" />
-                            <Tab className="h-64" label="Adress" />
+                            <Tab className="h-64" label="Etat civil" />
+                            <Tab className="h-64" label="Adresse" />
                             <Tab className="h-64" label="Contact" />
-                            <Tab className="h-64" label="Matrimoniale Info" />
-                            <Tab className="h-64" label="Professional Info" />
-                            <Tab className="h-64" label="Second Professional Info" />
-                            <Tab className="h-64" label="Pictures" />
+                            <Tab className="h-64" label="Information matrimoniale" />
+                            <Tab className="h-64" label="Information professionnelle" />
+                            <Tab className="h-64" label="Deuxième information professionnelle" />
+                            <Tab className="h-64" label="Photo" />
                         </Tabs>
                         <div className="p-16 sm:p-24 max-w-3xl">
                             <div className={tabValue !== 0 ? 'hidden' : ''}>

@@ -289,7 +289,7 @@ router.get('/view/:id', async (req, res) => {
                     as: 'equipe1'
                 }, {
                     model: Equipe,
-                    as: 'equipe2'
+                    as: 'equipes'
                 }]
         });
         if (!collaborateur) {

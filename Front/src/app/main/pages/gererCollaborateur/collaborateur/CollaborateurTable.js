@@ -9,6 +9,11 @@ import { motion } from "framer-motion";
 import { Typography } from "@mui/material";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
+import CollaborateurTableHeader from "./CollaborateurTableHeader";
+import moment from "moment";
+import 'moment/locale/fr';
+
+moment.locale('fr')
 
 function CollaborateurTable(props) {
   const navigate = useNavigate();
@@ -68,9 +73,9 @@ function CollaborateurTable(props) {
     setSelected([]);
   }
 
-  // function handleClick(item) {
-  //     navigate(`/business/manage/direction/${item.id}/`);
-  // }
+  function handleClick(item) {
+      navigate(`/manage/collaborator/${item.id}`);
+  }
 
   function handleCheck(event, id) {
     const selectedIndex = selected.indexOf(id);
@@ -112,12 +117,20 @@ function CollaborateurTable(props) {
     );
   }
 
-  console.log(collaborateurData)
+  // console.log(collaborateurData)
 
   return (
     <div className="w-full flex flex-col min-h-full">
       <FuseScrollbars className="grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
+          <CollaborateurTableHeader
+              selectColladId={selected}
+              order = {order}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={collaborateurData.length}
+              onMenuItemClick={handleDeselect}
+          />
           <TableBody>
             {_.orderBy(
               collaborateurData,
@@ -147,7 +160,7 @@ function CollaborateurTable(props) {
                     tabIndex={-1}
                     key={n.id}
                     selected={isSelected}
-                    // onClick={(event) => handleClick(n)}
+                    onClick={(event) => handleClick(n)}
                   >
                     <TableCell
                       className="w-40 md:w-64 text-center"
@@ -161,7 +174,8 @@ function CollaborateurTable(props) {
                     </TableCell>
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.matricule}</TableCell>
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.nom} {n.prenom}</TableCell>
-                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.dateNaissance}</TableCell>
+                    {/* <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.dateNaissance}</TableCell> */}
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{moment(n.dateNaissance).format('D MMMM YYYY')}</TableCell>
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.poste1?.titrePoste}</TableCell>
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.departement1?.nomDepartement}</TableCell>
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.projet1?.nomProjet}</TableCell>

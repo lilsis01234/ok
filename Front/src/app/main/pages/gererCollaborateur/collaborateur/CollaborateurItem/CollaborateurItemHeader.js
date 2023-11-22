@@ -40,7 +40,7 @@ function CollaborateurItemHeader({formValues}) {
     const handleSaveCollaborateur = async () => {
         if (id){
             try {
-                await axios.put(`http://localhost:4000/api/collaborateur/edit/${id}`, data)
+                await axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data)
                 alert('Collaborator Update succesfully')
                 navigate('/manage/collaborator')
             } catch (error){
@@ -78,7 +78,7 @@ function CollaborateurItemHeader({formValues}) {
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                         </FuseSvgIcon>
-                        <span className="flex mx-4 font-medium">Collaborator</span>
+                        <span className="flex mx-4 font-medium">Collaborateurs</span>
                     </Typography>
                 </motion.div>
                 <div className="flex items-center max-w-full">
@@ -87,8 +87,8 @@ function CollaborateurItemHeader({formValues}) {
                           initial={{ x: -20 }}
                           animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nom || 'New Collaborator'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Collaborator Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nom || 'Nouveau collaborateur'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Détail du collaborateur</Typography>
                     </motion.div>   
                 </div>
             </div>

@@ -67,7 +67,6 @@ function SecondProfessionalInfo(props) {
       <Controller
         name="poste2"
         control={control}
-        defaultValue={formValues.poste2 || ""}
         render={({ field }) => (
           <TextField
             {...field}
@@ -75,6 +74,7 @@ function SecondProfessionalInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.poste}
             required
+            value={field.value || ''}
             helperText={errors?.poste2?.message}
             label="Second Fonction"
             autoFocus
@@ -101,6 +101,7 @@ function SecondProfessionalInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.departement2}
             required
+            value={field.value || ''}
             helperText={errors?.departement2?.message}
             label="Second Departement"
             autoFocus
@@ -108,6 +109,7 @@ function SecondProfessionalInfo(props) {
             variant="outlined"
             fullWidth
           >
+            <MenuItem value="">Selectionner une option</MenuItem>
             {listeDepartement.map((departement2) => (
               <MenuItem key={departement2.id} value={departement2.id}>
                 {departement2.nomDepartement}
@@ -127,6 +129,7 @@ function SecondProfessionalInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.projet2}
             required
+            value={field.value || ''}
             helperText={errors?.projet2?.message}
             label="Second Project"
             autoFocus
@@ -134,6 +137,7 @@ function SecondProfessionalInfo(props) {
             variant="outlined"
             fullWidth
           >
+            <MenuItem value="">Selectionner une option</MenuItem>
             {listeProjet.map((projet2) => (
               <MenuItem key={projet2.id} value={projet2.id}>
                 {projet2.nomProjet}
@@ -153,6 +157,7 @@ function SecondProfessionalInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.equipe2}
             required
+            value={field.value || ''}
             helperText={errors?.equipe2?.message}
             label="Second Team"
             autoFocus
@@ -160,6 +165,7 @@ function SecondProfessionalInfo(props) {
             variant="outlined"
             fullWidth
           >
+            <MenuItem value="">Selectionner une option</MenuItem>
             {listeEquipe.map((equipe2) => (
               <MenuItem key={equipe2.id} value={equipe2.id}>
                 {equipe2.nomEquipe}

@@ -1,9 +1,12 @@
 import { TextField } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import moment from 'moment';
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
 
 function BasicDirectionInfoTab(props) {
   const { methods, formValues } = props;
@@ -36,19 +39,25 @@ function BasicDirectionInfoTab(props) {
           />
         )}
       />
-      <Controller
+       <Controller
         name="dateDelivrance"
         control={control}
+        defaultValue={formValues.dateDelivrance || null}
         render={({ field }) => (
-          <DatePicker
-            {...field}
-            renderInput={(params) => <TextField {...params} />}
-            label="Delivrance Day"
-            required
-            error={!!errors.dateDelivrance}
-            helperText={errors?.dateDelivrance?.message}
-            fullWidth
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              {...field}
+              value={field.value ? moment(field.value).toDate() : null}
+              renderInput={({ inputProps, InputProps, ...params }) => (
+                <TextField {...params} />
+              )}
+              label="Date de délivrance"
+              required
+              error={!!errors.dateDelivrance}
+              helperText={errors?.dateDelivrance?.message}
+              fullWidth
+            />
+          </LocalizationProvider>
         )}
       />
       <Controller
@@ -61,7 +70,7 @@ function BasicDirectionInfoTab(props) {
             error={!!errors.lieuDelivrance}
             required
             helperText={errors?.lieuDelivrance?.message}
-            label="Delivrance Place"
+            label="Date de délivrance"
             autoFocus
             id="lieuDelivrance"
             variant="outlined"
@@ -79,7 +88,7 @@ function BasicDirectionInfoTab(props) {
             error={!!errors.numCNAPS}
             required
             helperText={errors?.numCNAPS?.message}
-            label="CNAPS Numero"
+            label="Numero CNAPS"
             autoFocus
             id="numCNAPS"
             variant="outlined"
@@ -92,22 +101,23 @@ function BasicDirectionInfoTab(props) {
         name="statutmatrimoniale"
         control={control}
         render={({ field }) => (
-          <Select
+          <TextField
             {...field}
-            value={field.value || ""} // Assurez-vous d'avoir une valeur par défaut
+            select
+            value={field.value || 'Célibataire'} // Assurez-vous d'avoir une valeur par défaut
             className="mt-8 mb-16"
             error={!!errors.statutmatrimoniale}
             required
             helperText={errors?.statutmatrimoniale?.message}
-            label="Marital Status"
+            label="Statut Matrimonial"
             autoFocus
             id="statutmatrimoniale"
             variant="outlined"
             fullWidth
           >
-            <MenuItem value="Célibataire">Single</MenuItem>
-            <MenuItem value="Marié">Married</MenuItem>
-          </Select>
+            <MenuItem value="Célibataire">Célibataire</MenuItem>
+            <MenuItem value="Marié">Marié</MenuItem>
+          </TextField>
         )}
       />
 
@@ -121,7 +131,7 @@ function BasicDirectionInfoTab(props) {
             error={!!errors.nbEnfant}
             required
             helperText={errors?.nbEnfant?.message}
-            label="Number of Children"
+            label="Nombre d'enfant"
             autoFocus
             id="nbEnfant"
             type="number" // Spécifie le type de champ comme nombre

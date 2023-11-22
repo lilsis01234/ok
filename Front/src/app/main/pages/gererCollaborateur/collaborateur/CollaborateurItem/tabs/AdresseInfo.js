@@ -1,9 +1,8 @@
 import { TextField } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
+
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+
 
 
 function AdresseInfo(props) {
@@ -65,7 +64,7 @@ function AdresseInfo(props) {
             error={!!errors.ville}
             required
             helperText={errors?.ville?.message}
-            label="City"
+            label="Ville"
             autoFocus
             id="ville"
             variant="outlined"
@@ -81,8 +80,9 @@ function AdresseInfo(props) {
             {...field}
             className="mt-8 mb-16"
             error={!!errors.adresse2}
+            value={field.value || ''}
             helperText={errors?.adresse2?.message}
-            label="Second Adress"
+            label="Deuxième Adresse"
             autoFocus
             id="adresse2"
             variant="outlined"
