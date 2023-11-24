@@ -66,9 +66,9 @@ function CompteCollaborateurTable() {
 
     return (
         <div className="w-full flex flex-col min-h-full">
-            <CompteCollaborateurTableHeader/>
             <FuseScrollbars className="grow overflow-x-auto">
                 <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
+                    <CompteCollaborateurTableHeader/>
                     <TableBody>
                         {compteData
                             .slice(page * rowPerPage, page * rowPerPage + rowPerPage)
