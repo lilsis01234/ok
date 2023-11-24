@@ -33,6 +33,7 @@ function AdresseInfo(props) {
             id="lot"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
@@ -51,6 +52,7 @@ function AdresseInfo(props) {
             id="quartier"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
@@ -69,6 +71,7 @@ function AdresseInfo(props) {
             id="ville"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
@@ -87,6 +90,7 @@ function AdresseInfo(props) {
             id="adresse2"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />

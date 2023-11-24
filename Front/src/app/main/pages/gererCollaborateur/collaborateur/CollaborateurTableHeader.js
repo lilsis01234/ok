@@ -38,10 +38,10 @@ const rows = [
     label: 'Département',
     sort: true
   }, {
-    id: 'equipe',
+    id: 'Projet',
     align: 'left',
     disablePadding: false,
-    label: 'Equipe',
+    label: 'Projet',
     sort: true
   },{
     id: 'site',
@@ -83,7 +83,7 @@ function CollaborateurTableHeader(props) {
   return (
     <TableHead>
       <TableRow className='h-48 sm:h-64'>
-        <TableCell
+        {/* <TableCell
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === 'light'
@@ -134,7 +134,7 @@ function CollaborateurTableHeader(props) {
             </Box>
           )}
 
-        </TableCell>
+        </TableCell> */}
         {rows.map((row) => {
           return (
             <TableCell

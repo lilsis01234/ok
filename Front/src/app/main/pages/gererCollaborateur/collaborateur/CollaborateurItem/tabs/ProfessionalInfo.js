@@ -8,7 +8,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 function ProfessionalInfo(props) {
   const { methods, formValues } = props;
-  const { control, formState } = methods || {};
+  const { control, formState, setValue} = methods || {};
   const { errors } = formState || {};
 
   const [listePoste, setListePoste] = useState([]);
@@ -69,7 +69,6 @@ function ProfessionalInfo(props) {
       <Controller
         name="matricule"
         control={control}
-        defaultValue={formValues.matricule}
         render={({ field }) => (
           <TextField
             {...field}
@@ -82,30 +81,33 @@ function ProfessionalInfo(props) {
             id="matricule"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
-      <Controller
+       <Controller
         name="dateEmbauche"
         control={control}
-        defaultValue={formValues.dateEmbauche || null}
+        defaultValue={formValues.dateEmbauche ? moment(formValues.dateEmbauche).toDate() : moment().toDate()}
         render={({ field }) => (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               {...field}
               value={field.value ? moment(field.value).toDate() : null}
-              renderInput={({ inputProps, InputProps, ...params }) => (
-                <TextField {...params} />
-              )}
-              label="Date d'embauche "
+              onChange={(date) => {
+                field.onChange(date);
+              }}
+              label="Date d'Embauche"
               required
               error={!!errors.dateEmbauche}
               helperText={errors?.dateEmbauche?.message}
               fullWidth
+              format="dd/MM/yyyy"
             />
           </LocalizationProvider>
         )}
       />
+
       <Controller
         name="site"
         control={control}
@@ -123,6 +125,7 @@ function ProfessionalInfo(props) {
             id="site"
             variant="outlined"
             fullWidth
+            
           >
             <MenuItem value="Fivoarana">Fivoarana</MenuItem>
             <MenuItem value="Ivohasina">Ivohasina</MenuItem>
@@ -147,6 +150,7 @@ function ProfessionalInfo(props) {
             id="entreprise"
             variant="outlined"
             fullWidth
+           
           >
             <MenuItem value="Advalorem">Advalorem</MenuItem>
             <MenuItem value="Marketika">Marketika</MenuItem>
@@ -171,6 +175,7 @@ function ProfessionalInfo(props) {
             id="shift"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           >
             <MenuItem value="Jour">Jour</MenuItem>
             <MenuItem value="Nuit">Nuit</MenuItem>
@@ -180,7 +185,6 @@ function ProfessionalInfo(props) {
       <Controller
         name="poste"
         control={control}
-        // defaultValue={formValues.poste}
         render={({ field }) => (
           <TextField
             {...field}
@@ -189,12 +193,13 @@ function ProfessionalInfo(props) {
             error={!!errors.poste}
             required
             helperText={errors?.poste?.message}
-            value={field.value || ''}
+            value={field.value || null}
             label="Poste"
             autoFocus
             id="poste"
             variant="outlined"
             fullWidth
+            
           >
             {listePoste.map((poste) => (
               <MenuItem key={poste.id} value={poste.id}>
@@ -211,15 +216,16 @@ function ProfessionalInfo(props) {
           <TextField
             {...field}
             select
-            value={field.value || ''}
+            value={field.value || null}
             className="mt-8 mb-16"
             error={!!errors.departement}
             helperText={errors?.departement?.message}
             label="Département"
             autoFocus
-            id="poste"
+            id="departement"
             variant="outlined"
             fullWidth
+           
           >
             {listeDepartement.map((departement) => (
               <MenuItem key={departement.id} value={departement.id}>
@@ -237,18 +243,18 @@ function ProfessionalInfo(props) {
           <TextField
             {...field}
             select
-            value={field.value || ''}
+            value={field.value || null}
             className="mt-8 mb-16"
             error={!!errors.projet}
             helperText={errors?.projet?.message}
             label="Projet"
             autoFocus
-            id="poste"
+            id="projet"
             variant="outlined"
             fullWidth
           >
 
-            <MenuItem value="">Selectionner une option</MenuItem>
+            <MenuItem value={null}>Selectionner une option</MenuItem>
             {listeProjet.map((projet) => (
               <MenuItem key={projet.id} value={projet.id}>
                 {projet.nomProjet}
@@ -264,7 +270,7 @@ function ProfessionalInfo(props) {
           <TextField
             {...field}
             select
-            value={field.value || ''}
+            value={field.value || null}
             className="mt-8 mb-16"
             error={!!errors.equipe}
             helperText={errors?.equipe?.message}
@@ -274,7 +280,7 @@ function ProfessionalInfo(props) {
             variant="outlined"
             fullWidth
           >
-            <MenuItem value="">Selectionner une option</MenuItem>
+             <MenuItem value={null}>Selectionner une option</MenuItem>
             {listeEquipe.map((equipe) => (
               <MenuItem key={equipe.id} value={equipe.id}>
                 {equipe.nomEquipe}

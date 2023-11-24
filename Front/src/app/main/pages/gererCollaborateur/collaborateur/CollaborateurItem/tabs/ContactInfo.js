@@ -7,11 +7,13 @@ import Checkbox from '@mui/material/Checkbox';
 
 
 function ContactInfo(props) {
-  const { methods, formValues } = props;
+  const { methods, formValues, isEdit} = props;
   const { control, formState } = methods || {};
   const { errors } = formState || {};
 
   // console.log(methods);
+
+  console.log(isEdit);
 
   if (!methods) {
     return null;
@@ -34,6 +36,7 @@ function ContactInfo(props) {
             id="tel"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: true }}
           />
         )}
       />
@@ -52,6 +55,7 @@ function ContactInfo(props) {
             id="tel2"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
@@ -69,30 +73,31 @@ function ContactInfo(props) {
             id="tel"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
-         <Controller
-        name="email"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            className="mt-8 mb-16"
-            error={!!errors.email}
-            required
-            helperText={errors?.email?.message}
-            label="Email"
-            autoFocus
-            id="email"
-            variant="outlined"
-            fullWidth
+      {!isEdit && (
+            <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                error={!!errors.email}
+                required
+                helperText={errors?.email?.message}
+                label="Email"
+                autoFocus
+                id="email"
+                variant="outlined"
+                fullWidth
+                InputLabelProps={{ shrink: !!field.value }}
+              />
+            )}
           />
-        )}
-      />
-
-
-   
+      )}
     </div>
   );
 }

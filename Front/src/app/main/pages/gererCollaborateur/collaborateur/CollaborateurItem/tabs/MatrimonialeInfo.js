@@ -36,26 +36,29 @@ function BasicDirectionInfoTab(props) {
             id="CIN"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: true }}
           />
         )}
       />
-       <Controller
+      <Controller
         name="dateDelivrance"
         control={control}
-        defaultValue={formValues.dateDelivrance || null}
+        defaultValue={formValues.dateDelivrance ? moment(formValues.dateDelivrance).toDate() : moment().toDate()}
         render={({ field }) => (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               {...field}
               value={field.value ? moment(field.value).toDate() : null}
-              renderInput={({ inputProps, InputProps, ...params }) => (
-                <TextField {...params} />
-              )}
-              label="Date de délivrance"
+              onChange={(date) => {
+                field.onChange(date);
+              }}
+              label="Date de Délivrance"
               required
               error={!!errors.dateDelivrance}
               helperText={errors?.dateDelivrance?.message}
               fullWidth
+              format="dd/MM/yyyy"
+              InputLabelProps={{ shrink: true }}
             />
           </LocalizationProvider>
         )}
@@ -75,6 +78,7 @@ function BasicDirectionInfoTab(props) {
             id="lieuDelivrance"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
@@ -93,6 +97,7 @@ function BasicDirectionInfoTab(props) {
             id="numCNAPS"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
@@ -114,6 +119,7 @@ function BasicDirectionInfoTab(props) {
             id="statutmatrimoniale"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           >
             <MenuItem value="Célibataire">Célibataire</MenuItem>
             <MenuItem value="Marié">Marié</MenuItem>

@@ -35,29 +35,47 @@ const navigationConfig = [
     ],
   }, {
     id: 'collaborateur',
-    title: 'Collaborateur',
+    title: 'Collaborateurs',
     type: 'group',
     icon: 'heroicons-outline:user-group',
     translate: 'COLLABORATEURS', children : [
       {
          id : 'collaborateurs.liste',
-         title : 'Collaborator Lists',
+         title : 'Listes des collaborateurs',
          type: 'item',
          icon: 'heroicons-outline:user-group',
          url : 'collaborateurs/all',
       }, , {
         id : 'collaborator.manage',
-        title : 'Manage Collaborator',
+        title : 'Gérer Collaborateurs',
         type : 'collapse',
         icon : 'heroicons-outline:user-group', 
         children : [
           {
             id : 'collaborator.manage-collab',
-            title : 'Collaborator',
+            title : 'Listes des collaborateurs',
             type : 'item',
             url : 'manage/collaborator'
+          }, {
+            id : 'collaborator.manage-collab',
+            title : 'Archives',
+            type : 'item',
+            url : 'manage/archive/collaborateur'
           }
         ] 
+      },{
+        id : 'collaborateur.comptes',
+        title : 'Comptes collaborateurs',
+        type : 'collapse',
+        icon : 'heroicons-outline:user-circle',
+        children: [
+          {
+            id : 'collaborateur.manage-count',
+            title : 'Liste des comptes',
+            type : 'item',
+            url : 'manage/account'
+          }
+        ]
       }
     ]
   }, 
@@ -65,7 +83,6 @@ const navigationConfig = [
     id : 'entreprise',
     title : 'Entreprise',
     type : 'group',
-    translate : 'ENTREPRISE',
     children : [
        {
           id: 'entreprise.direction',
@@ -75,19 +92,19 @@ const navigationConfig = [
           url : 'dashboards/collaborateur'
         }, {
           id: 'entreprise.departement',
-          title: 'Department',
+          title: 'Département',
           type: 'item',
           icon: 'heroicons-outline:briefcase',
           url : 'dashboards/collaborateur'
         }, {
           id : 'entreprise.projet',
-          title : 'Team',
+          title : 'Projet',
           type : 'item',
           icon : 'heroicons-outline:user-group',
           url : 'dashboards/collaborateur'
         }, {
           id : 'entreprise.manage',
-          title : 'Manage Business Structure',
+          title : 'Gérer Structure de l\'Entreprise',
           type : 'collapse',
           icon : 'heroicons-outline:briefcase',
           children : [
@@ -103,17 +120,17 @@ const navigationConfig = [
               url : 'business/manage/departement'
             },  {
               id : 'entreprise.direction-manage-poste',
-              title : 'Fonction',
+              title : 'Poste',
               type : 'item',
               url : 'business/manage/Fonction'
             }, {
               id : 'entreprise.direction-manage-project',
-              title : 'Project',
+              title : 'Projet',
               type : 'item',
               url : 'business/manage/project'
             }, {
               id : 'entreprise.direction-manage-teams',
-              title : 'Team',
+              title : 'Equipe',
               type : 'item',
               url : 'business/manage/team'
             }
@@ -132,42 +149,42 @@ const navigationConfig = [
     children: [
       {
         id: 'actuality.list',
-        title: "toutes les actualités",
+        title: "Toutes les actualités",
         type: 'item',
         icon: 'heroicons-outline:newspaper',
         url: 'apps/actuality/list',
       },
       {
         id: 'actuality.add',
-        title: "Ajout d'actulité",
+        title: "Ajout d'actualité",
         type: 'item',
         icon: 'heroicons-outline:document-add',
         url: '/apps/addActuality',
       },
       {
         id: 'comment',
-        title: "Commentaire",
+        title: "Commentaires",
         type: 'item',
         icon: 'heroicons-outline:chat-alt',
         url: '/apps/edit-comments',
       },
       {
         id: 'categorie',
-        title: 'Categorie',
+        title: 'Catégories',
         type: 'item',
         icon: 'heroicons-outline:clipboard-list',
         url: '/apps/categorie',
       },
       {
         id: 'type',
-        title: 'Type',
+        title: 'Types',
         type: 'item',
         icon: 'material-outline:article',
         url: '/apps/type',
       },
       {
         id: 'tag',
-        title: 'éthiquette',
+        title: 'Etiquettes',
         type: 'item',
         icon: 'material-outline:article',
         url: '/apps/tag',

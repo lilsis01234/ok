@@ -22,27 +22,27 @@ import PictureCollab from './tabs/PictureCollab';
 
 
 const schema = yup.object().shape(
+    // {
+    // matricule: yup
+    //     .string()
+    //     .required('Veuillez entrer une matricule')
+    // }, 
     {
-    matricule: yup
-        .string()
-        .required('You must enter a matricule')
-    // .min(5, 'The product name must be at least 5 characters'),
-    }, {
         nom : yup
             .string()
-            .required('You must enter a name')
+            .required('Veuillez entrer un nom')
     }, {
        dateEmbauche : yup
             .date()
-            .required('You must enter a date') 
+            .required('Veuillez entrer une date d\'embauche') 
     }, {
         poste : yup
              .string()
-             .required('You must enter a fonction') 
+             .required('Veuillez entrer une poste') 
      }, {
         departement : yup
              .string()
-             .required('You must enter a departement') 
+             .required('Veuillez entrer un département') 
      },
 );
 
@@ -52,6 +52,7 @@ function CollaborateurListItem(props) {
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'))
     const [tabValue, setTabValue] = useState(0);
     const [noCollab, setNoCollab] = useState(false);
+    const [editData, setEditData] = useState(false);
 
     const [collab, setCollab] = useState([])
 
@@ -64,7 +65,6 @@ function CollaborateurListItem(props) {
     
     const { reset, watch, control, onChange, fomState } =  methods || {};
     const form = watch();
-    console.log(form)
 
 
     useEffect(() => {
@@ -73,14 +73,15 @@ function CollaborateurListItem(props) {
                 if (collaborateurId === 'new') {
                     console.log('Ajout d\'un nouvelle collaborateur')
                     setNoCollab(false)
-
+                    setEditData(false)
                 } else {
                     console.log('Affichage d\'une collaborateur existante')
                     axios.get(`http://localhost:4000/api/collaborateur/view/${collaborateurId}`)
                         .then(response => {
-                            console.log(response.data.collaborateur)
+                            // console.log(response.data.collaborateur)
                             setCollab(response.data.collaborateur)
                             setNoCollab(false)
+                            setEditData(true)
                         })
                         .catch(error => {
                             setNoCollab(true)
@@ -182,7 +183,7 @@ function CollaborateurListItem(props) {
                                 <AdresseInfo methods={methods} formValues={form}/>
                             </div>
                             <div className={tabValue !== 2 ? 'hidden' : ''}>
-                                <ContactInfo methods={methods} formValues={form}/>
+                                <ContactInfo methods={methods} formValues={form} isEdit={editData}/>
                             </div>
                             <div className={tabValue !== 3 ? 'hidden' : ''}>
                                 <MatrimonialeInfo methods={methods} formValues={form}/>

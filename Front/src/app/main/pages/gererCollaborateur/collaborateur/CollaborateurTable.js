@@ -74,7 +74,7 @@ function CollaborateurTable(props) {
   }
 
   function handleClick(item) {
-      navigate(`/manage/collaborator/${item.id}`);
+    navigate(`/manage/collaborator/${item.id}`);
   }
 
   function handleCheck(event, id) {
@@ -111,7 +111,7 @@ function CollaborateurTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There are no collaborator!
+          Il n'y a pas de collaborateur!
         </Typography>
       </motion.div>
     );
@@ -124,12 +124,12 @@ function CollaborateurTable(props) {
       <FuseScrollbars className="grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
           <CollaborateurTableHeader
-              selectColladId={selected}
-              order = {order}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={collaborateurData.length}
-              onMenuItemClick={handleDeselect}
+            selectColladId={selected}
+            order={order}
+            onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleRequestSort}
+            rowCount={collaborateurData.length}
+            onMenuItemClick={handleDeselect}
           />
           <TableBody>
             {_.orderBy(
@@ -162,7 +162,7 @@ function CollaborateurTable(props) {
                     selected={isSelected}
                     onClick={(event) => handleClick(n)}
                   >
-                    <TableCell
+                    {/* <TableCell
                       className="w-40 md:w-64 text-center"
                       padding="none"
                     >
@@ -171,7 +171,7 @@ function CollaborateurTable(props) {
                         onClick={(event) => event.stopPropagation()}
                         onChange={(event) => handleCheck(event, n.id)}
                       />
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.matricule}</TableCell>
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.nom} {n.prenom}</TableCell>
                     {/* <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.dateNaissance}</TableCell> */}

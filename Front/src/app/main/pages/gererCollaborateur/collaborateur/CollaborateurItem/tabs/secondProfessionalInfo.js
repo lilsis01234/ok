@@ -74,14 +74,16 @@ function SecondProfessionalInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.poste}
             required
-            value={field.value || ''}
+            value={field.value || null}
             helperText={errors?.poste2?.message}
-            label="Second Fonction"
+            label="Deuxième poste"
             autoFocus
             id="poste2"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           >
+             <MenuItem value={null}>Selectionner une option</MenuItem>
             {listePoste.map((poste2) => (
               <MenuItem key={poste2.id} value={poste2.id}>
                 {poste2.titrePoste}
@@ -93,7 +95,6 @@ function SecondProfessionalInfo(props) {
       <Controller
         name="departement2"
         control={control}
-        defaultValue={formValues.departement2 || ""}
         render={({ field }) => (
           <TextField
             {...field}
@@ -101,15 +102,16 @@ function SecondProfessionalInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.departement2}
             required
-            value={field.value || ''}
+            value={field.value || null}
             helperText={errors?.departement2?.message}
-            label="Second Departement"
+            label="Deuxième Département"
             autoFocus
             id="departement2"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           >
-            <MenuItem value="">Selectionner une option</MenuItem>
+            <MenuItem value={null}>Selectionner une option</MenuItem>
             {listeDepartement.map((departement2) => (
               <MenuItem key={departement2.id} value={departement2.id}>
                 {departement2.nomDepartement}
@@ -121,7 +123,6 @@ function SecondProfessionalInfo(props) {
       <Controller
         name="projet2"
         control={control}
-        defaultValue={formValues.projet2 || ""}
         render={({ field }) => (
           <TextField
             {...field}
@@ -129,15 +130,16 @@ function SecondProfessionalInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.projet2}
             required
-            value={field.value || ''}
+            value={field.value || null}
             helperText={errors?.projet2?.message}
-            label="Second Project"
+            label="Deuxième Projet"
             autoFocus
             id="projet2"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           >
-            <MenuItem value="">Selectionner une option</MenuItem>
+            <MenuItem value={null}>Selectionner une option</MenuItem>
             {listeProjet.map((projet2) => (
               <MenuItem key={projet2.id} value={projet2.id}>
                 {projet2.nomProjet}
@@ -149,7 +151,6 @@ function SecondProfessionalInfo(props) {
       <Controller
         name="equipe2"
         control={control}
-        defaultValue={formValues.equipe2 || ""}
         render={({ field }) => (
           <TextField
             {...field}
@@ -157,15 +158,16 @@ function SecondProfessionalInfo(props) {
             className="mt-8 mb-16"
             error={!!errors.equipe2}
             required
-            value={field.value || ''}
+            value={field.value || null}
             helperText={errors?.equipe2?.message}
-            label="Second Team"
+            label="Deuxième équipe"
             autoFocus
             id="equipe2"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           >
-            <MenuItem value="">Selectionner une option</MenuItem>
+            <MenuItem value={null}>Selectionner une option</MenuItem>
             {listeEquipe.map((equipe2) => (
               <MenuItem key={equipe2.id} value={equipe2.id}>
                 {equipe2.nomEquipe}

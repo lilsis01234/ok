@@ -3,9 +3,10 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import { fr } from 'date-fns/locale';
 import moment from 'moment';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
 
 
 function BasicInfo(props) {
@@ -13,7 +14,7 @@ function BasicInfo(props) {
   const { control, formState } = methods || {};
   const { errors } = formState || {};
 
-  console.log(methods);
+  // console.log(methods);
 
   if (!methods) {
     return null;
@@ -33,9 +34,10 @@ function BasicInfo(props) {
             helperText={errors?.nom?.message}
             label="Nom"
             autoFocus
-            id="name"
+            id="nom"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
@@ -54,6 +56,7 @@ function BasicInfo(props) {
             id="prenom"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
@@ -62,7 +65,7 @@ function BasicInfo(props) {
         control={control}
         defaultValue={formValues.dateNaissance ? moment(formValues.dateNaissance).toDate() : moment().toDate()}
         render={({ field }) => (
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} locale={fr}>
             <DatePicker
               {...field}
               value={field.value ? moment(field.value).toDate() : null}
@@ -74,6 +77,7 @@ function BasicInfo(props) {
               error={!!errors.dateNaissance}
               helperText={errors?.dateNaissance?.message}
               fullWidth
+              format="dd/MM/yyyy"
             />
           </LocalizationProvider>
         )}
@@ -93,6 +97,7 @@ function BasicInfo(props) {
             id="lieuNaissance"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
