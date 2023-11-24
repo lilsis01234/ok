@@ -37,20 +37,8 @@ function ActualityListApp() {
             alt="Profile Cover"
           />
 
-          <div className="flex flex-col flex-0 lg:flex-row items-center max-w-5xl w-full mx-auto px-32 lg:h-72">
-            <div className="-mt-96 lg:-mt-88 rounded-full">
-              <motion.div initial={{ scale: 0 }} animate={{ scale: 1, transition: { delay: 0.1 } }}>
-                <Avatar
-                  sx={{ borderColor: 'background.paper' }}
-                  className="w-128 h-128 border-4"
-                  src="assets/images/avatars/male-04.jpg"
-                  alt="User avatar"
-                />
-              </motion.div>
-            </div>
-
+          <div className="flex flex-col flex-0 lg:flex-row items-center max-w-7xl w-full mx-auto px-32 lg:h-72">
             <div className="flex flex-col items-center lg:items-start mt-16 lg:mt-0 lg:ml-32">
-              <Typography className="text-lg font-bold leading-none">Andrianjatovo Toavina</Typography>
               <Typography color="text.secondary">développeur Web, Fivoarana</Typography>
             </div>
 
@@ -58,7 +46,6 @@ function ActualityListApp() {
 
             <div className="flex items-center mt-24 lg:mt-0 space-x-24">
               <div className="flex flex-col items-center">
-                <Typography className="font-bold">300</Typography>
                 <Typography className="text-sm font-medium" color="text.secondary">
                   Collaborateurs
                 </Typography>
@@ -68,7 +55,7 @@ function ActualityListApp() {
         </div>
       }
       content={
-        <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
+        <div className="flex flex-auto justify-center w-full max-w-7xl mx-auto p-24 sm:p-32">
           <TimelineTab />
         </div>
       }

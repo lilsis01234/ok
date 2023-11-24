@@ -139,15 +139,15 @@ router.post('/image',upload.single('nom'), async (req, res) => {
 //Afficher les listes de tous les actualités
 router.get('/all', async (req, res) => {
     try {
-        const actuality = await Actualite.findAll({
-
+        const actualities = await Actualite.findAll({
+            order: [['date_publication', 'DESC']],
             include: [{
                 model: Compte,
                 include : [ { model : Collab} ]
             }]
         })
 
-        res.status(200).json(actuality)
+        res.status(200).json(actualities)
     }
     catch (error) {
         console.error(error);

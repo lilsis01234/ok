@@ -29,7 +29,6 @@ useEffect(() => {
   fetchActualities();
 }, [])
 
-console.log(listeActuality); 
 
   function handleClick(n) {
     props.navigate(`/apps/actuality/${n.id}`);
