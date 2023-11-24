@@ -1,7 +1,7 @@
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import { CheckBox } from '@mui/icons-material';
-import { Box, IconButton, Menu, TableCell, TableHead, TableRow } from '@mui/material';
-import React from 'react'
+import { Box, IconButton, Menu, TableCell, TableHead, TableRow, Tooltip, TableSortLabel, lighten} from '@mui/material';
+import React, { useState } from 'react'
 
 
 const rows = [
@@ -16,14 +16,14 @@ const rows = [
     id: 'name',
     align: 'left',
     disablePadding: false,
-    label: 'Name',
+    label: 'Nom et prénoms',
     sort: true
   },
   {
     id: 'dateNaissance',
     align: 'left',
     disablePadding: false,
-    label: 'Birth Day',
+    label: 'Date de naissance',
     sort: true
   }, {
     id: 'fonction',
@@ -35,21 +35,15 @@ const rows = [
     id: 'departement',
     align: 'left',
     disablePadding: false,
-    label: 'Departement',
+    label: 'Département',
     sort: true
   }, {
-    id: 'departement',
+    id: 'Projet',
     align: 'left',
     disablePadding: false,
-    label: 'Departement',
+    label: 'Projet',
     sort: true
-  }, {
-    id: 'departement',
-    align: 'left',
-    disablePadding: false,
-    label: 'Departement',
-    sort: true
-  }, {
+  },{
     id: 'site',
     align: 'left',
     disablePadding: false,
@@ -67,7 +61,7 @@ const rows = [
 
 
 
-function CollaborateurTableHeader() {
+function CollaborateurTableHeader(props) {
   const { selectColladId } = props;
   const numSelected = selectColladId.length;
 
@@ -89,7 +83,7 @@ function CollaborateurTableHeader() {
   return (
     <TableHead>
       <TableRow className='h-48 sm:h-64'>
-        <TableCell
+        {/* <TableCell
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === 'light'
@@ -140,7 +134,7 @@ function CollaborateurTableHeader() {
             </Box>
           )}
 
-        </TableCell>
+        </TableCell> */}
         {rows.map((row) => {
           return (
             <TableCell

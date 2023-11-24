@@ -23,6 +23,7 @@ import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererColl
 
 //Module d'actualité
 import appsConfigs from '../main/apps/appsConfigs';
+import GererCompteConfig from '../main/pages/gererCompte/gererCompteConfig';
 
 
 const routeConfigs = [
@@ -33,6 +34,7 @@ const routeConfigs = [
   DirectionAppConfig,
   StructureAppConfig,
   GererCollaborateurConfig,
+  GererCompteConfig,
 //Module d'actualité
   ...appsConfigs
 

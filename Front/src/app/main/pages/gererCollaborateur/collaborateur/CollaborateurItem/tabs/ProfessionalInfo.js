@@ -2,11 +2,13 @@ import { MenuItem, Select, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import axios, { formToJSON } from "axios";
-import { DatePicker } from "@mui/x-date-pickers";
+import moment from 'moment';
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 function ProfessionalInfo(props) {
   const { methods, formValues } = props;
-  const { control, formState } = methods || {};
+  const { control, formState, setValue} = methods || {};
   const { errors } = formState || {};
 
   const [listePoste, setListePoste] = useState([]);
@@ -67,7 +69,6 @@ function ProfessionalInfo(props) {
       <Controller
         name="matricule"
         control={control}
-        defaultValue={formValues.matricule || ""}
         render={({ field }) => (
           <TextField
             {...field}
@@ -80,77 +81,91 @@ function ProfessionalInfo(props) {
             id="matricule"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           />
         )}
       />
-      <Controller
+       <Controller
         name="dateEmbauche"
         control={control}
+        defaultValue={formValues.dateEmbauche ? moment(formValues.dateEmbauche).toDate() : moment().toDate()}
         render={({ field }) => (
-          <DatePicker
-            {...field}
-            renderInput={(params) => <TextField {...params} />}
-            label="Date d'embache"
-            required
-            error={!!errors.dateEmbauche}
-            helperText={errors?.dateEmbauche?.message}
-            fullWidth
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              {...field}
+              value={field.value ? moment(field.value).toDate() : null}
+              onChange={(date) => {
+                field.onChange(date);
+              }}
+              label="Date d'Embauche"
+              required
+              error={!!errors.dateEmbauche}
+              helperText={errors?.dateEmbauche?.message}
+              fullWidth
+              format="dd/MM/yyyy"
+            />
+          </LocalizationProvider>
         )}
       />
+
       <Controller
         name="site"
         control={control}
         render={({ field }) => (
-          <Select
+          <TextField
             {...field}
-            value={field.value || ""} // Assurez-vous d'avoir une valeur par défaut
+            select
+            value={field.value || 'Fivoarana'} // Assurez-vous d'avoir une valeur par défaut
             className="mt-8 mb-16"
             error={!!errors.site}
             required
             helperText={errors?.site?.message}
-            label="site"
+            label="Site"
             autoFocus
             id="site"
             variant="outlined"
             fullWidth
+            
           >
             <MenuItem value="Fivoarana">Fivoarana</MenuItem>
             <MenuItem value="Ivohasina">Ivohasina</MenuItem>
             <MenuItem value="Soazaraina">Soazaraina</MenuItem>
-          </Select>
+          </TextField>
         )}
       />
       <Controller
         name="entreprise"
         control={control}
         render={({ field }) => (
-          <Select
+          <TextField
             {...field}
-            value={field.value || ""} // Assurez-vous d'avoir une valeur par défaut
+            select
+            value={field.value || 'Advalorem'} // Assurez-vous d'avoir une valeur par défaut
             className="mt-8 mb-16"
             error={!!errors.entreprise}
             required
             helperText={errors?.entreprise?.message}
-            label="Entreprisse"
+            label="Entreprise"
             autoFocus
             id="entreprise"
             variant="outlined"
             fullWidth
+           
           >
             <MenuItem value="Advalorem">Advalorem</MenuItem>
             <MenuItem value="Marketika">Marketika</MenuItem>
             <MenuItem value="Progressio">Progressio</MenuItem>
-          </Select>
+          </TextField>
         )}
       />
       <Controller
         name="shift"
         control={control}
         render={({ field }) => (
-          <Select
+          <TextField
             {...field}
-            value={field.value || ""} // Assurez-vous d'avoir une valeur par défaut
+            select
+            value={field.value || "Jour"} // Assurez-vous d'avoir une valeur par défaut
             className="mt-8 mb-16"
             error={!!errors.shift}
             required
@@ -160,16 +175,16 @@ function ProfessionalInfo(props) {
             id="shift"
             variant="outlined"
             fullWidth
+            InputLabelProps={{ shrink: !!field.value }}
           >
-            <MenuItem value="Jour">Day</MenuItem>
-            <MenuItem value="Nuit">Night</MenuItem>
-          </Select>
+            <MenuItem value="Jour">Jour</MenuItem>
+            <MenuItem value="Nuit">Nuit</MenuItem>
+          </TextField>
         )}
       />
       <Controller
         name="poste"
         control={control}
-        defaultValue={formValues.poste || ""}
         render={({ field }) => (
           <TextField
             {...field}
@@ -178,15 +193,17 @@ function ProfessionalInfo(props) {
             error={!!errors.poste}
             required
             helperText={errors?.poste?.message}
+            value={field.value || null}
             label="Poste"
             autoFocus
             id="poste"
             variant="outlined"
             fullWidth
+            
           >
             {listePoste.map((poste) => (
               <MenuItem key={poste.id} value={poste.id}>
-                {poste.titrePosste}
+                {poste.titrePoste}
               </MenuItem>
             ))}
           </TextField>
@@ -195,20 +212,20 @@ function ProfessionalInfo(props) {
       <Controller
         name="departement"
         control={control}
-        defaultValue={formValues.departement || ""}
         render={({ field }) => (
           <TextField
             {...field}
             select
+            value={field.value || null}
             className="mt-8 mb-16"
             error={!!errors.departement}
-            required
             helperText={errors?.departement?.message}
-            label="Departement"
+            label="Département"
             autoFocus
-            id="poste"
+            id="departement"
             variant="outlined"
             fullWidth
+           
           >
             {listeDepartement.map((departement) => (
               <MenuItem key={departement.id} value={departement.id}>
@@ -221,21 +238,23 @@ function ProfessionalInfo(props) {
       <Controller
         name="projet"
         control={control}
-        defaultValue={formValues.projet || ""}
+        defaultValue={formValues.projet}
         render={({ field }) => (
           <TextField
             {...field}
             select
+            value={field.value || null}
             className="mt-8 mb-16"
             error={!!errors.projet}
-            required
             helperText={errors?.projet?.message}
-            label="Departement"
+            label="Projet"
             autoFocus
-            id="poste"
+            id="projet"
             variant="outlined"
             fullWidth
           >
+
+            <MenuItem value={null}>Selectionner une option</MenuItem>
             {listeProjet.map((projet) => (
               <MenuItem key={projet.id} value={projet.id}>
                 {projet.nomProjet}
@@ -247,21 +266,21 @@ function ProfessionalInfo(props) {
       <Controller
         name="equipe"
         control={control}
-        defaultValue={formValues.equipe || ""}
         render={({ field }) => (
           <TextField
             {...field}
             select
+            value={field.value || null}
             className="mt-8 mb-16"
             error={!!errors.equipe}
-            required
             helperText={errors?.equipe?.message}
-            label="Team"
+            label="Equipe"
             autoFocus
             id="equipe"
             variant="outlined"
             fullWidth
           >
+             <MenuItem value={null}>Selectionner une option</MenuItem>
             {listeEquipe.map((equipe) => (
               <MenuItem key={equipe.id} value={equipe.id}>
                 {equipe.nomEquipe}

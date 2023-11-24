@@ -82,7 +82,7 @@ router.post('/new', upload.single('image'), async (req, res) => {
             nbEnfant: req.body.nbEnfant,
             dateEmbauche: req.body.dateEmbauche,
             site: req.body.site,
-            image: image ? image.path : null,
+            image: image ? image.path.replace(/\\/g, '/') : null,
             entreprise: req.body.entreprise,
             numCNAPS: req.body.numCNAPS,
             shift: req.body.shift,
@@ -289,7 +289,7 @@ router.get('/view/:id', async (req, res) => {
                     as: 'equipe1'
                 }, {
                     model: Equipe,
-                    as: 'equipe2'
+                    as: 'equipes'
                 }]
         });
         if (!collaborateur) {
@@ -315,6 +315,7 @@ router.put('/:id/edit', upload.single('image'), async (req, res) => {
             return res.status(404).json({ error: 'Collaborateur introuvable' });
         }
         const updatedCollab = await updateCollab.update({
+            matricule: req.body.matricule,
             nom: req.body.nom,
             prenom: req.body.prenom,
             dateNaissance: req.body.dateNaissance,
@@ -335,7 +336,7 @@ router.put('/:id/edit', upload.single('image'), async (req, res) => {
             entreprise: req.body.entreprise,
             numCNAPS: req.body.numCNAPS,
             shift: req.body.shift,
-            image: image ? image.path : imageCollab,
+            image: image ? image.path.replace(/\\/g, '/') : imageCollab,
             poste: req.body.poste,
             poste2: req.body.poste2,
             departement: req.body.departement,
