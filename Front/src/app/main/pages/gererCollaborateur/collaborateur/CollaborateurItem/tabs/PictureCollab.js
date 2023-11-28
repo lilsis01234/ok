@@ -3,46 +3,57 @@ import { lighten, styled } from '@mui/material/styles';
 import { Controller, useFormContext } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import FuseUtils from '@fuse/utils/FuseUtils';
 
+
+//Création d'un composant stylisé
+// const Root = styled('div')(({ theme }) => ({
+//     '& .productImageFeaturedStar': {
+//         position: 'absolute',
+//         top: 0,
+//         right: 0,
+//         color: orange[400],
+//         opacity: 0,
+//     },
+
+//     '& .productImageUpload': {
+//         transitionProperty: 'box-shadow',
+//         transitionDuration: theme.transitions.duration.short,
+//         transitionTimingFunction: theme.transitions.easing.easeInOut,
+//     },
+
+//     '& .productImageItem': {
+//         transitionProperty: 'box-shadow',
+//         transitionDuration: theme.transitions.duration.short,
+//         transitionTimingFunction: theme.transitions.easing.easeInOut,
+//         '&:hover': {
+//             '& .productImageFeaturedStar': {
+//                 opacity: 0.8,
+//             },
+//         },
+//         '&.featured': {
+//             pointerEvents: 'none',
+//             boxShadow: theme.shadows[3],
+//             '& .productImageFeaturedStar': {
+//                 opacity: 1,
+//             },
+//             '&:hover .productImageFeaturedStar': {
+//                 opacity: 1,
+//             },
+//         },
+// }}))
 
 const Root = styled('div')(({ theme }) => ({
-    '& .productImageFeaturedStar': {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        color: orange[400],
-        opacity: 0,
+    '& .collaboratorPhotoUpload': {
+       transitionProperty: 'box-shadow',
+       transitionDuration: theme.transitions.duration.short,
+       transitionTimingFunction: theme.transitions.easing.easeInOut,
     },
-
-    '& .productImageUpload': {
-        transitionProperty: 'box-shadow',
-        transitionDuration: theme.transitions.duration.short,
-        transitionTimingFunction: theme.transitions.easing.easeInOut,
-    },
-
-    '& .productImageItem': {
-        transitionProperty: 'box-shadow',
-        transitionDuration: theme.transitions.duration.short,
-        transitionTimingFunction: theme.transitions.easing.easeInOut,
-        '&:hover': {
-            '& .productImageFeaturedStar': {
-                opacity: 0.8,
-            },
-        },
-        '&.featured': {
-            pointerEvents: 'none',
-            boxShadow: theme.shadows[3],
-            '& .productImageFeaturedStar': {
-                opacity: 1,
-            },
-            '&:hover .productImageFeaturedStar': {
-                opacity: 1,
-            },
-        },
-}}))
+ }));
 
 
 
+//Création d'un composant fonctionnel
 function PictureCollab(props) {
     const { methods, formValues } = props;
     const { control, formState } = methods || {};
@@ -58,7 +69,7 @@ function PictureCollab(props) {
             <Controller
                 name="image"
                 control={control}
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                     <Box
                         sx={{
                             backgroundColor: (theme) =>
@@ -75,24 +86,40 @@ function PictureCollab(props) {
                             className="hidden"
                             id="button-file"
                             type="file"
-                            onChange={(e) => {
-                                const file = e.target.files[0];
-                                if (!file) {
-                                    return;
-                                }
-                                const reader = new FileReader();
-
-                                reader.onload = () => {
-                                    const newImage = {
-                                        id: 'uniqueID', // Générez un ID unique si nécessaire
-                                        url: `data:${file.type};base64,${btoa(reader.result)}`,
-                                        type: 'image',
-                                    };
-                                    onChange(newImage);
-                                };
-
-                                reader.readAsBinaryString(file);
+                            onChange={async(e) => {
+                                const newPhoto = await readFileAsync(e);
+                                onChange(newPhoto)
                             }}
+                            // onChange={async(e) => {
+                            //     function readFileAsync(){
+                            //         return new Promise((resolve, reject) => {
+                            //             const file = e.target.files[0];
+                            //             if (!file) {
+                            //               return;
+                            //             }
+                            //             const reader = new FileReader();
+                  
+                            //             reader.onload = () => {
+                            //               resolve({
+                            //                 id: FuseUtils.generateGUID(),
+                            //                 url: `data:${file.type};base64,${btoa(reader.result)}`,
+                            //                 type: 'image',
+                            //               });
+                            //             };
+                  
+                            //             reader.onerror = reject;
+                  
+                            //             reader.readAsBinaryString(file);
+                            //           }); 
+                            //     }
+
+                            //     const newImage = await readFileAsync();
+                            //     console.log('Image enregistré avec  succès')
+
+                            //     onChange([newImage, ...value]);
+
+
+                            // }}
                         />
                         <FuseSvgIcon size={32} color="action">
                             heroicons-outline:upload
@@ -102,6 +129,36 @@ function PictureCollab(props) {
             />
         </Root>
     )
+}
+
+
+
+async function readFileAsync(e){
+    return new Promise((resolve, reject) => {
+        const file = e.target.files[0];
+        if(!file){
+            reject(new Error('No file selected'));
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            resolve({
+                id : Date.now(),
+                url: `data:${file.type};base64,${btoa(reader.result)}`,
+                type: 'image',
+            })
+        }
+
+
+        reader.onerror = (error) => {
+            reject(error)
+        }
+
+        reader.readAsBinaryString(file)
+
+    })
 }
 
 export default PictureCollab

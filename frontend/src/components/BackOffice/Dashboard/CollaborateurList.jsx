@@ -13,11 +13,7 @@ const NewCollaborateurList = () => {
 
     useEffect(()=> {
         axios
-<<<<<<< HEAD
             .get("http://localhost:4000/api/collaborateur/newCollab")
-=======
-            .get("http://localhost:4000/api/collaborateur/newCollab")
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then((response) => {
                 setData(response.data);
             })
@@ -65,22 +61,13 @@ const NewCollaborateurList = () => {
             {data.map((collaborateur, index) => (
                 <tr key={index} onClick={() => {viewCollab(collaborateur.id); openModal()}}>
                     <td>
-<<<<<<< HEAD
                         <Avatar src={`http://localhost:4000/${collaborateur.image}`} alt="avatar" withBorder={false} size="xs" className="rounded-full w-16 h-16 object-cover collab_photo"/>
-=======
-                        <Avatar src={`http://localhost:4000/${collaborateur.image}`} alt="avatar" withBorder={false} size="xs" className="rounded-full w-16 h-16 object-cover collab_photo"/>
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                     </td>
                     <td className="table_item_matricule">{collaborateur.matricule}</td>
                     <td className="table_item_nom">{collaborateur.nom}</td>
                     <td className="table_item_prenom">{collaborateur.prenom}</td>
-<<<<<<< HEAD
                     <td className="table_item_poste">{collaborateur.poste1.titrePoste}</td>
                     <td className="table_item_poste">{collaborateur.equipe1.nomEquipe}</td>
-=======
-                    <td className="table_item_site">{collaborateur.site}</td>
-                    <td className="table_item_poste">{collaborateur.poste1.titrePoste}</td>
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                     <td className="table_item_departement">{collaborateur.departement1.nomDepartement}</td>
                 </tr>
 

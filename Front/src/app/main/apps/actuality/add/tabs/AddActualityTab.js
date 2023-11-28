@@ -23,6 +23,9 @@ import Link from '@mui/material/Link';
 import parse from 'html-react-parser';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectUser } from 'app/store/userSlice';
 
 
 function AddActualityTab() {
@@ -75,19 +78,19 @@ function AddActualityTab() {
 
 
   const fetchCategories = () => {
-    axios.get('http://localhost:4000/api/actualite/categorie/all')
+    axios.get('http://localhost:4000/api/categorie/all')
       .then(res => {setListCategorie(res.data)})
       .catch(err => console.log(err));
   }
   
   const fetchTypes = () => {
-    axios.get('http://localhost:4000/api/actualite/type/all')
+    axios.get('http://localhost:4000/api/type/all')
     .then(res => {setListType(res.data)})
     .catch(err => console.log(err));
   }
 
   const fetchTags = () => {
-    axios.get('http://localhost:4000/api/actualite/tag/all')
+    axios.get('http://localhost:4000/api/tag/all')
     .then(res => {setListTag(res.data)})
     .catch(err => console.log(err));
   }
@@ -109,7 +112,7 @@ function AddActualityTab() {
 
     if (newCategName) {
 
-    const ApiPostCateg = 'http://localhost:4000/api/actualite/categorie/new';
+    const ApiPostCateg = 'http://localhost:4000/api/categorie/new';
     const nom = newCategName;
     const dataForm = { nom };
     axios.post(ApiPostCateg, dataForm)
@@ -137,7 +140,7 @@ function AddActualityTab() {
 
     if (newTypeName) {
 
-    const ApiPostType = 'http://localhost:4000/api/actualite/type/new';
+    const ApiPostType = 'http://localhost:4000/api/type/new';
     const nom = newTypeName;
     const dataForm = { nom };
     axios.post(ApiPostType, dataForm)
@@ -165,7 +168,7 @@ function AddActualityTab() {
 
     if (newTagName) {
 
-    const ApiPostTag = 'http://localhost:4000/api/actualite/tag/new';
+    const ApiPostTag = 'http://localhost:4000/api/tag/new';
     const nom = newTagName;
     const dataForm = { nom };
     axios.post(ApiPostTag, dataForm)
@@ -329,6 +332,9 @@ function AddActualityTab() {
 
 
   const formRef = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(selectUser);
 
   const handleSubmit = async (e) => {
 
@@ -346,6 +352,8 @@ function AddActualityTab() {
     const date_publication = dateActuelle;
     const image = imgMiseEnAvant;
     const commentaire = isChecked;
+    const compte_id = user.data.CompteId;
+    
 
 
     const dataForm = {
@@ -358,13 +366,10 @@ function AddActualityTab() {
       category,
       type,
       tag,
-      image
+      image,
+      compte_id
 
     };
-
-    console.log(dataForm);
-
-    const dispatch = useDispatch();
 
     const serveurApi = 'http://localhost:4000/api/actualite/new';
     axios.post(serveurApi, dataForm)
@@ -372,7 +377,8 @@ function AddActualityTab() {
 
           if (res.data) {
               console.log('reponse : ', res.data);
-              window.location.reload();
+              navigate('/apps/actuality/list')
+              // window.location.reload();
               dispatch(showMessage({ message: 'Actualité sauvegardée' }));
 
           }

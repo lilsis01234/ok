@@ -4,6 +4,8 @@ const Compte = require('../../Modele/CompteModel/Compte');
 const Collab = require('../../Modele/CollabModel/Collab');
 const TestPoste = require('../../Modele/Structure/TestPoste');
 const TestDepartement = require('../../Modele/Structure/TestDepartement');
+const RoleHierarchique = require('../../Modele/RoleModel/RoleHierarchique');
+const Role = require('../../Modele/RoleModel/Role');
 
 
 
@@ -11,33 +13,41 @@ const TestDepartement = require('../../Modele/Structure/TestDepartement');
 router.get('/all', async (req, res) => {
     try {
         const collaborateur = await Compte.findAll({
-          include : [
-              {
-                  model : Collab,
-                  include : [
-                    {
-                        model : TestPoste,
-                        as : 'poste1',
-                    },{
-                        model : TestPoste,
-                        as : 'postes',
-                    }, {
-                        model : TestDepartement,
-                        as : 'departement1',
-                    }, {
-                        model : TestDepartement,
-                        as : 'departements',
+            attributes: ['id', 'email'],
+            include: [
+                {
+                    model: Collab,
+                    attributes: ['id', 'nom', 'prenom', 'matricule', 'image'],
+                    include: [
+                        {
+                            model: TestPoste,
+                            as: 'poste1',
+                        }, {
+                            model: TestPoste,
+                            as: 'postes',
+                        }, {
+                            model: TestDepartement,
+                            as: 'departement1',
+                        }, {
+                            model: TestDepartement,
+                            as: 'departements',
+                        }
+                    ]
+                }, {
+                    model: RoleHierarchique,
+                    include: {
+                        model: Role
                     }
-                  ]}
-                  
-        ]
+                }
+
+            ]
         })
 
         res.status(200).json(collaborateur)
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({message : "Une erreur s'est produit dans la récupération des données"})
+        res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
     }
 })
 

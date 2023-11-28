@@ -20,28 +20,29 @@ import SecondProfessionalInfo from './tabs/secondProfessionalInfo';
 import PictureCollab from './tabs/PictureCollab';
 
 
+
 const schema = yup.object().shape(
+    // {
+    // matricule: yup
+    //     .string()
+    //     .required('Veuillez entrer une matricule')
+    // }, 
     {
-    matricule: yup
-        .string()
-        .required('You must enter a matricule')
-    // .min(5, 'The product name must be at least 5 characters'),
-    }, {
         nom : yup
             .string()
-            .required('You must enter a name')
+            .required('Veuillez entrer un nom')
     }, {
        dateEmbauche : yup
             .date()
-            .required('You must enter a date') 
+            .required('Veuillez entrer une date d\'embauche') 
     }, {
         poste : yup
              .string()
-             .required('You must enter a fonction') 
+             .required('Veuillez entrer une poste') 
      }, {
         departement : yup
              .string()
-             .required('You must enter a departement') 
+             .required('Veuillez entrer un département') 
      },
 );
 
@@ -51,6 +52,7 @@ function CollaborateurListItem(props) {
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'))
     const [tabValue, setTabValue] = useState(0);
     const [noCollab, setNoCollab] = useState(false);
+    const [editData, setEditData] = useState(false);
 
     const [collab, setCollab] = useState([])
 
@@ -63,7 +65,6 @@ function CollaborateurListItem(props) {
     
     const { reset, watch, control, onChange, fomState } =  methods || {};
     const form = watch();
-    // console.log(form)
 
 
     useEffect(() => {
@@ -72,13 +73,15 @@ function CollaborateurListItem(props) {
                 if (collaborateurId === 'new') {
                     console.log('Ajout d\'un nouvelle collaborateur')
                     setNoCollab(false)
-
+                    setEditData(false)
                 } else {
                     console.log('Affichage d\'une collaborateur existante')
-                    axios.get(`http://localhost:4000/api/collaborateur/view/${directionId}`)
+                    axios.get(`http://localhost:4000/api/collaborateur/view/${collaborateurId}`)
                         .then(response => {
-                            setCollab(response.data.collab)
+                            // console.log(response.data.collaborateur)
+                            setCollab(response.data.collaborateur)
                             setNoCollab(false)
+                            setEditData(true)
                         })
                         .catch(error => {
                             setNoCollab(true)
@@ -126,16 +129,16 @@ function CollaborateurListItem(props) {
                 className="flex flex-col flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There is no such collab!
+                    Il n'y a pas de collaborateur de ce type !
                 </Typography>
                 <Button
                     className="mt-24"
                     component={Link}
                     variant="outlined"
-                    to="manage/collaborator"
+                    to="/manage/collaborator"
                     color="inherit"
                 >
-                    Go To Collab Page
+                   Retourner à la liste des collaborateurs
                 </Button>
             </motion.div>
         )
@@ -164,13 +167,13 @@ function CollaborateurListItem(props) {
                             scrollButtons="auto"
                             classes={{ root: 'w-full h-64 border-b-1' }}
                         >
-                            <Tab className="h-64" label="Basic Info" />
-                            <Tab className="h-64" label="Adress" />
+                            <Tab className="h-64" label="Etat civil" />
+                            <Tab className="h-64" label="Adresse" />
                             <Tab className="h-64" label="Contact" />
-                            <Tab className="h-64" label="Matrimoniale Info" />
-                            <Tab className="h-64" label="Professional Info" />
-                            <Tab className="h-64" label="Second Professional Info" />
-                            <Tab className="h-64" label="Pictures" />
+                            <Tab className="h-64" label="Information matrimoniale" />
+                            <Tab className="h-64" label="Information professionnelle" />
+                            <Tab className="h-64" label="Deuxième information professionnelle" />
+                            <Tab className="h-64" label="Photo" />
                         </Tabs>
                         <div className="p-16 sm:p-24 max-w-3xl">
                             <div className={tabValue !== 0 ? 'hidden' : ''}>
@@ -180,7 +183,7 @@ function CollaborateurListItem(props) {
                                 <AdresseInfo methods={methods} formValues={form}/>
                             </div>
                             <div className={tabValue !== 2 ? 'hidden' : ''}>
-                                <ContactInfo methods={methods} formValues={form}/>
+                                <ContactInfo methods={methods} formValues={form} isEdit={editData}/>
                             </div>
                             <div className={tabValue !== 3 ? 'hidden' : ''}>
                                 <MatrimonialeInfo methods={methods} formValues={form}/>

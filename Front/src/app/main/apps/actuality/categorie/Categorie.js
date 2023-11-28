@@ -83,7 +83,7 @@ function ModernComingSoonPage() {
 
 
 const fetchCategories = () => {
-  axios.get('http://localhost:4000/api/actualite/categorie/all')
+  axios.get('http://localhost:4000/api/categorie/all')
     .then(res => {setListCategorie(res.data)})
     .catch(err => console.log(err));
 }
@@ -101,7 +101,7 @@ const handleSubmit = async (e) => { e.preventDefault();
     const dataForm = { nom };
   
   
-    const serveurApi = 'http://localhost:4000/api/actualite/categorie/new';
+    const serveurApi = 'http://localhost:4000/api/categorie/new';
     axios.post(serveurApi, dataForm)
         .then(res => {
           if (res.data) {
@@ -119,7 +119,7 @@ const handleSubmit = async (e) => { e.preventDefault();
 
 const deleteCategory = (id) => {
 
-  axios.delete(`http://localhost:4000/api/actualite/categorie/${id}/delete`)
+  axios.delete(`http://localhost:4000/api/categorie/${id}`)
 
   .then(() => {
     const updatedCategories = listeCategorie.filter(categorie => categorie.id !== id);
@@ -148,7 +148,7 @@ const handleEdit = (e) => {
 
   if(nom) {
     
-    axios.put(`http://localhost:4000/api/actualite/categorie/${id}/edit`, dataForm)
+    axios.put(`http://localhost:4000/api/categorie/${id}`, dataForm)
   
     .then((res) => {
         console.log(res.data);
@@ -263,7 +263,7 @@ const cancelEdit = () => {
 
           </div>
         </div>
-        <TableContainer>
+        <TableContainer className="max-h-512">
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>

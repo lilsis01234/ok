@@ -2,11 +2,18 @@ const {DataTypes, Model} = require('sequelize');
 const sequelize = require('../../database/database');
 const TestDepartement = require('../Structure/TestDepartement');
 const TestPoste = require('../Structure/TestPoste');
+const Projet = require('../Structure/Projet');
+const Equipe = require('../Structure/Equipe');
 
 
 class ArchiveCollaborateur extends Model{};
 
 ArchiveCollaborateur.init({
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
     matricule: {
         type: DataTypes.STRING(10),
         allowNull: false,
@@ -32,19 +39,22 @@ ArchiveCollaborateur.init({
         type: DataTypes.STRING(15)
     },
     quartier: {
-        type: DataTypes.STRING(20)
+        type: DataTypes.STRING(60)
     },
     ville: { 
         type: DataTypes.STRING(20) 
+    },
+    adresse2 : {
+        type : DataTypes.STRING(60)
     },
     tel: { 
         type: DataTypes.STRING(14) 
     },
     telurgence : {
-        type : DataTypes.STRING(14)
+        type : DataTypes.STRING(15)
     },
     CIN : {
-        type : DataTypes.STRING(12),
+        type : DataTypes.STRING(15),
         unique : true
     },
     dateDelivrance : {
@@ -63,42 +73,20 @@ ArchiveCollaborateur.init({
         type: DataTypes.STRING(15),
         unique : true
     },
-    Banque : {
-        type : DataTypes.STRING(30)
-    },
-    RIB : {
-        type : DataTypes.STRING(23)
-    },
     entreprise : {
         type : DataTypes.STRING(25),
         allowNull: false, 
     },
-
-
-
-
     dateEmbauche: { 
         type: DataTypes.DATE 
     },
     site: { 
         type: DataTypes.STRING(20) 
     },
-    image: { 
-        type: DataTypes.STRING 
-    },
     entreprise : {
         type : DataTypes.STRING(25),
         allowNull: false, 
     },
-    categorie : {
-        type : DataTypes.STRING(20), 
-    },
-    contrat : {
-         type: DataTypes.STRING(20)
-    },
-
-
-
     poste : {
         type : DataTypes.INTEGER,
         allowNull : false,
@@ -124,12 +112,39 @@ ArchiveCollaborateur.init({
                 key : 'id'
             }
         }
-    },
+    }, 
     departement2 : {
         type: DataTypes.INTEGER,
         allowNull : true,
         references : {
             model : TestDepartement,
+            key : 'id'
+        }
+    }, projet : {
+        type: DataTypes.INTEGER,
+        references : {
+            model : Projet,
+            key : 'id'
+        }
+    },
+    projet2 : {
+        type: DataTypes.INTEGER,
+        references : {
+            model : Projet,
+            key : 'id'
+        }
+    }, 
+    equipe : {
+        type : DataTypes.INTEGER,
+        references : {
+            model : Equipe,
+            key : 'id'
+        }
+    },
+    equipe2 : {
+        type : DataTypes.INTEGER,
+        references : {
+            model : Equipe,
             key : 'id'
         }
     },
@@ -172,6 +187,12 @@ ArchiveCollaborateur.belongsTo(TestDepartement, {
     onUpdate : 'CASCADE',
     as : 'departements'
 })
+
+ArchiveCollaborateur.belongsTo(Projet, {foreignKey:"projet", targetKey:'id',onUpdate:'CASCADE', as:'projet1'})
+ArchiveCollaborateur.belongsTo(Projet, {foreignKey:"projet2", targetKey:'id', onUpdate:'CASCADE', as:'projets'})
+
+ArchiveCollaborateur.belongsTo(Equipe, {foreignKey:"equipe", targetKey:'id', onUpdate:'CASCADE', as:'equipe1'})
+ArchiveCollaborateur.belongsTo(Equipe, {foreignKey:"equipe2", targetKey:'id', onUpdate:'CASCADE', as:'equipes'})
 
 
 module.exports = ArchiveCollaborateur;
