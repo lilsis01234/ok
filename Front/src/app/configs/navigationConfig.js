@@ -57,7 +57,7 @@ const navigationConfig = [
             type : 'item',
             url : 'manage/collaborator'
           }, {
-            id : 'collaborator.manage-collab',
+            id : 'collaborator.manage-collab-archives',
             title : 'Archives',
             type : 'item',
             url : 'manage/archive/collaborateur'
@@ -76,7 +76,7 @@ const navigationConfig = [
             url : 'manage/account'
           }
         ]
-      }
+      },
     ]
   }, 
   {
@@ -322,7 +322,39 @@ const navigationConfig = [
         translate:'Demande'
       },
     ]
+  }, 
+
+  //Pour les paramètres généraux
+  {
+    id : 'settings',
+    title : 'Paramètres',
+    type : 'group',
+    children : [
+      {
+        id : 'settings.role&Permission',
+        title : 'Rôle et permission',
+        type : 'collapse',
+        icon : 'heroicons-outline:user-circle',
+        children : [
+          {
+            id : 'collaborateur.manage-role',
+            title : 'Rôles',
+            type : 'item',
+            url : 'manage/role'
+          }, 
+          {
+            id : 'collaborateur.manage-permission',
+            title : 'Permissions',
+            type : 'item',
+            url : 'manage/permission'
+          }
+        ]
+      }
+    ]
   }
+
+
+
 ];
 
 export default navigationConfig;

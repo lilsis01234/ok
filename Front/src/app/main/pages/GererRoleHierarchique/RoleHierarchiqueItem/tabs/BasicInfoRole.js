@@ -3,17 +3,17 @@ import React, { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form';
 import axios from 'axios';
 
-function BasicInfoEquipe(props) {
+function BasicInfoRole(props) {
     const { methods, formValues } = props;
     const { control, formState } = methods || {};
     const { errors } = formState || {};
 
-    const [listeProjet, setListeProjet] = useState([]);
+    const [listeRole, setListeRole] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/projet/all')
+        axios.get('http://localhost:4000/api/role/all_role')
             .then((response) => {
-                setListeProjet(response.data)
+                setListeRole(response.data)
 
             })
             .catch((error) => {
@@ -24,30 +24,29 @@ function BasicInfoEquipe(props) {
     if (!methods) {
         return null;
     }
-
     return (
         <div>
             <Controller
-                name="nomEquipe"
+                name="roleHierarchique"
                 control={control}
-                defaultValue={formValues.nomEquipe || ''}
+                defaultValue={formValues.roleHierarchique || ''}
                 render={({ field }) => (
                     <TextField
                         {...field}
                         className="mt-8 mb-16"
-                        error={!!errors.nomEquipe}
+                        error={!!errors.roleHierarchique}
                         required
-                        helperText={errors?.nomEquipe?.message}
-                        label="Nom de l'équipe"
+                        helperText={errors?.roleHierarchique?.message}
+                        label="Rôle"
                         autoFocus
-                        id="nomEquipe"
+                        id="roleHierarchique"
                         variant="outlined"
                         fullWidth
                     />
                 )}
             />
             <Controller
-                name="projet"
+                name="RoleId"
                 control={control}
                 defaultValue={formValues.projet || ''}
                 render={({ field }) => (
@@ -55,18 +54,18 @@ function BasicInfoEquipe(props) {
                         {...field}
                         select
                         className="mt-8 mb-16"
-                        error={!!errors.projet}
+                        error={!!errors.RoleId}
                         required
-                        helperText={errors?.projet?.message}
-                        label="Project"
+                        helperText={errors?.RoleId?.message}
+                        label="Catégorie "
                         autoFocus
-                        id="project"
+                        id="RoleId"
                         variant="outlined"
                         fullWidth
                     >
-                        {listeProjet.map((projet) => (
-                            <MenuItem key={projet.id} value={projet.id}>
-                                {projet.nomProjet}
+                        {listeRole.map((role) => (
+                            <MenuItem key={role.id} value={role.id}>
+                                {role.titreRole}
                             </MenuItem>
                         ))}
                     </TextField>
@@ -79,4 +78,4 @@ function BasicInfoEquipe(props) {
     )
 }
 
-export default BasicInfoEquipe
+export default BasicInfoRole

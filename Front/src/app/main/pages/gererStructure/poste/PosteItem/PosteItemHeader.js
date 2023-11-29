@@ -76,7 +76,7 @@ return (
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                     </FuseSvgIcon>
-                    <span className="flex mx-4 font-medium">Fonction</span>
+                    <span className="flex mx-4 font-medium">Postes</span>
                 </Typography>
             </motion.div>
             <div className="flex items-center max-w-full">
@@ -85,8 +85,8 @@ return (
                     initial={{ x: -20 }}
                     animate={{ x: 0, transition: { delay: 0.3 } }}
                 >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{titrePoste || 'New Fonction'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Fonction Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{titrePoste || 'Nouveau Poste'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Détail du poste </Typography>
                 </motion.div>
             </div>
             </div>
@@ -102,7 +102,7 @@ return (
                     //  disabled={!isDirty  || !isValid}
                      onClick={handleSavePoste}
                 >
-                    Save
+                    Enregistrer
                 </Button>
             </motion.div>
         

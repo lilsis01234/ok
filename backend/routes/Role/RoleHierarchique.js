@@ -22,7 +22,11 @@ router.post('/new', async(req, res) => {
 //Liste de tous les rôles
 router.get('/all', async(req, res) => {
     try {
-        const listRoleHierarchique = await RoleHierarchique.findAll();
+        const listRoleHierarchique = await RoleHierarchique.findAll({
+            include : {
+                model : Role
+            }
+        });
         res.status(201).json(listRoleHierarchique);
     }
     catch (error){

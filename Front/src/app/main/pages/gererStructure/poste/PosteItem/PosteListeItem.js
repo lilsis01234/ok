@@ -35,10 +35,10 @@ function PosteListeItem(props) {
 
   })
 
-  const { reset, watch, control, onChange, fomState } = methods || {};
+  const { reset, watch, control, onChange, formState } = methods || {};
   const form = watch();
 
-  console.log(form)
+  // console.log(form)
 
 
 
@@ -80,7 +80,7 @@ function PosteListeItem(props) {
       setPoste(null)
       setNoPoste(false)
     }
-  }, [])
+  })
 
   function handleTabChange(event, value) {
     setTabValue(value)
@@ -95,7 +95,7 @@ function PosteListeItem(props) {
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There is no such Fonction!
+         Il n'y a pas de poste!
         </Typography>
         <Button
           className="mt-24"
@@ -104,7 +104,7 @@ function PosteListeItem(props) {
           to="/business/manage/departement"
           color="inherit"
         >
-          Go To Fonction Page
+          Retourner à la liste des postes
         </Button>
       </motion.div>
     )
