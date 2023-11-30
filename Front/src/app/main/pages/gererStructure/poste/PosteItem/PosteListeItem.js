@@ -46,10 +46,10 @@ function PosteListeItem(props) {
     async function fetchData() {
       try {
         if (posteId === 'new') {
-          console.log('Ajout d\'une nouvelle poste')
+          // console.log('Ajout d\'une nouvelle poste')
           setNoPoste(false)
         } else {
-          console.log('Affichage d\'une poste existante')
+          // console.log('Affichage d\'une poste existante')
           axios.get(`http://localhost:4000/api/poste/view/${posteId}`)
             .then(response => {
               setPoste(response.data)

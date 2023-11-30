@@ -21,7 +21,7 @@ const rows = [
 ]
 
 
-function PermisssionListeTableHeader() {
+function PermisssionListeTableHeader(props) {
     const createSortHandler = (property) => (event) => {
         props.onRequestSort(event, property);
     };

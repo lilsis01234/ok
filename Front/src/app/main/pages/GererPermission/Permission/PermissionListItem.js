@@ -26,18 +26,22 @@ function PermissionListItem(props) {
     const { reset, watch, control, onChange, formState } = methods || {};
     const form = watch();
 
+    console.log(form)
+
     useEffect(() => {
         async function fetchData() {
             try {
                 if (permissionId === 'new') {
-                    console.log('Ajout d\'une nouvelle permission')
+                    // console.log('Ajout d\'une nouvelle permission')
                     setNoPermission(false)
                 } else {
-                    console.log('Affichage d\'une permission existante')
+                    // console.log('Affichage d\'une permission existante')
                     axios.get(`http://localhost:4000/api/permission/view/${permissionId}`)
                       .then(response => {
                         setPermission(response.data)
                         setNoPermission(false)
+                        const { id, permission, role } = response.data;
+                        reset({ id, permission, role });
                       })
                       .catch(error => {
                         setNoPermission(true)
@@ -49,7 +53,7 @@ function PermissionListItem(props) {
             }
         }
         fetchData()
-    }, [permissionId])
+    }, [permissionId, reset])
 
     
   useEffect(() => {
@@ -60,12 +64,12 @@ function PermissionListItem(props) {
   }, [permissions, reset])
 
 
-    useEffect(() => {
-        return () => {
-            setPermission(null)
-            setNoPermission(false)
-        }
-    })
+    // useEffect(() => {
+    //     return () => {
+    //         setPermission(null)
+    //         setNoPermission(false)
+    //     }
+    // })
 
     function handleTabChange(event, value) {
         setTabValue(value)
@@ -80,7 +84,7 @@ function PermissionListItem(props) {
                 className="flex flex-col flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    Il n'y a pas de permission
+                    Il n'y a pas de permission!
                 </Typography>
                 <Button
                     className="mt-24"

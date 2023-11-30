@@ -15,7 +15,14 @@ function PermissionItemHeader({ formValues }) {
     const theme = useTheme();
     const navigate = useNavigate();
 
-    const { id, permission, role } = formValues;
+    // const { id, permission, role } = formValues;
+
+    const { id } = formValues
+    const {permission} = formValues
+    const {role} = formValues
+
+
+    console.log(formValues)
   
     let roleData = [];
     if (Array.isArray(role)) {
