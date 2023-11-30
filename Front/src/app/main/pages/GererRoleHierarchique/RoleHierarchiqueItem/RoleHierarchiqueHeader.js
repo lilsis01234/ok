@@ -7,46 +7,40 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import { Button, Typography } from '@mui/material';
 import axios from 'axios';
 
-function EquipeItemHeader({ formValues }) {
+function RoleHierarchiqueHeader({ formValues }) {
     const methods = useFormContext();
     const { formState, watch, getValues } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
 
-    const { id } = formValues
-    const { nomEquipe } = formValues
-    const { projet } = formValues
-
-    const theme = useTheme();
+    const { id, roleHierarchique, RoleId } = formValues
+    const theme = useTheme()
     const navigate = useNavigate();
 
     const data = {
-        nomEquipe,
-        projet
+        roleHierarchique,
+        RoleId
     }
 
-    // console.log(data)
 
-    const handleSaveEquipe = async () => {
+    const handleSaveRole = async () => {
         if (id) {
             try {
-                await axios.put(`http://localhost:4000/api/equipe/edit/${id}`, data)
-                alert('Team Update succesfully')
-                navigate('/business/manage/team')
+                await axios.put(`http://localhost:4000/api/roleHierarchique/edit/${id}`, data)
+                alert('Rôle mise à jour avec succès')
+                navigate('/manage/role')
             } catch (error) {
                 console.log(error)
             }
         } else {
             try {
-                await axios.post('http://localhost:4000/api/equipe/new', data)
-                alert('Team create successfully')
-                navigate('/business/manage/team')
+                await axios.post('http://localhost:4000/api/roleHierarchique/new', data)
+                alert('Rôle crée avec succès')
+                navigate('/manage/role')
             } catch (error) {
                 console.log(error)
             }
         }
     }
-
-
 
 
     return (
@@ -60,7 +54,7 @@ function EquipeItemHeader({ formValues }) {
                         className="flex items-center sm:mb-12"
                         component={Link}
                         role="button"
-                        to="/business/manage/team"
+                        to="/manage/role"
                         color="inherit"
                     >
                         <FuseSvgIcon size={20}>
@@ -68,7 +62,7 @@ function EquipeItemHeader({ formValues }) {
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                         </FuseSvgIcon>
-                        <span className="flex mx-4 font-medium">Equipes</span>
+                        <span className="flex mx-4 font-medium">Rôles</span>
                     </Typography>
                 </motion.div>
                 <div className="flex items-center max-w-full">
@@ -77,8 +71,8 @@ function EquipeItemHeader({ formValues }) {
                         initial={{ x: -20 }}
                         animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomEquipe || 'Nouvelle Equipe'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Détail de l'équipe</Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{roleHierarchique || 'Nouveau Rôle'}</Typography>
+                        <Typography variant="caption" className="font-medium"> Détail du rôle</Typography>
                     </motion.div>
                 </div>
             </div>
@@ -92,13 +86,15 @@ function EquipeItemHeader({ formValues }) {
                      variant="contained"
                      color="secondary"
                     //  disabled={!isDirty  || !isValid}
-                     onClick={handleSaveEquipe}
+                     onClick={handleSaveRole}
                 >
                     Enregistrer
                 </Button>
             </motion.div>
         </div>
+        
+
     )
 }
 
-export default EquipeItemHeader
+export default RoleHierarchiqueHeader

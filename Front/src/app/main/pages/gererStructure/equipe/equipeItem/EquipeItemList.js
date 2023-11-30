@@ -84,7 +84,7 @@ function EquipeItemList() {
       >
         <Typography color="text.secondary" variant="h5">
           {" "}
-          There is no such team!{" "}
+          Il n'y a pas d'équipe{" "}
         </Typography>
         <Button
           className="mt-24"
@@ -115,7 +115,7 @@ function EquipeItemList() {
               scrollButtons="auto"
               classes={{ root: "w-full h-64 border-b-1" }}
             >
-              <Tab className="h-64" label="Basic Team Info" />
+              <Tab className="h-64" label="Equipe" />
             </Tabs>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? "hidden" : ""}>

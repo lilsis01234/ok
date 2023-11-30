@@ -22,7 +22,7 @@ export const fetchRoleHierarchique = async () => {
         } else {
             console.error('Aucun rôle hierarchique récupéré depuis le backend.');
         }
-        console.log(roleHierarchique);
+        // console.log(roleHierarchique);
     } catch (error) {
         console.error('Erreur lors de la récupération des rôles hierarchiques', error);
     }

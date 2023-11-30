@@ -4,61 +4,56 @@ import { Controller } from 'react-hook-form';
 import axios from 'axios';
 
 
-function BasicPosteInfo(props) {
+function BasicInfoPermission(props) {
     const { methods, formValues } = props;
     const { control, formState } = methods || {};
     const { errors } = formState || {};
 
-    const [listDepartement, setListeDepartement] = useState([]);
+    const [listeRole, setListeRole] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/departement/all')
+        axios.get('http://localhost:4000/api/roleHierarchique/all')
             .then((response) => {
-                setListeDepartement(response.data)
+                setListeRole(response.data)
             })
             .catch((error) => {
                 console.error('Error fetching departement data')
             })
     }, [])
 
-
-
-
-    const formattedDepartements = listDepartement.map(item => ({
+    const formattedRoles = listeRole.map(item => ({
         id : item.id,
-        nomDepartement : item.nomDepartement
+        roleHierarchique : item.roleHierarchique
     }))
 
-    // console.log(formattedDepartements)
-
+    
     if (!methods) { 
         return null;
     }
 
-
-    return (
-        <div>
-            <Controller
-                name="titrePoste"
+  return (
+    <div>
+         <Controller
+                name="permission"
                 control={control}
                 defaultValue={formValues.titrePoste || ''}
                 render={({ field }) => (
                     <TextField
                         {...field}
                         className="mt-8 mb-16"
-                        error={!!errors.titrePoste}
+                        error={!!errors.permission}
                         required
-                        helperText={errors?.titrePoste?.message}
-                        label="Fonction Name"
+                        helperText={errors?.permission?.message}
+                        label="Permission"
                         autoFocus
-                        id="titrePoste"
+                        id="permission"
                         variant="outlined"
                         fullWidth
                     />
                 )}
             />
-            <Controller 
-                name="departement"
+        <Controller 
+                name="role"
                 control={control}
                 defaultValue={[]}
                 render={({field : { onChange, value } }) => (
@@ -66,8 +61,8 @@ function BasicPosteInfo(props) {
                         className="mt-8 mb-16"
                         multiple
                         freeSolo
-                        options={formattedDepartements ? formattedDepartements : []}
-                        getOptionLabel={(option) => option.nomDepartement}
+                        options={formattedRoles ? formattedRoles : []}
+                        getOptionLabel={(option) => option.roleHierarchique}
                         value={value}
                         onChange={(event, newValue) => {
                             onChange(newValue);
@@ -75,8 +70,8 @@ function BasicPosteInfo(props) {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                placeholder="Select multiple departement"
-                                label="Departement"
+                                placeholder="Selectionner plusieurs rôles"
+                                label="Rôle"
                                 variant="outlined"
                                 InputLabelProps={{
                                   shrink: true,
@@ -88,10 +83,10 @@ function BasicPosteInfo(props) {
                 )}
 
             />
-          
 
-        </div>
-    )
+      
+    </div>
+  )
 }
 
-export default BasicPosteInfo
+export default BasicInfoPermission

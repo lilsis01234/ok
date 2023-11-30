@@ -102,11 +102,11 @@ class JwtService extends FuseUtils.EventEmitter {
       return axios
         .post(jwtServiceConfig.accessToken, data)
         .then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           if (response.data.compte) {
             this.setSession(response.data.token);
             localStorage.setItem('jwt_refresh_token', response.data.refresh_token);
-            console.log('Connexion à partir du token réussie')
+            // console.log('Connexion à partir du token réussie')
           } else {
             this.logout();
             return (new Error('Failed to login with token.'));

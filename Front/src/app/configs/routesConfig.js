@@ -24,6 +24,8 @@ import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererColl
 //Module d'actualité
 import appsConfigs from '../main/apps/appsConfigs';
 import GererCompteConfig from '../main/pages/gererCompte/gererCompteConfig';
+import GererRoleHierarchiqueConfig from '../main/pages/GererRoleHierarchique/GererRoleHierarchiqueConfig';
+import GererPermissionConfig from '../main/pages/GererPermission/GererPermissionConfig';
 
 
 const routeConfigs = [
@@ -35,6 +37,9 @@ const routeConfigs = [
   StructureAppConfig,
   GererCollaborateurConfig,
   GererCompteConfig,
+  //Gestion des Permission et des roles,
+  GererPermissionConfig,
+  GererRoleHierarchiqueConfig,
 //Module d'actualité
   ...appsConfigs
 

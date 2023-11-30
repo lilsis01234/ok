@@ -1,52 +1,61 @@
 import { useTheme } from '@mui/styles';
 import React from 'react'
-import { useFormContext } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
-import { Button, Typography } from '@mui/material';
 import axios from 'axios';
+import { motion } from 'framer-motion';
+import { Button, Typography } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
+import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 
-function EquipeItemHeader({ formValues }) {
+function PermissionItemHeader({ formValues }) {
     const methods = useFormContext();
     const { formState, watch, getValues } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
 
-    const { id } = formValues
-    const { nomEquipe } = formValues
-    const { projet } = formValues
-
     const theme = useTheme();
     const navigate = useNavigate();
 
-    const data = {
-        nomEquipe,
-        projet
+    // const { id, permission, role } = formValues;
+
+    const { id } = formValues
+    const {permission} = formValues
+    const {role} = formValues
+
+
+    console.log(formValues)
+  
+    let roleData = [];
+    if (Array.isArray(role)) {
+        roleData = role.map((role) => role.id)
     }
 
-    // console.log(data)
 
-    const handleSaveEquipe = async () => {
+    const data = {
+        permission,
+        role: roleData
+    }
+
+    const handleSavePermission = async () => {
         if (id) {
+            console.log(departement)
             try {
-                await axios.put(`http://localhost:4000/api/equipe/edit/${id}`, data)
-                alert('Team Update succesfully')
-                navigate('/business/manage/team')
+                await axios.put(`http://localhost:4000/api/permission/${id}/edit`, data)
+                alert('Permission mise à jour avec succès')
+                navigate('/manage/permission')
             } catch (error) {
                 console.log(error)
             }
         } else {
+            console.log('Ajout nouvelle poste poste')
             try {
-                await axios.post('http://localhost:4000/api/equipe/new', data)
-                alert('Team create successfully')
-                navigate('/business/manage/team')
+                await axios.post(`http://localhost:4000/api/permission/new`, data)
+                alert('Permission ajoutée avec succès')
+                navigate('/manage/permission')
             } catch (error) {
                 console.log(error)
             }
         }
     }
-
-
 
 
     return (
@@ -60,7 +69,7 @@ function EquipeItemHeader({ formValues }) {
                         className="flex items-center sm:mb-12"
                         component={Link}
                         role="button"
-                        to="/business/manage/team"
+                        to="/manage/permission"
                         color="inherit"
                     >
                         <FuseSvgIcon size={20}>
@@ -68,7 +77,7 @@ function EquipeItemHeader({ formValues }) {
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                         </FuseSvgIcon>
-                        <span className="flex mx-4 font-medium">Equipes</span>
+                        <span className="flex mx-4 font-medium">Permissions</span>
                     </Typography>
                 </motion.div>
                 <div className="flex items-center max-w-full">
@@ -77,8 +86,8 @@ function EquipeItemHeader({ formValues }) {
                         initial={{ x: -20 }}
                         animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomEquipe || 'Nouvelle Equipe'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Détail de l'équipe</Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{permission || 'Nouvelle Permission'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Détail de la permission</Typography>
                     </motion.div>
                 </div>
             </div>
@@ -88,17 +97,18 @@ function EquipeItemHeader({ formValues }) {
                 animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
             >
                 <Button
-                     className="whitespace-nowrap mx-4"
-                     variant="contained"
-                     color="secondary"
+                    className="whitespace-nowrap mx-4"
+                    variant="contained"
+                    color="secondary"
                     //  disabled={!isDirty  || !isValid}
-                     onClick={handleSaveEquipe}
+                    onClick={handleSavePermission}
                 >
                     Enregistrer
                 </Button>
             </motion.div>
+
         </div>
     )
 }
 
-export default EquipeItemHeader
+export default PermissionItemHeader

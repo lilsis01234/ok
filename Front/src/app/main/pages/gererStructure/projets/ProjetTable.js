@@ -112,7 +112,7 @@ function ProjetTable(props) {
                 className="flex flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There are no project!
+                    Il n'y a pas de projet
                 </Typography>
             </motion.div>
         );

@@ -1,3 +1,5 @@
+import CompteCollaborateurItem from "./CompteItem/CompteCollaborateurItem";
+
 const { default: CompteCollaborateur } = require("./CompteCollaborateur");
 
 const GererCompteConfig = {
@@ -8,6 +10,9 @@ const GererCompteConfig = {
         {
             path : 'manage/account',
             element : <CompteCollaborateur/>
+        }, {
+            path : 'manage/account/:accoundId',
+            element : <CompteCollaborateurItem/>
         }
     ]
 }

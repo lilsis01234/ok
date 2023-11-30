@@ -67,7 +67,7 @@ router.get('/view/:id', async (req, res) => {
         const permission = await Permission.findByPk(req.params.id, {
             include: [{
                 model: RoleHierarchique,
-                as: 'roleHierarchique',
+                as: 'role',
                 include: {
                     model: Role
                 }
