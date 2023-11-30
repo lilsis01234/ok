@@ -445,6 +445,7 @@ function AddActualityTab() {
                 multiline
                 rows="6"
                 margin="none"
+                required
                 disableUnderline
               />
             </Card>

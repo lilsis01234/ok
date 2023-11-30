@@ -143,7 +143,8 @@ router.get('/all', async (req, res) => {
             order: [['date_publication', 'DESC']],
             include: [{
                 model: Compte,
-                include : [ { model : Collab} ]
+                attributes: ["id", "email"],
+                include : [ { model : Collab, attributes: ["nom", "prenom"]} ]
             }]
         })
 
@@ -162,10 +163,11 @@ router.get('/new-actualities', async (req, res) => {
     try {
         const actualities = await Actualite.findAll({
             order: [['date_publication', 'DESC']],
-            limit: 10,
+            limit: 5,
             include: [{
                 model: Compte,
-                include : [ { model : Collab} ]
+                attributes: ["id", "email"],
+                include : [ { model : Collab, attributes: ["nom", "prenom"]} ]
             }]
         })
         res.status(200).json(actualities)
