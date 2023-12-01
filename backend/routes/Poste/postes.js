@@ -40,7 +40,7 @@ router.get('/all', async (req, res) => {
 //Créer une nouvelle poste et une instance de la table association
 router.post('/new', async (req, res) => {
     try {
-        const { titrePoste, departement, direction } = req.body;
+        const { titrePoste, departement} = req.body;
 
         //Creation du poste
         const newPoste = await TestPoste.create({
@@ -154,7 +154,7 @@ router.get('/view/:id', async (req, res) => {
 router.put('/:id/edit', async (req, res) => {
     try {
         const posteId = req.params.id;
-        const { titrePoste, departement, direction } = req.body;
+        const { titrePoste, departement} = req.body;
 
 
         //Vérifier d'abord si le poste existe

@@ -26,6 +26,7 @@ const Equipe = require('../../Modele/Structure/Equipe');
 //Pour le route import
 const excel = require('exceljs');
 const { type } = require('os');
+const { Sequelize, Op } = require('sequelize');
 
 //Conserver l'image dans le mémoire
 const storages = multer.memoryStorage();
@@ -539,6 +540,112 @@ router.post('/import-excel', uploads.single('excel'), async (req, res) => {
         return res.status(400).json({ message: 'Format de fichier non pris en charge' })
     }
 
+})
+
+
+//Effectuer des recherches parmi les données 
+router.get('/search', async(req, res) => {
+    // const {searchTerm} = req.query.q;
+    const {q} = req.query;
+    // console.log(q);
+    try {
+        const searchResult = await Collab.findAll({
+            where : {
+                [Op.or] : [
+                    { matricule: { [Op.like]: `%${q}%` } },
+                    { nom: { [Op.like]: `%${q}%` } },
+                    { prenom: { [Op.like]: `%${q}%` } },
+                    { dateNaissance: { [Op.like]: `%${q}%` } },
+                    { site: { [Op.like]: `%${q}%` } },
+                    { entreprise: { [Op.like]: `%${q}%` } },
+                    Sequelize.literal(`poste1.titrePoste LIKE '%${q}%'`),
+                    Sequelize.literal(`departement1.nomDepartement LIKE '%${q}%'`),
+                    Sequelize.literal(`projet1.nomProjet LIKE '%${q}%'`)
+                ]
+            }, 
+            include : [
+                {
+                    model: TestPoste,
+                    as: 'poste1',
+                }, {
+                    model: TestPoste,
+                    as: 'postes',
+                }, {
+                    model: TestDepartement,
+                    as: 'departement1',
+                }, {
+                    model: TestDepartement,
+                    as: 'departements',
+                }, {
+                    model: Projet,
+                    as: 'projet1'
+                }, {
+                    model: Projet,
+                    as: 'projets'
+                }, {
+                    model: Equipe,
+                    as: 'equipe1'
+                }, {
+                    model: Equipe,
+                    as: 'equipes'
+                }]
+        })
+
+        res.json(searchResult)
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error : 'Erreur lors de la recherche des collaborateurss'})
+    }
+})
+
+router.get('/filter', async(req, res) => {
+    const {poste, departement,projet,site,entreprise} = req.query;
+    try {
+        const filterResult = await Collab.findAll({
+            where : {
+                [Op.or] : [
+                    Sequelize.literal(`poste1.titrePoste LIKE '%${poste}%'`),
+                    Sequelize.literal(`departement1.nomDepartement LIKE '%${departement}%'`),
+                    Sequelize.literal(`projet1.nomProjet LIKE '%${projet}%'`),
+                    { site: { [Op.like]: `%${site}%` } },
+                    { entreprise: { [Op.like]: `%${entreprise}%` } },
+                ]
+            },
+            include : [
+                {
+                    model: TestPoste,
+                    as: 'poste1',
+                }, {
+                    model: TestPoste,
+                    as: 'postes',
+                }, {
+                    model: TestDepartement,
+                    as: 'departement1',
+                }, {
+                    model: TestDepartement,
+                    as: 'departements',
+                }, {
+                    model: Projet,
+                    as: 'projet1'
+                }, {
+                    model: Projet,
+                    as: 'projets'
+                }, {
+                    model: Equipe,
+                    as: 'equipe1'
+                }, {
+                    model: Equipe,
+                    as: 'equipes'
+                }]
+
+        })
+        res.json(filterResult)
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error : 'Erreur lors de la filtrage des collaborateurss'})
+    }
 })
 
 

@@ -9,35 +9,39 @@ router.post('/new', async (req, res) => {
     try {
         const { permission, role } = req.body;
 
+        // Créer la nouvelle permission
         const newPermission = await Permission.create({
             permission
-        })
+        });
 
+        // if (!permissionId) {
+        //     throw new Error("L'ID de la nouvelle permission n'a pas été correctement obtenu.");
+        // }
 
+        // Si des rôles sont associés, les ajouter à la table RolePermission
         if (role && role.length > 0) {
             for (const roleId of role) {
-                const roleInstance = await RoleHierarchique.findByPk(roleId)
+                const roleInstance = await RoleHierarchique.findByPk(roleId);
                 if (!roleInstance) {
-                    console.log('RolePermission non sauvegardé', roleId)
+                    console.log('RolePermission non sauvegardé', roleId);
                 }
 
-                console.log(typeof(newPermission.id))
-                console.log(typeof(roleInstance.id))
-                 await RolePermission.create({
-                    permission: newPermission.id,
-                    role: roleInstance.id
-                })
-
+                // Créer l'association entre la permission et le rôle
+                await RolePermission.create({
+                    role: roleInstance.id,
+                    permission: newPermission.id,   
+                });
             }
         }
-        return res.status(201).json({ message: 'Permission crée avec succès' })
 
-
+        return res.status(201).json({ message: 'Permission créée avec succès' });
     } catch (error) {
         console.error('Erreur lors de la création de la permission :', error);
-        return res.status(500).json({ message: 'Une erreur s\'est produite lors de la création du permission' });
+        return res.status(500).json({ message: 'Une erreur s\'est produite lors de la création de la permission' });
     }
-})
+});
+
+
 
 
 //Récupérer toutes les permissions 
@@ -84,62 +88,65 @@ router.get('/view/:id', async (req, res) => {
 //Modifier les permisssion et les roles qui lui sont associé
 router.put('/:id/edit', async (req, res) => {
     try {
-        const permissionId = req.params.id;
+        const id = req.params.id;
         const { permission, role } = req.body;
 
-        const permissionInstance = await Permission.findByPk(permissionId);
+        console.log(req.body);
+        
+        const permissionInstance = await Permission.findByPk(id);
 
         if (!permissionInstance) {
-            return res.status(401).json({ message: "La permission n'existe pas" })
+            return res.status(404).json({ message: "La permission n'existe pas" });
         }
 
-        permissionInstance.permission
+        // Mettez à jour la propriété "permission"
+        permissionInstance.permission = permission;
         await permissionInstance.save();
 
-        //Récupérer les associtions actuelles de la permission
-        const association = await RolePermission.findAll({
+        // Récupérer les associations actuelles de la permission
+        const associations = await RolePermission.findAll({
             where: {
-                permission: permission.id
+                permission: permissionInstance.id
             }
-        })
+        });
 
-        //Récupérer les id des departements associés 
-        const roleActuelle = association.map((assoc) => assoc.role)
+        // Récupérer les id des rôles associés
+        const rolesActuels = associations.map((assoc) => assoc.role);
 
-        //Identifier les departement à ajouter
-        const roleAAjouter = role.filter((roleId) => !roleId.includes(roleId))
+        // Identifier les rôles à ajouter
+        const rolesAAjouter = role.filter((roleId) => !rolesActuels.includes(roleId));
 
-        //Identifier les departements avec les associations 
-        const roleASupprimer = roleActuelle.filter((roleId) => !role.includes(roleId))
+        // Identifier les rôles à supprimer
+        const rolesASupprimer = rolesActuels.filter((roleId) => !role.includes(roleId));
 
+        // Supprimer les associations existantes
         await RolePermission.destroy({
-            where : {
-                permission : permissionInstance.id,
-                role : roleASupprimer.id
+            where: {
+                permission: permissionInstance.id,
+                role: rolesASupprimer
             }
-        })
+        });
 
-        //Ajouter nouvelle associations
-        for (const roleId of roleAAjouter) {
-            const roles = await RoleHierarchique.findByPk(roleId)
+        // Ajouter de nouvelles associations
+        for (const roleId of rolesAAjouter) {
+            const roleInstance = await RoleHierarchique.findByPk(roleId);
 
-            if (!roles) {
-                return res.status(404).json({ message: `Le département avec l'ID ${roleId} est introuvable` })
+            if (!roleInstance) {
+                return res.status(404).json({ message: `Le rôle avec l'ID ${roleId} est introuvable` });
             }
 
-            await RoleHierarchique.create({
-                permission : permissionInstance.id,
-                role: roles.id
-            })
-
+            await RolePermission.create({
+                permission: permissionInstance.id,
+                role: roleInstance.id
+            });
         }
 
-        return res.status(200).json({ message: 'Permission mise à jour avec succès' })
+        return res.status(200).json({ message: 'Permission mise à jour avec succès' });
     } catch (error) {
-        console.error('Erreur lors de la mise à jour du permission', error)
-        return res.status(401).json({ message: 'Erreur lors de la mise à jour du permission' })
+        console.error('Erreur lors de la mise à jour de la permission', error);
+        return res.status(500).json({ message: 'Erreur lors de la mise à jour de la permission' });
     }
-})
+});
 
 
 //Pour supprimer les postes et ses associations

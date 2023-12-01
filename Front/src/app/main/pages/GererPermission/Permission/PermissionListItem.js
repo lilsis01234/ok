@@ -9,6 +9,7 @@ import { Button, Tabs, Tab } from '@mui/material';
 import FusePageCarded from '@fuse/core/FusePageCarded/FusePageCarded';
 import { FormProvider, useForm } from 'react-hook-form';
 import PermissionItemHeader from './PermissionItemHeader';
+import BasicInfoPermission from './tabs/BasicInfoPermission';
 
 function PermissionListItem(props) {
     const { permissionId } = useParams();
@@ -119,7 +120,7 @@ function PermissionListItem(props) {
                 </Tabs>
                 <div className="p-16 sm:p-24 max-w-3xl">
                   <div className={tabValue !== 0 ? 'hidden' : ''}>
-                      {/* <BasicPosteInfo methods={methods} formValues={form}/> */}
+                      <BasicInfoPermission methods={methods} formValues={form}/>
                   </div>
                 </div>
               </>

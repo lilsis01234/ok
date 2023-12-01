@@ -37,7 +37,6 @@ function PermissionItemHeader({ formValues }) {
 
     const handleSavePermission = async () => {
         if (id) {
-            console.log(departement)
             try {
                 await axios.put(`http://localhost:4000/api/permission/${id}/edit`, data)
                 alert('Permission mise à jour avec succès')
