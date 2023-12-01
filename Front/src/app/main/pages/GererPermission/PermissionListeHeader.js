@@ -24,7 +24,7 @@ function PermissionListeHeader() {
                 <Button
                     className=""
                     component={Link}
-                    // to="/business/manage/project/new"
+                    to="/manage/permission/new"
                     variant="contained"
                     color="secondary"
                     startIcon={<FuseSvgIcon>heroicons-outline:plus</FuseSvgIcon>}
