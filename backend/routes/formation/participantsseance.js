@@ -23,14 +23,14 @@ router.post('/addCollabSeancePres', async(req,res)=>{
     }
 })
 
-router.post('/addEquipeSeanceOnline', async(req,res)=>{
+router.post('/addCollabSeanceEq', async(req,res)=>{
     try {
-        const newParticipantSeance = await ParticipantsSeanceEquipe.create({
+        const newEquipeSeance = await ParticipantsSeanceEquipe.create({
             seance: req.body.seance,
             equipe: req.body.equipe,
             online: req.body.online,
         });
-        const newPartSeance = await newParticipantSeance.save();
+        const newPartSeance = await newEquipeSeance.save();
         res.status(201).json(newPartSeance);
     } catch (err) {
         console.error(err);
@@ -89,4 +89,6 @@ router.get('/allEquipeSeance', async(req,res)=>{
 
     }
 })
+
+module.exports = router;
 
