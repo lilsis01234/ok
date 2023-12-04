@@ -8,6 +8,7 @@ import MesDemandes from './MesDemandes'
 
 const DemandeFormations = () => {
   const[DemandeFormations,setDemandes] = useState([])
+  const[DemandeConsExt, setDemandeConsExt] = useState([])
 
   const user = JSON.parse(localStorage.getItem('user'));
   const role = user.RoleHierarchique.roleHierarchique;
@@ -27,6 +28,13 @@ const DemandeFormations = () => {
 
   const Desapprouver=(id)=>{
     console.log("demande refusé pour n°" + id);
+    axios.post(`http://localhost:4000/api/demande_formation/desapprouver/${id}`)
+    .then(res=>{
+      console.log(res)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
   }
 
   useEffect(()=>{
@@ -34,6 +42,14 @@ const DemandeFormations = () => {
     .then((res)=>
       { 
         setDemandes(res.data)
+        console.log(res.data)
+      })
+    .catch(err=>console.log(err))
+
+    axios.get('http://localhost:4000/api/demande_formation/allWithoutForm')
+    .then((res)=>
+      { 
+        setDemandeConsExt(res.data)
         console.log(res.data)
       })
     .catch(err=>console.log(err))
@@ -60,6 +76,17 @@ const DemandeFormations = () => {
           <button onClick={()=>{Desapprouver(demande.id)}}>Desapprouver</button>
         </div>
       ))}
+
+      <Typography>Les demandes approuvées sans consultant externe</Typography>
+      
+      {DemandeConsExt.map((demande, index) => (
+        <div key={index} className="training-request-item">
+          <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
+          <Typography className="theme">{demande.theme}</Typography>
+          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link><br></br>
+        </div>
+      ))}
+
       </>
       )  
     }
