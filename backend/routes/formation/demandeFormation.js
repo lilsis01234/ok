@@ -31,6 +31,30 @@ router.get('/all', async(req,res)=>{
 }
 )
 
+router.get('/allWithoutForm', async(req,res)=>{
+    try{
+        const demandes = await Formation.findAll({
+            include: [
+                {
+                    model: Collab2,
+                    as: 'Auteur',
+                    attributes: ['nom', 'prenom'],
+                },
+            ],
+            where: {
+                destinataireDemande: { [Sequelize.Op.not]: null },
+                formateurExt:  null ,
+                approbation: 1
+            }
+        })
+        res.status(200).json(demandes)
+    }
+    catch(err){
+        console.error(err)
+    }
+}
+)
+
 router.get('/demande/:idDemande', async (req, res) => {
     const idDemande = req.params.idDemande;
 
@@ -45,7 +69,7 @@ router.get('/demande/:idDemande', async (req, res) => {
             ],
             where: {
                 destinataireDemande: { [Sequelize.Op.not]: null },
-                approbation: null,
+                // approbation: null,
                 id: idDemande,
             },
         });
@@ -140,6 +164,32 @@ router.post('/approuver/:id', async(req,res)=>{
     }
     
 })
+
+router.post('/desapprouver/:id', async(req,res)=>{
+    const formationId = req.params.id;
+      try{
+          const updatedFormation = await Formation.update(
+              {
+                  approbation: 0,
+              },
+              {
+                  where: {
+                      id: formationId
+                  }
+              }
+          )        
+      
+          if (updatedFormation[0] === 0) {
+              return res.status(404).json({ message: "Formation not found." });
+          }
+    
+          return res.status(200).json({ message: "Formation approved successfully." });
+      } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: "An error occurred while approving the formation." });
+      }
+      
+  })
 
 // ajout demande de formation
 
