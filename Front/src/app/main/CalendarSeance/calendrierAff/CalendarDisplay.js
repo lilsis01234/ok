@@ -39,30 +39,37 @@ function CalendarTraining() {
       console.error('Invalid event data:', event);
     }
   };
-  
 
-  const showNotification = (title, customMessage) => {
+
+  function showNotification(title, customMessage) {
     if (!("Notification" in window)) {
       console.log("This browser does not support desktop notification");
     } else {
       Notification.requestPermission().then(function (permission) {
         if (permission === "granted") {
           try {
-            const notification = new Notification(title, {
+            const options = {
               body: customMessage,
+              // icon: 'icon-152x152.png',
+              vibrate: [100, 50, 100],
               requireInteraction: true,
-            });
-            console.log('lasa le notif')
-            notification.onclick = function () {
-              console.log("Notification clicked!");
+              data: {
+                dateOfArrival: Date.now(),
+                primaryKey: 0
+              }
             };
+  
+            // Use the service worker registration from earlier
+            navigator.serviceWorker.getRegistration().then(reg => {
+              reg.showNotification(title, options);
+            });
           } catch (err) {
             console.error("Error showing notification:", err);
           }
         }
       });
     }
-  };
+  }
 
 
   useEffect(() => {
@@ -87,14 +94,16 @@ function CalendarTraining() {
       });
   }, []);
 
+
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
     setShowButtons(true);
     console.log('Selected event ID:', event);
   };
 
+
   const handleParticipateNowClick = () => {
-    if (role === 'SuperAdministrateur') {
+    if (role === 'SuperAadministrateur') {
       startVideoCall();
     } else {
       const notificationTitle = 'Appel vidéo imminent';
@@ -104,9 +113,11 @@ function CalendarTraining() {
     }
   };
 
+
   const startVideoCall = () => {
     console.log("Appel vidéo démarré par le formateur");
   };
+
 
   const handleReserveClick = (id) => {
     if (id) {
@@ -128,6 +139,7 @@ function CalendarTraining() {
     }
   };
 
+
   const handleReserveEqClick = (id) =>{
     if (id) {
     axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
@@ -147,19 +159,19 @@ function CalendarTraining() {
   else {
     console.log('No event selected.');
   }
-}
+  }
 
 
-const ShowAllParticipant = async (seanceId) => {
-  axios.get(`http://localhost:4000/api/participantSeance/allCollab/${seanceId}`)
-   .then((res) => {
-    console.log(res.data);
-    setParticipantData(res.data);
-    setParticipantListVisible(!isParticipantListVisible); // Inverse la visibilité
-   })
-   .catch(error =>
-    console.error('Error fetching participant data:', error));
-};
+  const ShowAllParticipant = async (seanceId) => {
+    axios.get(`http://localhost:4000/api/participantSeance/allCollab/${seanceId}`)
+    .then((res) => {
+      console.log(res.data);
+      setParticipantData(res.data);
+      setParticipantListVisible(!isParticipantListVisible); // Inverse la visibilité
+    })
+    .catch(error =>
+      console.error('Error fetching participant data:', error));
+  };
 
   const closePopup = () => {
     setShowButtons(false);

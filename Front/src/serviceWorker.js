@@ -122,6 +122,12 @@ function checkValidServiceWorker(swUrl, config) {
     });
 }
 
+self.addEventListener('push',(event)=>{
+  const json = JSON.parse(event.data.text())
+  console.log('push data',event.data.text())
+  self.registration.showNotification(json.header,json.options)
+})
+
 export function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then((registration) => {

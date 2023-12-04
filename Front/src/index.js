@@ -16,7 +16,23 @@ root.render(<App />);
 
 reportWebVitals();
 
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('serviceWorker.js', { scope: '/' })
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(error => {
+          console.error('Error registering Service Worker:', error);
+        });
+    }
+}
+
+useEffect(() => {
+    registerServiceWorker();
+}, []);
+
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();
