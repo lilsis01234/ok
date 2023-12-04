@@ -9,11 +9,30 @@ import { Typography} from '@mui/material'
 const Formations = () => {
 
   const[Formation,setFormations] = useState([]);
+  const[formExt, setFormExt] = useState(null);
   const [FormationAdmin, setFormationAdmin] = useState([]);
+  const [showButtons, setShowButtons] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const role = user.RoleHierarchique.roleHierarchique;
   console.log(role)
 
+  const addFormateur = (id) =>{
+    console.log(id)
+    axios.post(`http://localhost:4000/api/demande_formation/addFormExt/${id}`,
+    {formateurExt : formExt}
+    )
+    .then(res=>{
+      console.log(res)
+      setShowButtons(false)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  const Click = () =>{
+    setShowButtons(!showButtons);
+  }
 
   const fetchFormation = () => {
     axios.get('http://localhost:4000/api/formations/all_formations')
@@ -64,7 +83,6 @@ const Formations = () => {
 
                 {FormationAdmin.length !== 0 ? (
                   recherche === '' || recherche === null ? (
-                    // If recherche is empty or null, display all formations
                     FormationAdmin.map((formation) => (
                       <div key={formation.id} className="formation_item">
                         <Link to={`/admin/formation/${formation.id}`}>
@@ -72,14 +90,22 @@ const Formations = () => {
                         </Link>
 
                         <Typography className="formation_description">{formation.description}</Typography>
-
                         {formation.Formateur || formation.formateurExt ? (
                           <Typography className="formateur_name">
-                            Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}|| {formation.formateurExt}
+                            Formateur: {formation.Formateur ? `${formation.Formateur.nom} ${formation.Formateur.prenom}` : ''} {formation.Formateur && formation.formateurExt ? '|| ' : ''} {formation.formateurExt}
                           </Typography>
                         ) : (
-                          <button> Ajouter un formateur </button>
+                          <button onClick={()=>{Click()}}> Ajouter un formateur </button>
                         )}
+
+                        {showButtons &&
+                        <div className="popup">
+                        <div className="popupContent">
+                          <input type='text' value={formExt} onChange={(e) => setFormExt(e.target.value)}></input>
+                          <button type='submit' onSubmit={()=>{addFormateur(formation.id)}}>Valider</button>
+                        </div>
+                        </div>
+                        }
 
                         <Link to={`/discussion/formation/${formation.id}`}>
                           <span className="lien">Accéder à la discussion</span>
