@@ -138,6 +138,49 @@ router.get('/all_demande/:id', async(req,res)=>{
     }
 })
 
+
+router.get('/alldemande/coatch', async (req, res) => {
+    const coatch = "coatch";
+
+    try {
+        // Find IDs of coatch role in RoleHierarchique
+        const idCoatch = await RoleHierarchique.findAll({
+            attributes: ['id'],
+            where: {
+                roleHierarchique: {
+                    [Sequelize.Op.like]: `%${coatch}%`, // Use `%` for wildcard matching
+                },
+            },
+            raw: true, // Make sure to get raw data (array of objects)
+        });
+
+        // Extract the IDs from the array of objects
+        const coatchIds = idCoatch.map(entry => entry.id);
+
+        // Find formations where destinataireDemande is in the list of coatch IDs
+        const demandes = await Formation.findAll({
+            include: [
+                {
+                    model: Collab2,
+                    as: 'Auteur',
+                    attributes: ['nom', 'prenom'],
+                },
+            ],
+            where: {
+                destinataireDemande: {
+                    [Sequelize.Op.in]: coatchIds,
+                },
+                approbation: null,
+            },
+        });
+
+        res.status(200).json(demandes);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 //Approbation
 router.post('/approuver/:id', async(req,res)=>{
   const formationId = req.params.id;
@@ -189,7 +232,7 @@ router.post('/desapprouver/:id', async(req,res)=>{
           return res.status(500).json({ message: "An error occurred while approving the formation." });
       }
       
-  })
+})
 
 
 router.post('/addDemandeFormation', async (req, res) => {
