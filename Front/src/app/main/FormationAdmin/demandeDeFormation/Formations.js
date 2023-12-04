@@ -14,21 +14,27 @@ const Formations = () => {
   const [showButtons, setShowButtons] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const role = user.RoleHierarchique.roleHierarchique;
-  console.log(role)
 
-  const addFormateur = (id) =>{
-    console.log(id)
-    axios.post(`http://localhost:4000/api/demande_formation/addFormExt/${id}`,
-    {formateurExt : formExt}
-    )
-    .then(res=>{
-      console.log(res)
-      setShowButtons(false)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-  }
+  const addFormateur = (id) => {
+    console.log(id);
+    axios
+      .post(`http://localhost:4000/api/demande_formation/addFormExt/${id}`, {
+        formateurExt: formExt,
+      })
+      .then((res) => {
+        console.log(res);
+        setFormExt(null);
+        setShowButtons(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleFormSubmit = (e, id) => {
+    e.preventDefault();
+    addFormateur(id);
+  };
 
   const Click = () =>{
     setShowButtons(!showButtons);
@@ -45,7 +51,6 @@ const Formations = () => {
     axios.get('http://localhost:4000/api/formations/all/admin')
     .then(res => {
       setFormationAdmin(res.data)
-      console.log(res.data)
     })
   }
 
@@ -101,8 +106,8 @@ const Formations = () => {
                         {showButtons &&
                         <div className="popup">
                         <div className="popupContent">
-                          <input type='text' value={formExt} onChange={(e) => setFormExt(e.target.value)}></input>
-                          <button type='submit' onSubmit={()=>{addFormateur(formation.id)}}>Valider</button>
+                          <input type='text' placeholder='nom du formateur' value={formExt} onChange={(e) => setFormExt(e.target.value)}></input>
+                          <button type='submit' onClick={(e) => handleFormSubmit(e, formation.id)}>Valider</button>
                         </div>
                         </div>
                         }
