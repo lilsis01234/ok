@@ -25,7 +25,7 @@ router.post('/connect', (req, res, next) => {
             where: { email: req.body.email },
             include: [{
                 model: Collab,
-                attributes: ['id','nom', 'prenom', 'matricule', 'image']
+                attributes: ['id','nom', 'prenom', 'matricule', 'image', 'equipe']
             }, {
                 model: RoleHierarchique,
                 include: {
