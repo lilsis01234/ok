@@ -52,6 +52,8 @@ const requestRouter = require('../backend/routes/formation/demandeFormation')
 const seanceRouter = require('../backend/routes/formation/seance')
 const moduleRouter = require('../backend/routes/formation/module')
 const discussionRouter = require('../backend/routes/formation/discussion')
+const participantSeanceRouter = require('../backend/routes/formation/participantsseance')
+const commentaireRouter = require('../backend/routes/formation/commentaire')
 
 //Module Actualité
 const actualite = require('./routes/Actualite/Actualité');
@@ -116,6 +118,7 @@ app.use('/api/seances',seanceRouter)
 app.use('/api/peerjs', peerServer);
 app.use('/api/module', moduleRouter);
 app.use('/api/roleHierarchique',roleHierarchique);
+app.use('/api/commentaire',commentaireRouter);
 
 //Module actualité
 app.use('/api/actualite', actualite );
@@ -127,6 +130,8 @@ app.use('/api/tag',tag );
 app.use('/api/chat/discussion', discussionChat)
 app.use('/api/chat/membre', membrer)
 app.use('/api/chat/message', message)
+app.use('/api/participantSeance',participantSeanceRouter)
+
 
 //Connection à la base de donnée MySQL
 sequelize.authenticate()
