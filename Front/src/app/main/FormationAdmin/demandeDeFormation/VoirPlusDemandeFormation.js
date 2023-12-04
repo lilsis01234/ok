@@ -26,7 +26,6 @@ function VoirPlusDemande() {
   return (
     <>
       <div>
-
         {demandes.demandes && demandes.demandes.length > 0 &&
           demandes.demandes.map((demande) => (
             <div key={demande.id}>
@@ -38,13 +37,18 @@ function VoirPlusDemande() {
 
       </div>
       <div>
-
-        {demandes.Collabs && demandes.Collabs.length > 0 &&
+      Demande pour :
+        {demandes.Collabs && demandes.Collabs.length > 0 ?
           demandes.Collabs.map((collab) => (
             <div key={collab.id}>
               <h4>{collab.Collab.matricule} {collab.Collab.nom} {collab.Collab.prenom}</h4>
             </div>
-        ))}
+        ))
+          :
+          (
+            <h1>Pas de destinataire spécifique</h1>
+          )
+        }
 
       </div>
       <div>
@@ -52,7 +56,7 @@ function VoirPlusDemande() {
         {demandes.equipe && demandes.equipe.length > 0 &&
           demandes.equipe.map((equipe) => (
             <div key={equipe.id}>
-              <h4>{equipe.Equipe.nomEquipe}</h4>
+              <h4>Equipe {equipe.Equipe.nomEquipe}</h4>
             </div>
         ))}
         
