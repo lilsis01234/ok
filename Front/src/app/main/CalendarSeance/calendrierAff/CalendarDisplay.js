@@ -12,7 +12,12 @@ function CalendarTraining() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showButtons, setShowButtons] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user.id)
+  console.log(user)
+  const userid = user.id;
+  const equipe = user.Collab.equipe
+  console.log(equipe)
+  const role = user.RoleHierarchique.roleHierarchique;
+  console.log(role)
 
   const scheduleNotification = (event) => {
     if (event.start && event.end) {
@@ -65,13 +70,15 @@ function CalendarTraining() {
     // Récupérer les données de l'API backend
     axios.get('http://localhost:4000/api/calendrier/agenda')
       .then((response) => {
+        console.log(response.data)
         // Formatter les données pour les rendre compatibles avec React Big Calendar
         const formattedEvents = response.data.map((event) => {
           return {
+            id:event.id,
             title: `${event.title} - ${event.nombreDePlaces} places`,
             start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), // Adjust timezone here
             end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(), // Adjust timezone here
-          };u
+          };
         });
         setEvents(formattedEvents);
         formattedEvents.forEach((event) => scheduleNotification(event)); // Schedule notifications
@@ -84,23 +91,53 @@ function CalendarTraining() {
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
     setShowButtons(true);
-    console.log('zany kitihandry zany')
+    console.log('Selected event ID:', event);
   };
 
   const handleParticipateNowClick = () => {
     console.log('Participer par appel vidéo maintenant');
   };
 
-  const handleReserveClick = () => {
-    console.log('Réserver une place');
-    
+  const handleReserveClick = (id) => {
+    if (id) {
+      axios.post('http://localhost:4000/api/participantSeance/addCollabSeancePres', {
+        seance: id,
+        collaborateur: userid, 
+        online: false,
+      })
+        .then(response => {
+          console.log('Reservation successful:', response.data);
+          closePopup()
+          alert('Réservation à succès')
+        })
+        .catch(error => {
+          console.error('Error reserving place:', error);
+        });
+    } else {
+      console.log('No event selected.');
+    }
   };
 
-  // const handleSetReminderClick = (event) => {
-  //   scheduleNotification(event);
-  //   console.log('lasa le rappel')
-  //   alert('Rappel confirmé')
-  // };
+  const handleReserveEqClick = (id) =>{
+    if (id) {
+    axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
+      seance: id,
+      equipe: equipe, 
+      online: false,
+    })
+      .then(response => {
+        console.log('Reservation successful:', response.data);
+        closePopup()
+        alert('Réservation à succès')
+      })
+      .catch(error => {
+        console.error('Error reserving place:', error);
+      });
+  } 
+  else {
+    console.log('No event selected.');
+  }
+}
 
   const closePopup = () => {
     setShowButtons(false);
@@ -123,8 +160,13 @@ function CalendarTraining() {
         <div className="popup">
         <div className="popupContent">
             <button className="popupButton" onClick={handleParticipateNowClick}>Participer par appel vidéo</button>
-            <button className="popupButton" onClick={handleReserveClick}>Réserver une place</button>
-            {/* <button className="popupButton" onClick={() => { handleSetReminderClick(selectedEvent); console.log('vokitika'); }}>Me rappeler cette formation</button> */}
+            <button className="popupButton" onClick={()=>{handleReserveClick(selectedEvent.id)}}>Réserver une place</button>
+            <button className="popupButton" onClick={()=>{ShowAllParticipant(selectedEvent.id)}}>Liste des participants</button>
+            
+            {role === 'SuperAdministrateur' &&
+            <button className="popupButton" onClick={()=>{handleReserveEqClick(selectedEvent.id)}}>Réserver des places pour mon équipe</button>
+            }
+
             <button className="closeButton" onClick={closePopup}>X</button>
         </div>
       </div>
