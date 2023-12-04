@@ -94,6 +94,9 @@ function CalendarTraining() {
       });
   }, []);
 
+  const DeleteSeance = (id) =>{
+    
+  }
 
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
