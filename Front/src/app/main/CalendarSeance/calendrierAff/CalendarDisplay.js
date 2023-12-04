@@ -71,7 +71,7 @@ function CalendarTraining() {
             title: `${event.title} - ${event.nombreDePlaces} places`,
             start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), // Adjust timezone here
             end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(), // Adjust timezone here
-          };
+          };u
         });
         setEvents(formattedEvents);
         formattedEvents.forEach((event) => scheduleNotification(event)); // Schedule notifications
