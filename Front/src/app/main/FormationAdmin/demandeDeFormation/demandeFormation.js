@@ -9,7 +9,7 @@ import MesDemandes from './MesDemandes'
 const DemandeFormations = () => {
   const[DemandeFormations,setDemandes] = useState([])
   const[DemandeConsExt, setDemandeConsExt] = useState([])
-
+  const[DemandeCoatch, setDemandeCoatch] = useState([])
   const user = JSON.parse(localStorage.getItem('user'));
   const role = user.RoleHierarchique.roleHierarchique;
   console.log(role)
@@ -53,6 +53,14 @@ const DemandeFormations = () => {
         console.log(res.data)
       })
     .catch(err=>console.log(err))
+
+    axios.get('http://localhost:4000/api/demande_formation/alldemande/coatch')
+    .then((res)=>
+      { 
+        setDemandeCoatch(res.data)
+        console.log(res.data)
+      })
+    .catch(err=>console.log(err))
   })
   
   return (
@@ -90,8 +98,26 @@ const DemandeFormations = () => {
       </>
       )  
     }
-    </div>
+
+    {(role === 'Coatch' || role === 'SuperAdministrateur') && (
+        <>
+      <Typography>Les demandes de formation</Typography>
+      
+      {DemandeCoatch.map((demande, index) => (
+        <div key={index} className="training-request-item">
+          <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
+          <Typography className="theme">{demande.theme}</Typography>
+          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link><br></br>
+          <button onClick={()=>{Approuver(demande.id)}}>Approuver</button><br></br>
+          <button onClick={()=>{Desapprouver(demande.id)}}>Desapprouver</button>
+        </div>
+      ))}
+      </>
   )
+}
+
+</div>
+)
 }
 
 export default DemandeFormations
