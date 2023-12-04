@@ -94,7 +94,18 @@ function CalendarTraining() {
   };
 
   const handleParticipateNowClick = () => {
-    console.log('Participer par appel vidéo maintenant');
+    if (role === 'SuperAdministrateur') {
+      startVideoCall();
+    } else {
+      const notificationTitle = 'Appel vidéo imminent';
+      const notificationMessage = 'Cliquez ici pour participer à l\'appel vidéo';
+  
+      showNotification(notificationTitle, notificationMessage);
+    }
+  };
+
+  const startVideoCall = () => {
+    console.log("Appel vidéo démarré par le formateur");
   };
 
   const handleReserveClick = (id) => {
@@ -170,7 +181,11 @@ const ShowAllParticipant = async (seanceId) => {
       {showButtons && selectedEvent && (
         <div className="popup">
         <div className="popupContent">
-            <button className="popupButton" onClick={handleParticipateNowClick}>Participer par appel vidéo</button>
+
+            {role === 'SuperAdministrateur' &&
+            (<button className="popupButton" onClick={()=>{handleParticipateNowClick()}}>Démarrer l' appel vidéo</button>)
+            }
+            
             <button className="popupButton" onClick={()=>{handleReserveClick(selectedEvent.id)}}>Réserver une place</button>
             
             {isParticipantListVisible && (
@@ -188,7 +203,7 @@ const ShowAllParticipant = async (seanceId) => {
               Liste des participants
             </button>
             
-            {role === 'SuperAdministrateur' &&
+            {role === 'chefEquipe' &&
             <button className="popupButton" onClick={()=>{handleReserveEqClick(selectedEvent.id)}}>Réserver des places pour mon équipe</button>
             }
 
