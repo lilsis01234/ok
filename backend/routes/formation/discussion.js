@@ -29,7 +29,7 @@ router.get('/all_discussions/:idformation', async (req, res) => {
             include: [
                 {
                     model: Collaborateur,
-                    attributes: ['nom', 'prenom']
+                    attributes: ['id','nom', 'prenom']
                 },
                 {
                     model: Module,
@@ -46,6 +46,29 @@ router.get('/all_discussions/:idformation', async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la récupération des discussions sur la formation' });
     }
 });
+
+router.get('/discussion/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const discussion = await DiscussionFormation.findByPk(id,{
+            include: [
+                {
+                    model: Collaborateur,
+                    attributes: ['id','nom', 'prenom']
+                },
+                {
+                    model: Module,
+                    attributes: ['id', 'titreModule']
+                },
+            ],
+        });
+        res.status(200).json(discussion);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des discussions:', error);
+        res.status(500).json({ message: 'Erreur lors de la récupération des discussion' });
+    }
+});
+
 
 router.get('/temporary-link/:filename', (req, res) => {
     const filePath = path.join(__dirname,'../../', 'uploads2', req.params.filename);
