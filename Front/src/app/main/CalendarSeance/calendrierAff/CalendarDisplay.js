@@ -11,13 +11,13 @@ function CalendarTraining() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showButtons, setShowButtons] = useState(false);
+  const [participantData, setParticipantData] = useState(null);
+  const [isParticipantListVisible, setParticipantListVisible] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user)
   const userid = user.id;
   const equipe = user.Collab.equipe
-  console.log(equipe)
   const role = user.RoleHierarchique.roleHierarchique;
-  console.log(role)
+
 
   const scheduleNotification = (event) => {
     if (event.start && event.end) {
@@ -55,7 +55,6 @@ function CalendarTraining() {
             console.log('lasa le notif')
             notification.onclick = function () {
               console.log("Notification clicked!");
-              // Handle notification click event here, e.g., redirect to a specific page
             };
           } catch (err) {
             console.error("Error showing notification:", err);
@@ -139,6 +138,18 @@ function CalendarTraining() {
   }
 }
 
+
+const ShowAllParticipant = async (seanceId) => {
+  axios.get(`http://localhost:4000/api/participantSeance/allCollab/${seanceId}`)
+   .then((res) => {
+    console.log(res.data);
+    setParticipantData(res.data);
+    setParticipantListVisible(!isParticipantListVisible); // Inverse la visibilité
+   })
+   .catch(error =>
+    console.error('Error fetching participant data:', error));
+};
+
   const closePopup = () => {
     setShowButtons(false);
   };
@@ -161,7 +172,21 @@ function CalendarTraining() {
         <div className="popupContent">
             <button className="popupButton" onClick={handleParticipateNowClick}>Participer par appel vidéo</button>
             <button className="popupButton" onClick={()=>{handleReserveClick(selectedEvent.id)}}>Réserver une place</button>
-            <button className="popupButton" onClick={()=>{ShowAllParticipant(selectedEvent.id)}}>Liste des participants</button>
+            
+            {isParticipantListVisible && (
+              <div className="participantData">
+                {participantData &&
+                  [...participantData.collabNames, ...participantData.collabNames2]
+                    .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
+                    .map((collab, index) => (
+                      <div key={index}>{`${collab.nom} ${collab.prenom}`}</div>
+                    ))}
+              </div>
+            )}
+            
+            <button className="popupButton" onClick={() => ShowAllParticipant(selectedEvent.id)}>
+              Liste des participants
+            </button>
             
             {role === 'SuperAdministrateur' &&
             <button className="popupButton" onClick={()=>{handleReserveEqClick(selectedEvent.id)}}>Réserver des places pour mon équipe</button>
