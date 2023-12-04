@@ -191,7 +191,6 @@ router.post('/desapprouver/:id', async(req,res)=>{
       
   })
 
-// ajout demande de formation
 
 router.post('/addDemandeFormation', async (req, res) => {
     try {
@@ -238,6 +237,30 @@ router.post('/addDemandeFormation', async (req, res) => {
     }
 });
 
-//verification des receuils de demandes
+router.post('/addFormExt/:id', async(req,res)=>{
+    const formationId = req.params.id;
+    const formateurExt = req.body.formateurExt
+    try{
+        const updatedFormation = await Formation.update(
+            {
+                formateurExt: formateurExt,
+            },
+            {
+                where: {
+                    id: formationId
+                }
+            }
+        )        
+    
+        if (updatedFormation[0] === 0) {
+            return res.status(404).json({ message: "Formation not found." });
+        }
+  
+        return res.status(200).json({ message: "Formation approved successfully." });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "An error occurred while approving the formation." });
+    }
+})
 
 module.exports = router;
