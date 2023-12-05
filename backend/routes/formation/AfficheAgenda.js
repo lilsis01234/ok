@@ -15,4 +15,20 @@ router.get('/agenda', async (req, res) => {
   }
 });
 
+router.delete('/seance/:id',async(req,res) =>{
+  const { id } = req.params;
+    try {
+        const deletedSeance = await Agenda.findByPk(id);
+        if (!deletedSeance) {
+            return res.status(404).json({ error: 'discussion introuvable' });
+        }
+        await deletedSeance.destroy();
+        res.sendStatus(204);
+    }
+    catch (error) {
+        console.error('Erreur lors de la suppression de la séance :', error)
+        res.status(500).json({ message: 'Erreur lors de la suppression' })
+    }
+})
+
 module.exports = router;
