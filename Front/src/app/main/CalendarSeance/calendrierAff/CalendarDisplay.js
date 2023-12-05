@@ -95,6 +95,7 @@ function CalendarTraining() {
       });
   }, []);
 
+  
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
     setShowButtons(true);
