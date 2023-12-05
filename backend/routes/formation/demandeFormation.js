@@ -329,4 +329,19 @@ router.post('/addFormExt/:id', async(req,res)=>{
     }
 })
 
+router.delete('/formation/:id', async(req,res) =>{
+    const { id } = req.params;
+    try {
+        const deletedFormation = await Formation.findByPk(id);
+        if (!deletedFormation) {
+            return res.status(404).json({ error: 'discussion introuvable' });
+        }
+        await deletedFormation.destroy();
+        res.sendStatus(204);
+    }
+    catch (error) {
+        console.error('Erreur lors de la suppression :', error)
+        res.status(500).json({ message: 'Erreur lors de la suppression' })
+    }
+})
 module.exports = router;
