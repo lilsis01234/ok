@@ -19,6 +19,7 @@ const VoirPlusFormation = () => {
     const [showButtons, setShowButtons] = useState(false);
     const user = JSON.parse(localStorage.getItem('user'))
     console.log(user)
+    const userId = user.id;
     const role = user.RoleHierarchique.roleHierarchique;
     console.log(role)
 
@@ -34,6 +35,7 @@ const VoirPlusFormation = () => {
 
             axios.get(`http://localhost:4000/api/seances/seancesParFormation/${idFormation.id}`)
             .then((res) => {
+            console.log(res.data)
             const formattedEvents = res.data.map((seance) => {
                 return {
                 title: `${seance.title} - ${seance.nombreDePlaces} places`,
@@ -142,10 +144,17 @@ const VoirPlusFormation = () => {
 
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Modules</h1>
+           
+            {informations.formation &&
+            ((informations.formation.RoleHierarchique?.roleHierarchique &&
+              role === informations.formation.RoleHierarchique.roleHierarchique) ||
+                (informations.formation.auteur === userId) && (
+                  <button>
+                    <Link to={`/addModule/${idFormation.id}`}>+</Link>
+                  </button>
+            ))}
 
-            {informations.formation && role === informations.formation.RoleHierarchique.roleHierarchique &&
-            <button><Link to={`/addModule/${idFormation.id}`}>+</Link></button>
-            }
+ 
 
             </div>
                 {informations.modules ? (informations.modules.length!==0 &&
@@ -163,10 +172,15 @@ const VoirPlusFormation = () => {
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Séances</h1>
             
-            {informations.formation && role === informations.formation.RoleHierarchique.roleHierarchique &&
-            <button><Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link></button>
-            }
-            
+            {informations.formation &&
+            ((informations.formation.RoleHierarchique?.roleHierarchique &&
+              role === informations.formation.RoleHierarchique.roleHierarchique) ||
+                (informations.formation.auteur === userId) && (
+                  <button>
+                    <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
+                  </button>
+            ))}
+
             </div>
 
             {events.length !== 0 ? (
