@@ -94,10 +94,6 @@ function CalendarTraining() {
       });
   }, []);
 
-  const DeleteSeance = (id) =>{
-    
-  }
-
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
     setShowButtons(true);
@@ -163,7 +159,25 @@ function CalendarTraining() {
     console.log('No event selected.');
   }
   }
-
+  
+  
+  const DeleteSeance = async (id) => {
+    const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette séance ?");
+    if (isConfirmed) {
+    try {
+      const response = await axios.delete(`http://localhost:4000/api/calendrier/seance/${id}`);
+      if (response.status === 204) {
+        // Suppression réussie, mise à jour la liste des événements
+        const updatedEvents = events.filter(event => event.id !== id);
+        setEvents(updatedEvents);
+      } else {
+        console.error('Erreur lors de la suppression de la séance');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la suppression de la séance :', error);
+    }
+  }};
+  
 
   const ShowAllParticipant = async (seanceId) => {
     axios.get(`http://localhost:4000/api/participantSeance/allCollab/${seanceId}`)
@@ -202,6 +216,7 @@ function CalendarTraining() {
             }
             
             <button className="popupButton" onClick={()=>{handleReserveClick(selectedEvent.id)}}>Réserver une place</button>
+            <button className="popupButton" onClick={() => { DeleteSeance(selectedEvent.id) }}>Supprimer</button>
             
             {isParticipantListVisible && (
               <div className="participantData">
@@ -227,6 +242,7 @@ function CalendarTraining() {
       </div>
       )}
     </div>
+
     </div>
     </div>
   );
