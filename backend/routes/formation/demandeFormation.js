@@ -8,28 +8,51 @@ const {  Formation2,Collab2,FormationCollab } = require('../../Modele/formation/
 const {  Formation,Equipe2,FormationEq } = require('../../Modele/formation/associationFormationDep');
 const RoleHierarchique = require('../../Modele/RoleModel/RoleHierarchique');
 
-router.get('/all', async(req,res)=>{
-    try{
+router.get('/all', async (req, res) => {
+    const coatch = "coatch";
+  
+    try {
+      // Find IDs of coatch role in RoleHierarchique
+      const idCoatch = await RoleHierarchique.findAll({
+        attributes: ['id'],
+        where: {
+          roleHierarchique: {
+            [Sequelize.Op.like]: `%${coatch}%`, // Use `%` for wildcard matching
+          },
+        },
+        raw: true, // Make sure to get raw data (array of objects)
+      });
+  
+      // Extract the IDs from the array of objects
+      const coatchIds = idCoatch.map(entry => entry.id);
+  
+      try {
         const demandes = await Formation.findAll({
-            include: [
-                {
-                    model: Collab2,
-                    as: 'Auteur',
-                    attributes: ['nom', 'prenom'],
-                },
-            ],
-            where: {
-                destinataireDemande: { [Sequelize.Op.not]: null },
-                approbation: null,
-            }
-        })
-        res.status(200).json(demandes)
+          include: [
+            {
+              model: Collab2,
+              as: 'Auteur',
+              attributes: ['nom', 'prenom'],
+            },
+          ],
+          where: {
+            destinataireDemande: {
+              [Sequelize.Op.not]: [null, ...coatchIds], // Updated this line
+            },
+            approbation: null,
+          },
+        });
+        res.status(200).json(demandes);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
     }
-    catch(err){
-        console.error(err)
-    }
-}
-)
+});
+  
 
 router.get('/allWithoutForm', async(req,res)=>{
     try{
