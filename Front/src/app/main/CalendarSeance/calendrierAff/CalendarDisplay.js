@@ -49,6 +49,7 @@ function CalendarTraining() {
         if (permission === "granted") {
           try {
             const options = {
+              icon:'/logo-sahaza.png',
               body: customMessage,
               // icon: 'icon-152x152.png',
               vibrate: [100, 50, 100],
