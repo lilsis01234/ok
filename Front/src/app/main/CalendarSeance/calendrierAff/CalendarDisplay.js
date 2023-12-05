@@ -80,6 +80,7 @@ function CalendarTraining() {
         // Formatter les données pour les rendre compatibles avec React Big Calendar
         const formattedEvents = response.data.map((event) => {
           return {
+            auteur: event.Formation.formateur,
             id:event.id,
             title: `${event.title} - ${event.nombreDePlaces} places`,
             start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), // Adjust timezone here
@@ -216,8 +217,11 @@ function CalendarTraining() {
             }
             
             <button className="popupButton" onClick={()=>{handleReserveClick(selectedEvent.id)}}>Réserver une place</button>
-            <button className="popupButton" onClick={() => { DeleteSeance(selectedEvent.id) }}>Supprimer</button>
             
+            {selectedEvent.auteur === userid &&
+            <button className="popupButton" onClick={() => { DeleteSeance(selectedEvent.id) }}>Supprimer</button>
+            }
+
             {isParticipantListVisible && (
               <div className="participantData">
                 {participantData &&
