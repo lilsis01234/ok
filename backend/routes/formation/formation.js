@@ -24,10 +24,10 @@ router.get('/all_formations', async(req,res) => {
             {
               model: Collaborateur,
               as: 'Formateur',
-              attributes: ['nom', 'prenom'],
+              attributes: ['id','nom', 'prenom'],
             },
           ],
-          attributes: ['id', 'theme', 'description', 'auteur','formateur'],
+          attributes: ['id', 'theme', 'description', 'auteur','formateur','approbation'],
             where:
             {
               destinataireDemande: null,
@@ -51,10 +51,10 @@ router.get('/all/admin', async(req,res)=>{
             {
               model: Collaborateur,
               as: 'Formateur',
-              attributes: ['nom', 'prenom'],
+              attributes: ['id','nom', 'prenom'],
             },
           ],
-          attributes: ['id', 'theme', 'description', 'auteur','formateur','formateurExt','destinataireDemande'],
+          attributes: ['id', 'theme', 'description', 'auteur','formateur','formateurExt','destinataireDemande','approbation'],
             where:
             {
               approbation:1,
@@ -181,5 +181,26 @@ router.post('/addFormation',async(req,res)=>{
     }
 })
 
+router.put('/edit/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const formAediter = await Formation.findByPk(id);
+
+    if (!formAediter) {
+      return res.status(404).json({ error: 'Formation introuvable' });
+    }
+
+    const editedFormation = await formAediter.update({
+      theme: req.body.theme,
+      description: req.body.description
+    });
+
+    res.status(201).json(editedFormation);
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour', error);
+    res.status(500).json({ error: 'Erreur lors de la mise à jour' });
+  }
+});
 
 module.exports = router;

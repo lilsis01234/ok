@@ -4,6 +4,7 @@ import './demandeFormation.css'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Typography} from '@mui/material'
+import EditFormation from '../../FormationUser/Formateur/EditFormation/EditFormation';
 
 
 const Formations = () => {
@@ -14,6 +15,9 @@ const Formations = () => {
   const [showButtons, setShowButtons] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const role = user.RoleHierarchique.roleHierarchique;
+  const userId = user.id;
+  const [editingFormation, setEditingFormation] = useState(null);
+
 
   const addFormateur = (id) => {
     console.log(id);
@@ -119,6 +123,19 @@ const Formations = () => {
                         <button className="voir_plus_button">
                           <Link to={`/admin/formation/${formation.id}`}>?</Link>
                         </button>
+                        
+                        <button onClick={() => setEditingFormation(formation)}>
+                          Edit
+                        </button>
+                        
+                        {editingFormation && editingFormation.id === formation.id && (
+                          <EditFormation
+                            formationId={formation.id}
+                            theme={formation.theme}
+                            description={formation.description}
+                          />
+                        )} 
+                        
                       </div>
                     ))
                   ) : (
@@ -155,6 +172,19 @@ const Formations = () => {
                         <button className="voir_plus_button">
                           <Link to={`/admin/formation/${formation.id}`}>?</Link>
                         </button>
+
+                        <button onClick={() => setEditingFormation(formation)}>
+                          Edit
+                        </button>
+                        
+                        {editingFormation && editingFormation.id === formation.id && (
+                          <EditFormation
+                            formationId={formation.id}
+                            theme={formation.theme}
+                            description={formation.description}
+                          />
+                        )} 
+                        
                       </div>
                     ))
                   )
@@ -199,6 +229,18 @@ const Formations = () => {
                     <Link to={`/admin/formation/${formation.id}`}>?</Link>
                   </button>
                 
+                 {userId === formation.Formateur.id &&
+                  <button onClick={() => setEditingFormation(formation)}>
+                    Edit
+                  </button>
+                  }
+                  {editingFormation && editingFormation.id === formation.id && (
+                    <EditFormation
+                      formationId={formation.id}
+                      theme={formation.theme}
+                      description={formation.description}
+                    />
+                  )}
                 </div>
               ))
               
@@ -236,6 +278,19 @@ const Formations = () => {
                     <button className="voir_plus_button">
                       <Link to={`/admin/formation/${formation.id}`}>?</Link>
                     </button>
+
+                    {userId === formation.Formateur.id &&
+                      <button onClick={() => setEditingFormation(formation)}>
+                        Edit
+                      </button>
+                      }
+                      {editingFormation && editingFormation.id === formation.id && (
+                        <EditFormation
+                          formationId={formation.id}
+                          theme={formation.theme}
+                          description={formation.description}
+                        />
+                      )} 
                   
                   </div>
               )))
