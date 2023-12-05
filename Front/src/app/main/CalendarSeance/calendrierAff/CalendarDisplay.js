@@ -15,7 +15,7 @@ function CalendarTraining() {
   const [isParticipantListVisible, setParticipantListVisible] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const userid = user.id;
-  const equipe = user.Collab.equipe
+  const equipe = user.Collab.equipe;
   const role = user.RoleHierarchique.roleHierarchique;
 
 
@@ -49,9 +49,8 @@ function CalendarTraining() {
         if (permission === "granted") {
           try {
             const options = {
-              icon:'/logo-sahaza.png',
               body: customMessage,
-              // icon: 'icon-152x152.png',
+              icon:'logo-sahaza.png',
               vibrate: [100, 50, 100],
               requireInteraction: true,
               data: {
