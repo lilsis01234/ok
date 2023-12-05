@@ -45,7 +45,12 @@ function MesDemandes (){
                 'REFUSÉE'}
               </Typography>
 
-
+              {demande.approbation === true &&
+              <button>
+                <Link to={`/admin/formation/${demande.id}`}>Modules & séances</Link>
+              </button>
+              }
+              <br></br>
               <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link>
               <br></br><button>Supprimer</button>
             </div>

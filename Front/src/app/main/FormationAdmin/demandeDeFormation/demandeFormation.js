@@ -73,8 +73,11 @@ const DemandeFormations = () => {
       {(role === 'SuperAdministrateur' || role === 'rh') &&
       (
       <>
-      <Typography>Les demandes de formation</Typography>
       
+      
+      {DemandeFormations.length !== 0 && 
+      <Typography>Les demandes de formation</Typography>
+      }
       {DemandeFormations.map((demande, index) => (
         <div key={index} className="training-request-item">
           <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
@@ -85,15 +88,18 @@ const DemandeFormations = () => {
         </div>
       ))}
 
-      <Typography>Les demandes approuvées sans consultant externe</Typography>
       
+      {DemandeConsExt.length !== 0 && 
+        <Typography>Les demandes approuvées sans consultant externe</Typography>
+      }
       {DemandeConsExt.map((demande, index) => (
         <div key={index} className="training-request-item">
           <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
           <Typography className="theme">{demande.theme}</Typography>
-          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link><br></br>
+          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus</Link><br></br>
         </div>
       ))}
+
 
       </>
       )  
@@ -101,15 +107,21 @@ const DemandeFormations = () => {
 
     {(role === 'Coatch' || role === 'SuperAdministrateur') && (
         <>
-      <Typography>Les demandes de formation</Typography>
+      <Typography>Les demandes de formation pour le coatch</Typography>
       
       {DemandeCoatch.map((demande, index) => (
         <div key={index} className="training-request-item">
           <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
           <Typography className="theme">{demande.theme}</Typography>
           <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link><br></br>
+          
+          {role === 'Coatch' &&
+          <>
           <button onClick={()=>{Approuver(demande.id)}}>Approuver</button><br></br>
           <button onClick={()=>{Desapprouver(demande.id)}}>Desapprouver</button>
+          </>
+          }
+
         </div>
       ))}
       </>
