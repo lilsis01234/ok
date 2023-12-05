@@ -15,11 +15,14 @@ import 'moment/locale/fr';
 
 moment.locale('fr')
 
-function CollaborateurTable(props) {
+function CollaborateurTable({searchResults}) {
+  
+  // console.log(searchResults)
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
-  const [collaborateurData, setCollaborateurData] = useState([]);
+  // const [collaborateurData, setCollaborateurData] = useState();
   const [page, setPage] = useState(0);
   const [rowPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
@@ -27,21 +30,11 @@ function CollaborateurTable(props) {
     id: null,
   });
 
-  const fetchCollaborateur = () => {
-    axios
-      .get("http://localhost:4000/api/collaborateur/all")
-      .then((response) => {
-        setCollaborateurData(response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
   useEffect(() => {
-    fetchCollaborateur();
-    setLoading(false);
-  }, []);
+    if (searchResults) {
+      setLoading(false);
+    }
+  }, [searchResults]);
 
   if (loading) {
     return <FuseLoading />;
@@ -63,7 +56,7 @@ function CollaborateurTable(props) {
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      setSelected(collaborateurData.map((n) => n.id));
+      setSelected(searchResults.map((n) => n.id));
       return;
     }
     setSelected([]);
@@ -103,7 +96,7 @@ function CollaborateurTable(props) {
     setRowsPerPage(event.target.value);
   }
 
-  if (collaborateurData.length === 0) {
+  if (searchResults.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -128,12 +121,12 @@ function CollaborateurTable(props) {
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
-            rowCount={collaborateurData.length}
+            rowCount={searchResults.length}
             onMenuItemClick={handleDeselect}
           />
           <TableBody>
             {_.orderBy(
-              collaborateurData,
+              searchResults,
               [
                 (o) => {
                   switch (order.id) {
@@ -190,7 +183,7 @@ function CollaborateurTable(props) {
       <TablePagination
         className="shrink-0 border-t-1"
         component="div"
-        count={collaborateurData.length}
+        count={searchResults.length}
         rowsPerPage={rowPerPage}
         page={page}
         backIconButtonProps={{

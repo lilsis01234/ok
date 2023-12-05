@@ -52,9 +52,52 @@ router.get('/all', async (req, res) => {
 })
 
 
+router.get('/view/:id', async(req, res) => {
+    const {id} = req.params;
+    try {
+        const compteCollab = await Compte.findByPk(id, {
+            attributes: ['id', 'email',  'collaborateur', 'RoleHierarchiqueId'],
+            include: [
+                {
+                    model: Collab,
+                    attributes: ['id', 'nom', 'prenom', 'matricule', 'image'],
+                    include: [
+                        {
+                            model: TestPoste,
+                            as: 'poste1',
+                        }, {
+                            model: TestPoste,
+                            as: 'postes',
+                        }, {
+                            model: TestDepartement,
+                            as: 'departement1',
+                        }, {
+                            model: TestDepartement,
+                            as: 'departements',
+                        }
+                    ]
+                }, {
+                    model: RoleHierarchique,
+                    include: {
+                        model: Role
+                    }
+                }
+
+            ]
+        })
+        res.status(200).json(compteCollab)
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
+    }
+})
+
+
 
 //Modifer le mot de passe d'un compte collaborateur 
-router.put('/:id/edit', async (req, res) => {
+router.put('/:id/editPassword', async (req, res) => {
     const { id } = req.params;
     try {
         const updateCompte = await Compte.findByPk(id);
@@ -73,6 +116,30 @@ router.put('/:id/edit', async (req, res) => {
         console.error("Erreur lors de la mise à jour du compte", err);
         res.status(500).json({ error: 'Erreur lors de la mise à jour du compte' })
     }
+})
+
+//Modifier le rôle d'un compte collaborateur
+router.put('/:id/edit', async(req, res) => {
+    const { id } = req.params;
+    try {
+        const updateCompte = await Compte.findByPk(id);
+        if (!updateCompte) {
+            return res.status(404).json({ error: 'Compte introuvable' });
+        }
+
+        const updatedCompte = await updateCompte.update({
+            // email : req.body.email,
+            RoleHierarchiqueId : req.body.RoleHierarchiqueId
+        })
+
+        return res.status(201).json(updatedCompte);
+
+        
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour du compte", error);
+        res.status(500).json({ error: 'Erreur lors de la mise à jour du compte' })
+    }
+    
 })
 
 

@@ -199,7 +199,7 @@ function ProfessionalInfo(props) {
             id="poste"
             variant="outlined"
             fullWidth
-            
+            InputLabelProps={{ shrink: !!field.value }}
           >
             {listePoste.map((poste) => (
               <MenuItem key={poste.id} value={poste.id}>
@@ -225,7 +225,7 @@ function ProfessionalInfo(props) {
             id="departement"
             variant="outlined"
             fullWidth
-           
+            InputLabelProps={{ shrink: !!field.value }}
           >
             {listeDepartement.map((departement) => (
               <MenuItem key={departement.id} value={departement.id}>

@@ -22,7 +22,9 @@ router.post('/new', async (req, res) => {
 //Afficher les listes de tous les categories d'actualités
 router.get('/all', async (req, res) => {
     try {
-        const categorie = await Type.findAll();
+        const categorie = await Type.findAll({
+            order: [['nom', 'ASC']],
+        });
 
         res.status(200).json(categorie);
     }

@@ -38,7 +38,7 @@ function CompteCollaborateurTable() {
     }
 
     function handleClick(item) {
-        navigate(`/manage/collaborator/${item.id}`);
+        navigate(`/manage/account/${item.id}`);
     }
 
     function handleChangePage(event, value) {
@@ -78,7 +78,7 @@ function CompteCollaborateurTable() {
                                     hover
                                     tabIndex={-1}
                                     key={n.id}
-                                // onClick={(event) => handleClick(n)}
+                                    onClick={(event) => handleClick(n)}
                                 >
                                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Collab?.matricule}</TableCell>
                                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Collab?.nom} {n.Collab?.prenom}</TableCell>

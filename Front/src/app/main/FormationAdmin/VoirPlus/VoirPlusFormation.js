@@ -180,7 +180,6 @@ const VoirPlusFormation = () => {
                     <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
                   </button>
             ))}
-
             </div>
 
             {events.length !== 0 ? (

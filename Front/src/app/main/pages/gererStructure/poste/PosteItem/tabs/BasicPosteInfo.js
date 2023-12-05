@@ -29,7 +29,7 @@ function BasicPosteInfo(props) {
         nomDepartement : item.nomDepartement
     }))
 
-    console.log(formattedDepartements)
+    // console.log(formattedDepartements)
 
     if (!methods) { 
         return null;

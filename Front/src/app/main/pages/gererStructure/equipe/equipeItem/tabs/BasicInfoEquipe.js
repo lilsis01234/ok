@@ -38,7 +38,7 @@ function BasicInfoEquipe(props) {
                         error={!!errors.nomEquipe}
                         required
                         helperText={errors?.nomEquipe?.message}
-                        label="Team Name"
+                        label="Nom de l'équipe"
                         autoFocus
                         id="nomEquipe"
                         variant="outlined"

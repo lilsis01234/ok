@@ -22,7 +22,9 @@ router.post('/new', async (req, res) => {
 //Afficher les listes de tous les étiquettes d'actualités
 router.get('/all', async (req, res) => {
     try {
-        const Tags = await Tag.findAll();
+        const Tags = await Tag.findAll({
+            order: [['nom', 'ASC']],
+        });
 
         res.status(200).json(Tags);
     }

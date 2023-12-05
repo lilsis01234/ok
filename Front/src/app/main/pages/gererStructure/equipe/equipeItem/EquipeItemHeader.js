@@ -68,7 +68,7 @@ function EquipeItemHeader({ formValues }) {
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                         </FuseSvgIcon>
-                        <span className="flex mx-4 font-medium">Team</span>
+                        <span className="flex mx-4 font-medium">Equipes</span>
                     </Typography>
                 </motion.div>
                 <div className="flex items-center max-w-full">
@@ -77,8 +77,8 @@ function EquipeItemHeader({ formValues }) {
                         initial={{ x: -20 }}
                         animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomEquipe || 'New Team'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Team Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomEquipe || 'Nouvelle Equipe'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Détail de l'équipe</Typography>
                     </motion.div>
                 </div>
             </div>
@@ -94,7 +94,7 @@ function EquipeItemHeader({ formValues }) {
                     //  disabled={!isDirty  || !isValid}
                      onClick={handleSaveEquipe}
                 >
-                    Save
+                    Enregistrer
                 </Button>
             </motion.div>
         </div>

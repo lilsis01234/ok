@@ -108,13 +108,13 @@ function PosteTable(props) {
                 className="flex flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There are no Fonction!
+                    Il n'y a pas de poste
                 </Typography>
             </motion.div>
         );
     }
 
-    console.log(posteData);
+    // console.log(posteData);
 
     return (
         <div className="w-full flex flex-col min-h-full">
@@ -185,10 +185,10 @@ function PosteTable(props) {
                 rowsPerPage={rowPerPage}
                 page={page}
                 backIconButtonProps={{
-                    'aria-label': 'Previous Page',
+                    'aria-label': 'Page Précédante',
                 }}
                 nextIconButtonProps={{
-                    'aria-label': 'Next Page',
+                    'aria-label': 'Page suivante',
                 }}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
