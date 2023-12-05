@@ -64,6 +64,10 @@ Seance.belongsTo(Module, {
   foreignKey: 'module',
 });
 
+Seance.belongsTo(Formation, {
+  foreignKey: 'formation',
+});
+
 Seance.belongsToMany(Collaborateur, { through: ParticipantSeance, foreignKey: 'seance' });
 Collaborateur.belongsToMany(Seance, { through: ParticipantSeance, foreignKey: 'collaborateur' });
 Departement.belongsToMany(Seance,{ through: ParticipantSeance, foreignKey: 'equipe' })
