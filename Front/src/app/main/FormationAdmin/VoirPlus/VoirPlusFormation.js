@@ -17,10 +17,15 @@ const VoirPlusFormation = () => {
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showButtons, setShowButtons] = useState(false);
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log(user)
+    const role = user.RoleHierarchique.roleHierarchique;
+    console.log(role)
 
     const fetchFormation = () => {
         axios.get(`http://localhost:4000/api/formations/all_informations/${idFormation.id}`)
             .then(res => {
+                console.log(res.data)
                 setInformations(res.data);
             })
             .catch(err => {
@@ -120,6 +125,7 @@ const VoirPlusFormation = () => {
     return (
         <div className="voirPlusContainer">
             <h1 className="collabListes_title font-bold">Détails sur la formation</h1>
+            
             {informations.formation && (
                 <div className='infos'>
                     <Typography>Thème: {informations.formation.theme}</Typography>
@@ -127,12 +133,20 @@ const VoirPlusFormation = () => {
                     {informations.formation.Formateur && (
                      <Typography>Formateur: <span className="formateurInfo">{informations.formation.Formateur.nom} {informations.formation.Formateur.prenom}</span></Typography>
                     )}
+                    {informations.formation.formateurExt && (
+                     <Typography>Formateur: <span className="formateurInfo">{informations.formation.formateurExt}</span></Typography>
+                    )}
                     <span className="formateurInfo"><Link to={`/discussion/formation/${idFormation.id}`}>Accéder à la discussion</Link></span>
                 </div>
-              )}
+            )}
+
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Modules</h1>
+
+            {informations.formation && role === informations.formation.RoleHierarchique.roleHierarchique &&
             <button><Link to={`/addModule/${idFormation.id}`}>+</Link></button>
+            }
+
             </div>
                 {informations.modules ? (informations.modules.length!==0 &&
                 <div>
@@ -148,7 +162,11 @@ const VoirPlusFormation = () => {
             )}
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Séances</h1>
+            
+            {informations.formation && role === informations.formation.RoleHierarchique.roleHierarchique &&
             <button><Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link></button>
+            }
+            
             </div>
 
             {events.length !== 0 ? (
