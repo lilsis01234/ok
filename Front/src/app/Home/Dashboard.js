@@ -20,40 +20,35 @@ import { pink,yellow } from '@mui/material/colors';
 
 const Dashboard = () => {
 
-  const displayNotification = (notificationTitle, customMessage) => {
-    if ('Notification' in window) {
+  function showNotification(title, customMessage) {
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notification");
+    } else {
       Notification.requestPermission().then(function (permission) {
-        if (permission === 'granted') {
+        if (permission === "granted") {
           try {
-            navigator.serviceWorker.getRegistration()
-              .then(reg => {
-                if (reg) {
-                  const options = {
-                    body: customMessage,
-                    vibrate: [100, 50, 100],
-                    requireInteraction: true,
-                    data: {
-                      dateOfArrival: Date.now(),
-                      primaryKey: 0,
-                    },
-                  };
-                  reg.showNotification(notificationTitle, options);
-                } else {
-                  console.error('Service Worker registration not found.');
-                }
-              })
-              .catch(error => {
-                console.error('Error getting Service Worker registration:', error);
-              });
+            const options = {
+              body: customMessage,
+              icon:'logo-sahaza.png',
+              vibrate: [100, 50, 100],
+              requireInteraction: true,
+              data: {
+                dateOfArrival: Date.now(),
+                primaryKey: 0
+              }
+            };
+  
+            // Use the service worker registration from earlier
+            navigator.serviceWorker.getRegistration().then(reg => {
+              reg.showNotification(title, options);
+            });
           } catch (err) {
-            console.error('Error showing notification:', err);
+            console.error("Error showing notification:", err);
           }
         }
       });
-    } else {
-      console.log('This browser does not support desktop notification');
     }
-  };
+  }
   
         
   const [listeActuCategDash, setlisteActuCategDash] = useState([]);
@@ -66,7 +61,7 @@ const Dashboard = () => {
   
   useEffect(() => {
     fetchActualitiesByCateg();
-    displayNotification('bienvenue','vous êtes sur la page d\'accueil')
+    showNotification('bienvenue','vous êtes sur la page d\'accueil')
   }, [])
 
 
