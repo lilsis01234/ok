@@ -20,6 +20,42 @@ import { pink,yellow } from '@mui/material/colors';
 
 const Dashboard = () => {
 
+  const displayNotification = (notificationTitle, customMessage) => {
+    if ('Notification' in window) {
+      Notification.requestPermission().then(function (permission) {
+        if (permission === 'granted') {
+          try {
+            navigator.serviceWorker.getRegistration()
+              .then(reg => {
+                if (reg) {
+                  const options = {
+                    body: customMessage,
+                    vibrate: [100, 50, 100],
+                    requireInteraction: true,
+                    data: {
+                      dateOfArrival: Date.now(),
+                      primaryKey: 0,
+                    },
+                  };
+                  reg.showNotification(notificationTitle, options);
+                } else {
+                  console.error('Service Worker registration not found.');
+                }
+              })
+              .catch(error => {
+                console.error('Error getting Service Worker registration:', error);
+              });
+          } catch (err) {
+            console.error('Error showing notification:', err);
+          }
+        }
+      });
+    } else {
+      console.log('This browser does not support desktop notification');
+    }
+  };
+  
+        
   const [listeActuCategDash, setlisteActuCategDash] = useState([]);
 
   const fetchActualitiesByCateg = () => {
@@ -30,6 +66,7 @@ const Dashboard = () => {
   
   useEffect(() => {
     fetchActualitiesByCateg();
+    displayNotification('bienvenue','vous êtes sur la page d\'accueil')
   }, [])
 
 
