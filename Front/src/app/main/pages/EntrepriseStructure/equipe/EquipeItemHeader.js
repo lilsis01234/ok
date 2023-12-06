@@ -1,51 +1,37 @@
 import { useTheme } from '@mui/styles';
-import React from 'react'
-import { useFormContext } from 'react-hook-form'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import { Button, Typography } from '@mui/material';
 import axios from 'axios';
 
-function DepartementItemHeader({ formValues }) {
-    const methods = useFormContext();
-    const { formState, watch, getValues } = methods ? methods : {};
-    const { isValid, isDirty } = formState ? formState : {}
+function EquipeItemHeader(props) {
+    const { projectId, departementId, equipeId } = props;
+    const [equipeData, setEquipeData] = useState([]);
 
-    const { id } = formValues
-    const { nomDepartement } = formValues
-    const { direction } = formValues
+    const theme = useTheme()
 
-    const theme = useTheme();
-    const navigate = useNavigate();
+    const fetchCollabData = () => {
+        axios.get(`http://localhost:4000/api/equipe/view/${equipeId}`)
+            .then((response) => {
+                setEquipeData(response.data.equipe)
+            })
+            .catch((error) => {
+                console.error('Erreur lors de la récupération des données', error)
+            })
 
-    const data = {
-        nomDepartement,
-        direction
     }
 
-    // console.log(id)
+    useEffect(() => {
+        fetchCollabData();
+    }, [])
 
-    const handleSaveDirection = async () => {
-        if (id) {
-            try {
-                await axios.put(`http://localhost:4000/api/departement/edit/${id}`, data)
-                alert('Departement Update succesfully')
-                navigate('/business/manage/departement')
-            } catch (error) {
-                console.log(error)
-            }
-        } else {
-            try {
-                await axios.post('http://localhost:4000/api/departement/new', data)
-                alert('Departement create succesfully')
-                navigate('/business/manage/departement')
-            } catch (error) {
-                console.log(error)
-            }
-        }
+    const navigate = useNavigate()
+
+    const handleBackDepartementPage = () => {
+        navigate('/entreprise/structure')
     }
-
 
 
 
@@ -60,7 +46,7 @@ function DepartementItemHeader({ formValues }) {
                         className="flex items-center sm:mb-12"
                         component={Link}
                         role="button"
-                        to="/business/manage/departement"
+                        to={`/entreprise/structure/${departementId}/${projectId}`}
                         color="inherit"
                     >
                         <FuseSvgIcon size={20}>
@@ -68,7 +54,7 @@ function DepartementItemHeader({ formValues }) {
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                         </FuseSvgIcon>
-                        <span className="flex mx-4 font-medium">Departement</span>
+                        <span className="flex mx-4 font-medium">Equipes</span>
                     </Typography>
                 </motion.div>
                 <div className="flex items-center max-w-full">
@@ -77,8 +63,8 @@ function DepartementItemHeader({ formValues }) {
                         initial={{ x: -20 }}
                         animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomDepartement || 'New Departement'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Departement Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{equipeData.nomEquipe} </Typography>
+                        <Typography variant="caption" className="font-medium"> Détail de l'équipe </Typography>
                     </motion.div>
                 </div>
             </div>
@@ -88,17 +74,17 @@ function DepartementItemHeader({ formValues }) {
                 animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
             >
                 <Button
-                     className="whitespace-nowrap mx-4"
-                     variant="contained"
-                     color="secondary"
+                    className="whitespace-nowrap mx-4"
+                    variant="contained"
+                    color="secondary"
                     //  disabled={!isDirty  || !isValid}
-                     onClick={handleSaveDirection}
+                    onClick={handleBackDepartementPage}
                 >
-                    Save
+                    Retourner à la page département
                 </Button>
             </motion.div>
         </div>
     )
 }
 
-export default DepartementItemHeader
+export default EquipeItemHeader

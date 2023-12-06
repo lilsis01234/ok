@@ -12,31 +12,41 @@ import dashboardsConfigs from '../Dashboard/dashboardsConfig';
 
 //ModuleProfile
 import ContactConfig from '../main/pages/Contacts/ContactAppConfig';
-import DirectionAppConfig from '../main/pages/Direction/DirectionAppConfig';
 import StructureAppConfig from '../main/pages/gererStructure/StructureAppConfig';
+import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
+import DirectionConfig from '../main/pages/Direction/DirectionConfig';
+import EntrepriseStrucutureConfig from '../main/pages/EntrepriseStructure/EntrepriseStructureConfig';
+
 
 //Module Formation
 import CalendarConfig from '../main/CalendarSeance/CalendarSeanceConfig';
 import CalendarFormConfig from '../main/CalendarSeance/calendrierForm/CalendarFormConfig';
 import FormationConfig from '../main/FormationAdmin/demandeDeFormation/FormationConfig';
-import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
+
 
 //Module d'actualité
 import appsConfigs from '../main/apps/appsConfigs';
+
+//pour la gestion de comptes
 import GererCompteConfig from '../main/pages/gererCompte/gererCompteConfig';
 import GererRoleHierarchiqueConfig from '../main/pages/GererRoleHierarchique/GererRoleHierarchiqueConfig';
 import GererPermissionConfig from '../main/pages/GererPermission/GererPermissionConfig';
+import CollaborateurAppConfig from '../main/pages/Collaborateur/CollaborateurAppConfig';
+
+
 
 
 const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
   ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,
   //Module Profil
-  ContactConfig,
-  DirectionAppConfig,
+  // ContactConfig,
+  CollaborateurAppConfig,
   StructureAppConfig,
   GererCollaborateurConfig,
   GererCompteConfig,
+  DirectionConfig,
+  EntrepriseStrucutureConfig,
   //Gestion des Permission et des roles,
   GererPermissionConfig,
   GererRoleHierarchiqueConfig,
