@@ -23,21 +23,52 @@ import Link from '@mui/material/Link';
 import parse from 'html-react-parser';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'app/store/userSlice';
 
 
 function AddActualityTab() {
-  
+
+
+  const {actualityId} = useParams();
+  const [ActualityToEdit, setActualityToEdit] = useState('');
+  const [extraitToEdit, setExtraitToEdit] = useState('');
+  const [titreToEdit, settitreToEdit] = useState('');
   const [wysiwygContent, setWysiwygContent] = useState('');
   const [imgMiseEnAvant, setImgMiseEnAvant] = useState('');
-  const [listeCategorie, setListCategorie] = useState([]);
-  const [listeType, setListType] = useState([]);
-  const [listeTag, setListTag] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedTag, setSelectedTag] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedVisibilite, setSelectedVisibilite] = useState([]);
+  const [selectedEtat, setSelectedEtat] = useState([]);
+  
+  const fetchActualityToEdit = () => {
+    axios.get(`http://localhost:4000/api/actualite/${actualityId}`)
+    .then(res => {
+      setActualityToEdit(res.data);
+      setExtraitToEdit(res.data.actuality?.extrait);
+      settitreToEdit(res.data.actuality?.titre);
+      setWysiwygContent(res.data.actuality?.contenu);
+      setImgMiseEnAvant(res.data.actuality?.image);
+      setSelectedCategory(res.data.actuality?.categorie);
+      setSelectedTag(res.data.actuality?.Tag);
+      setSelectedTypes(res.data.actuality?.Type);
+      setSelectedVisibilite(res.data.actuality?.visibilite);
+      setSelectedEtat(res.data.actuality?.etat);
+    })
+    .catch(err => console.log(err));
+  }
+
+  
+  useEffect(() => {
+    fetchActualityToEdit();
+  }, [])
+  
+
+  const [listeCategorie, setListCategorie] = useState([]);
+  const [listeType, setListType] = useState([]);
+  const [listeTag, setListTag] = useState([]);
   const [idImageToChange, setidImageToChange] = useState(null);
   const [isInputCategVisible, setIsInputCategVisible] = useState(false);
   const [isInputTypeVisible, setIsInputTypeVisible] = useState(false);
@@ -94,7 +125,7 @@ function AddActualityTab() {
     .then(res => {setListTag(res.data)})
     .catch(err => console.log(err));
   }
-  
+
   useEffect(() => {
     fetchCategories();
     fetchTypes();
@@ -106,6 +137,7 @@ function AddActualityTab() {
     e.preventDefault();
     setIsInputCategVisible(true);
   };
+
 
 
   const handleAddCategClick = async (e) => { e.preventDefault();
@@ -377,14 +409,15 @@ function AddActualityTab() {
 
           if (res.data) {
               console.log('reponse : ', res.data);
-              navigate('/apps/actuality/list')
-              // window.location.reload();
+              navigate('/apps/actuality/list');
               dispatch(showMessage({ message: 'Actualité sauvegardée' }));
 
           }
 
         })
         .catch(err => console.log(err));
+
+    
       
   }
 
@@ -392,6 +425,52 @@ function AddActualityTab() {
   const handleWysiwygChange = (value) => {
     setWysiwygContent(value);
   };
+  
+  const handleChangeVisibilite  = (event) => {
+    setSelectedVisibilite(event.target.value);
+  };
+  
+  const handleChangeEtat  = (event) => {
+    setSelectedEtat(event.target.value);
+  };
+
+  const test = () => {
+
+    const titre = titreToEdit;
+    const extrait = extraitToEdit;
+    // const visibilite = formData.get('visibilite');
+    // const etat = formData.get('etat');
+    // const category = getSelectedCategoryIds().split(',');
+    // const type = getSelectedTypeIds().split(',');
+    // const tag = getSelectedTagIds().split(',');
+    const contenu =  wysiwygContent;
+    const updatedAt = dateActuelle;
+    // const date_publication = dateActuelle;
+    // const image = imgMiseEnAvant;
+    // const commentaire = isChecked;
+    // const compte_id = user.data.CompteId;
+    
+
+
+    const data = {
+      titre,
+      contenu,
+      extrait,
+      updatedAt,
+      // etat,
+      // visibilite,
+      // category,
+      // type,
+      // tag,
+      // image,
+      // compte_id
+
+    };
+
+    console.log(data);
+  }
+
+  
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="w-full">
@@ -400,9 +479,17 @@ function AddActualityTab() {
           <Typography className="text-3xl font-semibold tracking-tight leading-8 mb-24 mt-16">
                 Ajouter un nouvel article
           </Typography>
-          <Button type="submit" className="py-10 px-32" variant="contained" color="secondary" size="small" aria-label="post" onClick={obtenirDateActuelle}>
-            Publier
-          </Button>
+          <div>
+            <Button type="button" className="py-10 px-32" variant="contained" color="error" size="small" aria-label="post" onClick={() => alert('ok')}>
+              Supprimer
+            </Button>
+            <Button type="button" className="py-10 px-32 ml-12" variant="contained" color="primary" size="small" aria-label="post" onClick={() => alert('ok')} >
+              Annuler
+            </Button>
+            <Button type="button" className="py-10 px-32 ml-12" variant="contained" color="success" size="small" aria-label="post" onClick={() => {test();obtenirDateActuelle()}}>
+              Mettre à jour
+            </Button>
+          </div>
         </div>
         
         <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 py-24 mb-24">
@@ -410,6 +497,8 @@ function AddActualityTab() {
             name="titre"
             id="titre"
             label="Saisissez votre titre ici"
+            value={titreToEdit}
+            onChange={(e) => {settitreToEdit(e.target.value)}}
             variant="outlined"
             required
             fullWidth
@@ -442,6 +531,8 @@ function AddActualityTab() {
                 className="p-24 w-full"
                 classes={{ root: 'text-14' }}
                 placeholder="Rédiger un extrait (facultatif)"
+                value={extraitToEdit}
+                onChange={(e) => {setExtraitToEdit(e.target.value)}}
                 multiline
                 rows="6"
                 margin="none"
@@ -614,7 +705,7 @@ function AddActualityTab() {
                   <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
                     visibilité
                   </FormLabel>
-                  <Select name="visibilite" id="visibilite" defaultValue="public" variant="outlined" fullWidth>
+                  <Select name="visibilite" id="visibilite" value={selectedVisibilite} onChange={handleChangeVisibilite} variant="outlined" fullWidth>
                     <MenuItem value="public">publique</MenuItem>
                     <MenuItem value="privee">privée</MenuItem>
                   </Select>
@@ -623,7 +714,7 @@ function AddActualityTab() {
                   <FormLabel htmlFor="etat" className="font-medium text-14" component="legend">
                     État
                   </FormLabel>
-                  <Select name="etat" id="etat" defaultValue="publie" variant="outlined" fullWidth>
+                  <Select name="etat" id="etat"  value={selectedEtat} onChange={handleChangeEtat} variant="outlined" fullWidth>
                     <MenuItem value="publie">publié</MenuItem>
                     <MenuItem value="brouillon">brouillon</MenuItem>
                   </Select>

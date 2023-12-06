@@ -1,7 +1,7 @@
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { styled } from '@mui/material/styles';
 import useThemeMediaQuery from '../../../../../@fuse/hooks/useThemeMediaQuery';
-import AddActualityTab from './tabs/AddActualityTab';
+import EditActualityTab from './tabs/EditActualityTab';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-header': {
@@ -23,7 +23,7 @@ function EditActualityApp() {
     <Root
       content={
         <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
-          <AddActualityTab />
+          <EditActualityTab />
         </div>
       }
       scroll={isMobile ? 'normal' : 'page'}

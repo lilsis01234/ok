@@ -4,12 +4,12 @@ const path = require('path');
 const Compte = require('../../Modele/CompteModel/Compte');
 const Collab = require('../../Modele/CollabModel/Collab');
 const ActualityImg = require('../../Modele/ActualityModel/ActualityImg');
-const Type = require('../../Modele/ActualityModel/Type');
-const Tag = require('../../Modele/ActualityModel/Tag');
 const ActType = require('../../Modele/ActualityModel/ActuType');
 const ActTag = require('../../Modele/ActualityModel/ActuTag');
 const fs = require('fs');
 const { Actualite, Categorie} = require('../../Modele/ActualityModel/associationActuCateg');
+const { Tag } = require('../../Modele/ActualityModel/associationActuTag');
+const { Type } = require('../../Modele/ActualityModel/associationActuType');
 
 //Configuration du stockages des fichiers uploader
 const storage = multer.diskStorage({
@@ -186,8 +186,27 @@ router.get('/:id', async (req, res) => {
         const actuality = await Actualite.findByPk(id, {
             include: [{
                 model: Compte,
-                include : [ { model : Collab} ]
-            }]
+                attributes: ["id", "email"],
+            },
+            {
+                model: Categorie,
+                as: "categorie",
+                attributes: ["id", "nom"],
+                through: { attributes: [] }
+            },
+            {
+                model: Tag,
+                as: "Tag",
+                attributes: ["id", "nom"],
+                through: { attributes: [] }
+            },
+            {
+                model: Type,
+                as: "Type",
+                attributes: ["id", "nom"],
+                through: { attributes: [] }
+            }
+        ]
         });
         if (!actuality) {
             return res.status(404).json({ error: 'Actualité introuvable' });
