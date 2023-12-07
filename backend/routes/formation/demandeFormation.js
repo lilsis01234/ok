@@ -344,4 +344,8 @@ router.delete('/formation/:id', async(req,res) =>{
         res.status(500).json({ message: 'Erreur lors de la suppression' })
     }
 })
+
+router.get('/demande/parinterm/:id', async(req,res) =>{
+    
+})
 module.exports = router;
