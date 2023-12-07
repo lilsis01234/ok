@@ -50,7 +50,7 @@ function CalendarTraining() {
           try {
             const options = {
               body: customMessage,
-              icon:'logo-sahaza.png',
+              icon:'./logo-sahaza.png',
               vibrate: [100, 50, 100],
               requireInteraction: true,
               data: {

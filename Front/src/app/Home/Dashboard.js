@@ -19,37 +19,6 @@ import CommentIcon from '@mui/icons-material/Comment';
 import { pink,yellow } from '@mui/material/colors';
 
 const Dashboard = () => {
-
-  function showNotification(title, customMessage) {
-    if (!("Notification" in window)) {
-      console.log("This browser does not support desktop notification");
-    } else {
-      Notification.requestPermission().then(function (permission) {
-        if (permission === "granted") {
-          try {
-            const options = {
-              body: customMessage,
-              icon:'logo-sahaza.png',
-              vibrate: [100, 50, 100],
-              requireInteraction: true,
-              data: {
-                dateOfArrival: Date.now(),
-                primaryKey: 0
-              }
-            };
-  
-            // Use the service worker registration from earlier
-            navigator.serviceWorker.getRegistration().then(reg => {
-              reg.showNotification(title, options);
-            });
-          } catch (err) {
-            console.error("Error showing notification:", err);
-          }
-        }
-      });
-    }
-  }
-  
         
   const [listeActuCategDash, setlisteActuCategDash] = useState([]);
 
@@ -61,7 +30,6 @@ const Dashboard = () => {
   
   useEffect(() => {
     fetchActualitiesByCateg();
-    showNotification('bienvenue','vous êtes sur la page d\'accueil')
   }, [])
 
 
