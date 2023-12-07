@@ -45,15 +45,15 @@ const roleHierarchique = require('./routes/Role/RoleHierarchique')
 const permission = require('./routes/Role/permission')
 
 //Module Formation
-const agendaRoutes = require('../backend/routes/formation/AjoutAgenda')
-const displayRoutes = require('../backend/routes/formation/AfficheAgenda')
+const agendaRoutes = require('../backend/routes/formation/Seances/AjoutAgenda')
+const displayRoutes = require('../backend/routes/formation/Seances/AfficheAgenda')
 const formationRouter = require('../backend/routes/formation/formation')
-const requestRouter = require('../backend/routes/formation/demandeFormation')
-const seanceRouter = require('../backend/routes/formation/seance')
-const moduleRouter = require('../backend/routes/formation/module')
-const discussionRouter = require('../backend/routes/formation/discussion')
-const participantSeanceRouter = require('../backend/routes/formation/participantsseance')
-const commentaireRouter = require('../backend/routes/formation/commentaire')
+const requestRouter = require('../backend/routes/formation/Demandes/demandeFormation')
+const seanceRouter = require('../backend/routes/formation/Seances/seance')
+const moduleRouter = require('../backend/routes/formation/Modules/module')
+const discussionRouter = require('../backend/routes/formation/Discussion/discussion')
+const participantSeanceRouter = require('../backend/routes/formation/Seances/participantsseance')
+const commentaireRouter = require('../backend/routes/formation/Discussion/commentaire')
 
 //Module Actualité
 const actualite = require('./routes/Actualite/Actualité');

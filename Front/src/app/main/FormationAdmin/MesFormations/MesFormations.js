@@ -32,7 +32,7 @@ function MesFormations (){
     return (
         <>
         <div className='header'>
-            <h1>Explorez nos Formations</h1>
+            <h1>Vos Formations</h1>
             <div className="search_form">
               
               <input
