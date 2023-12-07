@@ -22,4 +22,4 @@ reportWebVitals();
 // Learn more about service workers: http://bit.ly/CRA-PWA
 // index.js
   
-serviceWorker.register();
+serviceWorker.unregister();
