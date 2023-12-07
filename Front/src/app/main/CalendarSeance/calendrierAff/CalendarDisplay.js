@@ -57,6 +57,7 @@ function CalendarTraining() {
             console.log('lasa le notif')
             notification.onclick = function () {
               console.log("Notification clicked!");
+              handleIncomingCall();
             };
           } catch (err) {
             console.error("Error showing notification:", err);
@@ -99,18 +100,17 @@ function CalendarTraining() {
 
 
   const handleParticipateNowClick = () => {
-    if (role === 'SuperAadministrateur') {
+    if (role === 'SuperAdministrateur') {
       startVideoCall();
+      //the superadmin should start the video call
     } else {
-      const notificationTitle = 'Appel vidéo imminent';
-      const notificationMessage = 'Cliquez ici pour participer à l\'appel vidéo';
-  
-      showNotification(notificationTitle, notificationMessage);
+      //other people receive notification with a button that make them join the video call
     }
   };
 
 
   const startVideoCall = () => {
+    //add the code for the video call here using peerjs
     console.log("Appel vidéo démarré par le formateur");
   };
 

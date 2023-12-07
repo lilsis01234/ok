@@ -3,7 +3,7 @@ import axios from 'axios'
 import './demandeFormation.css'
 import { Link } from 'react-router-dom'
 import { Typography} from '@mui/material'
-import MesDemandes from './MesDemandes'
+import MesDemandes from '../MesDemandes/MesDemandes'
 
 
 const DemandeFormations = () => {

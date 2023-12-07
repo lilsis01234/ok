@@ -18,7 +18,7 @@ import StructureAppConfig from '../main/pages/gererStructure/StructureAppConfig'
 //Module Formation
 import CalendarConfig from '../main/CalendarSeance/CalendarSeanceConfig';
 import CalendarFormConfig from '../main/CalendarSeance/calendrierForm/CalendarFormConfig';
-import FormationConfig from '../main/FormationAdmin/demandeDeFormation/FormationConfig';
+import FormationConfig from '../main/FormationAdmin/ListeFormations/FormationConfig';
 import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
 
 //Module d'actualité
