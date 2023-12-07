@@ -52,7 +52,6 @@ router.get('/all', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
 });
-  
 
 router.get('/allWithoutForm', async(req,res)=>{
     try{
@@ -161,7 +160,6 @@ router.get('/all_demande/:id', async(req,res)=>{
     }
 })
 
-
 router.get('/alldemande/coatch', async (req, res) => {
     const coatch = "coatch";
 
@@ -257,7 +255,6 @@ router.post('/desapprouver/:id', async(req,res)=>{
       
 })
 
-
 router.post('/addDemandeFormation', async (req, res) => {
     try {
         // Create a new Formation
@@ -346,6 +343,6 @@ router.delete('/formation/:id', async(req,res) =>{
 })
 
 router.get('/demande/parinterm/:id', async(req,res) =>{
-    
+
 })
 module.exports = router;
