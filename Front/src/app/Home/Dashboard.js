@@ -21,6 +21,7 @@ import { pink,yellow } from '@mui/material/colors';
 const Dashboard = () => {
         
   const [listeActuCategDash, setlisteActuCategDash] = useState([]);
+  const [formations, setFormations] = useState([]);
 
   const fetchActualitiesByCateg = () => {
     axios.get('http://localhost:4000/api/categorie/25/actualites')
@@ -28,34 +29,19 @@ const Dashboard = () => {
       .catch(err => console.log(err));
   }
   
-  const showNotification = (title, customMessage) => {
-    if (!("Notification" in window)) {
-      console.log("This browser does not support desktop notification");
-    } else {
-      Notification.requestPermission().then(function (permission) {
-        if (permission === "granted") {
-          try {
-            const notification = new Notification(title, {
-              body: customMessage,
-              requireInteraction: true,
-              icon: Sary,
-            });
-            console.log('lasa le notif')
-            notification.onclick = function () {
-              console.log("Notification clicked!");
-            };
-          } catch (err) {
-            console.error("Error showing notification:", err);
-          }
-        }
-      });
-    }
-  };
+  const fetchFormation = () => {
+    axios.get('http://localhost:4000/api/formations/all_formations')
+      .then(res => {
+        console.log(res.data)
+        setFormations(res.data)
+      })
+      .catch(err => console.log(err));
+  }
   
 
   useEffect(() => {
     fetchActualitiesByCateg();
-    showNotification('bienvenue','ty le izy');
+    fetchFormation();
   }, [])
 
 
@@ -134,8 +120,37 @@ const Dashboard = () => {
                   <div className="flex-auto mb-32">
                   </div>
 
-                  <div className="flex-auto w-200">Les 3 directions</div>
-                  <div className="flex-auto w-200">Liste des formations</div>
+                  <div className="flex-auto w-full">Les 3 directions</div>
+                  <div className="flex-auto w-full">
+                    <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-400">
+                        Nos formations
+                    </Typography>
+                    <div>
+                      {formations.map((formation) => (
+                        <div key={formation.id} className="mb-8 p-4 border border-gray-300 rounded-lg w-full">
+                          {formation.Formateur.image!== null ? 
+                          (
+                          <Typography className="text-gray-700 mb-4">{formation.Formateur.nom} {formation.Formateur.prenom}</Typography>
+                          )
+                          :
+                          (
+                          <>
+                          {/* <img src={``}/> */}
+                          <Typography className="text-gray-700 mb-4">{formation.Formateur.nom} {formation.Formateur.prenom}</Typography>
+                          </>
+                          )}
+                          <Typography className="text-xl sm:text-xl font-bold text-green-400 mb-2">
+                            {formation.theme}
+                          </Typography>
+                          <Typography className="text-gray-700 mb-4">
+                            {formation.description}
+                          </Typography>
+                          {/* Add more details or styling as needed */}
+                        </div>
+                      ))}
+                    </div>
+
+                  </div>
                 </div>
 
                 {/* Column 2 */}

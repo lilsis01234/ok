@@ -19,12 +19,12 @@ router.get('/all_formations', async(req,res) => {
             {
               model: Collaborateur,
               as: 'Auteur',
-              attributes: ['nom', 'prenom'],
+              attributes: ['id','nom', 'prenom','image'],
             },
             {
               model: Collaborateur,
               as: 'Formateur',
-              attributes: ['id','nom', 'prenom'],
+              attributes: ['id','nom', 'prenom','image'],
             },
           ],
           attributes: ['id', 'theme', 'description', 'auteur','formateur','approbation'],
