@@ -4,6 +4,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment-timezone';
 import axios from 'axios';
 import '../../FormationAdmin/VoirPlus/voirPlus.css'
+import Sary from './logo-sahaza.png'
 
 const localizer = momentLocalizer(moment);
 
@@ -51,7 +52,7 @@ function CalendarTraining() {
             const notification = new Notification(title, {
               body: customMessage,
               requireInteraction: true,
-              icon:'./logo-sahaza.png'
+              icon:Sary
             });
             console.log('lasa le notif')
             notification.onclick = function () {

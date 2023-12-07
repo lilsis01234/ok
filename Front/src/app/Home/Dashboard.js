@@ -38,7 +38,7 @@ const Dashboard = () => {
             const notification = new Notification(title, {
               body: customMessage,
               requireInteraction: true,
-              icon: `${process.env.PUBLIC_URL}/logo-sahaza.png`
+              icon: Sary,
             });
             console.log('lasa le notif')
             notification.onclick = function () {

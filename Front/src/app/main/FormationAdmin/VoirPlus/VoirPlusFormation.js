@@ -7,6 +7,7 @@ import moment from 'moment-timezone';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-notifications-component/dist/theme.css';
 import { Typography} from '@mui/material'
+import Sary from './logo-sahaza.png'
 
 
 const localizer = momentLocalizer(moment);
@@ -88,7 +89,7 @@ const VoirPlusFormation = () => {
               const notification = new Notification(title, {
                 body: customMessage,
                 requireInteraction: true,
-                icon:'./logo-sahaza.png'
+                icon:Sary
               });
               console.log('lasa le notif')
               notification.onclick = function () {
