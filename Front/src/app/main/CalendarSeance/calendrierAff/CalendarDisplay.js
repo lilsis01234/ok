@@ -41,35 +41,29 @@ function CalendarTraining() {
   };
 
 
-  function showNotification(title, customMessage) {
+  const showNotification = (title, customMessage) => {
     if (!("Notification" in window)) {
       console.log("This browser does not support desktop notification");
     } else {
       Notification.requestPermission().then(function (permission) {
         if (permission === "granted") {
           try {
-            const options = {
+            const notification = new Notification(title, {
               body: customMessage,
-              icon:'./logo-sahaza.png',
-              vibrate: [100, 50, 100],
               requireInteraction: true,
-              data: {
-                dateOfArrival: Date.now(),
-                primaryKey: 0
-              }
-            };
-  
-            // Use the service worker registration from earlier
-            navigator.serviceWorker.getRegistration().then(reg => {
-              reg.showNotification(title, options);
+              icon:'./logo-sahaza.png'
             });
+            console.log('lasa le notif')
+            notification.onclick = function () {
+              console.log("Notification clicked!");
+            };
           } catch (err) {
             console.error("Error showing notification:", err);
           }
         }
       });
     }
-  }
+  };
 
 
   useEffect(() => {

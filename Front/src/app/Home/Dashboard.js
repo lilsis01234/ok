@@ -28,8 +28,34 @@ const Dashboard = () => {
       .catch(err => console.log(err));
   }
   
+  const showNotification = (title, customMessage) => {
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notification");
+    } else {
+      Notification.requestPermission().then(function (permission) {
+        if (permission === "granted") {
+          try {
+            const notification = new Notification(title, {
+              body: customMessage,
+              requireInteraction: true,
+              icon: `${process.env.PUBLIC_URL}/logo-sahaza.png`
+            });
+            console.log('lasa le notif')
+            notification.onclick = function () {
+              console.log("Notification clicked!");
+            };
+          } catch (err) {
+            console.error("Error showing notification:", err);
+          }
+        }
+      });
+    }
+  };
+  
+
   useEffect(() => {
     fetchActualitiesByCateg();
+    showNotification('bienvenue','ty le izy');
   }, [])
 
 

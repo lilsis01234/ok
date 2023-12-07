@@ -88,6 +88,7 @@ const VoirPlusFormation = () => {
               const notification = new Notification(title, {
                 body: customMessage,
                 requireInteraction: true,
+                icon:'./logo-sahaza.png'
               });
               console.log('lasa le notif')
               notification.onclick = function () {
