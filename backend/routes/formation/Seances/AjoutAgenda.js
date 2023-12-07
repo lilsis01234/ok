@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Agenda = require('../../Modele/formation/Seance');
+const Agenda = require('../../../Modele/formation/Seance');
 const moment = require('moment');
 const timezone = require('moment-timezone');
 moment.tz.setDefault('Indian/Antananarivo');

@@ -4,9 +4,9 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 // const Formation = require('../../Modele/formation/Formation');
 // const Collab = require('../../Modele/CollabModel/Collab');
-const {  Formation2,Collab2,FormationCollab } = require('../../Modele/formation/associationFormationCollab');
-const {  Formation,Equipe2,FormationEq } = require('../../Modele/formation/associationFormationDep');
-const RoleHierarchique = require('../../Modele/RoleModel/RoleHierarchique');
+const {  Formation2,Collab2,FormationCollab } = require('../../../Modele/formation/associationFormationCollab');
+const {  Formation,Equipe2,FormationEq } = require('../../../Modele/formation/associationFormationDep');
+const RoleHierarchique = require('../../../Modele/RoleModel/RoleHierarchique');
 
 router.get('/all', async (req, res) => {
     const coatch = "coatch";

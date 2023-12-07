@@ -59,7 +59,7 @@ function VisioConference() {
 
   return (
     <div className="App">
-      <h1>Current user id is {peerId}</h1>
+      <h1>Votre id est {peerId}</h1>
       <input type="text" value={remotePeerIdValue} onChange={(e) => setRemotePeerIdValue(e.target.value)} />
       <button onClick={() => call(remotePeerIdValue)}>Call</button>
       <div>
