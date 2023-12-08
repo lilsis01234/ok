@@ -50,6 +50,7 @@
         "moment": "2.29.4",
         "notistack": "1.0.6-next.3",
         "peer": "^1.0.1",
+        "peerjs": "^1.5.2",
         "perfect-scrollbar": "1.5.5",
         "prismjs": "1.29.0",
         "prop-types": "15.8.1",

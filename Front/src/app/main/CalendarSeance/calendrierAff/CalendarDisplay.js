@@ -5,6 +5,7 @@ import moment from 'moment-timezone';
 import axios from 'axios';
 import '../../FormationAdmin/VoirPlus/voirPlus.css'
 import Sary from './logo-sahaza.png'
+import { useNavigate } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
@@ -18,6 +19,7 @@ function CalendarTraining() {
   const userid = user.id;
   const equipe = user.Collab.equipe;
   const role = user.RoleHierarchique.roleHierarchique;
+  const navigate = useNavigate();
 
 
   const scheduleNotification = (event) => {
@@ -99,19 +101,18 @@ function CalendarTraining() {
   };
 
 
-  const handleParticipateNowClick = () => {
+  const handleParticipateNowClick = (id) => {
     if (role === 'SuperAdministrateur') {
-      startVideoCall();
-      //the superadmin should start the video call
+      startVideoCall(id);
     } else {
-      //other people receive notification with a button that make them join the video call
+      showNotification (<Link to={`/appelVideo/${id}`} >Cliquez ici pour participer</Link>,'L\'appel a commencé')
     }
   };
 
 
-  const startVideoCall = () => {
-    //add the code for the video call here using peerjs
+  const startVideoCall = (id) => {
     console.log("Appel vidéo démarré par le formateur");
+    navigate (`/appelVideo/${id}`)
   };
 
 
@@ -209,7 +210,7 @@ function CalendarTraining() {
         <div className="popupContent">
 
             {role === 'SuperAdministrateur' &&
-            (<button className="popupButton" onClick={()=>{handleParticipateNowClick()}}>Démarrer l' appel vidéo</button>)
+            (<button className="popupButton" onClick={()=>{handleParticipateNowClick(selectedEvent.id)}}>Démarrer l' appel vidéo</button>)
             }
             
             <button className="popupButton" onClick={()=>{handleReserveClick(selectedEvent.id)}}>Réserver une place</button>
