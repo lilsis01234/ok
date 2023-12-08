@@ -99,6 +99,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                   },
                   {
                       model: Role2,
+                      as: 'RoleHierarchique',
                       attributes: ['roleHierarchique'],
                   },
                   {

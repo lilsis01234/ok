@@ -5,7 +5,6 @@ import { Typography} from '@mui/material'
 import '../demandeDeFormation/demandeFormation.css'
 
 
-
 function MesFormations (){
     const[mesFormations, setMesFormations] = useState([]);
     const user = JSON.parse(localStorage.getItem('user'));

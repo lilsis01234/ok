@@ -14,13 +14,14 @@ const localizer = momentLocalizer(moment);
 
 const VoirPlusFormation = () => {
     const idFormation = useParams();
-    const [informations, setInformations] = useState([]);
+    const [informations, setInformations] = useState({});
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showButtons, setShowButtons] = useState(false);
     const user = JSON.parse(localStorage.getItem('user'))
     console.log(user)
     const userId = user.id;
+    console.log(userId)
     const role = user.RoleHierarchique.roleHierarchique;
     console.log(role)
 
@@ -55,7 +56,7 @@ const VoirPlusFormation = () => {
 
     useEffect(() => {
         fetchFormation();
-    }, [idFormation]);
+    }, [idFormation])
 
     const scheduleNotification = (event) => {
       if (event.start && event.end) {
@@ -77,7 +78,6 @@ const VoirPlusFormation = () => {
         console.error('Invalid event data:', event);
       }
     };
-    
   
     const showNotification = (title, customMessage) => {
       if (!("Notification" in window)) {
@@ -147,16 +147,29 @@ const VoirPlusFormation = () => {
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Modules</h1>
            
-            {informations.formation &&
-            ((informations.formation.RoleHierarchique?.roleHierarchique &&
-              role === informations.formation.RoleHierarchique.roleHierarchique) ||
-                (informations.formation.auteur === userId) && (
+            {informations.formation && informations.formation.RoleHierarchique ? (
+              console.log('RoleHierarchique object exists:', informations.formation.RoleHierarchique),
+              informations.formation.RoleHierarchique.roleHierarchique ? (
+                console.log('RoleHierarchique.roleHierarchique exists:', informations.formation.RoleHierarchique.roleHierarchique),
+                role === informations.formation.RoleHierarchique.roleHierarchique ||
+                (informations.formation.auteur === userId) ? (
                   <button>
                     <Link to={`/addModule/${idFormation.id}`}>+</Link>
                   </button>
-            ))}
+                ) : null
+              ) : (
+                console.log('RoleHierarchique.roleHierarchique is undefined or null'),
+                null
+              )
+            ) : (
+              console.log('RoleHierarchique or related properties are undefined or null'),
+              null
+            )}
 
- 
+
+
+
+          
 
             </div>
                 {informations.modules ? (informations.modules.length!==0 &&
@@ -174,15 +187,27 @@ const VoirPlusFormation = () => {
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Séances</h1>
             
-            {informations.formation &&
-            ((informations.formation.RoleHierarchique?.roleHierarchique &&
-              role === informations.formation.RoleHierarchique.roleHierarchique) ||
-                (informations.formation.auteur === userId) && (
+            {informations.formation && informations.formation.RoleHierarchique ? (
+              console.log('RoleHierarchique object exists:', informations.formation.RoleHierarchique),
+              informations.formation.RoleHierarchique.roleHierarchique ? (
+                console.log('RoleHierarchique.roleHierarchique exists:', informations.formation.RoleHierarchique.roleHierarchique),
+                role === informations.formation.RoleHierarchique.roleHierarchique ||
+                (informations.formation.auteur === userId) ? (
                   <button>
                     <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
                   </button>
-            ))}
+                ) : null
+              ) : (
+                console.log('RoleHierarchique.roleHierarchique is undefined or null'),
+                null
+              )
+            ) : (
+              console.log('RoleHierarchique or related properties are undefined or null'),
+              null
+            )}
+
             </div>
+
 
             {events.length !== 0 ? (
             <div className = "calendarContainer">
