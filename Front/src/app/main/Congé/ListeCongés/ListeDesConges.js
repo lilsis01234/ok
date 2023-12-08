@@ -6,7 +6,7 @@ const ListeConges = ()=>{
 
     useEffect(()=>{
         
-    })
+    },[])
     return(
         <h1>Liste des personnes en congé</h1>
     )

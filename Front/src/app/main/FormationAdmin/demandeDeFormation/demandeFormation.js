@@ -61,7 +61,7 @@ const DemandeFormations = () => {
         console.log(res.data)
       })
     .catch(err=>console.log(err))
-  })
+  },[])
   
   return (
     <div className="training-request-container">

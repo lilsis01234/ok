@@ -61,7 +61,7 @@ const Formations = () => {
   useEffect(() => {
     fetchFormation();
     fetchFormationAdmin();
-  })
+  },[])
 
 
   const [recherche,setRecherche] = useState(null);

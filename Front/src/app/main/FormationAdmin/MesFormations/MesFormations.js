@@ -26,7 +26,7 @@ function MesFormations (){
 
     useEffect(()=>{
         fetchFormation()
-    })
+    },[])
 
     return (
         <>

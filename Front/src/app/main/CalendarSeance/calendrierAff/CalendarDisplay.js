@@ -81,12 +81,12 @@ function CalendarTraining() {
             auteur: event.Formation.formateur,
             id:event.id,
             title: `${event.title} - ${event.nombreDePlaces} places`,
-            start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), // Adjust timezone here
-            end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(), // Adjust timezone here
+            start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), 
+            end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(),
           };
         });
         setEvents(formattedEvents);
-        formattedEvents.forEach((event) => scheduleNotification(event)); // Schedule notifications
+        formattedEvents.forEach((event) => scheduleNotification(event)); 
       })
       .catch((error) => {
         console.error(error);

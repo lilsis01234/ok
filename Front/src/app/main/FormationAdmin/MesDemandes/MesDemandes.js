@@ -22,7 +22,7 @@ function MesDemandes (){
 
     useEffect(()=>{
         fetchDemande()
-    })
+    },[])
 
     const DeleteDemande = async (id) => {
       const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette demande ?");
