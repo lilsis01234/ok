@@ -4,6 +4,7 @@ const VoirPlusDiscussion = lazy(() => import('../../FormationAdmin/discussionFor
 const CalendarForm = lazy(() => import('./CalendarForm'))
 const AjoutDemandeFormation = lazy(()=>import('../../FormationUser/AjoutDemandeFormation/AjoutDemandeFormation'))
 const AjoutCommentaire = lazy(()=>import('../../FormationAdmin/commentaireFormation/commentaireFormation'))
+const AppelVideo = lazy(()=>import('../../FormationAdmin/visioConference/VisioConference'))
 const CalendarFormConfig = {
     routes: [
                 // {
@@ -25,6 +26,10 @@ const CalendarFormConfig = {
                 {
                     path:'/voirPlus/:id',
                     element:<VoirPlusDiscussion/>
+                },
+                {
+                    path:'/appelVideo/:id',
+                    element:<AppelVideo/>
                 }
             ],
 };

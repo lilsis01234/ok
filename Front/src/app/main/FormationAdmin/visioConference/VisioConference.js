@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import Peer from 'peerjs';
-import './App.css';
 
 function VisioConference() {
   const [peerId, setPeerId] = useState('');
