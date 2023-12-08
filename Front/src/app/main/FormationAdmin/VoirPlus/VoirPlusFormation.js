@@ -115,12 +115,6 @@ const VoirPlusFormation = () => {
     const handleReserveClick = () => {
       console.log('Réserver une place');
     };
-  
-    // const handleSetReminderClick = (event) => {
-    //   scheduleNotification(event);
-    //   console.log('lasa le rappel')
-    //   alert('Rappel confirmé')
-    // };
 
     const closePopup = () => {
       setShowButtons(false);
@@ -165,8 +159,6 @@ const VoirPlusFormation = () => {
               console.log('RoleHierarchique or related properties are undefined or null'),
               null
             )}
-
-
 
 
           

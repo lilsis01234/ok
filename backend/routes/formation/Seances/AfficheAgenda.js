@@ -10,7 +10,7 @@ router.get('/agenda', async (req, res) => {
     const agendaEntries = await Agenda.findAll({
       include: {
         model: Formation,
-        attributes: ['theme', 'auteur', 'formateur']
+        attributes: ['theme', 'auteur', 'formateur','destinataireDemande']
       }
     });
     // Retournez les entrées de l'agenda en tant que réponse JSON

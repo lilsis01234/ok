@@ -74,7 +74,7 @@ function CalendarTraining() {
       .then((response) => {
         console.log(response.data)
         // Formatter les données pour les rendre compatibles avec React Big Calendar
-        const formattedEvents = response.data.map((event) => {
+        const formattedEvents = response.data.filter((res) => res.Formation.destinataireDemande === null).map((event) => {
           return {
             auteur: event.Formation.formateur,
             id:event.id,
