@@ -141,27 +141,23 @@ const VoirPlusFormation = () => {
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Modules</h1>
            
-            {informations.formation && informations.formation.RoleHierarchique ? (
-              console.log('RoleHierarchique object exists:', informations.formation.RoleHierarchique),
-              informations.formation.RoleHierarchique.roleHierarchique ? (
-                console.log('RoleHierarchique.roleHierarchique exists:', informations.formation.RoleHierarchique.roleHierarchique),
-                role === informations.formation.RoleHierarchique.roleHierarchique ||
-                (informations.formation.auteur === userId) ? (
-                  <button>
-                    <Link to={`/addModule/${idFormation.id}`}>+</Link>
-                  </button>
-                ) : null
+            {informations.formation && informations.formation.RoleHierarchique && informations.formation.RoleHierarchique.roleHierarchique && role === informations.formation.RoleHierarchique.roleHierarchique ? (
+              <button>
+                <Link to={`/addModule/${idFormation.id}`}>+</Link>
+              </button>
+            ) : (
+              informations.formation && informations.formation.auteur && informations.formation.auteur === userId ? (
+                <button>
+                  <Link to={`/addModule/${idFormation.id}`}>+</Link>
+                </button>
               ) : (
-                console.log('RoleHierarchique.roleHierarchique is undefined or null'),
                 null
               )
-            ) : (
-              console.log('RoleHierarchique or related properties are undefined or null'),
-              null
             )}
 
 
-          
+
+
 
             </div>
                 {informations.modules ? (informations.modules.length!==0 &&
@@ -179,27 +175,21 @@ const VoirPlusFormation = () => {
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Séances</h1>
             
-            {informations.formation && informations.formation.RoleHierarchique ? (
-              console.log('RoleHierarchique object exists:', informations.formation.RoleHierarchique),
-              informations.formation.RoleHierarchique.roleHierarchique ? (
-                console.log('RoleHierarchique.roleHierarchique exists:', informations.formation.RoleHierarchique.roleHierarchique),
-                role === informations.formation.RoleHierarchique.roleHierarchique ||
-                (informations.formation.auteur === userId) ? (
-                  <button>
-                    <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
-                  </button>
-                ) : null
+            {informations.formation && informations.formation.RoleHierarchique && informations.formation.RoleHierarchique.roleHierarchique && role === informations.formation.RoleHierarchique.roleHierarchique ? (
+              <button>
+               <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
+              </button>
+            ) : (
+              informations.formation && informations.formation.auteur && informations.formation.auteur === userId ? (
+                <button>
+                  <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
+                </button>
               ) : (
-                console.log('RoleHierarchique.roleHierarchique is undefined or null'),
                 null
               )
-            ) : (
-              console.log('RoleHierarchique or related properties are undefined or null'),
-              null
             )}
 
             </div>
-
 
             {events.length !== 0 ? (
             <div className = "calendarContainer">
