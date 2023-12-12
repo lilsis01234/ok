@@ -9,12 +9,10 @@ function VisioConference() {
   const currentUserVideoRef = useRef(null);
   const peerInstance = useRef(null);
   const idParam = useParams();
-  const id = idParam.id
-  console.log(id)
-
+  const id = idParam.id;
 
   const call = (remotePeerId) => {
-    navigator.mediaDevices.getUserMedia({ audio: true })
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then((mediaStream) => {
         currentUserVideoRef.current.srcObject = mediaStream;
         currentUserVideoRef.current.play();
@@ -27,10 +25,11 @@ function VisioConference() {
         });
       })
       .catch((error) => {
-        console.error('Error accessing audio devices:', error);
+        console.error('Error accessing media devices:', error);
+        // If there is an error, display an image or a message
+        // displayErrorImage();
       });
   };
-
 
   useEffect(() => {
     const peer = new Peer();
@@ -48,7 +47,7 @@ function VisioConference() {
   }, [id]);
 
   const handleIncomingCall = (call) => {
-    navigator.mediaDevices.getUserMedia({video:true, audio: true })
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then((mediaStream) => {
         currentUserVideoRef.current.srcObject = mediaStream;
         currentUserVideoRef.current.play();
@@ -59,16 +58,19 @@ function VisioConference() {
         });
       })
       .catch((error) => {
-        console.error('Error accessing audio devices:', error);
+        console.error('Error accessing media devices:', error);
+        // displayErrorImage();
       });
   };
 
+  // const displayErrorImage = () => {
+  //   currentUserVideoRef.current.src = 'https://example.com/error-image.jpg';
+  // };
+
   return (
     <div className="App">
-      {/* <h1>Votre id est {peerId}</h1> */}
-      {/* <input type="text" value={remotePeerIdValue} onChange={(e) => setRemotePeerIdValue(e.target.value)} />
-      <button onClick={() => call(remotePeerIdValue)}>Call</button> */}
       <div>
+        {/* Video or error image */}
         <video ref={currentUserVideoRef} />
       </div>
       <div>
