@@ -37,7 +37,7 @@ function ActualityListApp() {
 
           <div className="flex flex-col flex-0 lg:flex-row items-center max-w-7xl w-full mx-auto px-32 lg:h-72">
             <div className="flex flex-col items-center lg:items-start mt-16 lg:mt-0 lg:ml-32">
-              <Typography color="text.secondary">Actualitées > liste des actualitées</Typography>
+              <Typography color="text.secondary">Actualitées  liste des actualitées</Typography>
             </div>
           </div>
         </div>

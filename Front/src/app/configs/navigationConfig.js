@@ -16,13 +16,21 @@ const navigationConfig = [
     title: 'TABLEAU DE BORD',
     type: 'group',
     icon: 'heroicons-outline:home',
+    auth : {
+      role : ['SuperAdmin', 'User', 'Admin'],
+      roleHierarchique : '',
+      permission : ''
+    },
     children : [
       {
         id: 'dashboard.dashboard',
         title: 'Acceuil',
         type: 'item',
         icon: 'heroicons-outline:home',
-        url : '/acceuil'
+        auth : {
+          role : ['SuperAdmin', 'User', 'Admin'],
+        },
+        url : '/acceuil',
       },
       {
         id: 'dashboard.collaborateur',

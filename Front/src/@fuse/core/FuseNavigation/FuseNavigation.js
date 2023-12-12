@@ -57,6 +57,7 @@ registerComponent('vertical-divider', () => <Divider className="my-16" />);
 registerComponent('horizontal-divider', () => <Divider className="my-16" />);
 
 function FuseNavigation(props) {
+  // console.log(props.navigation)
   const options = _.pick(props, [
     'navigation',
     'layout',
@@ -67,7 +68,12 @@ function FuseNavigation(props) {
     'firstLevel',
     'selectedId',
   ]);
-  if (props.navigation.length > 0) {
+
+  if(props.navigation){
+    console.log(props.navigation)
+    console.log(props.navigation.ids.length)
+  }
+  if (props.navigation.ids.length > 0) {
     return (
       <>
         {inputGlobalStyles}
