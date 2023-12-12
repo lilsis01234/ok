@@ -1,12 +1,12 @@
-const Formation2 = require('./Formation')
-const Collab2 = require('../CollabModel/Collab')
-const FormationCollab = require('./FormationCollab')
+const Seance = require('./Seance');
+const Collaborateur = require('../CollabModel/Collab');
+const ParticipantsSeance = require('./ParticipantsSeance');
 
-Formation2.belongsToMany(Collab2, {through : FormationCollab, foreignKey: "formation", otherKey:'collaborateur', as:'Collab'})
-Collab2.belongsToMany(Formation2, {through : FormationCollab, foreignKey:"collaborateur", otherKey:'formation', as:'Formation'})
+Collaborateur.belongsToMany(Seance,{through:ParticipantsSeance,foreignKey:"collaborateur",otherKey:'seance',as:'seancecollab'})
+Seance.belongsToMany(Collaborateur,{through:ParticipantsSeance,foreignKey:"seance",otherKey:'collaborateur',as:'collabseance'})
 
-module.exports = {
-    Formation2,
-    Collab2,
-    FormationCollab
+module.exports={
+    Seance,
+    Collaborateur,
+    ParticipantsSeance,
 }

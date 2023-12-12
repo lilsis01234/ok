@@ -42,7 +42,7 @@ const ActuTag = require('../Modele/ActualityModel/ActuTag');
 const associationActuTag = require('../Modele/ActualityModel/associationActuTag');
 const Permission = require('../Modele/RoleModel/Permission');
 const associationPermission = require('../Modele/RoleModel/associationPermission');
-
+const conge = require('../Modele/conge/CongeModel');
 
 const EquipeSeance = require('../Modele/formation/EquipeSeance');
 const FormationCollab = require('../Modele/formation/FormationCollab');
@@ -56,7 +56,7 @@ const associationSeanceEquipe = require('../Modele/formation/associationSeanceEq
 //Synchronisation de la base de donnée 
 async function syncDatabase() {
     try {
-        await sequelize.sync({ force: false });
+        await sequelize.sync({ force: true });
         const { TestPoste, TestDepartement, PosteDepartement } = association;
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });
