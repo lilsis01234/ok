@@ -51,7 +51,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-//Afficher les listes de tous les actualités
+//Afficher les listes de tous les actualités par l'id d'une categorie
 router.get('/:id/actualites', async (req, res) => {
 
     const { id } = req.params;

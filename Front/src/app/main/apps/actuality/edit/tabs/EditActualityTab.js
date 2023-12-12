@@ -133,6 +133,25 @@ function AddActualityTab() {
   }, [])
 
 
+  const deleteActuality = () => {
+
+    axios.delete(`http://localhost:4000/api/actualite/${actualityId}`)
+  
+    .then(res => {
+
+          console.log('reponse : ', res.data);
+          navigate('/apps/actuality/list')
+          dispatch(showMessage({ message: 'Actualité supprimer' }));
+
+    })
+  
+    .catch(err => {
+      console.log(err);
+    });
+  
+  }
+
+
   const handleLinkClickAddCateg = (e) => {
     e.preventDefault();
     setIsInputCategVisible(true);
@@ -477,10 +496,10 @@ function AddActualityTab() {
       <form ref={formRef} onSubmit={handleSubmit}>
         <div className="md:flex flex-row justify-between items-center">
           <Typography className="text-3xl font-semibold tracking-tight leading-8 mb-24 mt-16">
-                Ajouter un nouvel article
+                Modifier un nouvel article
           </Typography>
           <div>
-            <Button type="button" className="py-10 px-32" variant="contained" color="error" size="small" aria-label="post" onClick={() => alert('ok')}>
+            <Button type="button" className="py-10 px-32" variant="contained" color="error" size="small" aria-label="post" onClick={() => deleteActuality()}>
               Supprimer
             </Button>
             <Button type="button" className="py-10 px-32 ml-12" variant="contained" color="primary" size="small" aria-label="post" onClick={() => alert('ok')} >
