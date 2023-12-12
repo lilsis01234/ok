@@ -21,7 +21,6 @@ const ContactApp = ()=> {
     const pageLayout = useRef(null);
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
     const [listCollab, setListeCollab] = useState([]);
-    const [recherche, setRecherche] = useState([])
     const [rightSidebarOpen, setRightSidebarOpen] = useState(false);
     const routeParams = useParams();
 
@@ -44,31 +43,9 @@ const ContactApp = ()=> {
     }, [routeParams])
 
 
-    const handleSearch = (event) => {
-      const newRecherche = event.target.value;
-      setRecherche(newRecherche)
-
-      const filteredData = listCollab.filter((collab) => {
-          return (
-            (collab.Collab?.matricule.toLowerCase().includes(newRecherche.toLowerCase())) ||
-            (collab.Collab?.nom.toLowerCase().includes(newRecherche.toLowerCase())) ||
-            (collab.Collab?.prenom.toLowerCase().includes(newRecherche.toLowerCase()))
-          )
-      })
-
-      if (newRecherche === ''){
-        fetchCollaborateur()
-      }
-      setListeCollab(filteredData);
-    }
-
-  
-
-
-
     return (
     <Root
-      header={<ContactHeader pageLayout={pageLayout} handleSearch={handleSearch} recherche={recherche}/>}
+      header={<ContactHeader pageLayout={pageLayout}/>}
       content = {<ContactListe listCollab={listCollab } setListeCollab={setListeCollab}/>}
       ref={pageLayout}
       rightSidebarContent = {<ContactSideBarContent/>}
@@ -82,3 +59,4 @@ const ContactApp = ()=> {
 
 
 export default ContactApp
+0

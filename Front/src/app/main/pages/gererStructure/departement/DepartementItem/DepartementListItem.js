@@ -74,8 +74,8 @@ function DepartementListItem(props) {
 
     useEffect(() => {
         if (departement && Object.keys(departement).length > 0) {
-            const { nomDepartement, direction } = departement;
-            reset({ nomDepartement, direction }); 
+            const { id, nomDepartement, direction } = departement;
+            reset({ id, nomDepartement, direction }); 
         }
     }, [departement, reset]);
 

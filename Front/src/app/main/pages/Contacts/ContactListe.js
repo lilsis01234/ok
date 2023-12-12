@@ -16,7 +16,7 @@ const ContactListe = (props) => {
         return (
           <div className="flex flex-1 items-center justify-center h-full">
             <Typography color="text.secondary" variant="h5">
-              There are no contacts!
+             Il n'y a pas de collaborateurs!
             </Typography>
           </div>
         );

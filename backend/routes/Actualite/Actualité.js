@@ -4,12 +4,10 @@ const path = require('path');
 const Compte = require('../../Modele/CompteModel/Compte');
 const Collab = require('../../Modele/CollabModel/Collab');
 const ActualityImg = require('../../Modele/ActualityModel/ActualityImg');
-const ActType = require('../../Modele/ActualityModel/ActuType');
-const ActTag = require('../../Modele/ActualityModel/ActuTag');
 const fs = require('fs');
-const { Actualite, Categorie} = require('../../Modele/ActualityModel/associationActuCateg');
-const { Tag } = require('../../Modele/ActualityModel/associationActuTag');
-const { Type } = require('../../Modele/ActualityModel/associationActuType');
+const { Actualite, Categorie, ActuCateg} = require('../../Modele/ActualityModel/associationActuCateg');
+const {  Tag, ActuTag} = require('../../Modele/ActualityModel/associationActuTag');
+const { Type, ActuType } = require('../../Modele/ActualityModel/associationActuType');
 
 //Configuration du stockages des fichiers uploader
 const storage = multer.diskStorage({
@@ -60,7 +58,7 @@ router.post('/new', async (req, res) => {
                     console.log('actualitecategory non sauvegardé', categoryId)
                 }
 
-                const actualitecategory = await ActCateg.create({
+                const actualitecategory = await ActuCateg.create({
                     act_id: savedActuality.id,
                     categ_id: categoryId
                 })
@@ -178,8 +176,92 @@ router.get('/new-actualities', async (req, res) => {
 })
 
 
+//Afficher les listes de tous les actualités
+router.get('/categorie/:id', async (req, res) => {
 
-//Afficher seulement un collaborateur
+    const { id } = req.params;
+
+    try {
+        const actuality = await Actualite.findAll({
+            include: [
+                {
+                    model: Categorie,
+                    where: { id: id },
+                    as: 'categorie',
+                    attributes: ['id', 'nom'] ,
+                    through: { 
+                        model: ActuCateg,
+                        attributes: [] 
+                    }
+                },
+                {
+                    model: Compte,
+                    attributes: ["id", "email"],
+                    include : [ { model : Collab, attributes: ["nom", "prenom"]} ]
+                }
+            ]
+          })
+
+        res.status(200).json(actuality)
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
+    }
+})
+
+//Afficher les listes de tous les actualités
+router.get('/tag/:id', async (req, res) => {
+
+    const { id } = req.params;
+
+    try {
+        const actuality = await Actualite.findAll({
+            include: [
+                {
+                    model: Tag,
+                    where: { id: id },
+                    as: 'Tag'
+                }
+            ]
+          })
+
+        res.status(200).json(actuality)
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
+    }
+})
+
+
+//Afficher les listes de tous les actualités
+router.get('/type/:id', async (req, res) => {
+
+    const { id } = req.params;
+
+    try {
+        const actuality = await Actualite.findAll({
+            include: [
+                {
+                    model: Type,
+                    where: { id: id },
+                    as: 'Type',
+                }
+            ]
+          })
+
+        res.status(200).json(actuality)
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
+    }
+})
+
+
+
+//Afficher une actualitée
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {

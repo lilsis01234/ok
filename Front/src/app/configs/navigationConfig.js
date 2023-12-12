@@ -84,25 +84,21 @@ const navigationConfig = [
     title : 'Entreprise',
     type : 'group',
     children : [
-       {
-          id: 'entreprise.direction',
-          title: 'Direction',
-          type: 'item',
-          icon: 'heroicons-outline:briefcase',
-          url : 'dashboards/collaborateur'
-        }, {
-          id: 'entreprise.departement',
-          title: 'Département',
-          type: 'item',
-          icon: 'heroicons-outline:briefcase',
-          url : 'dashboards/collaborateur'
-        }, {
-          id : 'entreprise.projet',
-          title : 'Projet',
+        {
+          id : 'entreprise.direction',
+          title : 'Direction',
           type : 'item',
-          icon : 'heroicons-outline:user-group',
-          url : 'dashboards/collaborateur'
-        }, {
+          icon : 'heroicons-outline:briefcase',
+          url : 'entreprise/direction'
+        }, 
+        {
+          id : 'entreprise.structure',
+          title : 'Structure de l\'entreprise',
+          type : 'item',
+          icon : 'heroicons-outline:briefcase',
+          url : 'entreprise/structure'
+        },
+        {
           id : 'entreprise.manage',
           title : 'Gérer Structure de l\'Entreprise',
           type : 'collapse',

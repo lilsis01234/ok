@@ -4,10 +4,12 @@ const Collab = require('../../Modele/CollabModel/Collab');
 const TestPoste = require('../../Modele/Structure/TestPoste');
 const { Op } = require('sequelize');
 const Direction = require('../../Modele/Structure/Direction');
+const Compte = require('../../Modele/CompteModel/Compte')
 
 //Pour le route import
 const xlsx = require('xlsx')
 const multer = require('multer');
+const Projet = require('../../Modele/Structure/Projet');
 
 //Conserver l'image dans le mémoire
 const storage = multer.memoryStorage();
@@ -40,7 +42,7 @@ router.get('/collab/:departementId', async(req, res) => {
             where : {
                 [Op.or] : [
                     {departement : departementId},
-                    {departement2 : departemetnId}
+                    {departement2 : departementId}
                 ]
             },
             include :[
@@ -204,6 +206,159 @@ router.post('/import-excel', upload.single('excel'), async(req, res) => {
     }
     
 })
+
+
+// Récupérer tous les données de la table Departement et exclure les Départements de la Direction
+router.get('/allWithoutDirection', async(req, res) => {
+    try {
+
+        const nomDepartement = 'Direction';
+        const allDepartement = await TestDepartement.findAll({
+            where: { nomDepartement: { [Op.notLike]: `%${nomDepartement}%` } },
+            include : [
+                {
+                    model : Direction,
+                    attributes : ['nomDirection']
+                }
+            ],
+            // attributes : ['nomDepartement, direction']
+        })
+
+        let departementWIthMember = []
+        // let membreDepartement = [];
+
+        //Rechercher les membres de chaque départements max 4
+        for(const departement of allDepartement){
+            let departementId;
+            if(departement){
+                departementId = departement.id;
+            }
+
+            const membres = await Collab.findAll({
+                where : {
+                    [Op.or] : [
+                        {departement : departementId},
+                        {departement2 : departementId}
+                    ]
+                },
+                limit : 4,
+                attributes : ['id', 'nom', 'image']
+            })
+
+            // membreDepartement = membreDepartement.concat(membres);
+            departementWIthMember = departementWIthMember.concat({departement, membres})
+        }
+
+        if (departementWIthMember.length > 0) {
+            res.status(200).json(departementWIthMember);
+        } else {
+            res.status(201).json({ message: 'Aucun membre de la direction enregistré dans la base de données' });
+        }
+
+    } catch (error){
+        console.error('Erreur lors de la récupération de tous les départements', error);
+        res.status(500).json({ message: 'Erreur lors de la récupération de tous les départements' });
+    }
+})
+
+//Affichage des membres des departements
+router.get('/:id/allCollab', async(req, res) => {
+    try {
+        const {id} = req.params;
+        const collab = await Collab.findAll({
+            where : {
+                [Op.or] : [
+                    {departement : id},
+                    {departement2 : id}
+                ]
+            },
+            attributes : ['id']
+        });
+
+        let collaborateurs = [];
+        
+        for(const n of collab){
+            let collaborateurId = n.id;  
+
+            if(collaborateurId){  
+                const collaborateur = await Compte.findAll({
+                    where : {collaborateur : collaborateurId},
+                    attributes : ['id', 'email'],
+                    include : [
+                        {
+                            model : Collab,
+                            attributes : ['id', 'nom', 'prenom', 'matricule', 'image'],
+                            include : [
+                                {
+                                    model : TestPoste,
+                                    as : 'poste1',
+                                    attributes : ['titrePoste'] 
+                                }
+                            ]
+                        }
+                    ]
+                });
+
+                collaborateurs = collaborateurs.concat(collaborateur);
+            }
+        }
+
+        res.status(200).json(collaborateurs);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des collaborateurs du département', error);
+        res.status(500).json({message : 'Erreur lors de la récupération des collaborateurs du département'});
+    }
+});
+
+
+//Récupérer tous les projets associés à ce département
+router.get('/:id/allProjects', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const projects = await Projet.findAll({
+            where: { departement: id },
+            attributes: ['id', 'nomProjet', 'departement'], // Ajout de l'attribut 'id' pour récupérer l'ID du projet
+            include: [
+                {
+                    model: TestDepartement,
+                    attributes: ['nomDepartement']
+                }
+            ]
+        });
+
+        let projectWithMember = [];
+
+        for (const project of projects) {
+            const projectId = project.id;
+
+            const membres = await Collab.findAll({
+                where: {
+                    [Op.or]: [
+                        { projet: projectId },
+                        { projet2: projectId }
+                    ]
+                },
+                limit: 4,
+                attributes: ['id', 'nom', 'image']
+            });
+
+            // Ajout des membres au projet correspondant
+            projectWithMember.push({
+                project: project,
+                membres: membres
+            });
+        }
+
+        if (projectWithMember.length > 0) {
+            res.status(200).json(projectWithMember);
+        }
+    } catch (error) {
+        console.error('Erreur lors de la récupération des projets associés à la département', error);
+        res.status(500).json({ message: 'Erreur lors de la récupération des projets associés à la département' });
+    }
+});
+
+
 
 
 

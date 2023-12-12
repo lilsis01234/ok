@@ -512,7 +512,7 @@ router.post('/import-excel', uploads.single('excel'), async (req, res) => {
                         //                 <p>Mot de passe : ${generatePassword}<p>            
                         //             </div>`
                         // }
-                
+
                         // transporter.sendMail(mailOptions, (error, info) => {
                         //     if (error) {
                         //         console.error('Erreur lors de l\envoie de l\'email : ', error)
@@ -544,14 +544,14 @@ router.post('/import-excel', uploads.single('excel'), async (req, res) => {
 
 
 //Effectuer des recherches parmi les données 
-router.get('/search', async(req, res) => {
+router.get('/search', async (req, res) => {
     // const {searchTerm} = req.query.q;
-    const {q} = req.query;
+    const { q } = req.query;
     // console.log(q);
     try {
         const searchResult = await Collab.findAll({
-            where : {
-                [Op.or] : [
+            where: {
+                [Op.or]: [
                     { matricule: { [Op.like]: `%${q}%` } },
                     { nom: { [Op.like]: `%${q}%` } },
                     { prenom: { [Op.like]: `%${q}%` } },
@@ -562,8 +562,8 @@ router.get('/search', async(req, res) => {
                     Sequelize.literal(`departement1.nomDepartement LIKE '%${q}%'`),
                     Sequelize.literal(`projet1.nomProjet LIKE '%${q}%'`)
                 ]
-            }, 
-            include : [
+            },
+            include: [
                 {
                     model: TestPoste,
                     as: 'poste1',
@@ -595,16 +595,19 @@ router.get('/search', async(req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({error : 'Erreur lors de la recherche des collaborateurss'})
+        res.status(500).json({ error: 'Erreur lors de la recherche des collaborateurs' })
     }
 })
 
-router.get('/filter', async(req, res) => {
-    const {poste, departement,projet,site,entreprise} = req.query;
+
+
+
+router.get('/filter', async (req, res) => {
+    const { poste, departement, projet, site, entreprise } = req.query;
     try {
         const filterResult = await Collab.findAll({
-            where : {
-                [Op.or] : [
+            where: {
+                [Op.or]: [
                     Sequelize.literal(`poste1.titrePoste LIKE '%${poste}%'`),
                     Sequelize.literal(`departement1.nomDepartement LIKE '%${departement}%'`),
                     Sequelize.literal(`projet1.nomProjet LIKE '%${projet}%'`),
@@ -612,7 +615,7 @@ router.get('/filter', async(req, res) => {
                     { entreprise: { [Op.like]: `%${entreprise}%` } },
                 ]
             },
-            include : [
+            include: [
                 {
                     model: TestPoste,
                     as: 'poste1',
@@ -644,9 +647,85 @@ router.get('/filter', async(req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({error : 'Erreur lors de la filtrage des collaborateurss'})
+        res.status(500).json({ error: 'Erreur lors de la filtrage des collaborateurss' })
     }
 })
+
+
+//Récupérer tous les collaborateurs avec leurs emails
+router.get('/allCollabWithMail', async (req, res) => {
+    try {
+        const collaborateur = await Compte.findAll({
+            attributes: ['id', 'email'],
+            include: [
+                {
+                    model: Collab,
+                    attributes: ['id', 'nom', 'prenom', 'matricule', 'image'],
+                    include: [
+                        {
+                            model: TestPoste,
+                            as: 'poste1',
+                            attributes: ['titrePoste']
+                        }
+                    ]
+                }
+            ]
+        })
+
+
+        res.status(200).json(collaborateur)
+    } catch (error) {
+        console.error('Erreur lors de la récupération des collaborateurs ', error);
+        res.status(500).json({ message: 'Erreur lors de la récupération des collaborateurs ' });
+    }
+})
+
+
+//Faire recherche sur les collaborateurs avec leur emails
+router.get('/searchCollab', async (req, res) => {
+    const { q } = req.query;
+    try {
+        const searchCollab = await Compte.findAll({
+            include: [
+                {
+                    model: Collab,
+                    attributes: ['id', 'nom', 'prenom', 'matricule', 'image'],
+                    include: [
+                        {
+                            model: TestPoste,
+                            as: 'poste1',
+                            attributes: ['titrePoste']
+                        }
+                    ]
+                }
+            ],
+            where : {
+                [Op.or] : [
+                    { email: { [Op.like]: `%${q}%` } },
+                    {
+                        '$Collab.nom$': { [Op.like]: `%${q}%` },
+                    },
+                    {
+                        '$Collab.prenom$': { [Op.like]: `%${q}%` },
+                    },
+                    {
+                        '$Collab.matricule$': { [Op.like]: `%${q}%` },
+                    },
+                    {
+                        '$Collab.poste1.titrePoste$': { [Op.like]: `%${q}%` },
+                    }
+                ]
+            }
+        })
+
+        res.status(200).json(searchCollab)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erreur lors de la recherche des collaborateurs' })
+    }
+})
+
+
 
 
 module.exports = router;
