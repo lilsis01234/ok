@@ -77,18 +77,6 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                         formation: formationId,
                     },
             });
-
-            const seances = await Seance.findAll({
-              where: {
-                  module: modules,
-              },
-              include: [
-                  {
-                      model: Module, 
-                      attributes: ['id', 'titreModule', 'description'],                   
-                  },
-              ],
-            });
           
             const formation = await Formation.findByPk(formationId, {
               include: [
@@ -114,7 +102,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                 return res.status(404).json({ error: 'Formation introuvable' });
             }
 
-            res.status(200).json({formation,modules,seances});
+            res.status(200).json({formation,modules});
         
         } 
         catch (error) {
