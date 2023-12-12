@@ -302,7 +302,8 @@ const navigationConfig = [
         type: 'item',
         title:'Calendrier',
         icon:'heroicons-outline:calendar',
-        translate:'Calendrier'
+        translate:'Calendrier',
+        url:'agenda/congeAccepte'
       },
       {
         id:'conge.demandes',
