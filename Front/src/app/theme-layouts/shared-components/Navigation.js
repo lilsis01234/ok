@@ -22,7 +22,7 @@ function Navigation(props) {
     return (
       <FuseNavigation
         className={clsx('navigation', props.className)}
-        navigation={navigation}
+        navigation={navigation}ac
         layout={props.layout}
         dense={props.dense}
         active={props.active}

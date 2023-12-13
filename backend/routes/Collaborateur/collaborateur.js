@@ -726,6 +726,50 @@ router.get('/searchCollab', async (req, res) => {
 })
 
 
+//Afficher les collaborateurs de la même départements
+router.get('/sameDepartement/:idCollab/:idDepartement', async(req, res) => {
+    try {
+        const {idCollab, idDepartement} = req.params;
+        const collaborateur = await Collab.findAll({
+            where : {
+               id : {[Op.ne] : idCollab},
+               departement : idDepartement,
+            }, 
+            attributes : ['image', 'id', 'nom'],
+            limit : 9,
+        })
+
+        res.status(200).json(collaborateur)
+    } catch (error) {   
+        console.log('Erreur lors de la récupération des collaborateurs', error)
+        res.status(500).json({error : 'Erreur lors de la récupération des collaborateurs'})
+    }
+})
+
+
+//Afficher les collaborateur de la même projet
+router.get('/sameProject/:idCollab/:idProjet', async(req,res) => {
+    try {
+        const {idCollab, idProjet} = req.params;
+        const collaborateur = await Collab.findAll({
+            where : {
+                  id : {[Op.ne] : idCollab},
+                  projet : idProjet,
+            },
+            attributes : ['image', 'id', 'nom'],
+            limit : 9,
+        })
+
+        res.status(200).json(collaborateur)
+    } catch (error) {
+        console.log('Erreur lors de la récupération des collaborateurs', error)
+        res.status(500).json({error : 'Erreur lors de la récupéarion des collaborateurs'})
+    }
+})
+
+
+
+
 
 
 module.exports = router;

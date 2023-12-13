@@ -3,6 +3,9 @@ import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
 import FuseNavItem from '../FuseNavItem';
+import { useSelector } from 'react-redux';
+import { setSidebarContext } from 'app/store/fuse/navigationSlice';
+import { Button } from '@mui/material';
 
 const StyledList = styled(List)(({ theme }) => ({
   '& .fuse-list-item': {
@@ -38,11 +41,28 @@ const StyledList = styled(List)(({ theme }) => ({
 
 function FuseNavVerticalLayout1(props) {
   const { navigation, layout, active, dense, className, onItemClick } = props;
+  console.log(navigation.entities)
+  const navigationData = navigation.entities
   const dispatch = useDispatch();
 
   function handleItemClick(item) {
     onItemClick?.(item);
   }
+
+
+
+  const sidebarContext = useSelector(state => state.fuse.navigation.sidebarContext)
+
+  const toogleSidebarContext = () => {
+    const newContext = sidebarContext === 'frontOffice' ? 'backOffice' : 'frontOffice';
+    // console.log(newContext)
+    dispatch(setSidebarContext(newContext))
+  }
+
+  // console.log(sidebarContext)
+
+
+
 
   return (
     <StyledList
@@ -53,11 +73,12 @@ function FuseNavVerticalLayout1(props) {
         className
       )}
     >
-      {navigation.map((_item) => (
+      <Button onClick={toogleSidebarContext}>{sidebarContext === 'frontOffice' ? 'Aller à l\'interface d\'administration': 'Revenir à la menu principale'} </Button>
+      {Object.keys(navigationData).map((key) => (
         <FuseNavItem
-          key={_item.id}
-          type={`vertical-${_item.type}`}
-          item={_item}
+          key={key}
+          type={`vertical-${navigationData[key].type}`}
+          item={navigationData[key]}
           nestedLevel={0}
           onItemClick={handleItemClick}
         />

@@ -3,7 +3,7 @@ import BrowserRouter from '@fuse/core/BrowserRouter';
 import FuseLayout from '@fuse/core/FuseLayout';
 import FuseTheme from '@fuse/core/FuseTheme';
 import { SnackbarProvider } from 'notistack';  //Pour les notifications
-import { useSelector } from 'react-redux';  
+import { useSelector } from 'react-redux';
 import rtlPlugin from 'stylis-plugin-rtl';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
@@ -15,6 +15,7 @@ import FuseAuthorization from '@fuse/core/FuseAuthorization/FuseAuthorization';
 import settingsConfig from 'app/configs/settingsConfig';
 import withAppProviders from './withAppProviders';
 import { AuthProvider } from './auth/AuthContext';
+
 
 // import axios from 'axios';
 /**
@@ -38,36 +39,42 @@ const emotionCacheOptions = {
 };
 
 function App() {
+  //Récupération des rôles des utilisateurs 
   const user = useSelector(selectUser);
+  const userPermission = useSelector(state => state.allUserPermission)
+
+
   const langDirection = useSelector(selectCurrentLanguageDirection);
   const mainTheme = useSelector(selectMainTheme);
 
   return (
-    <CacheProvider value={createCache(emotionCacheOptions[langDirection])}>
-      <FuseTheme theme={mainTheme} direction={langDirection}>
-        <AuthProvider>
-          <BrowserRouter>
-            <FuseAuthorization
-              userRole={user.role}
-              loginRedirectUrl={settingsConfig.loginRedirectUrl}
-            >
-              <SnackbarProvider
-                maxSnack={5}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                classes={{
-                  containerRoot: 'bottom-0 right-0 mb-52 md:mb-68 mr-8 lg:mr-80 z-99',
-                }}
+      <CacheProvider value={createCache(emotionCacheOptions[langDirection])}>
+        <FuseTheme theme={mainTheme} direction={langDirection}>
+          <AuthProvider>
+            <BrowserRouter>
+              <FuseAuthorization
+                userRole={user.role}
+                userRoleHierarchique={user.roleHierarchique}
+                userPermission={userPermission}
+                loginRedirectUrl={settingsConfig.loginRedirectUrl}
               >
-                <FuseLayout layouts={themeLayouts} />
-              </SnackbarProvider>
-            </FuseAuthorization>
-          </BrowserRouter>
-        </AuthProvider>
-      </FuseTheme>
-    </CacheProvider>
+                <SnackbarProvider
+                  maxSnack={5}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  classes={{
+                    containerRoot: 'bottom-0 right-0 mb-52 md:mb-68 mr-8 lg:mr-80 z-99',
+                  }}
+                >
+                  <FuseLayout layouts={themeLayouts} />
+                </SnackbarProvider>
+              </FuseAuthorization>
+            </BrowserRouter>
+          </AuthProvider>
+        </FuseTheme>
+      </CacheProvider>
   );
 }
 

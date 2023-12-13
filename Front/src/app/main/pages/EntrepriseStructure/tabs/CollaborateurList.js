@@ -40,7 +40,7 @@ function CollaborateurList(props) {
 
    const navigate = useNavigate();
    const handleClick = (item) => {
-        navigate(`collaborateurs/all/${item.id}`)
+        navigate(`/collaborateurs/all/${item.id}`)
    }
     
 
@@ -58,7 +58,7 @@ function CollaborateurList(props) {
                     variants={item}
                     className="flex flex-col flex-auto items-center shadow rounded-2xl overflow-hidden"
                     key={collab.id}
-                   
+                    onClick={() => handleClick(collab)} 
                 >
                     <div className="flex flex-col flex-auto w-full p-32 text-center pointer" >
                         <div className="w-128 h-128 mx-auto rounded-full overflow-hidden">
@@ -91,16 +91,7 @@ function CollaborateurList(props) {
                             </FuseSvgIcon>
                             <Typography className="ml-8">Email</Typography>
                         </a>
-                        {/* <a
-                            className="flex flex-auto items-center justify-center py-16 hover:bg-hover"
-                            // href={`tel${member.phone}`}
-                            role="button"
-                        >
-                            <FuseSvgIcon size={20} color="action">
-                                heroicons-solid:phone
-                            </FuseSvgIcon>
-                            <Typography className="ml-8">Message</Typography>
-                        </a> */}
+
                     </div>
                 </Paper>
             ))}
