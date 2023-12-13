@@ -32,7 +32,7 @@ router.get('/all', async (req, res) => {
             {
               model: Collab2,
               as: 'Auteur',
-              attributes: ['nom', 'prenom'],
+              attributes: ['nom', 'prenom','image'],
             },
           ],
           where: {
@@ -60,7 +60,7 @@ router.get('/allWithoutForm', async(req,res)=>{
                 {
                     model: Collab2,
                     as: 'Auteur',
-                    attributes: ['nom', 'prenom'],
+                    attributes: ['nom', 'prenom','image'],
                 },
             ],
             where: {
@@ -86,7 +86,7 @@ router.get('/demande/:idDemande', async (req, res) => {
                 {
                     model: Collab2,
                     as: 'Auteur',
-                    attributes: ['nom', 'prenom'],
+                    attributes: ['nom', 'prenom','image'],
                 },
             ],
             where: {
@@ -184,7 +184,7 @@ router.get('/alldemande/coatch', async (req, res) => {
                 {
                     model: Collab2,
                     as: 'Auteur',
-                    attributes: ['nom', 'prenom'],
+                    attributes: ['nom', 'prenom','image'],
                 },
             ],
             where: {
@@ -342,7 +342,4 @@ router.delete('/formation/:id', async(req,res) =>{
     }
 })
 
-router.get('/demande/parinterm/:id', async(req,res) =>{
-
-})
 module.exports = router;

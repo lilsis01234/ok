@@ -155,10 +155,6 @@ const VoirPlusFormation = () => {
               )
             )}
 
-
-
-
-
             </div>
                 {informations.modules ? (informations.modules.length!==0 &&
                 <div>

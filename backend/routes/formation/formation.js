@@ -46,12 +46,12 @@ router.get('/all/admin', async(req,res)=>{
             {
               model: Collaborateur,
               as: 'Auteur',
-              attributes: ['nom', 'prenom'],
+              attributes: ['nom', 'prenom','image'],
             },
             {
               model: Collaborateur,
               as: 'Formateur',
-              attributes: ['id','nom', 'prenom'],
+              attributes: ['id','nom', 'prenom','image'],
             },
           ],
           attributes: ['id', 'theme', 'description', 'auteur','formateur','formateurExt','destinataireDemande','approbation'],
@@ -83,7 +83,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                   {
                       model: Collaborateur,
                       as: 'Auteur',
-                      attributes: ['nom', 'prenom'],
+                      attributes: ['nom', 'prenom','image'],
                   },
                   {
                       model: Role2,
@@ -120,7 +120,7 @@ router.get('/formations/:idPersonne',async(req,res)=>{
         {
           model: Collaborateur,
           as: 'Auteur',
-          attributes: ['nom', 'prenom'],
+          attributes: ['nom', 'prenom','image'],
         },
         {
           model: Role2,
