@@ -89,7 +89,7 @@ const Formations = () => {
   
       {role === "SuperAdministrateur" && (
         <>
-          <Typography variant="h2" className="text-lg mt-12 mb-12 ml-12 text-gray-1000">
+          <Typography variant="h2" className="text-lg mt-10 mb-12 ml-12 text-gray-1000">
             Les formations approuvées
           </Typography>
   
