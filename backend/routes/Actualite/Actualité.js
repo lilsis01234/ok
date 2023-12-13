@@ -267,6 +267,10 @@ router.get('/:id', async (req, res) => {
             include: [{
                 model: Compte,
                 attributes: ["id", "email"],
+                include: [{
+                    model: Collab,
+                    attributes: ["id", "nom", "prenom"],
+                }]
             },
             {
                 model: Categorie,

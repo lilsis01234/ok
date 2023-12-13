@@ -4,6 +4,7 @@ const AddActualityApp = lazy(() => import('./add/AddActualityApp'));
 const Actualities = lazy(() => import('./list/Actualities'));
 const EditActualityApp = lazy(() => import('./edit/EditActualityApp'));
 const ActualityListApp = lazy(() => import('./flux/ActualityListApp'));
+const ActualitySingleApp = lazy(() => import('./flux/ActualitySingleApp'));
 const ActualitiesByCategorie = lazy(() => import('./flux/ActualitiesByCategorie'));
 const ActualitiesByTag = lazy(() => import('./flux/ActualitiesByTag'));
 const ActualitiesByType = lazy(() => import('./flux/ActualitiesByType'));
@@ -35,6 +36,10 @@ const actualityAppConfig = {
     {
       path: `/apps/timeline`,
       element: <ActualityListApp />
+    },
+    {
+      path: `/actuality/:actualityId`,
+      element: <ActualitySingleApp />
     },
     {
       path: `/apps/timeline/categorie/:categorieId`,
