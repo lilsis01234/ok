@@ -78,7 +78,7 @@ router.get('/temporary-link/:filename', (req, res) => {
 
 router.get('/view/:filename', (req, res) => {
 
-    const filePath = path.join(__dirname, '../../', 'uploads2', req.params.filename);
+    const filePath = path.join(__dirname, '../../../', 'uploads2', req.params.filename);
     // Set appropriate content type based on file extension
     const fileExtension = path.extname(filePath).toLowerCase();
     let contentType = 'application/octet-stream';
@@ -99,7 +99,7 @@ router.get('/view/:filename', (req, res) => {
 
 
 router.get('/downloaded/:filename', (req, res) => {
-    const filePath = path.join(__dirname,'../../', 'uploads2', req.params.filename);
+    const filePath = path.join(__dirname,'../../../', 'uploads2', req.params.filename);
     // Set appropriate content type based on file extension
     const fileExtension = path.extname(filePath).toLowerCase();
     let contentType = 'application/octet-stream';

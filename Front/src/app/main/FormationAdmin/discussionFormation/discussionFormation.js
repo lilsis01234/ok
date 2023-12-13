@@ -29,16 +29,6 @@ const Discussions = () => {
     useEffect(() => {
         fetchDiscussion();
     }, [id]);
-
-    // const displayFile = (fileName) => {
-    //     const temporaryLink = `http://localhost:4000/api/discussions/temporary-link/${encodeURIComponent(fileName)}`;
-    
-    //     return (
-    //         <a href={temporaryLink} target="_blank" rel="noopener noreferrer">
-    //             {fileName}
-    //         </a>
-    //     );
-    // };
     
     const viewFile = (fileName) => {
         window.open(`http://localhost:4000/api/discussions/view/${encodeURIComponent(fileName)}`, '_blank');
