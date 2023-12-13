@@ -139,7 +139,7 @@ app.use('/api/chat/message', message)
 
 
 //Module congé
-app.use('/api/conge/agenda',agendaCongeRouter)
+app.use('/api/conge',agendaCongeRouter)
 //Connection à la base de donnée MySQL
 sequelize.authenticate()
     .then(() => {

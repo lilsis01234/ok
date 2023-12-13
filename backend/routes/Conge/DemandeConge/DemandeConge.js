@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Agenda = require('../../../Modele/formation/Seance');
+const Conges = require('../../../Modele/conge/CongeModel');
 const moment = require('moment');
 const timezone = require('moment-timezone');
 moment.tz.setDefault('Indian/Antananarivo');
@@ -13,11 +13,10 @@ router.post('/agendaConge', async (req, res) => {
     const agendaEntries = await Promise.all(eventsData.map(async event => {
       const { start, end, motif, description } = event;
 
-      const agendaEntry = await Agenda.create({
+      const agendaEntry = await Conges.create({
         dayStart: start,
         dayEnd: end, 
         collaborateur: Collab,
-        nombreDePlacesReservees: 0,
         description: description,
         motif: motif,
         approbation: 0
