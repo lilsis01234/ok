@@ -7,6 +7,7 @@ import '../../FormationAdmin/VoirPlus/voirPlus.css'
 import Sary from './logo-sahaza.png'
 import { useNavigate } from 'react-router-dom';
 
+
 const localizer = momentLocalizer(moment);
 
 function CalendarTraining() {
@@ -194,59 +195,94 @@ function CalendarTraining() {
 
   return (
     <div className="voirPlusContainer">
-    <div className = "calendarContainer">
-    <div className="calendarWrapper">
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        step={15}
-        onSelectEvent={handleEventSelect}
-        style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
-      />
-      {showButtons && selectedEvent && (
-        <div className="popup">
-        <div className="popupContent">
-
-            {role === 'SuperAdministrateur' &&
-            (<button className="popupButton" onClick={()=>{handleParticipateNowClick(selectedEvent.id)}}>Démarrer l' appel vidéo</button>)
-            }
-            
-            <button className="popupButton" onClick={()=>{handleReserveClick(selectedEvent.id)}}>Réserver une place</button>
-            
-            {selectedEvent.auteur === userid &&
-            <button className="popupButton" onClick={() => { DeleteSeance(selectedEvent.id) }}>Supprimer</button>
-            }
-
-            {isParticipantListVisible && (
-              <div className="participantData">
-                {participantData &&
-                  [...participantData.collabNames, ...participantData.collabNames2]
-                    .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
-                    .map((collab, index) => (
-                      <div key={index}>{`${collab.nom} ${collab.prenom}`}</div>
-                    ))}
+      <div className="calendarContainer relative">
+        <div className="calendarWrapper">
+          <Calendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            step={15}
+            onSelectEvent={handleEventSelect}
+            style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
+          />
+          {showButtons && selectedEvent && (
+            <div className="popup fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
+                <button
+                  className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
+                  onClick={closePopup}
+                >
+                  X
+                </button>
+                {role === 'SuperAdministrateur' && (
+                  <button
+                    className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
+                    onClick={() => {
+                      handleParticipateNowClick(selectedEvent.id);
+                    }}
+                  >
+                    Démarrer l'appel vidéo
+                  </button>
+                )}
+  
+                <button
+                  className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
+                  onClick={() => {
+                    handleReserveClick(selectedEvent.id);
+                  }}
+                >
+                  Réserver une place
+                </button>
+  
+                {selectedEvent.auteur === userid && (
+                  <button
+                    className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
+                    onClick={() => {
+                      DeleteSeance(selectedEvent.id);
+                    }}
+                  >
+                    Supprimer
+                  </button>
+                )}
+  
+                {isParticipantListVisible && (
+                  <div className="participantData mb-4">
+                    {participantData &&
+                      [...participantData.collabNames, ...participantData.collabNames2]
+                        .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
+                        .map((collab, index) => (
+                          <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
+                        ))}
+                  </div>
+                )}
+  
+                <button
+                  className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
+                  onClick={() => ShowAllParticipant(selectedEvent.id)}
+                >
+                  Liste des participants
+                </button>
+  
+                {role === 'chefEquipe' && (
+                  <button
+                    className="popupButton bg-green-500 text-white py-2 px-4 rounded"
+                    onClick={() => {
+                      handleReserveEqClick(selectedEvent.id);
+                    }}
+                  >
+                    Réserver des places pour mon équipe
+                  </button>
+                )}
               </div>
-            )}
-            
-            <button className="popupButton" onClick={() => ShowAllParticipant(selectedEvent.id)}>
-              Liste des participants
-            </button>
-            
-            {role === 'chefEquipe' &&
-            <button className="popupButton" onClick={()=>{handleReserveEqClick(selectedEvent.id)}}>Réserver des places pour mon équipe</button>
-            }
-
-            <button className="closeButton" onClick={closePopup}>X</button>
+            </div>
+          )}
         </div>
       </div>
-      )}
-    </div>
-
-    </div>
     </div>
   );
+  
+  
 }
 
 export default CalendarTraining;
