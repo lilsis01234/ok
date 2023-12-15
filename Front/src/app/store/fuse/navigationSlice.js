@@ -5,17 +5,14 @@ import i18next from 'i18next';
 import _ from '@lodash';
 import navigationBO from 'app/configs/navigationBO';
 import navigationFO from 'app/configs/navigationFO';
-import { useSelector } from 'react-redux';
 import { selectUser } from '../userSlice';
-import { isArray } from 'lodash';
-import { action } from 'mobx';
+import { selectSidebarContext } from './sideBarContextSlice';
 
 // const sidebarContext = 'frontOffice';
 const navigationAdapter = createEntityAdapter();
 const emptyInitialState = navigationAdapter.getInitialState();
 // const initialState = navigationAdapter.upsertMany(emptyInitialState, navigationConfig);
 const initialState = {
-  sidebarContext : 'frontOffice',
   BONavigation: navigationAdapter.upsertMany(emptyInitialState, navigationBO),
   FONavigation: navigationAdapter.upsertMany(emptyInitialState, navigationFO)
 }
@@ -58,61 +55,67 @@ const navigationSlice = createSlice({
     setBackOfficeNavigation: (state, action) => {
       state.BONavigation = action.payload;
     },
-    setSidebarContext : (state, action) => {
-      state.sidebarContext = action.payload;
-    },
   },
 });
 
+
+
+
+
 // export const { setNavigation, resetNavigation, setSidebarContext } = navigationSlice.actions;
-export const { setNavigation, resetNavigation, setSidebarContext, setFrontOfficeNavigation, setBackOfficeNavigation} = navigationSlice.actions;
+export const { setNavigation, resetNavigation, setFrontOfficeNavigation, setBackOfficeNavigation } = navigationSlice.actions;
 
 // const getUserRole = (state) => state.user.role;
 
-export const selectFrontOfficeNavigation = (state) => state.fuse.navigation.FONavigation;
-export const selectBackOfficeNavigation = (state) => state.fuse.navigation.BONavigation;
-export const selectSidebarContext = (state) => state.fuse.navigation.sidebarContext;
+export const selectFrontOfficeNavigation = (state) => {
+  const frontOfficeNavigation = state.fuse.navigation.FONavigation
+  // console.log('Front Office Navigation:', frontOfficeNavigation);
+  return frontOfficeNavigation;
+};
+export const selectBackOfficeNavigation = (state) => {
+  const backOfficeNavigation = state.fuse.navigation.BONavigation
+  // console.log('Back Office Navigation:', backOfficeNavigation);
+  return backOfficeNavigation;
+};
+
 
 export const selectNavigation = createSelector(
-  [selectFrontOfficeNavigation, selectBackOfficeNavigation,  ({ i18n }) => i18n.language],
-  (BONavigation, FONavigation, language) => {
-    const user = useSelector(selectUser);
-    const userRole = user.role;
-    const userRoleHierarchique = user.userRoleHierarchique;
-    const userPermission = useSelector(state => state.allUserPermision);
+  [selectFrontOfficeNavigation, selectBackOfficeNavigation, selectUser, ({ i18n }) => i18n.language, (state) => state.allUserPermission, (state) => state],
+  (BONavigation, FONavigation, user, userPermission, state) => {
+  
+      const sidebarContext = 'frontOffice'
+
+    // const {sidebarContext} = fuse
+    console.log('State' , state)
 
 
+    const userRole = user?.role;
+    const userRoleHierarchique = user?.userRoleHierarchique;
+    const currentNavigation = sidebarContext === 'frontOffice' ? FONavigation : BONavigation;
 
-    const currentNavigation = sidebarContext === 'frontOffice' ? FONavigation: BONavigation;
-    console.log(sidebarContext)
-
-    function setTranslationValues(data) {
-      console.log('setTranslationValues Inupt: ', data)
-
+    function setTranslationValues(data, i18next) {
       if (!Array.isArray(data) || data.length === 0) {
-        // console.error('setTranslationValues: Data is not a non-empty array');
         return data;
       }
 
       // Utilisez la fonction isArray pour vérifier si data est un tableau
-      if (Array.isArray(data) ) {
-        // Traitement pour un table
-        return data.map((item) => {
-
+      if (Array.isArray(data)) {
+        // Traitement pour un tableau
+        return data.map(function (item) {
           if (!item) {
             console.error('setTranslationValues: Encountered a null or undefined item');
             return item;
           }
 
-          console.log(item)
+          // console.log(item)
           if (item.translate && item.title) {
             item.title = i18next.t(`navigation:${item.translate}`);
           }
-    
+
           if (item.children) {
-            item.children = setTranslationValues(item.children);
+            item.children = setTranslationValues(item.children, i18next);
           }
-    
+
           return item;
         });
       } else if (typeof data === 'object') {
@@ -122,14 +125,14 @@ export const selectNavigation = createSelector(
 
         // Exemple de traitement pour un objet avec des propriétés "ids" et "entities"
         if (updatedData.entities) {
-          updatedData.entities = Object.values(updatedData.entities).map((item) => {
-            console.log('Item de Input Data', item)
+          updatedData.entities = Object.values(updatedData.entities).map(function (item) {
+            // console.log('Item de Input Data', item)
             if (item.translate && item.title) {
               item.title = i18next.t(`navigation:${item.translate}`);
             }
 
             if (item && item.children) {
-              item.children = setTranslationValues(item.children);
+              item.children = setTranslationValues(item.children, i18next);
             }
 
             return item;
@@ -140,20 +143,22 @@ export const selectNavigation = createSelector(
 
         console.log('setTranslationValues Output:', updatedData);
         return updatedData;
-      } 
+      }
     }
 
-    console.log('Current Navigation:', currentNavigation);
+
+    // console.log('Current Navigation:', currentNavigation);
 
     const valeurFilter = setTranslationValues(
       _.merge(
         [],
         filterRecursively(currentNavigation, (item) => {
-          console.log('Processing item:', item);
-          console.log('Item auth:', item && item.auth);
+          // console.log('Processing item:', item);
+          // console.log('Item auth:', item && item.auth);
           return FuseUtils.hasPermission(item && item.auth, userRole, userRoleHierarchique, userPermission);
         })
-      )
+
+      ), i18next
     );
     return valeurFilter
   }
@@ -161,12 +166,12 @@ export const selectNavigation = createSelector(
 
 
 function filterRecursively(arr, predicate) {
-  console.log('Original Array:', arr);
+  // console.log('Original Array:', arr);
 
   // Si arr est un objet avec des propriétés "ids" et "entities"
   if (arr && arr.entities) {
     const filteredArr = Object.values(arr.entities).filter(predicate);
-    console.log('Filtered Array:', filteredArr);
+    // console.log('Filtered Array:', filteredArr);
 
     const mappedArr = filteredArr.map((item) => {
       item = { ...item };
@@ -187,7 +192,7 @@ function filterRecursively(arr, predicate) {
   // Si arr est déjà un tableau
   if (Array.isArray(arr)) {
     const filteredArr = arr.filter(predicate);
-    console.log('Filtered Array:', filteredArr);
+    // console.log('Filtered Array:', filteredArr);
 
     const mappedArr = filteredArr.map((item) => {
       item = { ...item };
@@ -205,9 +210,19 @@ function filterRecursively(arr, predicate) {
   return arr;
 }
 
-export const selectFlatNavigation = createSelector([selectNavigation], (navigation) =>
-  FuseUtils.getFlatNavigation(navigation)
-);
+// export const selectFlatNavigation = createSelector([selectNavigation], (navigation) =>
+//   FuseUtils.getFlatNavigation(navigation)
+// );
+
+export const selectFlatNavigation = createSelector([selectNavigation], (navigation) => {
+  if (!navigation) {
+    console.error('selectFlatNavigation: Navigation is undefined');
+    return [];
+  }
+  return FuseUtils.getFlatNavigation(navigation);
+});
+
+
 
 
 export default navigationSlice.reducer;

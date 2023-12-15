@@ -17,6 +17,7 @@ import withAppProviders from './withAppProviders';
 import { AuthProvider } from './auth/AuthContext';
 
 
+
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
@@ -48,10 +49,11 @@ function App() {
   const mainTheme = useSelector(selectMainTheme);
 
   return (
-      <CacheProvider value={createCache(emotionCacheOptions[langDirection])}>
-        <FuseTheme theme={mainTheme} direction={langDirection}>
-          <AuthProvider>
-            <BrowserRouter>
+
+    <CacheProvider value={createCache(emotionCacheOptions[langDirection])}>
+      <FuseTheme theme={mainTheme} direction={langDirection}>
+        <AuthProvider>
+          <BrowserRouter>
               <FuseAuthorization
                 userRole={user.role}
                 userRoleHierarchique={user.roleHierarchique}
@@ -71,10 +73,10 @@ function App() {
                   <FuseLayout layouts={themeLayouts} />
                 </SnackbarProvider>
               </FuseAuthorization>
-            </BrowserRouter>
-          </AuthProvider>
-        </FuseTheme>
-      </CacheProvider>
+          </BrowserRouter>
+        </AuthProvider>
+      </FuseTheme>
+    </CacheProvider>
   );
 }
 

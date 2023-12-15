@@ -16,6 +16,7 @@ import FuseNavVerticalItem from './vertical/types/FuseNavVerticalItem';
 import FuseNavVerticalLink from './vertical/types/FuseNavVerticalLink';
 import { registerComponent } from './FuseNavItem';
 
+
 const inputGlobalStyles = (
   <GlobalStyles
     styles={(theme) => ({
@@ -68,6 +69,7 @@ function FuseNavigation(props) {
     'firstLevel',
     'selectedId',
   ]);
+
 
   if(props.navigation){
     console.log(props.navigation)

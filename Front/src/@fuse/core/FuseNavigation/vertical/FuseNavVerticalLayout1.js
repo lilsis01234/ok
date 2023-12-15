@@ -4,8 +4,9 @@ import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
 import FuseNavItem from '../FuseNavItem';
 import { useSelector } from 'react-redux';
-import { setSidebarContext } from 'app/store/fuse/navigationSlice';
+import {selectSidebarContext, setSidebarContext } from 'app/store/fuse/sideBarContextSlice'
 import { Button } from '@mui/material';
+
 
 const StyledList = styled(List)(({ theme }) => ({
   '& .fuse-list-item': {
@@ -43,25 +44,22 @@ function FuseNavVerticalLayout1(props) {
   const { navigation, layout, active, dense, className, onItemClick } = props;
   console.log(navigation.entities)
   const navigationData = navigation.entities
-  const dispatch = useDispatch();
+
 
   function handleItemClick(item) {
     onItemClick?.(item);
   }
 
 
-
-  const sidebarContext = useSelector(state => state.fuse.navigation.sidebarContext)
+  const dispatch = useDispatch();
+  const sidebarContext = useSelector(selectSidebarContext)
+  console.log(sidebarContext)
 
   const toogleSidebarContext = () => {
     const newContext = sidebarContext === 'frontOffice' ? 'backOffice' : 'frontOffice';
-    // console.log(newContext)
-    dispatch(setSidebarContext(newContext))
-  }
-
-  // console.log(sidebarContext)
-
-
+    dispatch(setSidebarContext(newContext));
+  };
+  
 
 
   return (

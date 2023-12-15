@@ -9,7 +9,6 @@ const createReducer = (asyncReducers) => (state, action) => {
     fuse,
     i18n,
     user,
-    authReducer,
     ...asyncReducers,
   });
 
