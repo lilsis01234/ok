@@ -8,7 +8,6 @@ const ActualitySingleApp = lazy(() => import('./flux/ActualitySingleApp'));
 const ActualitiesByCategorie = lazy(() => import('./flux/ActualitiesByCategorie'));
 const ActualitiesByTag = lazy(() => import('./flux/ActualitiesByTag'));
 const ActualitiesByType = lazy(() => import('./flux/ActualitiesByType'));
-const FrontActuality = lazy(() => import('./front/FrontActuality'));
 const Comment = lazy(() => import('./commentaire/Comment'));
 const Categorie = lazy(() => import('./categorie/Categorie'));
 const Type = lazy(() => import('./type/Type'));
@@ -52,10 +51,6 @@ const actualityAppConfig = {
     {
       path: `/apps/timeline/type/:typeId`,
       element: <ActualitiesByType />
-    },
-    {
-      path: `/apps/front-actuality`,
-      element: <FrontActuality />
     },
     {
       path: `/apps/edit-comments`,

@@ -182,30 +182,17 @@ const navigationConfig = [
         id: 'tag',
         title: 'Etiquettes',
         type: 'item',
-        icon: 'material-outline:article',
+        icon: 'feather:tag',
         url: '/apps/tag',
       },
       {
-        id: 'frontend',
-        title: 'Front office',
-        icon: 'heroicons-outline:check-circle',
-        type: 'collapse',
-        children: [
-          {
-            id: 'actuality.flux',
-            title: "Flux d'actualités",
-            type: 'item',
-            icon: 'heroicons-outline:menu-alt-2',
-            url: '/apps/timeline',
-          },
-          {
-            id: 'actuality-content',
-            title: 'Actualité',
-            type: 'item',
-            icon: 'heroicons-outline:clipboard-list',
-            url: '/apps/front-actuality',
-          }
-        ],
+        
+        id: 'actuality.flux',
+        title: "Flux d'actualités",
+        type: 'item',
+        icon: 'heroicons-solid:newspaper',
+        url: '/apps/timeline',
+          
       }
     ],
   },

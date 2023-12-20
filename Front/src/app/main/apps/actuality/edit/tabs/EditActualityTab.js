@@ -40,8 +40,10 @@ function AddActualityTab() {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedTag, setSelectedTag] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  const [selectedVisibilite, setSelectedVisibilite] = useState([]);
-  const [selectedEtat, setSelectedEtat] = useState([]);
+  const [selectedVisibilite, setSelectedVisibilite] = useState('');
+  const [selectedEtat, setSelectedEtat] = useState('');
+  const [idImageToChange, setidImageToChange] = useState(null);
+  const [nameImgActu, setNameImgActu] = useState('');
   
   const fetchActualityToEdit = () => {
     axios.get(`http://localhost:4000/api/actualite/${actualityId}`)
@@ -56,20 +58,37 @@ function AddActualityTab() {
       setSelectedTypes(res.data.actuality?.Type);
       setSelectedVisibilite(res.data.actuality?.visibilite);
       setSelectedEtat(res.data.actuality?.etat);
+      setNameImgActu(res.data.actuality?.image);
     })
     .catch(err => console.log(err));
+  }
+
+  const getIdImgActualityByName = () => {
+    if (nameImgActu) {
+      axios.get(`http://localhost:4000/api/actualite/getidimg?name=${nameImgActu}`)
+        .then(res => {
+          // console.log(res.data);
+          setidImageToChange(res.data?.actualityImg?.id);
+        })
+        .catch(err => console.log(err));
+    }
   }
 
   
   useEffect(() => {
     fetchActualityToEdit();
   }, [])
+
+
+
+  useEffect(() => {
+    getIdImgActualityByName();
+  }, [nameImgActu])
   
 
   const [listeCategorie, setListCategorie] = useState([]);
   const [listeType, setListType] = useState([]);
   const [listeTag, setListTag] = useState([]);
-  const [idImageToChange, setidImageToChange] = useState(null);
   const [isInputCategVisible, setIsInputCategVisible] = useState(false);
   const [isInputTypeVisible, setIsInputTypeVisible] = useState(false);
   const [isInputTagVisible, setIsInputTagVisible] = useState(false);
@@ -301,6 +320,20 @@ function AddActualityTab() {
     
   }
 
+  const actualityFieldImgToEmpty = (id) => {
+
+      axios.put(`http://localhost:4000/api/actualite/image/${id}`)
+    
+      .then((res) => {
+        console.log(res.data);
+      })
+    
+      .catch(err => {
+        console.log(err);
+      });
+    
+  }
+
   const accordionStyle = {
     marginBottom: 0,
   };
@@ -387,59 +420,6 @@ function AddActualityTab() {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
 
-  const handleSubmit = async (e) => {
-
-    e.preventDefault();
-    const formData = new FormData(formRef.current);
-    
-    const titre = formData.get('titre');
-    const extrait = formData.get('extrait');
-    const visibilite = formData.get('visibilite');
-    const etat = formData.get('etat');
-    const category = getSelectedCategoryIds().split(',');
-    const type = getSelectedTypeIds().split(',');
-    const tag = getSelectedTagIds().split(',');
-    const contenu =  wysiwygContent;
-    const date_publication = dateActuelle;
-    const image = imgMiseEnAvant;
-    const commentaire = isChecked;
-    const compte_id = user.data.CompteId;
-    
-
-
-    const dataForm = {
-      titre,
-      contenu,
-      date_publication,
-      extrait,
-      etat,
-      visibilite,
-      category,
-      type,
-      tag,
-      image,
-      compte_id
-
-    };
-
-    const serveurApi = 'http://localhost:4000/api/actualite/new';
-    axios.post(serveurApi, dataForm)
-        .then(res => {
-
-          if (res.data) {
-              console.log('reponse : ', res.data);
-              navigate('/apps/actuality/list');
-              dispatch(showMessage({ message: 'Actualité sauvegardée' }));
-
-          }
-
-        })
-        .catch(err => console.log(err));
-
-    
-      
-  }
-
 
   const handleWysiwygChange = (value) => {
     setWysiwygContent(value);
@@ -453,21 +433,20 @@ function AddActualityTab() {
     setSelectedEtat(event.target.value);
   };
 
-  const test = () => {
+  const handleSubmit = () => {
 
     const titre = titreToEdit;
     const extrait = extraitToEdit;
-    // const visibilite = formData.get('visibilite');
-    // const etat = formData.get('etat');
-    // const category = getSelectedCategoryIds().split(',');
-    // const type = getSelectedTypeIds().split(',');
-    // const tag = getSelectedTagIds().split(',');
+    const visibilite = selectedVisibilite;
+    const etat = selectedEtat;
+    const category = getSelectedCategoryIds().split(',');
+    const type = getSelectedTypeIds().split(',');
+    const tag = getSelectedTagIds().split(',');
     const contenu =  wysiwygContent;
     const updatedAt = dateActuelle;
     // const date_publication = dateActuelle;
-    // const image = imgMiseEnAvant;
+    const image = imgMiseEnAvant;
     // const commentaire = isChecked;
-    // const compte_id = user.data.CompteId;
     
 
 
@@ -476,24 +455,35 @@ function AddActualityTab() {
       contenu,
       extrait,
       updatedAt,
-      // etat,
-      // visibilite,
-      // category,
-      // type,
-      // tag,
-      // image,
-      // compte_id
+      etat,
+      visibilite,
+      category,
+      type,
+      tag,
+      image,
 
     };
 
-    console.log(data);
-  }
+    const serveurApi = `http://localhost:4000/api/actualite/${actualityId}`;
+    axios.put(serveurApi, data)
+        .then(res => {
 
+          if (res.data) {
+              console.log('reponse : ', res.data);
+
+          }
+          dispatch(showMessage({ message: 'Actualité mise à jour' }));
+          navigate('/apps/actuality/list');
+
+        })
+        .catch(err => console.log(err));
+
+  }
   
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="w-full">
-      <form ref={formRef} onSubmit={handleSubmit}>
+      <form>
         <div className="md:flex flex-row justify-between items-center">
           <Typography className="text-3xl font-semibold tracking-tight leading-8 mb-24 mt-16">
                 Modifier un nouvel article
@@ -502,10 +492,10 @@ function AddActualityTab() {
             <Button type="button" className="py-10 px-32" variant="contained" color="error" size="small" aria-label="post" onClick={() => deleteActuality()}>
               Supprimer
             </Button>
-            <Button type="button" className="py-10 px-32 ml-12" variant="contained" color="primary" size="small" aria-label="post" onClick={() => alert('ok')} >
+            <Button type="button" className="py-10 px-32 ml-12" variant="contained" color="primary" size="small" aria-label="post" onClick={() => navigate('/apps/actuality/list')} >
               Annuler
             </Button>
-            <Button type="button" className="py-10 px-32 ml-12" variant="contained" color="success" size="small" aria-label="post" onClick={() => {test();obtenirDateActuelle()}}>
+            <Button type="button" className="py-10 px-32 ml-12" variant="contained" color="success" size="small" aria-label="post" onClick={() => {handleSubmit();obtenirDateActuelle()}}>
               Mettre à jour
             </Button>
           </div>
@@ -693,7 +683,7 @@ function AddActualityTab() {
 
               <CardContent className="p-0">                        
                 <FormControl className="mb-16" fullWidth>
-                { !imgMiseEnAvant ? 
+                { (!imgMiseEnAvant || imgMiseEnAvant == '') ? 
                   <Button type="button" className="py-10 px-32" variant="outlined" color="inherit" size="small" aria-label="post" onClick={imageHandlerMea}>
                     ajouter une image
                   </Button>
@@ -702,13 +692,13 @@ function AddActualityTab() {
                     changer l'image
                   </Button>
                     }
-                  { imgMiseEnAvant ? ( <div>
+                  { imgMiseEnAvant &&  imgMiseEnAvant != '' && ( <div>
                     <img src={`http://localhost:4000/${imgMiseEnAvant}`} alt="image" className="mt-32" />
-                    <Link color="inherit" href="#" onClick={(e) => {e.preventDefault();deleteImg(idImageToChange);}} >
+                    <Link color="inherit" href="#" onClick={(e) => {e.preventDefault();deleteImg(idImageToChange);actualityFieldImgToEmpty(actualityId)}} >
                       Supprimer l'image
                     </Link>
                   </div>
-                  ) : ''}
+                  )}
                 </FormControl>                   
               </CardContent>
             </Card>
