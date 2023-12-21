@@ -4,6 +4,7 @@ const Formation = require('../../../Modele/formation/Formation');
 const Module = require('../../../Modele/formation/Module');
 const Seance = require('../../../Modele/formation/Seance');
 const Collaborateur = require('../../../Modele/CollabModel/Collab');
+const Collab = require('../../../Modele/CollabModel/Collab');
 router.use(cookieParser());
 
 router.get('/all_seances', async (req, res) => {
@@ -84,7 +85,13 @@ router.get('/seancesParFormation/:idformation', async (req, res) => {
          const seances = await Seance.findAll({
              where : {
                  formation : idformation,
-            }
+            },
+            include:[{
+                model:Collab
+            },
+            {
+                model:Formation
+            }]
          })
          res.json(seances);
  
