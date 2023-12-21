@@ -83,15 +83,13 @@ router.get('/seancesParFormation/:idformation', async (req, res) => {
  
          //Recherche de la formation ayant cet id
          const seances = await Seance.findAll({
-             where : {
-                 formation : idformation,
-            },
-            include:[{
-                model:Collab
-            },
+            include:
             {
                 model:Formation
-            }]
+            },
+            where : {
+                formation : idformation,
+            }
          })
          res.json(seances);
  
