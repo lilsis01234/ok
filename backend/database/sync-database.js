@@ -53,7 +53,13 @@ const associationFormationEq = require('../Modele/formation/associationFormation
 const associationFormationCollab= require('../Modele/formation/associationFormationCollab');
 const associationSeanceEquipe = require('../Modele/formation/associationSeanceEquipe');
 
+const Conge = require('../Modele/conge/CongeModel');
+const PieceJointe = require('../Modele/conge/PiecesJointes');
+const SoldeConge = require('../Modele/conge/SoldeConge');
+const TypeConge = require('../Modele/conge/TypeCongé');
+
 //Synchronisation de la base de donnée 
+
 async function syncDatabase() {
     try {
         await sequelize.sync({ force: false });
