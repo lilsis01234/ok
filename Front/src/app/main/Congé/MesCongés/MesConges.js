@@ -1,15 +1,15 @@
 import React,{useState,useEffect} from "react";
 
 
-const ListeConges = ()=>{
+const MesConges = ()=>{
     const [conges,setConges] = useState([])
 
     useEffect(()=>{
         
     },[])
     return(
-        <h1>Liste des personnes en congé</h1>
+        <h1>Mes congés</h1>
     )
 }
 
-export default ListeConges
+export default MesConges
