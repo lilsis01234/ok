@@ -53,10 +53,10 @@ const associationFormationEq = require('../Modele/formation/associationFormation
 const associationFormationCollab= require('../Modele/formation/associationFormationCollab');
 const associationSeanceEquipe = require('../Modele/formation/associationSeanceEquipe');
 
-const Conge = require('../Modele/conge/CongeModel');
-const PieceJointe = require('../Modele/conge/PiecesJointes');
+const DemandeConge = require('../Modele/conge/CongeModel');
 const SoldeConge = require('../Modele/conge/SoldeConge');
-const TypeConge = require('../Modele/conge/TypeCongé');
+const TypeConge = require('../Modele/conge/Types');
+const PieceJointe = require('../Modele/conge/PiecesJointes');
 
 //Synchronisation de la base de donnée 
 

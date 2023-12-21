@@ -194,8 +194,9 @@ function CalendarTraining() {
   };
 
   return (
+    <div className ="flex justify-center items-center min-h-screen"> 
     <div className="voirPlusContainer">
-      <div className="calendarContainer relative">
+      <div className="calendarContainer">
         <div className="calendarWrapper">
           <Calendar
             localizer={localizer}
@@ -204,10 +205,10 @@ function CalendarTraining() {
             endAccessor="end"
             step={15}
             onSelectEvent={handleEventSelect}
-            style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
+            style={{padding: '15px', backgroundColor: 'white', borderRadius: '20px' }}
           />
           {showButtons && selectedEvent && (
-            <div className="popup fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
               <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
                 <button
                   className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
@@ -279,6 +280,7 @@ function CalendarTraining() {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
   

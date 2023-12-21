@@ -7,7 +7,7 @@ import { useNavigate,useParams } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
-function CalendarForm() {
+function CongeCalendarForm() {
   const [events, setEvents] = useState([]);
   const formation = useParams()
   console.log(formation)
@@ -64,4 +64,4 @@ function CalendarForm() {
   );
 }
 
-export default CalendarForm;
+export default CongeCalendarForm;

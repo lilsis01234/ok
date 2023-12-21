@@ -70,10 +70,22 @@ function MesDemandes (){
               <br></br>
               </>
               }
-              
               <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link>
+                            
+              {demande.approbation === null &&
+              <>
               <br></br><button onClick={() => { DeleteDemande(demande.id) }}>Annuler la demande</button>
+              </>
+              }
+
+              {demande.approbation === false &&
+              <>
+              <br></br><button onClick={() => { DeleteDemande(demande.id) }}>Supprimer la demande</button>
+              </>
+              }
+
             </div>
+
         
         ))}
         </div>
