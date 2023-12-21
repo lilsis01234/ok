@@ -42,7 +42,7 @@ const VoirPlusFormation = () => {
             console.log(res.data)
             const formattedEvents = res.data.map((event) => {
               return {
-                auteur: event.Collabs[0].id,
+                auteur: event.Formation.formateur,
                 id:event.id,
                 title: `${event.title} - ${event.nombreDePlaces} places`,
                 start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), 
