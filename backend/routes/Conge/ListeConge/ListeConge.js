@@ -1,18 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const  Conges  = require('../../../Modele/conge/CongeModel');
-const Formation = require('../../../Modele/formation/Formation');
+const   Conge = require('../../../Modele/conge/CongeModel');
 const Collab = require('../../../Modele/CollabModel/Collab');
+const Type = require('../../../Modele/conge/Types');
 
 // Route GET pour récupérer toutes les dates de l'agenda
 router.get('/agendaConge', async (req, res) => {
   try {
     // Récupérez toutes les entrées de l'agenda depuis la base de données
-    const agendaEntries = await Conges.findAll({
-      include: {
+    const agendaEntries = await Conge.findAll({
+      
+      include: 
+      [{
         model: Collab,
         attributes: ['nom', 'prenom', 'matricule']
-      }
+       },
+        
+       {
+        model : Type,
+        attributes:['nom']
+       }
+      ]
     });
     // Retournez les entrées de l'agenda en tant que réponse JSON
     res.status(200).json(agendaEntries);
