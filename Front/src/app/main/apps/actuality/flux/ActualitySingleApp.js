@@ -146,13 +146,13 @@ function ActualitiesByCategorie() {
           )}
 
           {Actuality?.actuality?.contenu && (
-            <div className="w-4xl flex mb-32">
+            <div className="w-3xl flex mb-32">
               <Card className="w-full p-32" >
                 <div dangerouslySetInnerHTML={{ __html: Actuality?.actuality?.contenu }} />
               </Card>
             </div>
           )}
-          <div className="w-4xl flex mb-32">
+          <div className="w-3xl flex mb-32">
             <ButtonGroup className="w-full" variant="contained" aria-label="outlined button group">
               <Button 
                 className="w-1/2 justify-start pl-20" 
@@ -176,7 +176,7 @@ function ActualitiesByCategorie() {
           <div className='w-3xl flex justify-center border-b-2 border-slate-900 my-32'>
             <Typography className='after:content-[" "] after:w-full after:absolute after:right-0 after:left-0 after:bottom-0 after:h-3 after:bg-[#818cf8] text-2xl font-bold text-center pb-10 inline-block relative' color="text.secondary">Articles Similaires</Typography>
           </div>
-          <div className="w-4xl p-16 flex flex-row flex-wrap">
+          <div className="w-3xl p-16 flex flex-row flex-wrap">
             { 
               relatedActuality.map((n) => {
               return (
