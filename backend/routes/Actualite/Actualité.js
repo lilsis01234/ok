@@ -205,7 +205,6 @@ router.get('/categorie/:id', async (req, res) => {
         res.status(200).json(actuality)
     }
     catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
     }
 })
@@ -229,7 +228,6 @@ router.get('/tag/:id', async (req, res) => {
         res.status(200).json(actuality)
     }
     catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
     }
 })
@@ -269,6 +267,10 @@ router.get('/:id', async (req, res) => {
             include: [{
                 model: Compte,
                 attributes: ["id", "email"],
+                include: [{
+                    model: Collab,
+                    attributes: ["id", "nom", "prenom"],
+                }]
             },
             {
                 model: Categorie,

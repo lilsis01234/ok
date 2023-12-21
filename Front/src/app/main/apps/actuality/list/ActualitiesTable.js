@@ -12,11 +12,14 @@ import withRouter from '@fuse/core/withRouter';
 import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/fr';
+import Typography from '@mui/material/Typography';
+import FuseLoading from '@fuse/core/FuseLoading/FuseLoading';
 
 
 function ActualitiesTable(props) {
 
   const [listeActuality, setListActuality] = useState([]);
+  const [loading, setLoading] = useState(true);
 
 //Récupération de la liste des actualités
 const fetchActualities = () => {
@@ -27,8 +30,13 @@ const fetchActualities = () => {
 
 useEffect(() => {
   fetchActualities();
+  setLoading(false);
 }, [])
 
+
+if (loading) {
+  return <FuseLoading />
+}
 
   function handleClick(n) {
     props.navigate(`/apps/actuality/${n.id}`);
@@ -58,16 +66,25 @@ useEffect(() => {
                       {n.titre}
                     </TableCell>
 
-                    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
+                    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row" >
                       {n.Compte?.Collab?.nom} {n.Compte?.Collab?.prenom} 
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      category
+                      {n.categorie.map((categorie) => ( 
+                        <Typography>
+                           {categorie.nom}
+                        </Typography>
+                        ))} 
+
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      type
+                      {n.Type.map((type) => ( 
+                          <Typography>
+                            {type.nom}
+                          </Typography>
+                      ))} 
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">

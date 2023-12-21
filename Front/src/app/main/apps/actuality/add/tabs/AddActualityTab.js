@@ -26,6 +26,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'app/store/userSlice';
+import FuseLoading from '@fuse/core/FuseLoading/FuseLoading';
 
 
 function AddActualityTab() {
@@ -50,6 +51,7 @@ function AddActualityTab() {
   const [boutonDesableTag, setBoutonDesableTag] = useState(true);
   const [isChecked, setChecked] = useState(false);
   const [dateActuelle, setDateActuelle] = useState('');
+  const [loading, setLoading] = useState(false);
 
 
   const handleTypesChange = (event, newValues) => {
@@ -204,9 +206,9 @@ function AddActualityTab() {
           },
         })
           .then(res => {
-
             if (res.data.nom) {
-                  const img = `<div><img src="http://localhost:4000/${res.data.nom}" alt="image téléchargée" /></div>`;
+
+                  const img = `<div><img src="http://localhost:4000/${res.data.nom}" alt="image téléchargée" className="max-w-[60%] h-auto"/></div>`;
                   setWysiwygContent(wysiwygContent + img);
             }
 
@@ -376,6 +378,7 @@ function AddActualityTab() {
         .then(res => {
 
           if (res.data) {
+              setLoading(true);
               console.log('reponse : ', res.data);
               navigate('/apps/actuality/list')
               // window.location.reload();
@@ -385,6 +388,8 @@ function AddActualityTab() {
 
         })
         .catch(err => console.log(err));
+
+    // console.log(dataForm)
       
   }
 
@@ -392,6 +397,11 @@ function AddActualityTab() {
   const handleWysiwygChange = (value) => {
     setWysiwygContent(value);
   };
+
+  if (loading) {
+    return <FuseLoading />
+  }
+
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="w-full">
@@ -445,7 +455,6 @@ function AddActualityTab() {
                 multiline
                 rows="6"
                 margin="none"
-                required
                 disableUnderline
               />
             </Card>
