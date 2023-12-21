@@ -7,20 +7,28 @@ import moment from 'moment-timezone';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-notifications-component/dist/theme.css';
 import { Typography} from '@mui/material'
+import Sary from './logo-sahaza.png'
 
 
 const localizer = momentLocalizer(moment);
 
 const VoirPlusFormation = () => {
     const idFormation = useParams();
-    const [informations, setInformations] = useState([]);
+    const [informations, setInformations] = useState({});
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showButtons, setShowButtons] = useState(false);
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log(user)
+    const userId = user.id;
+    console.log(userId)
+    const role = user.RoleHierarchique.roleHierarchique;
+    console.log(role)
 
     const fetchFormation = () => {
         axios.get(`http://localhost:4000/api/formations/all_informations/${idFormation.id}`)
             .then(res => {
+                console.log(res.data)
                 setInformations(res.data);
             })
             .catch(err => {
@@ -29,6 +37,7 @@ const VoirPlusFormation = () => {
 
             axios.get(`http://localhost:4000/api/seances/seancesParFormation/${idFormation.id}`)
             .then((res) => {
+            console.log(res.data)
             const formattedEvents = res.data.map((seance) => {
                 return {
                 title: `${seance.title} - ${seance.nombreDePlaces} places`,
@@ -47,7 +56,7 @@ const VoirPlusFormation = () => {
 
     useEffect(() => {
         fetchFormation();
-    }, [idFormation]);
+    }, [idFormation])
 
     const scheduleNotification = (event) => {
       if (event.start && event.end) {
@@ -69,7 +78,6 @@ const VoirPlusFormation = () => {
         console.error('Invalid event data:', event);
       }
     };
-    
   
     const showNotification = (title, customMessage) => {
       if (!("Notification" in window)) {
@@ -81,6 +89,7 @@ const VoirPlusFormation = () => {
               const notification = new Notification(title, {
                 body: customMessage,
                 requireInteraction: true,
+                icon:Sary
               });
               console.log('lasa le notif')
               notification.onclick = function () {
@@ -106,12 +115,6 @@ const VoirPlusFormation = () => {
     const handleReserveClick = () => {
       console.log('Réserver une place');
     };
-  
-    // const handleSetReminderClick = (event) => {
-    //   scheduleNotification(event);
-    //   console.log('lasa le rappel')
-    //   alert('Rappel confirmé')
-    // };
 
     const closePopup = () => {
       setShowButtons(false);
@@ -120,6 +123,7 @@ const VoirPlusFormation = () => {
     return (
         <div className="voirPlusContainer">
             <h1 className="collabListes_title font-bold">Détails sur la formation</h1>
+            
             {informations.formation && (
                 <div className='infos'>
                     <Typography>Thème: {informations.formation.theme}</Typography>
@@ -127,12 +131,30 @@ const VoirPlusFormation = () => {
                     {informations.formation.Formateur && (
                      <Typography>Formateur: <span className="formateurInfo">{informations.formation.Formateur.nom} {informations.formation.Formateur.prenom}</span></Typography>
                     )}
+                    {informations.formation.formateurExt && (
+                     <Typography>Formateur: <span className="formateurInfo">{informations.formation.formateurExt}</span></Typography>
+                    )}
                     <span className="formateurInfo"><Link to={`/discussion/formation/${idFormation.id}`}>Accéder à la discussion</Link></span>
                 </div>
-              )}
+            )}
+
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Modules</h1>
-            <button><Link to={`/addModule/${idFormation.id}`}>+</Link></button>
+           
+            {informations.formation && informations.formation.RoleHierarchique && informations.formation.RoleHierarchique.roleHierarchique && role === informations.formation.RoleHierarchique.roleHierarchique ? (
+              <button>
+                <Link to={`/addModule/${idFormation.id}`}>+</Link>
+              </button>
+            ) : (
+              informations.formation && informations.formation.auteur && informations.formation.auteur === userId ? (
+                <button>
+                  <Link to={`/addModule/${idFormation.id}`}>+</Link>
+                </button>
+              ) : (
+                null
+              )
+            )}
+
             </div>
                 {informations.modules ? (informations.modules.length!==0 &&
                 <div>
@@ -148,7 +170,21 @@ const VoirPlusFormation = () => {
             )}
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Séances</h1>
-            <button><Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link></button>
+            
+            {informations.formation && informations.formation.RoleHierarchique && informations.formation.RoleHierarchique.roleHierarchique && role === informations.formation.RoleHierarchique.roleHierarchique ? (
+              <button>
+               <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
+              </button>
+            ) : (
+              informations.formation && informations.formation.auteur && informations.formation.auteur === userId ? (
+                <button>
+                  <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
+                </button>
+              ) : (
+                null
+              )
+            )}
+
             </div>
 
             {events.length !== 0 ? (

@@ -19,8 +19,9 @@ import CommentIcon from '@mui/icons-material/Comment';
 import { pink,yellow } from '@mui/material/colors';
 
 const Dashboard = () => {
-
+        
   const [listeActuCategDash, setlisteActuCategDash] = useState([]);
+  const [formations, setFormations] = useState([]);
 
   const fetchActualitiesByCateg = () => {
     axios.get('http://localhost:4000/api/categorie/25/actualites')
@@ -28,8 +29,19 @@ const Dashboard = () => {
       .catch(err => console.log(err));
   }
   
+  const fetchFormation = () => {
+    axios.get('http://localhost:4000/api/formations/all_formations')
+      .then(res => {
+        console.log(res.data)
+        setFormations(res.data)
+      })
+      .catch(err => console.log(err));
+  }
+  
+
   useEffect(() => {
     fetchActualitiesByCateg();
+    fetchFormation();
   }, [])
 
 
@@ -108,14 +120,43 @@ const Dashboard = () => {
                   <div className="flex-auto mb-32">
                   </div>
 
-                  <div className="flex-auto w-200">Les 3 directions</div>
-                  <div className="flex-auto w-200">Liste des formations</div>
+                  <div className="flex-auto w-full">Les 3 directions</div>
+                  <div className="flex-auto w-full">
+                    <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-400">
+                        Nos formations
+                    </Typography>
+                    <div>
+                      {formations.map((formation) => (
+                        <div key={formation.id} className="mb-8 p-4 border border-gray-300 rounded-lg w-full">
+                          {formation.Formateur.image!== null ? 
+                          (
+                          <Typography className="text-gray-700 mb-4">{formation.Formateur.nom} {formation.Formateur.prenom}</Typography>
+                          )
+                          :
+                          (
+                          <>
+                          {/* <img src={``}/> */}
+                          <Typography className="text-gray-700 mb-4">{formation.Formateur.nom} {formation.Formateur.prenom}</Typography>
+                          </>
+                          )}
+                          <Typography className="text-xl sm:text-xl font-bold text-green-400 mb-2">
+                            {formation.theme}
+                          </Typography>
+                          <Typography className="text-gray-700 mb-4">
+                            {formation.description}
+                          </Typography>
+                          {/* Add more details or styling as needed */}
+                        </div>
+                      ))}
+                    </div>
+
+                  </div>
                 </div>
 
                 {/* Column 2 */}
                 <div className="flex flex-col w-full md:w-1/4 px-16">
-                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-32 overflow-hidden aspect-w-1 justify-center align-center">
-                  <center><img src={Sary} alt="logo_sahaza" className='h-72 w-68' /></center>
+                  <Paper className="flex flex-col flex-auto shadow rounded-2xl mb-32 overflow-hidden aspect-w-1 justify-center items-center">
+                  <img src={Sary} alt="logo_sahaza" className='h-72 w-68' />
                     <div className="text-center">
                       <Typography className="text-xl sm:text-3xl font-bold tracking-tight leading-none text-red-400">
                         Mot du jour

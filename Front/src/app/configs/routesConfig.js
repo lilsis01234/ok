@@ -13,7 +13,6 @@ import dashboardsConfigs from '../Dashboard/dashboardsConfig';
 //ModuleProfile
 import ContactConfig from '../main/pages/Contacts/ContactAppConfig';
 import StructureAppConfig from '../main/pages/gererStructure/StructureAppConfig';
-import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
 import DirectionConfig from '../main/pages/Direction/DirectionConfig';
 import EntrepriseStrucutureConfig from '../main/pages/EntrepriseStructure/EntrepriseStructureConfig';
 
@@ -21,7 +20,9 @@ import EntrepriseStrucutureConfig from '../main/pages/EntrepriseStructure/Entrep
 //Module Formation
 import CalendarConfig from '../main/CalendarSeance/CalendarSeanceConfig';
 import CalendarFormConfig from '../main/CalendarSeance/calendrierForm/CalendarFormConfig';
-import FormationConfig from '../main/FormationAdmin/demandeDeFormation/FormationConfig';
+import FormationConfig from '../main/FormationAdmin/ListeFormations/FormationConfig';
+import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
+import CongeConfig from '../main/CalendarCongé/CongéConfig';
 
 
 //Module d'actualité
@@ -34,11 +35,9 @@ import GererPermissionConfig from '../main/pages/GererPermission/GererPermission
 import CollaborateurAppConfig from '../main/pages/Collaborateur/CollaborateurAppConfig';
 
 
-
-
 const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
-  ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,
+  ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,CongeConfig,
   //Module Profil
   // ContactConfig,
   CollaborateurAppConfig,

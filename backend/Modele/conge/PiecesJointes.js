@@ -1,9 +1,11 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../database/database');
+const sequelize = require('../../database/database');
+const {DataTypes, Model} = require('sequelize');
 
-const DemandePermission = require('./Permission'); // Importez le modèle DemandeConge si ce n'est pas déjà fait
+const DemandeConge = require('./CongeModel');
 
-const PieceJointe = sequelize.define('PieceJointe', {
+class PieceJointe extends Model{}
+
+PieceJointe.init({
     originalname: {
         type: DataTypes.STRING,
         allowNull: false
@@ -15,10 +17,24 @@ const PieceJointe = sequelize.define('PieceJointe', {
     path: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    congé:{
+        type : DataTypes.INTEGER,
+        allowNull : false,
+        references : {
+        model : DemandeConge,
+        key : 'id'
     }
+}},{
+    sequelize,
+    modelName : 'DemandeConge'
 });
 
-PieceJointe.belongsTo(DemandePermission); 
-DemandePermission.hasMany(PieceJointe);
+PieceJointe.belongsTo(DemandeConge, {
+    foreignKey : 'congé',
+    onDelete : 'CASCADE'
+}); 
+
+DemandeConge.hasMany(PieceJointe);
 
 module.exports = PieceJointe;

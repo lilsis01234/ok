@@ -7,9 +7,9 @@ const path = require('path');
 const fs = require('fs');
 
 
-const Collaborateur = require('../../Modele/CollabModel/Collab');
-const DiscussionFormation = require('../../Modele/formation/DiscussionFormation');
-const Module = require('../../Modele/formation/Module');
+const Collaborateur = require('../../../Modele/CollabModel/Collab');
+const DiscussionFormation = require('../../../Modele/formation/DiscussionFormation');
+const Module = require('../../../Modele/formation/Module');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -29,7 +29,7 @@ router.get('/all_discussions/:idformation', async (req, res) => {
             include: [
                 {
                     model: Collaborateur,
-                    attributes: ['nom', 'prenom']
+                    attributes: ['id','nom', 'prenom']
                 },
                 {
                     model: Module,
@@ -47,6 +47,29 @@ router.get('/all_discussions/:idformation', async (req, res) => {
     }
 });
 
+router.get('/discussion/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const discussion = await DiscussionFormation.findByPk(id,{
+            include: [
+                {
+                    model: Collaborateur,
+                    attributes: ['id','nom', 'prenom']
+                },
+                {
+                    model: Module,
+                    attributes: ['id', 'titreModule']
+                },
+            ],
+        });
+        res.status(200).json(discussion);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des discussions:', error);
+        res.status(500).json({ message: 'Erreur lors de la récupération des discussion' });
+    }
+});
+
+
 router.get('/temporary-link/:filename', (req, res) => {
     const filePath = path.join(__dirname,'../../', 'uploads2', req.params.filename);
     res.download(filePath);
@@ -55,7 +78,7 @@ router.get('/temporary-link/:filename', (req, res) => {
 
 router.get('/view/:filename', (req, res) => {
 
-    const filePath = path.join(__dirname, '../../', 'uploads2', req.params.filename);
+    const filePath = path.join(__dirname, '../../../', 'uploads2', req.params.filename);
     // Set appropriate content type based on file extension
     const fileExtension = path.extname(filePath).toLowerCase();
     let contentType = 'application/octet-stream';
@@ -76,7 +99,7 @@ router.get('/view/:filename', (req, res) => {
 
 
 router.get('/downloaded/:filename', (req, res) => {
-    const filePath = path.join(__dirname,'../../', 'uploads2', req.params.filename);
+    const filePath = path.join(__dirname,'../../../', 'uploads2', req.params.filename);
     // Set appropriate content type based on file extension
     const fileExtension = path.extname(filePath).toLowerCase();
     let contentType = 'application/octet-stream';

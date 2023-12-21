@@ -2,8 +2,7 @@ import React, {useState,useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Typography} from '@mui/material'
-import './demandeFormation.css'
-
+import '../demandeDeFormation/demandeFormation.css'
 
 
 function MesFormations (){
@@ -27,12 +26,12 @@ function MesFormations (){
 
     useEffect(()=>{
         fetchFormation()
-    })
+    },[])
 
     return (
         <>
         <div className='header'>
-            <h1>Explorez nos Formations</h1>
+            <h1>Vos Formations</h1>
             <div className="search_form">
               
               <input
@@ -60,19 +59,6 @@ function MesFormations (){
                   
                   <Typography className="formation_description">{formation.description}</Typography>
                   
-                  {/* {formation.Formateur ? (
-                    
-                    <Typography className="formateur_name">
-                      Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
-                    </Typography>
-                  
-                  ) 
-                  : 
-                  (
-                    <Typography className="formateur_name">Formateur externe</Typography>
-                  )
-                  } */}
-                  
                   <Link to={`/discussion/formation/${formation.id}`}><span className="lien">Accéder à la discussion</span></Link>
 
                   <button className="voir_plus_button">
@@ -98,19 +84,6 @@ function MesFormations (){
                     <h2 className="formation_title"><Link to={`/admin/formation/${formation.id}`}>{formation.theme}</Link></h2>
                     
                     <Typography className="formation_description">{formation.description}</Typography>
-                    
-                    {/* {formation.Formateur ? (
-                      
-                      <Typography className="formateur_name">
-                        Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
-                      </Typography>
-                    
-                    ) 
-                    : 
-                    (
-                      <Typography className="formateur_name">Formateur externe</Typography>
-                    )}
-                   */}
                    
                     <Link to={`/discussion/formation/${formation.id}`}><span className="lien">Accéder à la discussion</span></Link>
                     

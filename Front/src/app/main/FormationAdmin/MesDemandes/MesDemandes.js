@@ -22,7 +22,24 @@ function MesDemandes (){
 
     useEffect(()=>{
         fetchDemande()
-    })
+    },[])
+
+    const DeleteDemande = async (id) => {
+      const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette demande ?");
+      if (isConfirmed) {
+      try {
+        const response = await axios.delete(`http://localhost:4000/api/demande_formation/formation/${id}`);
+        if (response.status === 204) {
+          // Suppression réussie, mise à jour de la liste des événements
+          const updatedEvents = events.filter(event => event.id !== id);
+          setEvents(updatedEvents);
+        } else {
+          console.error('Erreur lors de la suppression de la séance');
+        }
+      } catch (error) {
+        console.error('Erreur lors de la suppression de la séance :', error);
+      }
+    }};    
 
     return(
         <div>
@@ -45,10 +62,30 @@ function MesDemandes (){
                 'REFUSÉE'}
               </Typography>
 
-
+              {demande.approbation === true &&
+              <>
+              <button>
+                <Link to={`/admin/formation/${demande.id}`}>Modules & séances</Link>
+              </button>
+              <br></br>
+              </>
+              }
               <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link>
-              <br></br><button>Supprimer</button>
+                            
+              {demande.approbation === null &&
+              <>
+              <br></br><button onClick={() => { DeleteDemande(demande.id) }}>Annuler la demande</button>
+              </>
+              }
+
+              {demande.approbation === false &&
+              <>
+              <br></br><button onClick={() => { DeleteDemande(demande.id) }}>Supprimer la demande</button>
+              </>
+              }
+
             </div>
+
         
         ))}
         </div>

@@ -1,7 +1,7 @@
 import {lazy} from 'react'; 
 
 const Formations = lazy(() => import('./Formations'))
-const DemandeFormations = lazy(()=>import('./demandeFormation'))
+const DemandeFormations = lazy(()=>import('../demandeDeFormation/demandeFormation'))
 const VoirPlusFormation = lazy(()=>import('../VoirPlus/VoirPlusFormation'))
 const AjoutFormation = lazy(()=>import('../../FormationUser/Formateur/AjoutFormation/AjoutFormations'))
 const AjoutModule = lazy(()=>import('../../FormationUser/Formateur/AjoutModule/AjoutModule'))
@@ -9,8 +9,8 @@ const CalendarForm = lazy(() => import('../../CalendarSeance/calendrierForm/Cale
 const Discussions = lazy(()=>import('../discussionFormation/discussionFormation'))
 const AddDiscussion= lazy(()=>import('../discussionFormation/ajoutDiscussion'))
 const VoirPlusDemande = lazy(()=>import('../demandeDeFormation/VoirPlusDemandeFormation'))
-const MesFormations = lazy(()=>import('./MesFormations'))
-const MesDemandes = lazy(()=>import('./MesDemandes'))
+const MesFormations = lazy(()=>import('../MesFormations/MesFormations'))
+const MesDemandes = lazy(()=>import('../MesDemandes/MesDemandes'))
 
 const FormationConfig = {
     routes: [

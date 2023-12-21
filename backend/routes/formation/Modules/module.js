@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const cookieParser = require('cookie-parser');
-const Formation = require('../../Modele/formation/Formation');
-const Module = require('../../Modele/formation/Module');
-const Collaborateur = require('../../Modele/CollabModel/Collab');
+const Formation = require('../../../Modele/formation/Formation');
+const Module = require('../../../Modele/formation/Module');
+const Collaborateur = require('../../../Modele/CollabModel/Collab');
 router.use(cookieParser());
 
 router.get('/all_modules', async(req,res) => {

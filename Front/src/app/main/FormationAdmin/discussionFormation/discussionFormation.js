@@ -14,6 +14,8 @@ import { Typography} from '@mui/material'
 const Discussions = () => {
     const { id } = useParams();
     const [discussion, setDiscussion] = useState([]);
+    const user = JSON.parse(localStorage.getItem('user'))
+    const userId = user.id;
 
     const fetchDiscussion = () => {
         axios.get(`http://localhost:4000/api/discussions/all_discussions/${id}`)
@@ -27,16 +29,6 @@ const Discussions = () => {
     useEffect(() => {
         fetchDiscussion();
     }, [id]);
-
-    // const displayFile = (fileName) => {
-    //     const temporaryLink = `http://localhost:4000/api/discussions/temporary-link/${encodeURIComponent(fileName)}`;
-    
-    //     return (
-    //         <a href={temporaryLink} target="_blank" rel="noopener noreferrer">
-    //             {fileName}
-    //         </a>
-    //     );
-    // };
     
     const viewFile = (fileName) => {
         window.open(`http://localhost:4000/api/discussions/view/${encodeURIComponent(fileName)}`, '_blank');
@@ -100,8 +92,10 @@ const Discussions = () => {
 
                     <div className="discussion-item" key={index}>
 
+                        {userId === discussions.Collab.id &&
                         <button onClick={(e)=>{handleDelete(discussions.id)}}>Supprimer</button>
-                        
+                        }
+
                         <div className="meta-info">
                             <Typography className="module-title">Module {discussions.Module.titreModule}</Typography>
                             <Typography className="collab-name">{discussions.Collab.nom} {discussions.Collab.prenom}</Typography>
@@ -125,6 +119,7 @@ const Discussions = () => {
                         </div>
                         
                         <button><Link to={`/repondre/${discussions.id}`}>Répondre</Link></button>
+                        <button><Link to={`/voirPlus/${discussions.id}`}>Voir plus</Link></button>
                     </div>
                 ))}
             </div>

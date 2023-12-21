@@ -46,13 +46,16 @@ const roleHierarchique = require('./routes/Role/RoleHierarchique')
 const permission = require('./routes/Role/permission')
 
 //Module Formation
-const agendaRoutes = require('../backend/routes/formation/AjoutAgenda')
-const displayRoutes = require('../backend/routes/formation/AfficheAgenda')
+const agendaRoutes = require('../backend/routes/formation/Seances/AjoutAgenda')
+const displayRoutes = require('../backend/routes/formation/Seances/AfficheAgenda')
 const formationRouter = require('../backend/routes/formation/formation')
-const requestRouter = require('../backend/routes/formation/demandeFormation')
-const seanceRouter = require('../backend/routes/formation/seance')
-const moduleRouter = require('../backend/routes/formation/module')
-const discussionRouter = require('../backend/routes/formation/discussion')
+const requestRouter = require('../backend/routes/formation/Demandes/demandeFormation')
+const seanceRouter = require('../backend/routes/formation/Seances/seance')
+const moduleRouter = require('../backend/routes/formation/Modules/module')
+const discussionRouter = require('../backend/routes/formation/Discussion/discussion')
+const participantSeanceRouter = require('../backend/routes/formation/Seances/participantsseance')
+const commentaireRouter = require('../backend/routes/formation/Discussion/commentaire')
+const agendaCongeRouter = require('../backend/routes/Conge/ListeConge/ListeConge')
 
 //Module Actualité
 const actualite = require('./routes/Actualite/Actualité');
@@ -119,6 +122,9 @@ app.use('/api/seances',seanceRouter)
 app.use('/api/peerjs', peerServer);
 app.use('/api/module', moduleRouter);
 app.use('/api/roleHierarchique',roleHierarchique);
+app.use('/api/commentaire',commentaireRouter);
+app.use('/api/participantSeance',participantSeanceRouter)
+
 
 //Module actualité
 app.use('/api/actualite', actualite );
@@ -131,6 +137,9 @@ app.use('/api/chat/discussion', discussionChat)
 app.use('/api/chat/membre', membrer)
 app.use('/api/chat/message', message)
 
+
+//Module congé
+app.use('/api/conge',agendaCongeRouter)
 //Connection à la base de donnée MySQL
 sequelize.authenticate()
     .then(() => {

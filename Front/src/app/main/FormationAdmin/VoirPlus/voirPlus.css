@@ -132,7 +132,6 @@
     /* Button styles within the popup */
     margin-right: 10px;
     margin-bottom: 10px;
-    background-color: #369eca;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -142,10 +141,6 @@
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .popupButton:hover {
-    background-color: #0b5d8a;
   }
   
   .closeButton {
