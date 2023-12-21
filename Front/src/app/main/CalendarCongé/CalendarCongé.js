@@ -20,6 +20,7 @@ function CalendarConge() {
     // Fetch data from the backend API
     axios.get('http://localhost:4000/api/conge/agendaConge')
       .then((response) => {
+        console.log(response.data)
         // Format data to make it compatible with React Big Calendar
         const formattedEvents = response.data.filter((event) => (event.approbation === true)).map((event) => {
           return {
@@ -27,12 +28,12 @@ function CalendarConge() {
             title: `${event.Collab.nom} ${event.Collab.prenom}`,
             motif: `${event.motif}`,
             description: `${event.description}`,
+            type : `${event.Type.nom}`,
             start: moment.tz(event.dayStart, 'Africa/Nairobi').toDate(),
             end: moment.tz(event.dayEnd, 'Africa/Nairobi').toDate(),
           };
         });
         setEvents(formattedEvents);
-        formattedEvents.forEach((event) => scheduleNotification(event));
       })
       .catch((error) => {
         console.error(error);
@@ -66,6 +67,7 @@ function CalendarConge() {
                 <Typography className="text-2xl font-bold mb-4">{selectedEvent.title}</Typography>
                 <Typography className="text-lg mb-2">{selectedEvent.motif}</Typography>
                 <Typography className="text-lg mb-2">{selectedEvent.description}</Typography>
+                <Typography className='text-lg mb-2'>{selectedEvent.type}</Typography>
                 <Typography className="text-xl">
                   {selectedEvent.start.toLocaleString()} - {selectedEvent.end.toLocaleString()}
                 </Typography>
