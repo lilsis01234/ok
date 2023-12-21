@@ -6,6 +6,8 @@ import FuseNavItem from '../FuseNavItem';
 import { useSelector } from 'react-redux';
 import {selectSidebarContext, setSidebarContext } from 'app/store/fuse/sideBarContextSlice'
 import { Button } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { selectNavigation } from 'app/store/fuse/navigationSlice';
 
 
 const StyledList = styled(List)(({ theme }) => ({
@@ -41,37 +43,35 @@ const StyledList = styled(List)(({ theme }) => ({
 }));
 
 function FuseNavVerticalLayout1(props) {
-  const { navigation, layout, active, dense, className, onItemClick } = props;
-  console.log(navigation.entities)
-  const navigationData = navigation.entities
+  const { layout, active, dense, className, onItemClick } = props;
+  const dispatch = useDispatch();
+  const sidebarContext = useSelector(selectSidebarContext);
+  const [navigationData, setNavigationData] = useState([]);
+  const navigation = useSelector(selectNavigation);
 
-
+  useEffect(() => {
+    dispatch(setSidebarContext(sidebarContext));
+    setNavigationData(navigation); 
+    console.log('SideBarContext:', sidebarContext)
+    console.log('Updated Navigation:', navigation);
+  }, [dispatch, sidebarContext, navigation]);
+  
   function handleItemClick(item) {
     onItemClick?.(item);
   }
-
-
-  const dispatch = useDispatch();
-  const sidebarContext = useSelector(selectSidebarContext)
-  console.log(sidebarContext)
 
   const toogleSidebarContext = () => {
     const newContext = sidebarContext === 'frontOffice' ? 'backOffice' : 'frontOffice';
     dispatch(setSidebarContext(newContext));
   };
-  
-
 
   return (
     <StyledList
-      className={clsx(
-        'navigation whitespace-nowrap px-12 py-0',
-        `active-${active}-list`,
-        dense && 'dense',
-        className
-      )}
+      className={clsx('navigation whitespace-nowrap px-12 py-0', `active-${active}-list`, dense && 'dense', className)}
     >
-      <Button onClick={toogleSidebarContext}>{sidebarContext === 'frontOffice' ? 'Aller à l\'interface d\'administration': 'Revenir à la menu principale'} </Button>
+      <Button onClick={toogleSidebarContext}>
+        {sidebarContext === 'frontOffice' ? 'Aller à l\'interface d\'administration' : 'Revenir à la menu principale'}
+      </Button>
       {Object.keys(navigationData).map((key) => (
         <FuseNavItem
           key={key}

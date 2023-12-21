@@ -7,48 +7,74 @@ import navigationBO from 'app/configs/navigationBO';
 import navigationFO from 'app/configs/navigationFO';
 import { selectUser } from '../userSlice';
 import { selectSidebarContext } from './sideBarContextSlice';
+import { createCachedSelector } from 're-reselect';
 
-// const sidebarContext = 'frontOffice';
 const navigationAdapter = createEntityAdapter();
 const emptyInitialState = navigationAdapter.getInitialState();
-// const initialState = navigationAdapter.upsertMany(emptyInitialState, navigationConfig);
 const initialState = {
   BONavigation: navigationAdapter.upsertMany(emptyInitialState, navigationBO),
   FONavigation: navigationAdapter.upsertMany(emptyInitialState, navigationFO)
 }
 
-export const appendNavigationItem = (item, parentId) => (dispatch, getState) => {
-  const navigation = selectNavigationAll(getState());
-  return dispatch(setNavigation(FuseUtils.appendNavItem(navigation, item, parentId)));
-};
+// export const appendNavigationItem = (item, parentId) => (dispatch, getState) => {
+//   const navigation = selectNavigationAll(getState());
+//   return dispatch(setNavigation(FuseUtils.appendNavItem(navigation, item, parentId)));
+// };
 
-export const prependNavigationItem = (item, parentId) => (dispatch, getState) => {
-  const navigation = selectNavigationAll(getState());
-  return dispatch(setNavigation(FuseUtils.prependNavItem(navigation, item, parentId)));
-};
+// export const prependNavigationItem = (item, parentId) => (dispatch, getState) => {
+//   const navigation = selectNavigationAll(getState());
+//   return dispatch(setNavigation(FuseUtils.prependNavItem(navigation, item, parentId)));
+// };
 
-export const updateNavigationItem = (id, item) => (dispatch, getState) => {
-  const navigation = selectNavigationAll(getState());
-  return dispatch(setNavigation(FuseUtils.updateNavItem(navigation, id, item)));
-};
+// export const updateNavigationItem = (id, item) => (dispatch, getState) => {
+//   const navigation = selectNavigationAll(getState());
+//   return dispatch(setNavigation(FuseUtils.updateNavItem(navigation, id, item)));
+// };
 
-export const removeNavigationItem = (id) => (dispatch, getState) => {
-  const navigation = selectNavigationAll(getState());
-  return dispatch(setNavigation(FuseUtils.removeNavItem(navigation, id)));
-};
+// export const removeNavigationItem = (id) => (dispatch, getState) => {
+//   const navigation = selectNavigationAll(getState());
+//   return dispatch(setNavigation(FuseUtils.removeNavItem(navigation, id)));
+// };
+
+// export const {
+//   selectAll: selectFront,
+//   selectIds: selectNavigationIds,
+//   selectById: selectNavigationItemById,
+// } = navigationAdapter.getSelectors((state) => state.fuse.navigation);
+
 
 export const {
-  selectAll: selectNavigationAll,
-  selectIds: selectNavigationIds,
-  selectById: selectNavigationItemById,
-} = navigationAdapter.getSelectors((state) => state.fuse.navigation);
+  selectAll: selectFrontOfficeNavigation,
+  selectIds: selectFrontOfficeNavigationIds,
+  selectById: selectFrontOfficeNavigationItemById,
+} = navigationAdapter.getSelectors((state) => state.fuse.navigation.FONavigation);
+
+export const {
+  selectAll: selectBackOfficeNavigation,
+  selectIds: selectBackOfficeNavigationIds,
+  selectById: selectBackOfficeNavigationItemById,
+} = navigationAdapter.getSelectors((state) => state.fuse.navigation.BONavigation);
+
+
+// const navigationSlice = createSlice({
+//   name: 'navigation',
+//   initialState,
+//   reducers: {
+//     setNavigation: navigationAdapter.setAll,
+//     resetNavigation: (state, action) => initialState,
+//     setFrontOfficeNavigation: (state, action) => {
+//       state.FONavigation = action.payload;
+//     },
+//     setBackOfficeNavigation: (state, action) => {
+//       state.BONavigation = action.payload;
+//     },
+//   },
+// });
 
 const navigationSlice = createSlice({
   name: 'navigation',
   initialState,
   reducers: {
-    setNavigation: navigationAdapter.setAll,
-    resetNavigation: (state, action) => initialState,
     setFrontOfficeNavigation: (state, action) => {
       state.FONavigation = action.payload;
     },
@@ -63,70 +89,77 @@ const navigationSlice = createSlice({
 
 
 // export const { setNavigation, resetNavigation, setSidebarContext } = navigationSlice.actions;
-export const { setNavigation, resetNavigation, setFrontOfficeNavigation, setBackOfficeNavigation } = navigationSlice.actions;
+// export const { setNavigation, resetNavigation, setFrontOfficeNavigation, setBackOfficeNavigation } = navigationSlice.actions;
+export const { setFrontOfficeNavigation, setBackOfficeNavigation } = navigationSlice.actions;
 
-// const getUserRole = (state) => state.user.role;
+// export const selectFrontOfficeNavigation = (state) => {
+//   const frontOfficeNavigation = state.fuse.navigation.FONavigation
+//   console.log('Front Office Navigation:', frontOfficeNavigation);
+//   return frontOfficeNavigation;
+// };
+// export const selectBackOfficeNavigation = (state) => {
+//   const backOfficeNavigation = state.fuse.navigation.BONavigation
+//   console.log('Back Office Navigation:', backOfficeNavigation);
+//   return backOfficeNavigation;
+// };
 
-export const selectFrontOfficeNavigation = (state) => {
-  const frontOfficeNavigation = state.fuse.navigation.FONavigation
-  // console.log('Front Office Navigation:', frontOfficeNavigation);
-  return frontOfficeNavigation;
-};
-export const selectBackOfficeNavigation = (state) => {
-  const backOfficeNavigation = state.fuse.navigation.BONavigation
-  // console.log('Back Office Navigation:', backOfficeNavigation);
-  return backOfficeNavigation;
-};
 
 
 export const selectNavigation = createSelector(
-  [selectFrontOfficeNavigation, selectBackOfficeNavigation, selectUser, ({ i18n }) => i18n.language, (state) => state.allUserPermission, (state) => state],
-  (BONavigation, FONavigation, user, userPermission, state) => {
-  
-      const sidebarContext = 'frontOffice'
+  [selectFrontOfficeNavigation, selectBackOfficeNavigation, selectUser, selectSidebarContext, (state) => state.allUserPermission],
+  (FONavigation, BONavigation, user,  sidebarContext, userPermission) => {
+    console.log('BONavigation ' , BONavigation)
+    console.log('FONavigation ' ,FONavigation)
+    console.log('Utilisateur' ,user)
+    console.log('SidebarContext' ,sidebarContext)
+    console.log('UserPermission ' ,userPermission)
 
-    // const {sidebarContext} = fuse
-    console.log('State' , state)
 
 
+
+    const context = sidebarContext?.context
     const userRole = user?.role;
     const userRoleHierarchique = user?.userRoleHierarchique;
-    const currentNavigation = sidebarContext === 'frontOffice' ? FONavigation : BONavigation;
+
+    let currentNavigation = FONavigation
+    if(context === 'backOffice'){
+      currentNavigation = BONavigation
+      console.log('Menu de Navigation est celle du BO')
+    }
+
+  
+
+    // const currentNavigation = context === 'frontOffice' ? FONavigation : BONavigation;
+    console.log('Current Navigation', currentNavigation)
+
 
     function setTranslationValues(data, i18next) {
       if (!Array.isArray(data) || data.length === 0) {
         return data;
       }
-
-      // Utilisez la fonction isArray pour vérifier si data est un tableau
       if (Array.isArray(data)) {
-        // Traitement pour un tableau
         return data.map(function (item) {
+          console.log('Item de Input Data Array', item)
           if (!item) {
             console.error('setTranslationValues: Encountered a null or undefined item');
             return item;
           }
 
-          // console.log(item)
-          if (item.translate && item.title) {
-            item.title = i18next.t(`navigation:${item.translate}`);
-          }
+          // if (item.translate && item.title) {
+          //   item.title = i18next.t(`navigation:${item.translate}`);
+          // }
 
           if (item.children) {
             item.children = setTranslationValues(item.children, i18next);
           }
-
+          console.log('setTranslationValues Output:', item);
           return item;
         });
       } else if (typeof data === 'object') {
-        // Traitement pour un objet
-
         const updatedData = { ...data };
-
-        // Exemple de traitement pour un objet avec des propriétés "ids" et "entities"
         if (updatedData.entities) {
           updatedData.entities = Object.values(updatedData.entities).map(function (item) {
-            // console.log('Item de Input Data', item)
+            console.log('Item de Input Data', item)
             if (item.translate && item.title) {
               item.title = i18next.t(`navigation:${item.translate}`);
             }
@@ -145,33 +178,28 @@ export const selectNavigation = createSelector(
         return updatedData;
       }
     }
-
-
-    // console.log('Current Navigation:', currentNavigation);
+    // console.log('Current Navigation :', currentNavigation);
 
     const valeurFilter = setTranslationValues(
       _.merge(
         [],
         filterRecursively(currentNavigation, (item) => {
-          // console.log('Processing item:', item);
-          // console.log('Item auth:', item && item.auth);
+          console.log('Processing item:', item);
+          console.log('Item auth:', item && item.auth);
           return FuseUtils.hasPermission(item && item.auth, userRole, userRoleHierarchique, userPermission);
         })
-
-      ), i18next
+      )
     );
     return valeurFilter
-  }
+  }, 
 );
 
 
 function filterRecursively(arr, predicate) {
-  // console.log('Original Array:', arr);
-
-  // Si arr est un objet avec des propriétés "ids" et "entities"
+  console.log('Original Array:', arr);
   if (arr && arr.entities) {
     const filteredArr = Object.values(arr.entities).filter(predicate);
-    // console.log('Filtered Array:', filteredArr);
+    console.log('Filtered Object:', filteredArr);
 
     const mappedArr = filteredArr.map((item) => {
       item = { ...item };
@@ -189,10 +217,9 @@ function filterRecursively(arr, predicate) {
 
   }
 
-  // Si arr est déjà un tableau
   if (Array.isArray(arr)) {
     const filteredArr = arr.filter(predicate);
-    // console.log('Filtered Array:', filteredArr);
+    console.log('Filtered Array:', filteredArr);
 
     const mappedArr = filteredArr.map((item) => {
       item = { ...item };
@@ -202,6 +229,7 @@ function filterRecursively(arr, predicate) {
       return item;
     });
 
+    console.log('MappedArray', mappedArr)
     return mappedArr.length > 0 ? mappedArr : arr;
 
   }
@@ -215,6 +243,7 @@ function filterRecursively(arr, predicate) {
 // );
 
 export const selectFlatNavigation = createSelector([selectNavigation], (navigation) => {
+  console.log('Navigation', navigation)
   if (!navigation) {
     console.error('selectFlatNavigation: Navigation is undefined');
     return [];

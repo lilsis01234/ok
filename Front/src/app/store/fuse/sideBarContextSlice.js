@@ -17,7 +17,7 @@ const sidebarContextSlice = createSlice({
 
 export const { setSidebarContext } = sidebarContextSlice.actions;
 export const selectSidebarContext = (state) => {
-    console.log('Full state in selectSidebarContext:', state.fuse);
+    // console.log('Full state in selectSidebarContext:', state.fuse);
     return state.fuse.sidebarContext.context
 };
 

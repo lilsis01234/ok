@@ -15,6 +15,8 @@ import FuseNavVerticalGroup from './vertical/types/FuseNavVerticalGroup';
 import FuseNavVerticalItem from './vertical/types/FuseNavVerticalItem';
 import FuseNavVerticalLink from './vertical/types/FuseNavVerticalLink';
 import { registerComponent } from './FuseNavItem';
+import { useSelector } from 'react-redux';
+import { selectNavigation } from 'app/store/fuse/navigationSlice';
 
 
 const inputGlobalStyles = (
@@ -59,8 +61,11 @@ registerComponent('horizontal-divider', () => <Divider className="my-16" />);
 
 function FuseNavigation(props) {
   // console.log(props.navigation)
+  const navigation = useSelector(selectNavigation)
+
+
   const options = _.pick(props, [
-    'navigation',
+    // 'navigation',
     'layout',
     'active',
     'dense',
@@ -71,11 +76,27 @@ function FuseNavigation(props) {
   ]);
 
 
-  if(props.navigation){
-    console.log(props.navigation)
-    console.log(props.navigation.ids.length)
+  // if(props.navigation){
+  //   console.log(props.navigation)
+  //   console.log(props.navigation.length)
+  // }
+  // if (props.navigation.length > 0) {
+  //   return (
+  //     <>
+  //       {inputGlobalStyles}
+  //       {props.layout === 'horizontal' && <FuseNavHorizontalLayout1 {...options} />}
+  //       {props.layout === 'vertical' && <FuseNavVerticalLayout1 {...options} />}
+  //       {props.layout === 'vertical-2' && <FuseNavVerticalLayout2 {...options} />}
+  //     </>
+  //   );
+  // }
+
+  
+  if(navigation){
+    console.log(navigation)
+    console.log(navigation.length)
   }
-  if (props.navigation.ids.length > 0) {
+  if (navigation.length > 0) {
     return (
       <>
         {inputGlobalStyles}
@@ -85,6 +106,9 @@ function FuseNavigation(props) {
       </>
     );
   }
+
+
+
   return null;
 }
 

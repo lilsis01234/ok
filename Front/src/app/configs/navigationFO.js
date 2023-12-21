@@ -46,6 +46,9 @@ const navigationFO = [
             type: 'item',
             icon: 'heroicons-outline:newspaper',
             url: 'apps/actuality/list',
+            auth : {
+              role : ['SuperAdmin', 'User', 'Admin'],
+            },
           },
           {
             id: 'actuality.add',
@@ -53,6 +56,9 @@ const navigationFO = [
             type: 'item',
             icon: 'heroicons-outline:document-add',
             url: '/apps/addActuality',
+            auth : {
+              role : ['SuperAdmin', 'User', 'Admin'],
+            },
           },
           {
             id: 'comment',
@@ -60,6 +66,9 @@ const navigationFO = [
             type: 'item',
             icon: 'heroicons-outline:chat-alt',
             url: '/apps/edit-comments',
+            auth : {
+              role : ['SuperAdmin', 'User', 'Admin'],
+            },
           },
           {
             id: 'categorie',
@@ -67,6 +76,9 @@ const navigationFO = [
             type: 'item',
             icon: 'heroicons-outline:clipboard-list',
             url: '/apps/categorie',
+            auth : {
+              role : ['SuperAdmin', 'User', 'Admin'],
+            },
           },
           {
             id: 'type',
@@ -74,6 +86,9 @@ const navigationFO = [
             type: 'item',
             icon: 'material-outline:article',
             url: '/apps/type',
+            auth : {
+              role : ['SuperAdmin', 'User', 'Admin'],
+            },
           },
           {
             id: 'tag',
@@ -81,12 +96,18 @@ const navigationFO = [
             type: 'item',
             icon: 'material-outline:article',
             url: '/apps/tag',
+            auth : {
+              role : ['SuperAdmin', 'User', 'Admin'],
+            },
           },
           {
             id: 'frontend',
             title: 'Front office',
             icon: 'heroicons-outline:check-circle',
             type: 'collapse',
+            auth : {
+              role : ['SuperAdmin', 'User', 'Admin'],
+            },
             children: [
               {
                 id: 'actuality.flux',
@@ -94,6 +115,9 @@ const navigationFO = [
                 type: 'item',
                 icon: 'heroicons-outline:menu-alt-2',
                 url: '/apps/timeline',
+                auth : {
+                  role : ['SuperAdmin', 'User', 'Admin'],
+                },
               },
               {
                 id: 'actuality-content',
@@ -101,6 +125,9 @@ const navigationFO = [
                 type: 'item',
                 icon: 'heroicons-outline:clipboard-list',
                 url: '/apps/front-actuality',
+                auth : {
+                  role : ['SuperAdmin', 'User', 'Admin'],
+                },
               }
             ],
           }
