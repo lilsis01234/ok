@@ -9,10 +9,11 @@ DemandeConge.init(
     {
         motif:{
             type : DataTypes.STRING(250), 
+            allowNull : false,
         },
         description:{
             type : DataTypes.STRING(500), 
-            allowNull : false, 
+            allowNull : true,
         },
         dayStart:{
             type: DataTypes.STRING(100),
@@ -32,7 +33,7 @@ DemandeConge.init(
         },
         type:{
             type : DataTypes.INTEGER,
-            allowNull : false,
+            allowNull : true,
             references : {
             model : Type,
             key : 'id'
