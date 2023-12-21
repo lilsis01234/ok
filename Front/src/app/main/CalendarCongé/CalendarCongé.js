@@ -19,10 +19,14 @@ function CalendarConge() {
   useEffect(() => {
     // Fetch data from the backend API
     axios.get('http://localhost:4000/api/conge/agendaConge')
-      .then((response) => {
-        console.log(response.data)
-        // Format data to make it compatible with React Big Calendar
-        const formattedEvents = response.data.filter((event) => (event.approbation === true)).map((event) => {
+      
+    .then((response) => {
+    
+      console.log(response.data)
+    
+      // Format data to make it compatible with React Big Calendar
+    
+      const formattedEvents = response.data.filter((event) => (event.approbation === true)).map((event) => {
           return {
             id: event.id,
             title: `${event.Collab.nom} ${event.Collab.prenom}`,
@@ -35,10 +39,12 @@ function CalendarConge() {
         });
         setEvents(formattedEvents);
       })
+      
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  
+    }, []);
 
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
