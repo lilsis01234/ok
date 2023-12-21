@@ -71,7 +71,7 @@ if (loading) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.categorie.map((categorie) => ( 
+                      { n.categorie && n.categorie.map((categorie) => ( 
                         <Typography>
                            {categorie.nom}
                         </Typography>
@@ -80,7 +80,7 @@ if (loading) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.Type.map((type) => ( 
+                      {n.Type && n.Type.map((type) => ( 
                           <Typography>
                             {type.nom}
                           </Typography>
