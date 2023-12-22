@@ -4,10 +4,11 @@ import { Typography} from '@mui/material'
 import { Link } from 'react-router-dom';
 
 
-function MesDemandes (){
+const  MesDemandes =()=>{
     const[mesDemandesFormations, setMesDemandesFormations] = useState([]);
     const user = JSON.parse(localStorage.getItem('user'));
     const idPersonne = user.id;
+    const [demandesPourMoi, setDemandePourMoi] = useState([]);
 
     const fetchDemande = () =>{
         axios.get(`http://localhost:4000/api/demande_formation/all_demande/${idPersonne}`)
@@ -20,8 +21,20 @@ function MesDemandes (){
         })
     }
 
+    const fetchDemandePourmoi = () =>{
+      axios.get(`http://localhost:4000/api/demande_formation/demandesPourVous/${idPersonne}`)
+        .then((res)=>{
+            setDemandePourMoi(res.data)
+            console.log(res.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
     useEffect(()=>{
         fetchDemande()
+        fetchDemandePourmoi()
     },[])
 
     const DeleteDemande = async (id) => {
@@ -39,9 +52,11 @@ function MesDemandes (){
       } catch (error) {
         console.error('Erreur lors de la suppression de la séance :', error);
       }
-    }};    
+    };   
+    } 
 
     return(
+        <>  
         <div>
         {mesDemandesFormations.map((demande, index) => (
             
@@ -86,10 +101,16 @@ function MesDemandes (){
 
             </div>
 
-        
         ))}
         </div>
+        <div>
+            {demandesPourMoi.length !== 0 && demandesPourMoi.map((demande)=>(
+              <>
+               
+              </>
+            ))}
+        </div>
+        </>
     )
-}
-
+  }
 export default MesDemandes
