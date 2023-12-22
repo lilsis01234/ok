@@ -2,11 +2,11 @@ const Sequelize = require('sequelize');
 const router = require('express').Router();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
-// const Formation = require('../../Modele/formation/Formation');
-// const Collab = require('../../Modele/CollabModel/Collab');
 const {  Formation2,Collab2,FormationCollab } = require('../../../Modele/formation/associationFormationCollab');
 const {  Formation,Equipe2,FormationEq } = require('../../../Modele/formation/associationFormationDep');
 const RoleHierarchique = require('../../../Modele/RoleModel/RoleHierarchique');
+const Seance = require('../../../Modele/formation/Seance');
+const Collab = require('../../../Modele/CollabModel/Collab');
 
 router.get('/all', async (req, res) => {
     const coatch = "coatch";
@@ -327,19 +327,54 @@ router.post('/addFormExt/:id', async(req,res)=>{
 })
 
 router.delete('/formation/:id', async(req,res) =>{
-    const { id } = req.params;
+    const { id } = req.params.id;
     try {
         const deletedFormation = await Formation.findByPk(id);
         if (!deletedFormation) {
             return res.status(404).json({ error: 'discussion introuvable' });
         }
         await deletedFormation.destroy();
+        const SeancesToDelete = await Seance.findAll({
+            where : {
+                formation : deletedFormation
+            }
+        }
+        )
+        if(SeancesToDelete){
+            await SeancesToDelete.destroy();
+        }
         res.sendStatus(204);
     }
+    
     catch (error) {
         console.error('Erreur lors de la suppression :', error)
         res.status(500).json({ message: 'Erreur lors de la suppression' })
     }
+
 })
 
+router.get('/demandesPourVous/:id',async(req,res)=>{
+    const id = req.params.id;
+    try{
+        const demandePourVous = await FormationCollab.findAll({
+            where:{
+                collaborateur:id
+            },
+            include:[
+                {
+                    model:Formation
+                },
+                {
+                    model:Collab
+                }
+            ]
+        })
+    res.status(200).json(demandePourVous)
+    }
+    catch(err){
+        console.error(err)
+    }
+
+
+})
 module.exports = router;
