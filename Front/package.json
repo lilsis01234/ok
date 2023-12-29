@@ -54,7 +54,6 @@
         "prismjs": "1.29.0",
         "prop-types": "15.8.1",
         "qs": "6.11.2",
-        "re-reselect": "^5.0.0",
         "react": "18.2.0",
         "react-apexcharts": "^1.4.1",
         "react-autosuggest": "10.1.0",

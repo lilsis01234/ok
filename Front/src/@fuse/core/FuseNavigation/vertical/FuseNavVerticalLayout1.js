@@ -1,14 +1,13 @@
 import List from '@mui/material/List';
 import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FuseNavItem from '../FuseNavItem';
-import { useSelector } from 'react-redux';
-import {selectSidebarContext, setSidebarContext } from 'app/store/fuse/sideBarContextSlice'
-import { Button } from '@mui/material';
+import { selectNavigation, setNavigation, updateNavigation } from 'app/store/fuse/navigationSlice';
 import { useEffect, useState } from 'react';
-import { selectNavigation } from 'app/store/fuse/navigationSlice';
-
+import { Button } from '@mui/material';
+import  {setNavigationContext}  from 'app/configs/navigationConfig';
+import { selectUser } from 'app/store/userSlice';
 
 const StyledList = styled(List)(({ theme }) => ({
   '& .fuse-list-item': {
@@ -43,40 +42,53 @@ const StyledList = styled(List)(({ theme }) => ({
 }));
 
 function FuseNavVerticalLayout1(props) {
+
   const { layout, active, dense, className, onItemClick } = props;
   const dispatch = useDispatch();
-  const sidebarContext = useSelector(selectSidebarContext);
-  const [navigationData, setNavigationData] = useState([]);
-  const navigation = useSelector(selectNavigation);
+  const navigation = useSelector(selectNavigation)
+  const user = useSelector(selectUser)
 
-  useEffect(() => {
-    dispatch(setSidebarContext(sidebarContext));
-    setNavigationData(navigation); 
-    console.log('SideBarContext:', sidebarContext)
-    console.log('Updated Navigation:', navigation);
-  }, [dispatch, sidebarContext, navigation]);
-  
+  console.log(user)
+
+  const [sideBarContext, setSideBarContext] = useState('frontOffice')
+
+
+  setNavigationContext(sideBarContext)
+
   function handleItemClick(item) {
     onItemClick?.(item);
   }
 
-  const toogleSidebarContext = () => {
-    const newContext = sidebarContext === 'frontOffice' ? 'backOffice' : 'frontOffice';
-    dispatch(setSidebarContext(newContext));
+  const handleChangeSideBarContext = () => {
+    const newContext = sideBarContext === 'frontOffice' ? 'backOffice' : 'frontOffice'
+    setSideBarContext(newContext);
   };
+
+  useEffect(() => {
+    const newNavigationConfig = setNavigationContext(sideBarContext)
+    dispatch(updateNavigation(newNavigationConfig))
+    dispatch(setNavigation(newNavigationConfig))
+  }, [sideBarContext])
+
+  // useEffect(() => {
+  //   dispatch(updateNavigation(navigation))
+  // }, [navigation])
 
   return (
     <StyledList
-      className={clsx('navigation whitespace-nowrap px-12 py-0', `active-${active}-list`, dense && 'dense', className)}
+      className={clsx(
+        'navigation whitespace-nowrap px-12 py-0',
+        `active-${active}-list`,
+        dense && 'dense',
+        className
+      )}
     >
-      <Button onClick={toogleSidebarContext}>
-        {sidebarContext === 'frontOffice' ? 'Aller à l\'interface d\'administration' : 'Revenir à la menu principale'}
-      </Button>
-      {Object.keys(navigationData).map((key) => (
+      {user.role === 'User' ? '' :   <Button onClick={handleChangeSideBarContext}>{sideBarContext === 'frontOffice' ? 'Aller à l\'interface d\'administration' : 'Retourner au menu principale'}</Button>}
+      {navigation && navigation.map((_item) => (
         <FuseNavItem
-          key={key}
-          type={`vertical-${navigationData[key].type}`}
-          item={navigationData[key]}
+          key={_item.id}
+          type={`vertical-${_item.type}`}
+          item={_item}
           nestedLevel={0}
           onItemClick={handleItemClick}
         />
