@@ -3,6 +3,7 @@ import navigationConfig from 'app/configs/navigationConfig';
 import FuseUtils from '@fuse/utils';
 import i18next from 'i18next';
 import _ from '@lodash';
+import { selectUser } from '../userSlice';
 
 const navigationAdapter = createEntityAdapter();
 const emptyInitialState = navigationAdapter.getInitialState();
@@ -44,16 +45,25 @@ const navigationSlice = createSlice({
   reducers: {
     setNavigation: navigationAdapter.setAll,
     resetNavigation: (state, action) => initialState,
+    updateNavigation: (state, action) => {
+      const updatedNavigation = action.payload;
+      navigationAdapter.setMany(state, updatedNavigation);
+    }
   },
 });
 
-export const { setNavigation, resetNavigation } = navigationSlice.actions;
+export const { setNavigation, resetNavigation , updateNavigation} = navigationSlice.actions;
 
 const getUserRole = (state) => state.user.role;
 
 export const selectNavigation = createSelector(
-  [selectNavigationAll, ({ i18n }) => i18n.language, getUserRole],
-  (navigation, language, userRole) => {
+  [selectNavigationAll, ({ i18n }) => i18n.language, selectUser, (state) => state.allUserPermission],
+  (navigation, language, user, userPermission) => {
+
+
+    const userRole = user?.role;
+    const userRoleHierarchique = user?.userRoleHierarchique;
+
     function setTranslationValues(data) {
       // loop through every object in the array
       return data.map((item) => {
@@ -73,7 +83,7 @@ export const selectNavigation = createSelector(
     return setTranslationValues(
       _.merge(
         [],
-        filterRecursively(navigation, (item) => FuseUtils.hasPermission(item.auth, userRole))
+        filterRecursively(navigation, (item) => FuseUtils.hasPermission(item.auth, userRole, userRoleHierarchique, userPermission))
       )
     );
   }

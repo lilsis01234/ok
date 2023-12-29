@@ -59,7 +59,7 @@ const routes = [
   {
     path: '/',
     element: <Navigate to="/sign-in" />,
-    auth : settingsConfig.defaultAuth
+    // auth : settingsConfig.defaultAuth
   },
   {
     path: 'loading',

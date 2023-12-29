@@ -1,8 +1,13 @@
 import List from '@mui/material/List';
 import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FuseNavItem from '../FuseNavItem';
+import { selectNavigation, setNavigation, updateNavigation } from 'app/store/fuse/navigationSlice';
+import { useEffect, useState } from 'react';
+import { Button } from '@mui/material';
+import  {setNavigationContext}  from 'app/configs/navigationConfig';
+import { selectUser } from 'app/store/userSlice';
 
 const StyledList = styled(List)(({ theme }) => ({
   '& .fuse-list-item': {
@@ -37,12 +42,37 @@ const StyledList = styled(List)(({ theme }) => ({
 }));
 
 function FuseNavVerticalLayout1(props) {
-  const { navigation, layout, active, dense, className, onItemClick } = props;
+
+  const { layout, active, dense, className, onItemClick } = props;
   const dispatch = useDispatch();
+  const navigation = useSelector(selectNavigation)
+  const user = useSelector(selectUser)
+
+  console.log(user)
+
+  const [sideBarContext, setSideBarContext] = useState('frontOffice')
+
+
+  setNavigationContext(sideBarContext)
 
   function handleItemClick(item) {
     onItemClick?.(item);
   }
+
+  const handleChangeSideBarContext = () => {
+    const newContext = sideBarContext === 'frontOffice' ? 'backOffice' : 'frontOffice'
+    setSideBarContext(newContext);
+  };
+
+  useEffect(() => {
+    const newNavigationConfig = setNavigationContext(sideBarContext)
+    dispatch(updateNavigation(newNavigationConfig))
+    dispatch(setNavigation(newNavigationConfig))
+  }, [sideBarContext])
+
+  // useEffect(() => {
+  //   dispatch(updateNavigation(navigation))
+  // }, [navigation])
 
   return (
     <StyledList
@@ -53,7 +83,8 @@ function FuseNavVerticalLayout1(props) {
         className
       )}
     >
-      {navigation.map((_item) => (
+      {user.role === 'User' ? '' :   <Button onClick={handleChangeSideBarContext}>{sideBarContext === 'frontOffice' ? 'Aller à l\'interface d\'administration' : 'Retourner au menu principale'}</Button>}
+      {navigation && navigation.map((_item) => (
         <FuseNavItem
           key={_item.id}
           type={`vertical-${_item.type}`}

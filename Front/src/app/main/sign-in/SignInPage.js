@@ -58,8 +58,8 @@ function SignInPage() {
       .then((user) => {
         // No need to do anything, user data will be set at app/auth/AuthContex
         console.log('Utilisateur authentifié avec succès')
-        window.location.reload();
         navigate('/acceuil')
+        window.location.reload();
       })
       .catch((error) => {
           setError('generic', {
