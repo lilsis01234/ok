@@ -33,121 +33,60 @@ const loadFrontOfficeNavigation = () => {
           },
           url: '/acceuil',
         },
-        {
-          id: 'dashboard.collaborateur',
-          title: 'Collaborateur',
-          type: 'item',
-          icon: 'heroicons-outline:user-group',
-          translate: 'COLLABORATEURS',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
-          },
-          url: 'dashboards/collaborateur'
-        }
       ],
     },
     {
-      id: 'actuality',
-      title: "Actualités",
+      id: 'collaborateur',
+      title: 'Collaborateurs',
       type: 'group',
-      icon: 'heroicons-outline:home',
+      icon: 'heroicons-outline:user-group',
       auth: {
         role: ['SuperAdmin', 'User', 'Admin'],
       },
       children: [
         {
-          id: 'actuality.list',
-          title: "Toutes les actualités",
+          id: 'collaborateurs.liste',
+          title: 'Listes des collaborateurs',
           type: 'item',
-          icon: 'heroicons-outline:newspaper',
-          url: 'apps/actuality/list',
+          icon: 'heroicons-outline:user-group',
           auth: {
             role: ['SuperAdmin', 'User', 'Admin'],
           },
+          url: 'collaborateurs/all',
+        },
+      ]
+    }, {
+      id: 'entreprise',
+      title: 'Entreprise',
+      auth: {
+        role: ['SuperAdmin', 'User', 'Admin'],
+      },
+      type: 'group',
+      children: [
+        {
+          id: 'entreprise.direction',
+          title: 'Direction',
+          type: 'item',
+          icon: 'heroicons-outline:briefcase',
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin'],
+          },
+          url: 'entreprise/direction'
         },
         {
-          id: 'actuality.add',
-          title: "Ajout d'actualité",
+          id: 'entreprise.structure',
+          title: 'Structure de l\'entreprise',
           type: 'item',
-          icon: 'heroicons-outline:document-add',
-          url: '/apps/addActuality',
+          icon: 'heroicons-outline:briefcase',
           auth: {
             role: ['SuperAdmin', 'User', 'Admin'],
           },
+          url: 'entreprise/structure'
         },
-        {
-          id: 'comment',
-          title: "Commentaires",
-          type: 'item',
-          icon: 'heroicons-outline:chat-alt',
-          url: '/apps/edit-comments',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
-          },
-        },
-        {
-          id: 'categorie',
-          title: 'Catégories',
-          type: 'item',
-          icon: 'heroicons-outline:clipboard-list',
-          url: '/apps/categorie',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
-          },
-        },
-        {
-          id: 'type',
-          title: 'Types',
-          type: 'item',
-          icon: 'material-outline:article',
-          url: '/apps/type',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
-          },
-        },
-        {
-          id: 'tag',
-          title: 'Etiquettes',
-          type: 'item',
-          icon: 'material-outline:article',
-          url: '/apps/tag',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
-          },
-        },
-        {
-          id: 'frontend',
-          title: 'Front office',
-          icon: 'heroicons-outline:check-circle',
-          type: 'collapse',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
-          },
-          children: [
-            {
-              id: 'actuality.flux',
-              title: "Flux d'actualités",
-              type: 'item',
-              icon: 'heroicons-outline:menu-alt-2',
-              url: '/apps/timeline',
-              auth: {
-                role: ['SuperAdmin', 'User', 'Admin'],
-              },
-            },
-            {
-              id: 'actuality-content',
-              title: 'Actualité',
-              type: 'item',
-              icon: 'heroicons-outline:clipboard-list',
-              url: '/apps/front-actuality',
-              auth: {
-                role: ['SuperAdmin', 'User', 'Admin'],
-              },
-            }
-          ],
-        }
-      ],
-    },
+      ]
+    }
+
+
   ]
 }
 
@@ -155,37 +94,148 @@ const loadFrontOfficeNavigation = () => {
 const loadBackOfficeNavigation = () => {
   navigationConfig = [
     {
-      id: 'dashboard',
-      title: 'TABLEAU DE BORD',
+      id: 'collaborateur',
+      title: 'Collaborateurs',
       type: 'group',
-      icon: 'heroicons-outline:home',
+      icon: 'heroicons-outline:user-group',
       auth: {
-        role: ['SuperAdmin', 'User', 'Admin'],
+        role: ['SuperAdmin', 'Admin'],
       },
       children: [
         {
-          id: 'dashboard.dashboard',
-          title: 'Acceuil',
+          id: 'collaborator.manage-collab',
+          title: 'Listes des collaborateurs',
+          icon: 'heroicons-outline:user-circle',
           type: 'item',
-          icon: 'heroicons-outline:home',
+          url: 'manage/collaborator',
           auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
+            role: ['SuperAdmin', 'Admin'],
           },
-          url: '/acceuil',
+        }, {
+          id: 'collaborator.manage-collab-archives',
+          title: 'Archives',
+          type: 'item',
+          url: 'manage/archive/collaborateur',
+          icon: 'heroicons-outline:user-circle',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          },
         },
         {
-          id: 'dashboard.collaborateur',
-          title: 'Collaborateur',
-          type: 'item',
-          icon: 'heroicons-outline:user-group',
-          translate: 'COLLABORATEURS',
+          id: 'collaborateur.comptes',
+          title: 'Comptes collaborateurs',
+          type: 'collapse',
+          icon: 'heroicons-outline:user-circle',
           auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
+            role: ['SuperAdmin', 'Admin'],
           },
-          url: 'dashboards/collaborateur'
+          children: [
+            {
+              id: 'collaborateur.manage-count',
+              title: 'Liste des comptes',
+              type: 'item',
+              url: 'manage/account',
+              auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
+            }
+          ]
+        },
+      ]
+    }, {
+      id: 'entreprise',
+      title: 'Entreprise',
+      auth: {
+        role: ['SuperAdmin', 'Admin'],
+      },
+      type: 'group',
+      children: [
+        {
+          id: 'entreprise.direction-manage-direction',
+          title: 'Direction',
+          type: 'item',
+          icon : 'heroicons-outline:briefcase',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          },
+          url: 'business/manage/direction'
+        }, {
+          id: 'entreprise.direction-manage-departement',
+          title: 'Departement',
+          icon : 'heroicons-outline:briefcase',
+          type: 'item',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          },
+          url: 'business/manage/departement'
+        }, {
+          id: 'entreprise.direction-manage-poste',
+          title: 'Poste',
+          type: 'item',
+          icon : 'heroicons-outline:briefcase',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          },
+          url: 'business/manage/Fonction'
+        }, {
+          id: 'entreprise.direction-manage-project',
+          title: 'Projet',
+          type: 'item',
+          icon : 'heroicons-outline:briefcase',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          },
+          url: 'business/manage/project'
+        }, {
+          id: 'entreprise.direction-manage-teams',
+          title: 'Equipe',
+          type: 'item',
+          icon : 'heroicons-outline:briefcase',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          },
+          url: 'business/manage/team'
         }
-      ],
-    },
+      ]
+    }, {
+          id : 'settings',
+          title : 'Paramètres',
+          type : 'group',
+          auth: {
+            role: ['SuperAdmin'],
+          },
+          children : [
+            {
+              id : 'settings.role&Permission',
+              title : 'Rôle et permission',
+              type : 'collapse',
+              icon : 'heroicons-outline:user-circle',
+              auth: {
+                role: ['SuperAdmin'],
+              },
+              children : [
+                {
+                  id : 'collaborateur.manage-role',
+                  title : 'Rôles',
+                  type : 'item',
+                  url : 'manage/role',
+                  auth: {
+                    role: ['SuperAdmin'],
+                  },
+                }, 
+                {
+                  id : 'collaborateur.manage-permission',
+                  title : 'Permissions',
+                  type : 'item',
+                  url : 'manage/permission',
+                  auth: {
+                    role: ['SuperAdmin'],
+                  },
+                }
+              ]
+            }
+          ]
+        }
   ]
 }
 
@@ -241,7 +291,8 @@ setNavigationContext('frontOffice')
 //     title: 'Collaborateurs',
 //     type: 'group',
 //     icon: 'heroicons-outline:user-group',
-//     translate: 'COLLABORATEURS', children : [
+//     translate: 'COLLABORATEURS', 
+//     children : [
 //       {
 //          id : 'collaborateurs.liste',
 //          title : 'Listes des collaborateurs',
