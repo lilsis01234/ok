@@ -19,7 +19,7 @@ router.post('/new', async(req, res)  => {
 })
 
 //Afficher les listes des directions
-router.get('/all', async(reqq, res) => {
+router.get('/all', async(req, res) => {
     try {
         const listDirection = await Direction.findAll();
         res.status(201).json(listDirection);
@@ -30,7 +30,7 @@ router.get('/all', async(reqq, res) => {
     }
 })
 
-//Afficher seulement un directions
+//Afficher seulement un direction
 router.get('/view/:id', async(req, res)=> {
     const {id} = req.params;
     try {
@@ -40,8 +40,8 @@ router.get('/view/:id', async(req, res)=> {
         }
         res.json({direction})
     } catch (err){
-        console.error('Erreur lors de la récupération des directions:', error)
-        res.status(500).json({error: 'Erruer lors de la récupération de la directions'})
+        console.error('Erreur lors de la récupération des directions:', err)
+        res.status(500).json({error: 'Erreur lors de la récupération de la directions'})
     }
 })
 

@@ -2,6 +2,7 @@ const ArchiveCollab = require('../../Modele/CollabModel/ArchiveCollab');
 const Collab = require('../../Modele/CollabModel/Collab');
 const Equipe = require('../../Modele/Structure/Equipe');
 const Projet = require('../../Modele/Structure/Projet');
+const Site = require('../../Modele/Structure/Site');
 const TestDepartement = require('../../Modele/Structure/TestDepartement');
 const TestPoste = require('../../Modele/Structure/TestPoste');
 
@@ -40,8 +41,6 @@ router.post('/collab/:id',  async(req, res) => {
             entreprise : collaborateur.entreprise,
             numCNAPS: collaborateur.numCNAPS,
             shift: collaborateur.shift,
-            // categorie : collaborateur.categorie,
-            // contrat : collaborateur.contrat,
             poste: collaborateur.poste,
             departement : collaborateur.departement,
             poste2 : collaborateur.poste2,
@@ -69,6 +68,10 @@ router.get('/all', async(req, res) => {
     try {
        const collaborateurArchive = await ArchiveCollab.findAll({
         include : [
+            {
+                model : Site,
+                as:'sites'
+            },
             {
                 model: TestPoste,
                 as: 'poste1',
@@ -110,6 +113,10 @@ router.get('/view/:id', async (req, res) => {
     try {
         const collaborateur = await ArchiveCollab.findByPk(id, {
             include: [
+                {
+                    model : Site,
+                    as:'sites'
+                },
                 {
                     model: TestPoste,
                     as: 'poste1',

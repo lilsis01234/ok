@@ -27,6 +27,7 @@ const Equipe = require('../../Modele/Structure/Equipe');
 const excel = require('exceljs');
 const { type } = require('os');
 const { Sequelize, Op } = require('sequelize');
+const Site = require('../../Modele/Structure/Site');
 
 //Conserver l'image dans le mémoire
 const storages = multer.memoryStorage();
@@ -182,6 +183,10 @@ router.get('/all', async (req, res) => {
         const collaborateur = await Collab.findAll({
             include: [
                 {
+                    model : Site,
+                    as:'sites'
+                },
+                {
                     model: TestPoste,
                     as: 'poste1',
                 }, {
@@ -226,6 +231,10 @@ router.get('/newcollab', async (req, res) => {
             limit: 10,
             include: [
                 {
+                    model : Site,
+                    as:'sites'
+                },
+                {
                     model: TestPoste,
                     as: 'poste1',
                 }, {
@@ -267,6 +276,10 @@ router.get('/view/:id', async (req, res) => {
     try {
         const collaborateur = await Collab.findByPk(id, {
             include: [
+                {
+                    model : Site,
+                    as:'sites'
+                },
                 {
                     model: TestPoste,
                     as: 'poste1',
@@ -423,6 +436,7 @@ router.post('/import-excel', uploads.single('excel'), async (req, res) => {
 
                 if (!isEmpty) {
                     //Parcours des lignes de données à partir de la deuxième ligne
+                    const site = await Site.findOne({where : {nomSite : collab.site}})
                     const poste = await TestPoste.findOne({ where: { titrePoste: collab.poste } })
                     const poste2 = await TestPoste.findOne({ where: { titrePoste: collab.poste2 } })
                     const departement = await TestDepartement.findOne({ where: { nomDepartement: collab.departement } })
@@ -454,7 +468,7 @@ router.post('/import-excel', uploads.single('excel'), async (req, res) => {
                             statutmatrimoniale: collab.statutmatrimoniale,
                             nbEnfant: collab.nbEnfant,
                             dateEmbauche: collab.dateEmbauche,
-                            site: collab.site,
+                            site: site ? site.id : null,
                             entreprise: collab.entreprise,
                             numCNAPS: collab.shift,
                             shift: collab.numCNAPS,
@@ -556,14 +570,18 @@ router.get('/search', async (req, res) => {
                     { nom: { [Op.like]: `%${q}%` } },
                     { prenom: { [Op.like]: `%${q}%` } },
                     { dateNaissance: { [Op.like]: `%${q}%` } },
-                    { site: { [Op.like]: `%${q}%` } },
                     { entreprise: { [Op.like]: `%${q}%` } },
+                    Sequelize.literal(`site.nomSite LIKE '%${q}%'`),
                     Sequelize.literal(`poste1.titrePoste LIKE '%${q}%'`),
                     Sequelize.literal(`departement1.nomDepartement LIKE '%${q}%'`),
                     Sequelize.literal(`projet1.nomProjet LIKE '%${q}%'`)
                 ]
             },
             include: [
+                {
+                    model : Site,
+                    as:'sites'
+                },
                 {
                     model: TestPoste,
                     as: 'poste1',
@@ -616,6 +634,10 @@ router.get('/filter', async (req, res) => {
                 ]
             },
             include: [
+                {
+                    model : Site,
+                    as:'sites'
+                },
                 {
                     model: TestPoste,
                     as: 'poste1',
