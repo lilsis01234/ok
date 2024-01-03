@@ -17,6 +17,8 @@ import Paper from '@mui/material/Paper';
 // import { useEffect } from 'react';
 import jwtService from '../../auth/services/jwtService';
 import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 /**
@@ -62,12 +64,33 @@ function SignInPage() {
         window.location.reload();
       })
       .catch((error) => {
-          setError('generic', {
-            type: 'manual',
-            message: error.message,
-          });
+        setError('generic', {
+          type: 'manual',
+          message: error.message,
+        });
       });
   }
+
+  //Récupération des collaborateurs de manière aléatoire pour l'avatar
+  const [collaborateur, setCollaborateur] = useState([])
+
+  const fetchCollab = () => {
+    axios.get('http://localhost:4000/api/collaborateur/collaborateur-aleatoire')
+      .then(response => {
+        setCollaborateur(response.data)
+      })
+      .catch(error => {
+        console.error('Erreur lors de la récupération des collaborateurs', error)
+      })
+  }
+
+  useEffect(() => {
+    fetchCollab();
+  }, [])
+
+
+
+
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
@@ -76,7 +99,7 @@ function SignInPage() {
           <img className="w-48" src="assets/images/logo/logo.png" alt="logo" />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
-           Se connecter
+            Se connecter
           </Typography>
           {/* <div className="flex items-baseline mt-2 font-medium">
             <Typography>Don't have an account?</Typography>
@@ -142,7 +165,7 @@ function SignInPage() {
                 )}
               />
 
-              <Link className="text-md font-medium" to="/pages/auth/forgot-password">
+              <Link className="text-md font-medium" to="/authentification/motdepasseOublie">
                 Mot de passe oublié?
               </Link>
             </div>
@@ -238,30 +261,46 @@ function SignInPage() {
 
         <div className="z-10 relative w-full max-w-2xl">
           <div className="text-7xl font-bold leading-none text-gray-100">
-            <div>Welcome to</div>
-            <div>our community</div>
+            <div>Bienvenue </div>
+            <div>sur notre plateforme</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-gray-400">
-            Fuse helps developers to build organized and well coded dashboards full of beautiful and
-            rich modules. Join us and start building your application today.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum convallis vehicula justo, ut rhoncus mi ultrices nec.
+            Quisque feugiat quam sit amet hendrerit dapibus.
           </div>
           <div className="flex items-center mt-32">
-            <AvatarGroup
-              sx={{
-                '& .MuiAvatar-root': {
-                  borderColor: 'primary.main',
-                },
-              }}
-            >
-              <Avatar src="assets/images/avatars/female-18.jpg" />
+            {collaborateur ?
+              <>
+                <AvatarGroup
+                  sx={{
+                    '& .MuiAvatar-root': {
+                      borderColor: 'primary.main',
+                    },
+                  }}
+                >
+                  {collaborateur.map((collab) => (
+                    collab.image ? (
+                        <Avatar src={`http://localhost:4000/${collab.image}`} />
+                      ) : (
+                      <Avatar >{collab.nom ? collab.nom[0] : '?'}</Avatar>
+                    )
+
+                  ))}
+
+                  {/* <Avatar src="assets/images/avatars/female-18.jpg" />
               <Avatar src="assets/images/avatars/female-11.jpg" />
               <Avatar src="assets/images/avatars/male-09.jpg" />
-              <Avatar src="assets/images/avatars/male-16.jpg" />
-            </AvatarGroup>
+              <Avatar src="assets/images/avatars/male-16.jpg" /> */}
+                </AvatarGroup>
+                <div className="ml-16 font-medium tracking-tight text-gray-400">
+                  Trouver les autres collaborateurs du groupe sur cette plateforme.
+                </div>
+              </>
+              : ''
+            }
 
-            <div className="ml-16 font-medium tracking-tight text-gray-400">
-              More than 17k people joined us, it's your turn
-            </div>
+
+
           </div>
         </div>
       </Box>

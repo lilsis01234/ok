@@ -92,10 +92,10 @@ function FuseNavigation(props) {
   // }
 
   
-  if(navigation){
-    console.log(navigation)
-    console.log(navigation.length)
-  }
+  // if(navigation){
+  //   console.log(navigation)
+  //   console.log(navigation.length)
+  // }
   if (navigation.length > 0) {
     return (
       <>

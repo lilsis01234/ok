@@ -243,11 +243,11 @@ const loadBackOfficeNavigation = () => {
 export const setNavigationContext = (context) => {
   if (context === 'backOffice') {
     loadBackOfficeNavigation();
-    console.log('On est dans la BackOffice', navigationConfig);
+    // console.log('On est dans la BackOffice', navigationConfig);
     return navigationConfig;
   } else if (context === 'frontOffice') {
     loadFrontOfficeNavigation();
-    console.log('On est dans la FrontOffice', navigationConfig);
+    // console.log('On est dans la FrontOffice', navigationConfig);
     return navigationConfig;
   }
 };

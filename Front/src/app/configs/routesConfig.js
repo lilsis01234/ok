@@ -33,6 +33,11 @@ import GererCompteConfig from '../main/pages/gererCompte/gererCompteConfig';
 import GererRoleHierarchiqueConfig from '../main/pages/GererRoleHierarchique/GererRoleHierarchiqueConfig';
 import GererPermissionConfig from '../main/pages/GererPermission/GererPermissionConfig';
 import CollaborateurAppConfig from '../main/pages/Collaborateur/CollaborateurAppConfig';
+import ForgotPasswordPagesConfig from '../main/forgotPassword/ForgotPasswordPagesConfig';
+import ResetPasswordPageConfig from '../main/resetPassword/ResetPasswordPageConfig';
+import AccountSettingsConfig from '../main/accountSettings/AccountSettingConfig';
+import ProfileConfig from '../main/Profile/ProfileConfig';
+
 
 
 const routeConfigs = [
@@ -46,6 +51,10 @@ const routeConfigs = [
   GererCompteConfig,
   DirectionConfig,
   EntrepriseStrucutureConfig,
+  ForgotPasswordPagesConfig,
+  ResetPasswordPageConfig,
+  AccountSettingsConfig,
+  ProfileConfig,
   //Gestion des Permission et des roles,
   GererPermissionConfig,
   GererRoleHierarchiqueConfig,

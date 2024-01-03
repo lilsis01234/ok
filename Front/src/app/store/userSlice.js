@@ -93,7 +93,7 @@ export const updateUserData = (user) => async (dispatch, getState) => {
 
 const storedUser = localStorage.getItem('user');    
 const userConnected = JSON.parse(storedUser)
-console.log(userConnected)
+// console.log(userConnected)
 
 let initialState
 if (userConnected) {

@@ -767,6 +767,21 @@ router.get('/sameProject/:idCollab/:idProjet', async(req,res) => {
     }
 })
 
+//Récupérer les collaborateurs de alléatoire
+router.get('/collaborateur-aleatoire', async(req, res) => {
+    try {
+        const collaborateur = await Collab.findAll({
+            order : Sequelize.literal('RAND()'),
+            limit : 4,
+            attributes : ['image', 'id', 'nom'],
+        })
+        res.status(200).json(collaborateur)
+    } catch (error) {
+        console.log('Erreur lors de la récupération des collaborateurs', error)
+        res.status(500).json({error : 'Erreur lors de la récupéarion des collaborateurs'})
+    }
+})
+
 
 
 

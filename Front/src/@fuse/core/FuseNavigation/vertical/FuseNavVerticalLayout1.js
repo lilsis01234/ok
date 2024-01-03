@@ -48,7 +48,7 @@ function FuseNavVerticalLayout1(props) {
   const navigation = useSelector(selectNavigation)
   const user = useSelector(selectUser)
 
-  console.log(user)
+  // console.log(user)
 
   const [sideBarContext, setSideBarContext] = useState('frontOffice')
 

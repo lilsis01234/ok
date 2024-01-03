@@ -11,11 +11,7 @@ const ForgotPasswordForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-<<<<<<< HEAD
         axios.post('http://localhost:4000/api/password/password_request_rest', {email})
-=======
-        axios.post('http://localhost:4000/api/password/password_request_rest', {email})
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
           .then((response) => {
             alert("Demande de réinitialisation du mot de passe envoyées avec succès")
             setTimeout(() => {

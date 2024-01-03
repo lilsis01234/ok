@@ -2,7 +2,7 @@
     "name": "backend",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "server.js",
     "scripts": {
         "start": "nodemon server.js"
     },
@@ -27,6 +27,7 @@
         "peer": "^1.0.1",
         "sequelize": "^6.32.1",
         "socket.io": "^4.7.2",
+        "validator": "^13.11.0",
         "xlsx": "^0.18.5"
     }
 }
