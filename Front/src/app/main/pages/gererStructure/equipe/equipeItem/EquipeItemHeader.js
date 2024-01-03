@@ -30,7 +30,7 @@ function EquipeItemHeader({ formValues }) {
         if (id) {
             try {
                 await axios.put(`http://localhost:4000/api/equipe/edit/${id}`, data)
-                alert('Team Update succesfully')
+                alert('Equipe mise à jour avec succès')
                 navigate('/business/manage/team')
             } catch (error) {
                 console.log(error)
@@ -38,13 +38,23 @@ function EquipeItemHeader({ formValues }) {
         } else {
             try {
                 await axios.post('http://localhost:4000/api/equipe/new', data)
-                alert('Team create successfully')
+                alert('Equipe ajouté avec succés')
                 navigate('/business/manage/team')
             } catch (error) {
                 console.log(error)
             }
         }
     }
+
+    const handleDeleteTeam = async () =>{
+        const confirmation = window.confirm(`Vous voulez vraiment supprimer l'équipe ${nomEquipe}`)
+        if(confirmation){
+            await axios.delete(`http://localhost:4000/api/equipe/delete/${id}`, data)
+            alert('Equipe supprimée avec succès')
+            navigate('/business/manage/team')
+        }
+    }
+
 
 
 
@@ -87,6 +97,17 @@ function EquipeItemHeader({ formValues }) {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
             >
+                {id && (
+                    <Button
+                        className="whitespace-nowrap mx-4"
+                        variant="contained"
+                        color="error"
+            
+                        onClick={handleDeleteTeam}
+                    >
+                        Supprimer
+                    </Button>
+                )}
                 <Button
                      className="whitespace-nowrap mx-4"
                      variant="contained"

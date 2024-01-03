@@ -8,6 +8,7 @@ const RoleHierarchique = require('../../Modele/RoleModel/RoleHierarchique');
 const Role = require('../../Modele/RoleModel/Role');
 const Projet = require('../../Modele/Structure/Projet');
 const Equipe = require('../../Modele/Structure/Equipe');
+const Site = require('../../Modele/Structure/Site');
 
 
 
@@ -64,6 +65,10 @@ router.get('/view/:id', async(req, res) => {
                     model: Collab,
                     attributes: ['id', 'nom', 'prenom', 'matricule', 'image'],
                     include: [
+                        {
+                            model : Site,
+                            as:'sites'
+                        },
                         {
                             model: TestPoste,
                             as: 'poste1',
@@ -175,6 +180,10 @@ router.get('/collab/view/:id', async(req, res) => {
                     model : Collab,
                     attributes : ['id', 'matricule', 'nom', 'prenom', 'sexe', 'quartier', 'tel', 'site', 'image', 'entreprise', 'shift', 'poste', 'poste2', 'departement', 'departement2', 'projet', 'projet2', 'equipe', 'equipe2'], 
                     include : [
+                        {
+                            model : Site,
+                            as:'sites'
+                        },
                         {
                             model: TestPoste,
                             as: 'poste1',

@@ -103,7 +103,7 @@ function DepartementListItem(props) {
                 className="flex flex-col flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There is no such departement!
+                    Il n'y a pas de département!
                 </Typography>
                 <Button
                      className="mt-24"
@@ -112,7 +112,7 @@ function DepartementListItem(props) {
                      to="/business/manage/departement"
                      color="inherit"
                 >
-                    Go To Departements Page
+                    Retourner à la page Liste des départements
                 </Button>
             </motion.div>
         )

@@ -9,32 +9,36 @@ import { motion } from 'framer-motion';
 import { Typography } from '@mui/material';
 import _ from 'lodash'
 import { TablePagination } from '@mui/material';
-import DepartementTableHeader from './DepartementTableHeader';
+import SiteTableHeader from './SiteTableHeader';
 
-function DepartementTable(props) {
+function SiteTable(props) {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
-    const [selected, setSelected] = useState([]);
-    const [departementData, setDepartementData] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [selected, setSelected] = useState([])
+    const [siteData, setSiteData] = useState([])
+
+
     const [page, setPage] = useState(0);
     const [rowPerPage, setRowsPerPage] = useState(10);
+
+
     const [order, setOrder] = useState({
         direction: 'asc',
         id: null,
     });
 
-    const fetchDepartement = () => {
-       axios.get('http://localhost:4000/api/departement/all')
+    const fetchSite = () => {
+        axios.get('http://localhost:4000/api/site/all')
         .then((response) => {
-            setDepartementData(response.data)
+            setSiteData(response.data)
         })
-        .catch((err) => {
-            console.error(err)
+        .catch((error) => {
+            console.error(error)
         })
     }
 
     useEffect(() => {
-        fetchDepartement()
+        fetchSite()
         setLoading(false)
     }, []) 
 
@@ -42,6 +46,7 @@ function DepartementTable(props) {
         return <FuseLoading/>
     }
 
+    
     function handleRequestSort(event, property){
         const id = property;
         let direction = 'desc';
@@ -55,41 +60,11 @@ function DepartementTable(props) {
             id,
         });
     }
-
-    function handleSelectAllClick(event){
-        if(event.target.checked){
-            setSelected(departementData.map((n) => n.id))
-            return ; 
-        }
-        setSelected([]);
-    }
-
-    function handleDeselect() {
-        setSelected([]);
-    }
-
+    
     function handleClick(item) {
-        navigate(`/business/manage/departement/${item.id}/`);
+        navigate(`/business/manage/site/${item.id}/`);
     }
 
-    function handleCheck(event, id) {
-        const selectedIndex = selected.indexOf(id);
-        let newSelected = []
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id)
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1))
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        }
-        else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1)
-            );
-        }
-        setSelected(newSelected)
-    }
 
     function handleChangePage(event, value) {
         setPage(value);
@@ -100,7 +75,7 @@ function DepartementTable(props) {
     }
 
 
-    if (departementData.length === 0) {
+    if (siteData.length === 0) {
         return (
             <motion.div
                 initial={{ opacity: 0 }}
@@ -108,13 +83,14 @@ function DepartementTable(props) {
                 className="flex flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                  Il n'y a pas de département!
+                    Il n'y a pa de site!
                 </Typography>
             </motion.div>
         );
     }
 
-    // console.log(departementData);
+
+    // console.log(siteData)
 
 
 
@@ -122,17 +98,14 @@ function DepartementTable(props) {
     <div className="w-full flex flex-col min-h-full">
         <FuseScrollbars className="grow overflow-x-auto">
             <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
-                <DepartementTableHeader
-                    selectedDepartementId={selected}
+                <SiteTableHeader
                     order = {order}
-                    onSelectAllClick={handleSelectAllClick}
                     onRequestSort={handleRequestSort}
-                    rowCount={departementData.length}
-                    onMenuItemClick={handleDeselect}
+                    rowCount={siteData.length}
                 />
                 <TableBody>
                 {_.orderBy(
-                            departementData, [
+                            siteData, [
                             (o) => {
                                 switch (order.id) {
                                     case 'categories': {
@@ -146,32 +119,18 @@ function DepartementTable(props) {
                         ], [order.direction])
                         .slice(page * rowPerPage, page * rowPerPage + rowPerPage)
                         .map((n) => {
-                            const isSelected = selected.indexOf(n.id) !== -1;
                             return (
                                 <TableRow
                                     className="h-72 cursor-pointer"
                                     hover
                                     role="checkbox"
-                                    aria-checked={isSelected}
                                     tabIndex={-1}
                                     key={n.id}
-                                    selected={isSelected}
                                     onClick={(event) => handleClick(n)}
                                 >
-                                    <TableCell className="w-40 md:w-64 text-center" padding="none">
-                                        <CheckBox
-                                            checked={isSelected}
-                                            onClick={(event) => event.stopPropagation()}
-                                            onChange={(event) => handleCheck(event, n.id)}
-                                        />
-                                    </TableCell>
                                     <TableCell className="p-4 md:p-16 " component="th" scope="row">
-                                        {n.nomDepartement}
+                                        {n.nomSite}
                                     </TableCell>
-                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">
-                                        {n.Direction?.nomDirection}
-                                    </TableCell>
-
                                 </TableRow>
                             )
                         })      
@@ -182,7 +141,7 @@ function DepartementTable(props) {
         <TablePagination
             className="shrink-0 border-t-1"
             component="div"
-            count={departementData.length}
+            count={siteData.length}
             rowsPerPage={rowPerPage}
             page={page}
             backIconButtonProps={{
@@ -198,4 +157,4 @@ function DepartementTable(props) {
   )
 }
 
-export default DepartementTable
+export default SiteTable

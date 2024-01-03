@@ -89,7 +89,7 @@ function CollaborateurProfileContent(props) {
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Site</Typography>
-                                    <Typography>{collabData.Collab?.site}</Typography>
+                                    <Typography>{collabData.Collab?.sites?.nomSite}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Entreprise</Typography>

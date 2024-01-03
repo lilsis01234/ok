@@ -195,6 +195,15 @@ const loadBackOfficeNavigation = () => {
             role: ['SuperAdmin', 'Admin'],
           },
           url: 'business/manage/team'
+        }, {
+          id: 'entreprise.direction-manage-teams',
+          title: 'Site',
+          type: 'item',
+          icon : 'heroicons-outline:briefcase',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          },
+          url: 'business/manage/site'
         }
       ]
     }, {

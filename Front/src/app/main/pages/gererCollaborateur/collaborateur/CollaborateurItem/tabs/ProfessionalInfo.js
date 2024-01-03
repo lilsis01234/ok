@@ -15,6 +15,7 @@ function ProfessionalInfo(props) {
   const [listeDepartement, setListeDepartement] = useState([]);
   const [listeProjet, setListeProjet] = useState([]);
   const [listeEquipe, setListeEquipe] = useState([]);
+  const [listeSite, setListeSite] = useState([]);
 
   useEffect(() => {
     axios
@@ -59,6 +60,18 @@ function ProfessionalInfo(props) {
         console.error("Error fetching project data", error);
       });
   }, []);
+
+  useEffect(() => {
+    axios 
+    .get('http://localhost:4000/api/site/all')
+    .then ((response) => {
+      setListeSite(response.data)
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la récupération des sites", error)
+    })
+  }, [])
+
 
   if (!methods) {
     return null;
@@ -115,7 +128,7 @@ function ProfessionalInfo(props) {
           <TextField
             {...field}
             select
-            value={field.value || 'Fivoarana'} // Assurez-vous d'avoir une valeur par défaut
+            value={field.value || null} // Assurez-vous d'avoir une valeur par défaut
             className="mt-8 mb-16"
             error={!!errors.site}
             required
@@ -125,11 +138,13 @@ function ProfessionalInfo(props) {
             id="site"
             variant="outlined"
             fullWidth
-            
+            InputLabelProps={{ shrink: !!field.value }}
           >
-            <MenuItem value="Fivoarana">Fivoarana</MenuItem>
-            <MenuItem value="Ivohasina">Ivohasina</MenuItem>
-            <MenuItem value="Soazaraina">Soazaraina</MenuItem>
+           {listeSite.map((site) => (
+              <MenuItem key={site.id} value={site.id}>
+                {site.nomSite}
+              </MenuItem>
+            ))}
           </TextField>
         )}
       />

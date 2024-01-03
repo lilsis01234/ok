@@ -11,6 +11,7 @@ const Direction = require('../Modele/Structure/Direction')
 const Projet = require('../Modele/Structure/Projet')
 const Collaborateur = require('../Modele/CollabModel/Collaborateur')
 const Eqquipe = require('../Modele/Structure/Equipe')
+const Site = require('../Modele/Structure/Site')
 const association = require('../Modele/Structure/association')
 
 const RoleCollab = require('../Modele/RoleModel/Role');

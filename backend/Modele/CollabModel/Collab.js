@@ -4,6 +4,7 @@ const TestDepartement = require('../Structure/TestDepartement');
 const TestPoste = require('../Structure/TestPoste');
 const Projet = require('../Structure/Projet');
 const Equipe = require('../Structure/Equipe');
+const Site = require('../Structure/Site');
 
 class Collab extends Model{};
 
@@ -69,9 +70,6 @@ Collab.init({
 
     dateEmbauche: { 
         type: DataTypes.DATE 
-    },
-    site: { 
-        type: DataTypes.STRING(20) 
     },
     image: { 
         type: DataTypes.STRING 
@@ -147,6 +145,13 @@ Collab.init({
             model : Equipe,
             key : 'id'
         }
+    }, 
+    site :{
+        type : DataTypes.INTEGER,
+        references : {
+            model : Site,
+            key : 'id'
+        }
     }
 
 }, {
@@ -175,6 +180,8 @@ Collab.belongsTo(Projet, {foreignKey:"projet2", targetKey:'id', onUpdate:'CASCAD
 
 Collab.belongsTo(Equipe, {foreignKey:"equipe", targetKey:'id', onUpdate:'CASCADE', as:'equipe1'})
 Collab.belongsTo(Equipe, {foreignKey:"equipe2", targetKey:'id', onUpdate:'CASCADE', as:'equipes'})
+
+Collab.belongsTo(Site, {foreignKey:"site",  targetKey:'id',onUpdate:'CASCADE',  as:'sites'})
 
 module.exports = Collab;
 
