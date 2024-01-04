@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 import { useState } from 'react';

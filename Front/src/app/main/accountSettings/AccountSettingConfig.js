@@ -1,6 +1,7 @@
 import React from 'react'
 import AccountSetting from './AccountSetting'
 import UpdatePassword from './UpdatePassword'
+import UpdateProfile from './UpdateProfile'
 
 
 const AccountSettingsConfig = {
@@ -14,6 +15,9 @@ const AccountSettingsConfig = {
         }, {
             path : 'setting/account/password',
             element : <UpdatePassword/>
+        }, {
+            path : 'settings/account/profile',
+            element : <UpdateProfile/>
         }
     ]
 }

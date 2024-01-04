@@ -1,5 +1,6 @@
 const Collab = require('../../Modele/CollabModel/Collab');
 const Compte = require('../../Modele/CompteModel/Compte');
+const Site = require('../../Modele/Structure/Site');
 const TestDepartement = require('../../Modele/Structure/TestDepartement');
 const TestPoste = require('../../Modele/Structure/TestPoste');
 
@@ -18,6 +19,10 @@ router.get('/:id/profile', async(req, res) => {
                 {
                     model : Collab,
                     include : [
+                        {
+                            model : Site,
+                            as:'sites'
+                        },
                         {
                             model : TestPoste,
                             as : 'poste1',

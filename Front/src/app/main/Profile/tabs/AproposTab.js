@@ -6,15 +6,16 @@ import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
-function CollaborateurProfileContent(props) {
-    const { collabData } = props
+function AproposTab(props) {
+    const { userData } = props;
     const [collabSameDepartement, setCollabSameDepartement] = useState([])
     const [collabSameProject, setCollabSameProject] = useState([])
 
-    const collabId = collabData.Collab?.id
-    const collabDepartement = collabData.Collab?.departement
-    const collabProjet = collabData.Collab?.projet
+    const collabId = userData.Collab?.id
+    const collabDepartement = userData.Collab?.departement
+    const collabProjet = userData.Collab?.projet
 
     const fetchCollabData = () => {
         axios.get(`http://localhost:4000/api/collaborateur/sameDepartement/${collabId}/${collabDepartement}`)
@@ -34,18 +35,24 @@ function CollaborateurProfileContent(props) {
 
     const fetchCollabProjet = () => {
         axios.get(`http://localhost:4000/api/collaborateur/sameProject/${collabId}/${collabProjet}`)
-        .then((response) => {
-            setCollabSameProject(response.data)
-            console.log(response.data)
-        })
-        .catch((error) => {
-            console.error('Erreur lors de la récupération des données', error)
-        })
+            .then((response) => {
+                setCollabSameProject(response.data)
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.error('Erreur lors de la récupération des données', error)
+            })
     }
 
     useEffect(() => {
         fetchCollabProjet()
     }, [collabId, collabProjet])
+
+    const item = {
+        hidden: { opacity: 0, y: 40 },
+        show: { opacity: 1, y: 0 },
+    };
+
 
     const container = {
         show: {
@@ -55,10 +62,9 @@ function CollaborateurProfileContent(props) {
         },
     };
 
-    const item = {
-        hidden: { opacity: 0, y: 40 },
-        show: { opacity: 1, y: 0 },
-    };
+    const formattedDateBirth = moment(userData.Collab?.dateNaissance).format('DD MMMM YYYY');
+    const formattedDateDelivrance = moment(userData.Collab?.dateDelivrance).format('DD MMMM YYYY');
+    const formattedDateEmbauche = moment(userData.Collab?.dateEmbauche).format('DD MMMM YYYY')
 
     return (
         <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
@@ -73,21 +79,61 @@ function CollaborateurProfileContent(props) {
                             </div>
                             <CardContent className="px-32 py-24">
                                 <div className="mb-24">
+                                    <Typography className="font-semibold mb-4 text-15">Date de naissance</Typography>
+                                    <Typography>{formattedDateBirth}</Typography>
+                                </div>
+                                <div className="mb-24">
+                                    <Typography className="font-semibold mb-4 text-15">Lieu de naissance</Typography>
+                                    <Typography>{userData.Collab?.lieuNaissance}</Typography>
+                                </div>
+                                <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Sexe</Typography>
-                                    <Typography>{collabData.Collab?.sexe}</Typography>
+                                    <Typography> {userData.Collab?.sexe}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Adresse</Typography>
-                                    <Typography>{collabData.Collab?.quartier}</Typography>
+                                    <Typography>{userData.Collab?.lot} {userData.Collab?.quartier} {userData.Collab?.quartier}</Typography>
                                 </div>
-                                <div className="mb-24">
-                                    <Typography className="font-semibold mb-4 text-15">Site</Typography>
-                                    <Typography>{collabData.Collab?.sites?.nomSite}</Typography>
-                                </div>
-                                <div className="mb-24">
-                                    <Typography className="font-semibold mb-4 text-15">Entreprise</Typography>
-                                    <Typography>{collabData.Collab?.entreprise}</Typography>
-                                </div>
+                                {userData.Collab?.adresse2 && (
+                                    <div className="mb-24">
+                                        <Typography className="font-semibold mb-4 text-15">Deuxième Adresse</Typography>
+                                        <Typography>{userData.Collab?.adresse2}</Typography>
+                                    </div>
+                                )}
+                                {userData.Collab?.CIN && (
+                                    <div className="mb-24">
+                                        <Typography className="font-semibold mb-4 text-15">CIN</Typography>
+                                        <Typography>{userData.Collab?.CIN}</Typography>
+                                    </div>
+                                )}
+                                {userData.Collab?.dateDelivrance && (
+                                    <div className="mb-24">
+                                        <Typography className="font-semibold mb-4 text-15">Date de délivrance</Typography>
+                                        <Typography>{formattedDateDelivrance}</Typography>
+                                    </div>
+                                )}
+                                {userData.Collab?.lieuDelivrance && (
+                                    <div className="mb-24">
+                                        <Typography className="font-semibold mb-4 text-15">Lieu de délivrance</Typography>
+                                        <Typography>{userData.Collab?.lieuDelivrance}</Typography>
+                                    </div>
+                                )}
+                                {userData.Collab?.statutmatrimoniale && (
+                                    <div className="mb-24">
+                                        <Typography className="font-semibold mb-4 text-15">Statut matrimoniale</Typography>
+                                        <Typography>{userData.Collab?.statutmatrimoniale}</Typography>
+                                    </div>
+                                )}
+                                {userData.Collab?.nbEnfant && (
+                                    <div className="mb-24">
+                                        <Typography className="font-semibold mb-4 text-15">Nombre d'enfant</Typography>
+                                        <Typography>{userData.Collab?.nbEnfant}</Typography>
+                                    </div>
+                                )}
+
+
+
+
 
                             </CardContent>
 
@@ -102,57 +148,62 @@ function CollaborateurProfileContent(props) {
                             <CardContent className="px-32 py-24">
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Postes</Typography>
-                                    <Typography>{collabData.Collab?.poste1?.titrePoste}</Typography>
+                                    <Typography>{userData.Collab?.poste1?.titrePoste}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Département</Typography>
-                                    <Typography>{collabData.Collab?.departement1?.nomDepartement}</Typography>
+                                    <Typography>{userData.Collab?.departement1?.nomDepartement}</Typography>
                                 </div>
-                                {collabData.Collab?.projet1?.nomProjet && (
+                                {userData.Collab?.projet1?.nomProjet && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Projet</Typography>
-                                        <Typography>{collabData.Collab?.projet1?.nomProjet}</Typography>
+                                        <Typography>{userData.Collab?.projet1?.nomProjet}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.equipe1?.nomEquipe && (
+                                {userData.Collab?.equipe1?.nomEquipe && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Equipe</Typography>
-                                        <Typography>{collabData.Collab?.equipe1?.nomEquipe}</Typography>
+                                        <Typography>{userData.Collab?.equipe1?.nomEquipe}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.shift && (
+                                {userData.Collab?.shift && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Shift</Typography>
-                                        <Typography>{collabData.Collab?.shift}</Typography>
+                                        <Typography>{userData.Collab?.shift}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.postes?.titrePoste && (
+                                <div className="mb-24">
+                                    <Typography className="font-semibold mb-4 text-15">Site</Typography>
+                                    <Typography>{userData.Collab?.sites?.nomSite}</Typography>
+                                </div>
+                                <div className="mb-24">
+                                    <Typography className="font-semibold mb-4 text-15">Entreprise</Typography>
+                                    <Typography>{userData.Collab?.entreprise}</Typography>
+                                </div>
+                                {userData.Collab?.postes?.titrePoste && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Poste</Typography>
-                                        <Typography>{collabData.Collab?.postes?.titrePoste}</Typography>
+                                        <Typography>{userData.Collab?.postes?.titrePoste}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.departements?.nomDepartement && (
+                                {userData.Collab?.departements?.nomDepartement && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Département</Typography>
-                                        <Typography>{collabData.Collab?.departements?.nomDepartement}</Typography>
+                                        <Typography>{userData.Collab?.departements?.nomDepartement}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.projets?.nomProjet && (
+                                {userData.Collab?.projets?.nomProjet && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Projet</Typography>
-                                        <Typography>{collabData.Collab?.projets?.nomProjet}</Typography>
+                                        <Typography>{userData.Collab?.projets?.nomProjet}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.projets?.equipes && (
+                                {userData.Collab?.projets?.equipes && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Equipe</Typography>
-                                        <Typography>{collabData.Collab?.projets?.equipes}</Typography>
+                                        <Typography>{userData.Collab?.projets?.equipes}</Typography>
                                     </div>
                                 )}
-
-
-
                             </CardContent>
 
                         </Card>
@@ -165,13 +216,19 @@ function CollaborateurProfileContent(props) {
                             <CardContent className="px-32 py-24">
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Email</Typography>
-                                    <Typography>{collabData.email}</Typography>
+                                    <Typography>{userData.email}</Typography>
                                 </div>
 
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Téléphone</Typography>
-                                    <Typography>{collabData.Collab?.tel}</Typography>
+                                    <Typography>{userData.Collab?.tel}</Typography>
                                 </div>
+                                {userData.Collab?.tel2 && (
+                                    <div className="mb-24">
+                                        <Typography className="font-semibold mb-4 text-15">Deuxième Téléphone</Typography>
+                                        <Typography>{userData.Collab?.tel2}</Typography>
+                                    </div>
+                                )}
                             </CardContent>
 
                         </Card>
@@ -208,7 +265,7 @@ function CollaborateurProfileContent(props) {
                             </CardContent>
                         </Card>
                         {collabSameProject.length != 0 && (
-                                <Card component={motion.div} variants={item} className="w-full mb-32">
+                            <Card component={motion.div} variants={item} className="w-full mb-32">
                                 <div className="flex items-center px-32 pt-24">
                                     <Typography className="flex flex-1 text-2xl font-semibold leading-tight">
                                         De la même projet
@@ -239,7 +296,7 @@ function CollaborateurProfileContent(props) {
                                 </CardContent>
                             </Card>
                         )}
-                    
+
 
                     </div>
                 </div>
@@ -249,4 +306,4 @@ function CollaborateurProfileContent(props) {
     )
 }
 
-export default CollaborateurProfileContent
+export default AproposTab

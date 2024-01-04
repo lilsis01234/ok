@@ -571,7 +571,7 @@ router.get('/search', async (req, res) => {
                     { prenom: { [Op.like]: `%${q}%` } },
                     { dateNaissance: { [Op.like]: `%${q}%` } },
                     { entreprise: { [Op.like]: `%${q}%` } },
-                    Sequelize.literal(`site.nomSite LIKE '%${q}%'`),
+                    Sequelize.literal(`sites.nomSite LIKE '%${q}%'`),
                     Sequelize.literal(`poste1.titrePoste LIKE '%${q}%'`),
                     Sequelize.literal(`departement1.nomDepartement LIKE '%${q}%'`),
                     Sequelize.literal(`projet1.nomProjet LIKE '%${q}%'`)

@@ -59,6 +59,7 @@ function CollaborateurListItem(props) {
     const methods = useForm({
         mode: 'onChange',
         defaultValues: {},
+        suppressHydrationWarning: true,
         resolver: yupResolver(schema)
     })
 

@@ -32,7 +32,7 @@ function UpdatePassword() {
             return;
         }
 
-        axios.put(`http://localhost:4000/api/compte_collaborateur/${idUser}/edit`, { password })
+        axios.put(`http://localhost:4000/api/compte_collaborateur/${idUser}/editPassword`, { password })
             .then((response) => {
                 alert("Le mot de passe modifié avec succès")
                 navigate("/settings/account");

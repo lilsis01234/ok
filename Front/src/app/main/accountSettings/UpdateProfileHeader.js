@@ -8,7 +8,7 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 
-function CollaborateurItemHeader({ formValues }) {
+function UpdateProfileHeader({ formValues }) {
     const methods = useFormContext();
     const { formState, watch, getValues } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
@@ -16,61 +16,32 @@ function CollaborateurItemHeader({ formValues }) {
     const { id, nom, prenom, dateNaissance, lieuNaissance, sexe,
         lot, quartier, ville, adresse2, tel, tel2, telurgence,
         CIN, dateDelivrance, lieuDelivrance, statutmatrimoniale, nbEnfant,
-        dateEmbauche, site, image, entreprise, numCNAPS, shift, poste, poste2,
-        departement, departement2, projet, projet2, equipe, equipe2, email, matricule
+        image, numCNAPS, matricule
     } = formValues
 
     const theme = useTheme();
     const navigate = useNavigate();
 
-
     const data = {
-        nom, prenom, dateNaissance, lieuNaissance, sexe,
+        id, nom, prenom, dateNaissance, lieuNaissance, sexe,
         lot, quartier, ville, adresse2, tel, tel2, telurgence,
         CIN, dateDelivrance, lieuDelivrance, statutmatrimoniale, nbEnfant,
-        dateEmbauche, site, image, entreprise, numCNAPS, shift, poste, poste2,
-        departement, departement2, projet, projet2, equipe, equipe2, email, matricule
+        image, numCNAPS, matricule
     }
 
 
     const handleSaveCollaborateur = async () => {
-        if (id) {
-            axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },})
-                .then(response => {
-                    alert('Information collaborateur mise à jour avec succès')
-                    console.log(response)
-                    navigate('/manage/collaborator')
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        } else {
-            axios.post('http://localhost:4000/api/collaborateur/new', data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },})
-                .then(response => {
-                    alert('Collaborateur ajouté avec succès')
-                    console.log(response)
-                    navigate('/manage/collaborator')
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
+        axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data)
+            .then(response => {
+                alert('Information collaborateur mise à jour avec succès')
+                console.log(response)
+                navigate('/settings/account')
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
     }
-
-    const handleArchiveCollaborateur = async() => {
-        navigate(`/manage/collaborator/archive/${id}`)
-    }
-
-
-
-
-
 
 
     return (
@@ -85,7 +56,7 @@ function CollaborateurItemHeader({ formValues }) {
                             className="flex items-center sm:mb-12"
                             component={Link}
                             role="button"
-                            to="/manage/collaborator"
+                            to="/settings/account"
                             color="inherit"
                         >
                             <FuseSvgIcon size={20}>
@@ -93,7 +64,7 @@ function CollaborateurItemHeader({ formValues }) {
                                     ? 'heroicons-outline:arrow-sm-left'
                                     : 'heroicons-outline:arrow-sm-right'}
                             </FuseSvgIcon>
-                            <span className="flex mx-4 font-medium">Collaborateurs</span>
+                            <span className="flex mx-4 font-medium">Retourner à la page précédante</span>
                         </Typography>
                     </motion.div>
                     <div className="flex items-center max-w-full">
@@ -102,8 +73,8 @@ function CollaborateurItemHeader({ formValues }) {
                             initial={{ x: -20 }}
                             animate={{ x: 0, transition: { delay: 0.3 } }}
                         >
-                            <Typography className="text-16 sm:text-20 truncate font-semibold">{nom || 'Nouveau collaborateur'} </Typography>
-                            <Typography variant="caption" className="font-medium"> Détail du collaborateur</Typography>
+                            <Typography className="text-16 sm:text-20 truncate font-semibold">{nom} {prenom}</Typography>
+                            <Typography variant="caption" className="font-medium"> Mon profil</Typography>
                         </motion.div>
                     </div>
                 </div>
@@ -112,22 +83,10 @@ function CollaborateurItemHeader({ formValues }) {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
                 >
-                    {id && (
-                         <Button
-                         className="whitespace-nowrap mx-4"
-                         variant="contained"
-                         color="error"
-                     //  disabled={!isDirty  || !isValid}
-                      onClick={handleArchiveCollaborateur}
-                     >
-                         Archiver
-                     </Button>
-                    )}
                     <Button
                         className="whitespace-nowrap mx-4"
                         variant="contained"
                         color="secondary"
-                        //  disabled={!isDirty  || !isValid}
                         onClick={handleSaveCollaborateur}
                     >
                         Enregistrer
@@ -138,4 +97,4 @@ function CollaborateurItemHeader({ formValues }) {
     )
 }
 
-export default CollaborateurItemHeader
+export default UpdateProfileHeader

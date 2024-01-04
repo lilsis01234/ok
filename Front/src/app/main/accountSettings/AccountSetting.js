@@ -21,6 +21,7 @@ function AccountSetting() {
       }
 
       const link_password = '/setting/account/password'
+      const link_profile = '/settings/account/profile'
     return (
         <div className="flex grow shrink-0 flex-col items-center container p-24 sm:p-40">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.1 } }}>
@@ -58,7 +59,7 @@ function AccountSetting() {
                   <motion.div variants={item} className="min-w-full sm:min-w-224 min-h-360">
                     <Card 
                          component={Link}
-                        //  to={link}
+                         to={link_profile}
                          role="button"
                          className="flex flex-col items-start w-full h-full p-24 rounded-lg shadow rounded-lg hover:shadow-xl transition-shadow duration-150 ease-in-out"
                     >

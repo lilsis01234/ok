@@ -23,6 +23,10 @@ router.get('/all', async (req, res) => {
                     attributes: ['id', 'nom', 'prenom', 'matricule', 'image'],
                     include: [
                         {
+                            model : Site,
+                            as:'sites'
+                        },
+                        {
                             model: TestPoste,
                             as: 'poste1',
                         }, {
