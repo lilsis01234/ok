@@ -206,12 +206,42 @@ const loadBackOfficeNavigation = () => {
           url: 'business/manage/site'
         }
       ]
-    }, {
+    },{
+      id : 'importExport',
+      title : 'Importer ',
+      type : 'group',
+      auth: {
+        role: ['SuperAdmin'],
+      },
+      children : [
+        {
+          id : 'import.collabData',
+          title : 'Données collaborateurs',
+          type : 'item',
+          icon : 'heroicons-outline:folder-add',
+          url : '/import-data/collaborateurs',
+          auth: {
+            role: ['SuperAdmin'],
+          },
+        }, {
+          id : 'import.entreprise',
+          title : 'Données Entreprises',
+           
+          type : 'item',
+          icon : 'heroicons-outline:folder-add',
+          url : '/import-data/entreprise',
+          auth: {
+            role: ['SuperAdmin'],
+          },
+        }
+      ]
+    },
+    {
           id : 'settings',
           title : 'Paramètres',
           type : 'group',
           auth: {
-            role: ['SuperAdmin'],
+            role: ['SuperAdmin', 'Admin'],
           },
           children : [
             {
@@ -240,9 +270,9 @@ const loadBackOfficeNavigation = () => {
                   auth: {
                     role: ['SuperAdmin'],
                   },
-                }
+                }, 
               ]
-            }
+            }, 
           ]
         }
   ]

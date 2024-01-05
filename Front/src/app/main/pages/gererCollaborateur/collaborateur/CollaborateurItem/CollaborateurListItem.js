@@ -28,22 +28,22 @@ const schema = yup.object().shape(
     //     .required('Veuillez entrer une matricule')
     // }, 
     {
-        nom : yup
+        nom: yup
             .string()
             .required('Veuillez entrer un nom')
     }, {
-       dateEmbauche : yup
-            .date()
-            .required('Veuillez entrer une date d\'embauche') 
-    }, {
-        poste : yup
-             .string()
-             .required('Veuillez entrer une poste') 
-     }, {
-        departement : yup
-             .string()
-             .required('Veuillez entrer un département') 
-     },
+    dateEmbauche: yup
+        .date()
+        .required('Veuillez entrer une date d\'embauche')
+}, {
+    poste: yup
+        .string()
+        .required('Veuillez entrer une poste')
+}, {
+    departement: yup
+        .string()
+        .required('Veuillez entrer un département')
+},
 );
 
 
@@ -63,8 +63,8 @@ function CollaborateurListItem(props) {
         resolver: yupResolver(schema)
     })
 
-    
-    const { reset, watch, control, onChange, fomState } =  methods || {};
+
+    const { reset, watch, control, onChange, fomState } = methods || {};
     const form = watch();
 
 
@@ -97,7 +97,7 @@ function CollaborateurListItem(props) {
     }, [collaborateurId])
 
     useEffect(() => {
-        if(!collab){
+        if (!collab) {
             return;
         }
         reset(collab);
@@ -139,7 +139,7 @@ function CollaborateurListItem(props) {
                     to="/manage/collaborator"
                     color="inherit"
                 >
-                   Retourner à la liste des collaborateurs
+                    Retourner à la liste des collaborateurs
                 </Button>
             </motion.div>
         )
@@ -156,7 +156,7 @@ function CollaborateurListItem(props) {
     return (
         <FormProvider {...methods}>
             <FusePageCarded
-                header={<CollaborateurItemHeader formValues={form}/>}
+                header={<CollaborateurItemHeader formValues={form} />}
                 content={
                     <>
                         <Tabs
@@ -178,25 +178,25 @@ function CollaborateurListItem(props) {
                         </Tabs>
                         <div className="p-16 sm:p-24 max-w-3xl">
                             <div className={tabValue !== 0 ? 'hidden' : ''}>
-                                <BasicInfo methods={methods} formValues={form}/>
+                                <BasicInfo methods={methods} formValues={form} />
                             </div>
                             <div className={tabValue !== 1 ? 'hidden' : ''}>
-                                <AdresseInfo methods={methods} formValues={form}/>
+                                <AdresseInfo methods={methods} formValues={form} />
                             </div>
                             <div className={tabValue !== 2 ? 'hidden' : ''}>
-                                <ContactInfo methods={methods} formValues={form} isEdit={editData}/>
+                                <ContactInfo methods={methods} formValues={form} isEdit={editData} />
                             </div>
                             <div className={tabValue !== 3 ? 'hidden' : ''}>
-                                <MatrimonialeInfo methods={methods} formValues={form}/>
+                                <MatrimonialeInfo methods={methods} formValues={form} />
                             </div>
                             <div className={tabValue !== 4 ? 'hidden' : ''}>
-                                <ProfessionalInfo methods={methods} formValues={form}/>
+                                <ProfessionalInfo methods={methods} formValues={form} />
                             </div>
                             <div className={tabValue !== 5 ? 'hidden' : ''}>
-                                <SecondProfessionalInfo methods={methods} formValues={form}/>
+                                <SecondProfessionalInfo methods={methods} formValues={form} />
                             </div>
                             <div className={tabValue !== 6 ? 'hidden' : ''}>
-                                <PictureCollab methods={methods} formValues={form}/>
+                                <PictureCollab methods={methods} formValues={form} />
                             </div>
 
                         </div>

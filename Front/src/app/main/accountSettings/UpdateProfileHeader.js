@@ -1,14 +1,19 @@
 import { Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { useSelect } from '@mui/base';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser, setUser } from 'app/store/userSlice';
+import JwtService from 'src/app/auth/services/jwtService';
 
 function UpdateProfileHeader({ formValues }) {
+
     const methods = useFormContext();
     const { formState, watch, getValues } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
@@ -29,12 +34,42 @@ function UpdateProfileHeader({ formValues }) {
         image, numCNAPS, matricule
     }
 
+    //Pour mettre à jour le redux après le modification du profil
+    const user = useSelector(selectUser)
+
+    const userId = user.data?.CompteId
+    const [userData, setUserData] = useState();
+    const dispatch = useDispatch();
+
+    const fetchUserDataConnected = () => {
+        axios.get(`http://localhost:4000/api/user/${userId}/profile`)
+        .then(response => {
+            setUserData(response.data)
+            console.log(response.data)
+        })
+        .catch(error => {
+            console.error('Erreur lors de la récupération des informations des utilisateurs connectés')
+        })
+    }
+
+    useEffect(()=> {
+       fetchUserDataConnected()
+    }, [userId])
+
 
     const handleSaveCollaborateur = async () => {
-        axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data)
+        axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then(response => {
+                
                 alert('Information collaborateur mise à jour avec succès')
-                console.log(response)
+                // console.log(response)
+                // dispatch(setUser(userData))
+                // window.location.reload()
+                // JwtService.signInWithToken()
                 navigate('/settings/account')
             })
             .catch(error => {

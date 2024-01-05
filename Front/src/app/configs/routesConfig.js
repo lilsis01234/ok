@@ -37,6 +37,7 @@ import ForgotPasswordPagesConfig from '../main/forgotPassword/ForgotPasswordPage
 import ResetPasswordPageConfig from '../main/resetPassword/ResetPasswordPageConfig';
 import AccountSettingsConfig from '../main/accountSettings/AccountSettingConfig';
 import ProfileConfig from '../main/Profile/ProfileConfig';
+import ImportDataPageConfig from '../main/pages/ImportData/ImportDataPageConfig';
 
 
 
@@ -55,6 +56,7 @@ const routeConfigs = [
   ResetPasswordPageConfig,
   AccountSettingsConfig,
   ProfileConfig,
+  ImportDataPageConfig,
   //Gestion des Permission et des roles,
   GererPermissionConfig,
   GererRoleHierarchiqueConfig,

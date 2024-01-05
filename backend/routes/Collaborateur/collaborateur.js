@@ -58,6 +58,9 @@ function generateRandomPassword() {
     return password;
 }
 
+//pour supprimer l'image dans la modification
+const fs = require('fs');
+
 //Ajouter un nouvel utilisateur
 router.post('/new', upload.single('image'), async (req, res) => {
     try {
@@ -328,6 +331,13 @@ router.put('/:id/edit', upload.single('image'), async (req, res) => {
         if (!updateCollab) {
             return res.status(404).json({ error: 'Collaborateur introuvable' });
         }
+
+        if (image && imageCollab && fs.existsSync(imageCollab)){
+            fs.unlinkSync(imageCollab)
+        }
+
+
+
         const updatedCollab = await updateCollab.update({
             matricule: req.body.matricule,
             nom: req.body.nom,
