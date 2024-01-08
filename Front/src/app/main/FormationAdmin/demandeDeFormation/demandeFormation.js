@@ -3,12 +3,13 @@ import axios from 'axios'
 import './demandeFormation.css'
 import { Link } from 'react-router-dom'
 import { Typography} from '@mui/material'
-import MesDemandes from './MesDemandes'
+import MesDemandes from '../MesDemandes/MesDemandes'
 
 
 const DemandeFormations = () => {
   const[DemandeFormations,setDemandes] = useState([])
-
+  const[DemandeConsExt, setDemandeConsExt] = useState([])
+  const[DemandeCoatch, setDemandeCoatch] = useState([])
   const user = JSON.parse(localStorage.getItem('user'));
   const role = user.RoleHierarchique.roleHierarchique;
   console.log(role)
@@ -27,6 +28,13 @@ const DemandeFormations = () => {
 
   const Desapprouver=(id)=>{
     console.log("demande refusé pour n°" + id);
+    axios.post(`http://localhost:4000/api/demande_formation/desapprouver/${id}`)
+    .then(res=>{
+      console.log(res)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
   }
 
   useEffect(()=>{
@@ -37,7 +45,23 @@ const DemandeFormations = () => {
         console.log(res.data)
       })
     .catch(err=>console.log(err))
-  })
+
+    axios.get('http://localhost:4000/api/demande_formation/allWithoutForm')
+    .then((res)=>
+      { 
+        setDemandeConsExt(res.data)
+        console.log(res.data)
+      })
+    .catch(err=>console.log(err))
+
+    axios.get('http://localhost:4000/api/demande_formation/alldemande/coatch')
+    .then((res)=>
+      { 
+        setDemandeCoatch(res.data)
+        console.log(res.data)
+      })
+    .catch(err=>console.log(err))
+  },[])
   
   return (
     <div className="training-request-container">
@@ -49,8 +73,11 @@ const DemandeFormations = () => {
       {(role === 'SuperAdministrateur' || role === 'rh') &&
       (
       <>
-      <Typography>Les demandes de formation</Typography>
       
+      
+      {DemandeFormations.length !== 0 && 
+      <Typography>Les demandes de formation</Typography>
+      }
       {DemandeFormations.map((demande, index) => (
         <div key={index} className="training-request-item">
           <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
@@ -60,11 +87,49 @@ const DemandeFormations = () => {
           <button onClick={()=>{Desapprouver(demande.id)}}>Desapprouver</button>
         </div>
       ))}
+
+      
+      {DemandeConsExt.length !== 0 && 
+        <Typography>Les demandes approuvées sans consultant externe</Typography>
+      }
+      {DemandeConsExt.map((demande, index) => (
+        <div key={index} className="training-request-item">
+          <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
+          <Typography className="theme">{demande.theme}</Typography>
+          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus</Link><br></br>
+        </div>
+      ))}
+
+
       </>
       )  
     }
-    </div>
+
+    {(role === 'Coatch' || role === 'SuperAdministrateur') && (
+        <>
+      <Typography>Les demandes de formation pour le coatch</Typography>
+      
+      {DemandeCoatch.map((demande, index) => (
+        <div key={index} className="training-request-item">
+          <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
+          <Typography className="theme">{demande.theme}</Typography>
+          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link><br></br>
+          
+          {role === 'Coatch' &&
+          <>
+          <button onClick={()=>{Approuver(demande.id)}}>Approuver</button><br></br>
+          <button onClick={()=>{Desapprouver(demande.id)}}>Desapprouver</button>
+          </>
+          }
+
+        </div>
+      ))}
+      </>
   )
+}
+
+</div>
+)
 }
 
 export default DemandeFormations

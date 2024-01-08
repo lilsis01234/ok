@@ -19,15 +19,15 @@ router.get('/all_formations', async(req,res) => {
             {
               model: Collaborateur,
               as: 'Auteur',
-              attributes: ['nom', 'prenom'],
+              attributes: ['id','nom', 'prenom','image'],
             },
             {
               model: Collaborateur,
               as: 'Formateur',
-              attributes: ['nom', 'prenom'],
+              attributes: ['id','nom', 'prenom','image'],
             },
           ],
-          attributes: ['id', 'theme', 'description', 'auteur','formateur'],
+          attributes: ['id', 'theme', 'description', 'auteur','formateur','approbation'],
             where:
             {
               destinataireDemande: null,
@@ -46,15 +46,15 @@ router.get('/all/admin', async(req,res)=>{
             {
               model: Collaborateur,
               as: 'Auteur',
-              attributes: ['nom', 'prenom'],
+              attributes: ['nom', 'prenom','image'],
             },
             {
               model: Collaborateur,
               as: 'Formateur',
-              attributes: ['nom', 'prenom'],
+              attributes: ['id','nom', 'prenom','image'],
             },
           ],
-          attributes: ['id', 'theme', 'description', 'auteur','formateur','formateurExt','destinataireDemande'],
+          attributes: ['id', 'theme', 'description', 'auteur','formateur','formateurExt','destinataireDemande','approbation'],
             where:
             {
               approbation:1,
@@ -77,28 +77,17 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                         formation: formationId,
                     },
             });
-
-            const seances = await Seance.findAll({
-              where: {
-                  module: modules,
-              },
-              include: [
-                  {
-                      model: Module, 
-                      attributes: ['id', 'titreModule', 'description'],                   
-                  },
-              ],
-            });
           
             const formation = await Formation.findByPk(formationId, {
               include: [
                   {
                       model: Collaborateur,
                       as: 'Auteur',
-                      attributes: ['nom', 'prenom'],
+                      attributes: ['nom', 'prenom','image'],
                   },
                   {
                       model: Role2,
+                      as: 'RoleHierarchique',
                       attributes: ['roleHierarchique'],
                   },
                   {
@@ -113,7 +102,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
                 return res.status(404).json({ error: 'Formation introuvable' });
             }
 
-            res.status(200).json({formation,modules,seances});
+            res.status(200).json({formation,modules});
         
         } 
         catch (error) {
@@ -131,7 +120,7 @@ router.get('/formations/:idPersonne',async(req,res)=>{
         {
           model: Collaborateur,
           as: 'Auteur',
-          attributes: ['nom', 'prenom'],
+          attributes: ['nom', 'prenom','image'],
         },
         {
           model: Role2,
@@ -181,5 +170,26 @@ router.post('/addFormation',async(req,res)=>{
     }
 })
 
+router.put('/edit/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const formAediter = await Formation.findByPk(id);
+
+    if (!formAediter) {
+      return res.status(404).json({ error: 'Formation introuvable' });
+    }
+
+    const editedFormation = await formAediter.update({
+      theme: req.body.theme,
+      description: req.body.description
+    });
+
+    res.status(201).json(editedFormation);
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour', error);
+    res.status(500).json({ error: 'Erreur lors de la mise à jour' });
+  }
+});
 
 module.exports = router;

@@ -161,7 +161,7 @@ function ActualitiesTable({searchResults}) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.categorie && n.categorie.map((categorie) => ( 
+                      { n.categorie && n.categorie.map((categorie) => ( 
                         <Typography>
                            {categorie.nom}
                         </Typography>

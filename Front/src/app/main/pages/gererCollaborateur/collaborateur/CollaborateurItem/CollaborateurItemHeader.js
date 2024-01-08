@@ -35,7 +35,10 @@ function CollaborateurItemHeader({ formValues }) {
 
     const handleSaveCollaborateur = async () => {
         if (id) {
-            axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data)
+            axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },})
                 .then(response => {
                     alert('Information collaborateur mise à jour avec succès')
                     console.log(response)
@@ -45,7 +48,10 @@ function CollaborateurItemHeader({ formValues }) {
                     console.log(error)
                 })
         } else {
-            axios.post('http://localhost:4000/api/collaborateur/new', data)
+            axios.post('http://localhost:4000/api/collaborateur/new', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },})
                 .then(response => {
                     alert('Collaborateur ajouté avec succès')
                     console.log(response)

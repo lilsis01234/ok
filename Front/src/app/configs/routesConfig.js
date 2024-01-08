@@ -13,7 +13,6 @@ import dashboardsConfigs from '../Dashboard/dashboardsConfig';
 //ModuleProfile
 import ContactConfig from '../main/pages/Contacts/ContactAppConfig';
 import StructureAppConfig from '../main/pages/gererStructure/StructureAppConfig';
-import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
 import DirectionConfig from '../main/pages/Direction/DirectionConfig';
 import EntrepriseStrucutureConfig from '../main/pages/EntrepriseStructure/EntrepriseStructureConfig';
 
@@ -21,7 +20,9 @@ import EntrepriseStrucutureConfig from '../main/pages/EntrepriseStructure/Entrep
 //Module Formation
 import CalendarConfig from '../main/CalendarSeance/CalendarSeanceConfig';
 import CalendarFormConfig from '../main/CalendarSeance/calendrierForm/CalendarFormConfig';
-import FormationConfig from '../main/FormationAdmin/demandeDeFormation/FormationConfig';
+import FormationConfig from '../main/FormationAdmin/ListeFormations/FormationConfig';
+import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
+import CongeConfig from '../main/CalendarCongé/CongéConfig';
 
 
 //Module d'actualité
@@ -32,13 +33,17 @@ import GererCompteConfig from '../main/pages/gererCompte/gererCompteConfig';
 import GererRoleHierarchiqueConfig from '../main/pages/GererRoleHierarchique/GererRoleHierarchiqueConfig';
 import GererPermissionConfig from '../main/pages/GererPermission/GererPermissionConfig';
 import CollaborateurAppConfig from '../main/pages/Collaborateur/CollaborateurAppConfig';
-
+import ForgotPasswordPagesConfig from '../main/forgotPassword/ForgotPasswordPagesConfig';
+import ResetPasswordPageConfig from '../main/resetPassword/ResetPasswordPageConfig';
+import AccountSettingsConfig from '../main/accountSettings/AccountSettingConfig';
+import ProfileConfig from '../main/Profile/ProfileConfig';
+import ImportDataPageConfig from '../main/pages/ImportData/ImportDataPageConfig';
 
 
 
 const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
-  ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,
+  ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,CongeConfig,
   //Module Profil
   // ContactConfig,
   CollaborateurAppConfig,
@@ -47,6 +52,11 @@ const routeConfigs = [
   GererCompteConfig,
   DirectionConfig,
   EntrepriseStrucutureConfig,
+  ForgotPasswordPagesConfig,
+  ResetPasswordPageConfig,
+  AccountSettingsConfig,
+  ProfileConfig,
+  ImportDataPageConfig,
   //Gestion des Permission et des roles,
   GererPermissionConfig,
   GererRoleHierarchiqueConfig,
@@ -60,7 +70,7 @@ const routes = [
   {
     path: '/',
     element: <Navigate to="/sign-in" />,
-    auth : settingsConfig.defaultAuth
+    // auth : settingsConfig.defaultAuth
   },
   {
     path: 'loading',

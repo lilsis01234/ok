@@ -6,6 +6,9 @@ const TestPoste = require('../../Modele/Structure/TestPoste');
 const TestDepartement = require('../../Modele/Structure/TestDepartement');
 const RoleHierarchique = require('../../Modele/RoleModel/RoleHierarchique');
 const Role = require('../../Modele/RoleModel/Role');
+const Projet = require('../../Modele/Structure/Projet');
+const Equipe = require('../../Modele/Structure/Equipe');
+const Site = require('../../Modele/Structure/Site');
 
 
 
@@ -19,6 +22,10 @@ router.get('/all', async (req, res) => {
                     model: Collab,
                     attributes: ['id', 'nom', 'prenom', 'matricule', 'image'],
                     include: [
+                        {
+                            model : Site,
+                            as:'sites'
+                        },
                         {
                             model: TestPoste,
                             as: 'poste1',
@@ -62,6 +69,10 @@ router.get('/view/:id', async(req, res) => {
                     model: Collab,
                     attributes: ['id', 'nom', 'prenom', 'matricule', 'image'],
                     include: [
+                        {
+                            model : Site,
+                            as:'sites'
+                        },
                         {
                             model: TestPoste,
                             as: 'poste1',
@@ -158,6 +169,61 @@ router.delete('/:id/delete', async (req, res) => {
     catch (error) {
         console.error('Erreur lors de la suppression du compte: ', error)
         res.status(500).json({ message: 'Erreur lors de la suprresion du compte' })
+    }
+})
+
+
+//Récupérer tous les informations d'un utilisateurs
+router.get('/collab/view/:id', async(req, res) => {
+    const {id} = req.params;
+    try {
+        const compteCollab = await Compte.findByPk(id, {
+            attributes : ['id', 'email'],
+            include : [
+                {
+                    model : Collab,
+                    attributes : ['id', 'matricule', 'nom', 'prenom', 'sexe', 'quartier', 'tel', 'site', 'image', 'entreprise', 'shift', 'poste', 'poste2', 'departement', 'departement2', 'projet', 'projet2', 'equipe', 'equipe2'], 
+                    include : [
+                        {
+                            model : Site,
+                            as:'sites'
+                        },
+                        {
+                            model: TestPoste,
+                            as: 'poste1',
+                        }, {
+                            model: TestPoste,
+                            as: 'postes',
+                        }, {
+                            model: TestDepartement,
+                            as: 'departement1',
+                        }, {
+                            model: TestDepartement,
+                            as: 'departements',
+                        }, {
+                            model : Projet,
+                            as : 'projet1'
+                        }, {
+                            model : Projet,
+                            as : 'projets'
+                        }, {
+                            model : Equipe,
+                            as : 'equipe1'
+                        }, {
+                            model : Equipe,
+                            as : 'equipes'
+                        }
+                    ]
+                
+                }
+            ]
+           
+        })
+
+        res.status(200).json(compteCollab)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message : 'Une erreur s\'est produite dans la récupération des données'})
     }
 })
 

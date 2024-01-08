@@ -38,7 +38,7 @@ function BasicDepartementInfo(props) {
                         error={!!errors.nomDepartement}
                         required
                         helperText={errors?.nomDirection?.message}
-                        label="Departement Name"
+                        label="Nom du Département"
                         autoFocus
                         id="nomDepartement"
                         variant="outlined"

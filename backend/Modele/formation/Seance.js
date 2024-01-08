@@ -21,14 +21,6 @@ Seance.init(
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    module: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Module,
-        key: 'id',
-      },
-    },
     formation:{
       type:DataTypes.INTEGER,
       allowNull:false,
@@ -60,8 +52,8 @@ Seance.init(
   }
 );
 
-Seance.belongsTo(Module, {
-  foreignKey: 'module',
+Seance.belongsTo(Formation, {
+  foreignKey: 'formation',
 });
 
 Seance.belongsToMany(Collaborateur, { through: ParticipantSeance, foreignKey: 'seance' });

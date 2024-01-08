@@ -9,6 +9,7 @@ import { createRoot } from 'react-dom/client';
 import App from './app/App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
+// import { useEffect } from 'react';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -19,4 +20,6 @@ reportWebVitals();
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
+// index.js
+  
 serviceWorker.unregister();

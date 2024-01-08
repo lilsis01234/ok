@@ -27,6 +27,7 @@ const Equipe = require('../../Modele/Structure/Equipe');
 const excel = require('exceljs');
 const { type } = require('os');
 const { Sequelize, Op } = require('sequelize');
+const Site = require('../../Modele/Structure/Site');
 
 //Conserver l'image dans le mémoire
 const storages = multer.memoryStorage();
@@ -56,6 +57,9 @@ function generateRandomPassword() {
     }
     return password;
 }
+
+//pour supprimer l'image dans la modification
+const fs = require('fs');
 
 //Ajouter un nouvel utilisateur
 router.post('/new', upload.single('image'), async (req, res) => {
@@ -182,6 +186,10 @@ router.get('/all', async (req, res) => {
         const collaborateur = await Collab.findAll({
             include: [
                 {
+                    model : Site,
+                    as:'sites'
+                },
+                {
                     model: TestPoste,
                     as: 'poste1',
                 }, {
@@ -226,6 +234,10 @@ router.get('/newcollab', async (req, res) => {
             limit: 10,
             include: [
                 {
+                    model : Site,
+                    as:'sites'
+                },
+                {
                     model: TestPoste,
                     as: 'poste1',
                 }, {
@@ -267,6 +279,10 @@ router.get('/view/:id', async (req, res) => {
     try {
         const collaborateur = await Collab.findByPk(id, {
             include: [
+                {
+                    model : Site,
+                    as:'sites'
+                },
                 {
                     model: TestPoste,
                     as: 'poste1',
@@ -315,6 +331,13 @@ router.put('/:id/edit', upload.single('image'), async (req, res) => {
         if (!updateCollab) {
             return res.status(404).json({ error: 'Collaborateur introuvable' });
         }
+
+        if (image && imageCollab && fs.existsSync(imageCollab)){
+            fs.unlinkSync(imageCollab)
+        }
+
+
+
         const updatedCollab = await updateCollab.update({
             matricule: req.body.matricule,
             nom: req.body.nom,
@@ -423,6 +446,7 @@ router.post('/import-excel', uploads.single('excel'), async (req, res) => {
 
                 if (!isEmpty) {
                     //Parcours des lignes de données à partir de la deuxième ligne
+                    const site = await Site.findOne({where : {nomSite : collab.site}})
                     const poste = await TestPoste.findOne({ where: { titrePoste: collab.poste } })
                     const poste2 = await TestPoste.findOne({ where: { titrePoste: collab.poste2 } })
                     const departement = await TestDepartement.findOne({ where: { nomDepartement: collab.departement } })
@@ -454,7 +478,7 @@ router.post('/import-excel', uploads.single('excel'), async (req, res) => {
                             statutmatrimoniale: collab.statutmatrimoniale,
                             nbEnfant: collab.nbEnfant,
                             dateEmbauche: collab.dateEmbauche,
-                            site: collab.site,
+                            site: site ? site.id : null,
                             entreprise: collab.entreprise,
                             numCNAPS: collab.shift,
                             shift: collab.numCNAPS,
@@ -556,14 +580,18 @@ router.get('/search', async (req, res) => {
                     { nom: { [Op.like]: `%${q}%` } },
                     { prenom: { [Op.like]: `%${q}%` } },
                     { dateNaissance: { [Op.like]: `%${q}%` } },
-                    { site: { [Op.like]: `%${q}%` } },
                     { entreprise: { [Op.like]: `%${q}%` } },
+                    Sequelize.literal(`sites.nomSite LIKE '%${q}%'`),
                     Sequelize.literal(`poste1.titrePoste LIKE '%${q}%'`),
                     Sequelize.literal(`departement1.nomDepartement LIKE '%${q}%'`),
                     Sequelize.literal(`projet1.nomProjet LIKE '%${q}%'`)
                 ]
             },
             include: [
+                {
+                    model : Site,
+                    as:'sites'
+                },
                 {
                     model: TestPoste,
                     as: 'poste1',
@@ -616,6 +644,10 @@ router.get('/filter', async (req, res) => {
                 ]
             },
             include: [
+                {
+                    model : Site,
+                    as:'sites'
+                },
                 {
                     model: TestPoste,
                     as: 'poste1',
@@ -724,6 +756,65 @@ router.get('/searchCollab', async (req, res) => {
         res.status(500).json({ error: 'Erreur lors de la recherche des collaborateurs' })
     }
 })
+
+
+//Afficher les collaborateurs de la même départements
+router.get('/sameDepartement/:idCollab/:idDepartement', async(req, res) => {
+    try {
+        const {idCollab, idDepartement} = req.params;
+        const collaborateur = await Collab.findAll({
+            where : {
+               id : {[Op.ne] : idCollab},
+               departement : idDepartement,
+            }, 
+            attributes : ['image', 'id', 'nom'],
+            limit : 9,
+        })
+
+        res.status(200).json(collaborateur)
+    } catch (error) {   
+        console.log('Erreur lors de la récupération des collaborateurs', error)
+        res.status(500).json({error : 'Erreur lors de la récupération des collaborateurs'})
+    }
+})
+
+
+//Afficher les collaborateur de la même projet
+router.get('/sameProject/:idCollab/:idProjet', async(req,res) => {
+    try {
+        const {idCollab, idProjet} = req.params;
+        const collaborateur = await Collab.findAll({
+            where : {
+                  id : {[Op.ne] : idCollab},
+                  projet : idProjet,
+            },
+            attributes : ['image', 'id', 'nom'],
+            limit : 9,
+        })
+
+        res.status(200).json(collaborateur)
+    } catch (error) {
+        console.log('Erreur lors de la récupération des collaborateurs', error)
+        res.status(500).json({error : 'Erreur lors de la récupéarion des collaborateurs'})
+    }
+})
+
+//Récupérer les collaborateurs de alléatoire
+router.get('/collaborateur-aleatoire', async(req, res) => {
+    try {
+        const collaborateur = await Collab.findAll({
+            order : Sequelize.literal('RAND()'),
+            limit : 4,
+            attributes : ['image', 'id', 'nom'],
+        })
+        res.status(200).json(collaborateur)
+    } catch (error) {
+        console.log('Erreur lors de la récupération des collaborateurs', error)
+        res.status(500).json({error : 'Erreur lors de la récupéarion des collaborateurs'})
+    }
+})
+
+
 
 
 

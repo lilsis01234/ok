@@ -56,6 +56,15 @@ function PosteItemHeader({ formValues }) {
         }
     }
 
+    const handleDeletePoste = async () =>{
+        const confirmation = window.confirm(`Vous voulez vraiment supprimer le poste ${titrePoste}`)
+        if(confirmation){
+            await axios.delete(`http://localhost:4000/api/poste/${id}/delete`, data)
+            alert('Poste supprimée avec succès')
+            navigate('/business/manage/Fonction')
+        }
+    }
+
 
     return (
         <div className="flex flex-col sm:flex-row flex-1 w-full items-center justify-between space-y-8 sm:space-y-0 py-32 px-24 md:px-32">
@@ -95,6 +104,17 @@ function PosteItemHeader({ formValues }) {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
             >
+                {id && (
+                    <Button
+                        className="whitespace-nowrap mx-4"
+                        variant="contained"
+                        color="error"
+                        //  disabled={!isDirty  || !isValid}
+                        onClick={handleDeletePoste}
+                    >
+                        Supprimer
+                    </Button>
+                )}
                 <Button
                     className="whitespace-nowrap mx-4"
                     variant="contained"

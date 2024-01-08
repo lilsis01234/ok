@@ -11,6 +11,7 @@ const Direction = require('../Modele/Structure/Direction')
 const Projet = require('../Modele/Structure/Projet')
 const Collaborateur = require('../Modele/CollabModel/Collaborateur')
 const Eqquipe = require('../Modele/Structure/Equipe')
+const Site = require('../Modele/Structure/Site')
 const association = require('../Modele/Structure/association')
 
 const RoleCollab = require('../Modele/RoleModel/Role');
@@ -42,7 +43,7 @@ const ActuTag = require('../Modele/ActualityModel/ActuTag');
 const associationActuTag = require('../Modele/ActualityModel/associationActuTag');
 const Permission = require('../Modele/RoleModel/Permission');
 const associationPermission = require('../Modele/RoleModel/associationPermission');
-
+const conge = require('../Modele/conge/CongeModel');
 
 const EquipeSeance = require('../Modele/formation/EquipeSeance');
 const FormationCollab = require('../Modele/formation/FormationCollab');
@@ -52,6 +53,11 @@ const associationSeanceCollab = require('../Modele/formation/associationSeanceCo
 const associationFormationEq = require('../Modele/formation/associationFormationDep');
 const associationFormationCollab= require('../Modele/formation/associationFormationCollab');
 const associationSeanceEquipe = require('../Modele/formation/associationSeanceEquipe');
+
+const DemandeConge = require('../Modele/conge/CongeModel');
+const SoldeConge = require('../Modele/conge/SoldeConge');
+const TypeConge = require('../Modele/conge/Types');
+const PieceJointe = require('../Modele/conge/PiecesJointes');
 
 //Synchronisation de la base de donnée 
 async function syncDatabase() {
