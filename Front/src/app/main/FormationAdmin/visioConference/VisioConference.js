@@ -9,28 +9,35 @@ function VisioConference() {
   const currentUserVideoRef = useRef(null);
   const peerInstance = useRef(null);
   const idParam = useParams();
-  const id = idParam.id
-  console.log(id)
-
+  const id = idParam.id;
 
   const call = (remotePeerId) => {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then((mediaStream) => {
-        currentUserVideoRef.current.srcObject = mediaStream;
-        currentUserVideoRef.current.play();
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
+      const audioDevice = devices.some((device) => device.kind === 'audioinput');
+      const videoDevice = devices.some((device) => device.kind === 'videoinput');
 
-        const call = peerInstance.current.call(remotePeerId, mediaStream);
+      const mediaConstraints = {
+        audio: audioDevice,
+        video: videoDevice,
+      };
 
-        call.on('stream', (remoteStream) => {
-          remoteVideoRef.current.srcObject = remoteStream;
-          remoteVideoRef.current.play();
+      navigator.mediaDevices.getUserMedia(mediaConstraints)
+        .then((mediaStream) => {
+          currentUserVideoRef.current.srcObject = mediaStream;
+          currentUserVideoRef.current.play();
+
+          const call = peerInstance.current.call(remotePeerId, mediaStream);
+
+          call.on('stream', (remoteStream) => {
+            remoteVideoRef.current.srcObject = remoteStream;
+            remoteVideoRef.current.play();
+          });
+        })
+        .catch((error) => {
+          console.error('Error accessing media devices:', error);
         });
-      })
-      .catch((error) => {
-        console.error('Error accessing audio devices:', error);
-      });
+    });
   };
-
 
   useEffect(() => {
     const peer = new Peer();
@@ -48,12 +55,12 @@ function VisioConference() {
   }, [id]);
 
   const handleIncomingCall = (call) => {
-    navigator.mediaDevices.getUserMedia({video:true, audio: false })
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
       .then((mediaStream) => {
         currentUserVideoRef.current.srcObject = mediaStream;
         currentUserVideoRef.current.play();
         call.answer(mediaStream);
-        call.on('stream', function (remoteStream) {
+        call.on('stream', (remoteStream) => {
           remoteVideoRef.current.srcObject = remoteStream;
           remoteVideoRef.current.play();
         });
@@ -63,11 +70,20 @@ function VisioConference() {
       });
   };
 
+  const endCall = () => {
+    const tracks = currentUserVideoRef.current.srcObject.getTracks();
+    tracks.forEach((track) => track.stop());
+
+    if (peerInstance.current) {
+      peerInstance.current.destroy();
+    }
+  };
+
   return (
     <div className="App">
-      {/* <h1>Votre id est {peerId}</h1> */}
-      {/* <input type="text" value={remotePeerIdValue} onChange={(e) => setRemotePeerIdValue(e.target.value)} />
-      <button onClick={() => call(remotePeerIdValue)}>Call</button> */}
+      <div>
+        <button onClick={endCall}>Arrêter l'appel</button>
+      </div>
       <div>
         <video ref={currentUserVideoRef} />
       </div>
