@@ -59,7 +59,7 @@ function SignInPage() {
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
         // No need to do anything, user data will be set at app/auth/AuthContexts
-          console.log('Utilisateur authentifié avec succès')
+          // console.log('Utilisateur authentifié avec succès')
           navigate('/acceuil')
           window.location.reload();
       })
