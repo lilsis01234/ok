@@ -5,6 +5,15 @@ const Tag = require('../../Modele/ActualityModel/Tag');
 //Ajouter une nouvelle étiquettes d'actualité
 router.post('/new', async (req, res) => {
     try {
+
+        const existingTag = await Tag.findOne({
+            where: { nom: req.body.nom }
+        });
+
+        if (existingTag) {
+            return res.status(400).json({ message: 'Le nom de la tag existe déjà.' });
+        }
+
         const newTag = await Tag.create({ nom: req.body.nom });
 
         const savedTag = await newTag.save();

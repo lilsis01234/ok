@@ -1,29 +1,25 @@
-import React,  { useEffect, useState} from 'react';
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import FuseLoading from "@fuse/core/FuseLoading/FuseLoading";
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
-import _ from '@lodash';
+import FuseScrollbars from "@fuse/core/FuseScrollbars/FuseScrollbars";
 import { Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { TablePagination } from "@mui/material";
 import { motion } from "framer-motion";
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import ActualitiesTableHead from './ActualitiesTableHead';
-import withRouter from '@fuse/core/withRouter';
-import moment from 'moment';
+import { Typography } from "@mui/material";
+import _ from "lodash";
 import { useNavigate } from "react-router-dom";
+import ActualitiesTableHeader from "./ActualitiesTableHeader";
+import moment from "moment";
 import 'moment/locale/fr';
-import Typography from '@mui/material/Typography';
 
 moment.locale('fr')
-
 
 function ActualitiesTable({searchResults}) {
 
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowPerPage, setRowsPerPage] = useState(10);
-  const [selected, setSelected] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState({
     direction: "asc",
     id: null,
@@ -66,25 +62,7 @@ function ActualitiesTable({searchResults}) {
   }
 
   function handleClick(item) {
-    navigate(`/apps/actuality/${item.id}`);
-  }
-
-  function handleCheck(event, id) {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
+    navigate(`/apps/actuality/${n.id}`);
   }
 
   function handleChangePage(event, value) {
@@ -114,7 +92,7 @@ function ActualitiesTable({searchResults}) {
     <div className="w-full flex flex-col min-h-full">
       <FuseScrollbars className="grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
-          <ActualitiesTableHead 
+          <ActualitiesTableHeader
             selectColladId={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
@@ -122,7 +100,6 @@ function ActualitiesTable({searchResults}) {
             rowCount={searchResults.length}
             onMenuItemClick={handleDeselect}
           />
-
           <TableBody>
             {_.orderBy(
               searchResults,
@@ -144,66 +121,69 @@ function ActualitiesTable({searchResults}) {
               .map((n) => {
                 const isSelected = selected.indexOf(n.id) !== -1;
                 return (
-                  <TableRow
+                   <TableRow
                     className="h-72 cursor-pointer"
-                    hover
-                    role="checkbox"
-                    key={n.id}
-                    onClick={(event) => handleClick(n)}
-                  >
+                        hover
+                        role="checkbox"
+                        aria-checked={isSelected}
+                        tabIndex={-1}
+                        key={n.id}
+                        selected={isSelected}
+                        onClick={(event) => handleClick(n)}
+                 >
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.titre}
+                        {n.titre}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row" >
-                      {n.Compte?.Collab?.nom} {n.Compte?.Collab?.prenom} 
+                        {n.Compte?.Collab?.nom} {n.Compte?.Collab?.prenom} 
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.categorie && n.categorie.map((categorie) => ( 
+                        {n.categorie && n.categorie.map((categorie) => ( 
                         <Typography>
-                           {categorie.nom}
+                            {categorie.nom}
                         </Typography>
                         ))} 
 
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.Type && n.Type.map((type) => ( 
-                          <Typography>
+                        {n.Type && n.Type.map((type) => ( 
+                            <Typography>
                             {type.nom}
-                          </Typography>
-                      ))} 
+                            </Typography>
+                        ))} 
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      0
+                        0
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      0
+                        0
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row" align="right">
-                      {moment(n.date_publication).format('DD MMM YYYY')}
+                        {moment(n.date_publication).format('DD MMM YYYY')}
                     </TableCell>
 
                     <TableCell className="md:pl-52 p-4 md:p-16" component="th" scope="row"  style={{ textAlign: 'right' }}>
-                      {n.etat == 'publie' ? (
+                        {n.etat == 'publie' ? (
                         <FuseSvgIcon className="text-green" size={20}>
-                          heroicons-outline:check-circle
+                            heroicons-outline:check-circle
                         </FuseSvgIcon>
-                      ) : (
+                        ) : (
                         <FuseSvgIcon className="text-red" size={20}>
-                          heroicons-outline:minus-circle
+                            heroicons-outline:minus-circle
                         </FuseSvgIcon>
-                      )}
+                        )}
                     </TableCell>
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.visibilite}
+                        {n.visibilite}
                     </TableCell>
-                  </TableRow>
+                 </TableRow>
                 );
               })}
           </TableBody>
@@ -228,4 +208,4 @@ function ActualitiesTable({searchResults}) {
   );
 }
 
-export default withRouter(ActualitiesTable);
+export default ActualitiesTable;

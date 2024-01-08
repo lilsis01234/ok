@@ -4,6 +4,15 @@ const { Actualite, Categorie, ActuCateg} = require('../../Modele/ActualityModel/
 //Ajouter une nouvelle categorie d'actualité
 router.post('/new', async (req, res) => {
     try {
+
+        const existingCategorie = await Categorie.findOne({
+            where: { nom: req.body.nom }
+        });
+
+        if (existingCategorie) {
+            return res.status(400).json({ message: 'Le nom de la catégorie existe déjà.' });
+        }
+        
         const newCategorie = await Categorie.create({ nom: req.body.nom });
 
         const savedCategorie = await newCategorie.save();
@@ -12,8 +21,8 @@ router.post('/new', async (req, res) => {
 
     }
     catch (err) {
-        console.error('Erreur lors de la création d\'une categorie actualitée: ', err);
-        res.status(201).json({ message: 'Erreur lors de la création d\'une categorie actualitée' });
+        console.error('Erreur lors de la création d\'une categorie: ', err);
+        res.status(500).json({ message: 'Erreur lors de la création d\'une categorie' });
     }
 })
 

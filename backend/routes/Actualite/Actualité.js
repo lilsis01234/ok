@@ -8,7 +8,8 @@ const fs = require('fs');
 const { Actualite, Categorie, ActuCateg} = require('../../Modele/ActualityModel/associationActuCateg');
 const {  Tag, ActuTag} = require('../../Modele/ActualityModel/associationActuTag');
 const { Type, ActuType } = require('../../Modele/ActualityModel/associationActuType');
-const { Op } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
+
 
 //Configuration du stockages des fichiers uploader
 const storage = multer.diskStorage({
@@ -453,6 +454,57 @@ router.get('/prevandnext/:id', async (req, res) => {
         res.status(500).json({ error: 'Erreur lors de la récupération des actualités précédente et suivante' });
     }
 });
+
+//Effectuer des recherches parmi les données 
+router.get('/search', async (req, res) => {
+    const { q } = req.query;
+    try {
+        const searchResult = await Actualite.findAll({
+            where: {
+                [Op.or]: [
+                    { id: { [Op.like]: `%${q}%` } },
+                    { titre: { [Op.like]: `%${q}%` } },
+                    { contenu: { [Op.like]: `%${q}%` } },
+                    { date_publication: { [Op.like]: `%${q}%` } },
+                    { extrait: { [Op.like]: `%${q}%` } },
+                    // Sequelize.literal(`"$Compte.collaborateur.nom$" LIKE '%${q}%'`),
+                    // Sequelize.literal(`"$Compte.collaborateur.prenom$" LIKE '%${q}%'`)
+                ]
+            },
+            include: [
+                {
+                    model: Compte,
+                    attributes: ["id", "email"],
+                    include : [ { model : Collab, attributes: ["nom", "prenom"]} ]
+                },
+                {
+                    model: Categorie,
+                    as: "categorie",
+                    attributes: ["nom"],
+                    through: { attributes: [] }
+                },
+                {
+                    model: Tag,
+                    as: "Tag",
+                    attributes: ["nom"],
+                    through: { attributes: [] }
+                },
+                {
+                    model: Type,
+                    as: "Type",
+                    attributes: ["nom"],
+                    through: { attributes: [] }
+                }
+            ]
+        })
+
+        res.json(searchResult)
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erreur lors de la recherche d\'actualité' })
+    }
+})
 
 //Mettre à jour un Actualité existant 
 router.put('/:id', async (req, res) => {

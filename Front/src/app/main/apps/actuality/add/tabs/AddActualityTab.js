@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -27,10 +28,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from 'app/store/userSlice';
 import FuseLoading from '@fuse/core/FuseLoading/FuseLoading';
+import SendIcon from '@mui/icons-material/Send';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 
 function AddActualityTab() {
-  
+
+
+  const [titreActualite, setTitreActualite] = useState('');
   const [wysiwygContent, setWysiwygContent] = useState('');
   const [imgMiseEnAvant, setImgMiseEnAvant] = useState('');
   const [listeCategorie, setListCategorie] = useState([]);
@@ -52,8 +57,12 @@ function AddActualityTab() {
   const [isChecked, setChecked] = useState(false);
   const [dateActuelle, setDateActuelle] = useState('');
   const [loading, setLoading] = useState(false);
+  const [privateBlock, setPrivateBlock] = useState('');
+  const [loadingBouton, setLoadingBouton] = useState(false);
 
-
+  const handleClickBtn = () => {
+    setLoadingBouton(true);
+  }
   const handleTypesChange = (event, newValues) => {
     setSelectedTypes(newValues);
   };
@@ -125,7 +134,11 @@ function AddActualityTab() {
               setIsInputCategVisible(false);
           }
         })
-        .catch(err => console.log(err)); 
+        .catch (err => {
+          dispatch(showMessage({message : err.response.data.message}));
+          setnewCategName('');
+          setIsInputCategVisible(false);
+        });
       } else {
         setBoutonDesableCateg(true);
         setIsInputCategVisible(false);
@@ -153,7 +166,11 @@ function AddActualityTab() {
               setIsInputTypeVisible(false);
           }
         })
-        .catch(err => console.log(err)); 
+        .catch (err => {
+          dispatch(showMessage({message : err.response.data.message}));
+          setnewTypeName('');
+          setIsInputTypeVisible(false);
+        }); 
       } else {
         setBoutonDesableType(true);
         setIsInputTypeVisible(false);
@@ -181,7 +198,11 @@ function AddActualityTab() {
               setIsInputTagVisible(false);
           }
         })
-        .catch(err => console.log(err)); 
+        .catch (err => {
+          dispatch(showMessage({message : err.response.data.message}));
+          setnewTagName('');
+          setIsInputTagVisible(false);
+        }); 
       } else {
         setBoutonDesableTag(true);
         setIsInputTagVisible(false);
@@ -341,6 +362,7 @@ function AddActualityTab() {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
+    setLoadingBouton(true);
     const formData = new FormData(formRef.current);
     
     const titre = formData.get('titre');
@@ -389,7 +411,7 @@ function AddActualityTab() {
         })
         .catch(err => console.log(err));
 
-    // console.log(dataForm)
+      // console.log(dataForm);
       
   }
 
@@ -410,9 +432,22 @@ function AddActualityTab() {
           <Typography className="text-3xl font-semibold tracking-tight leading-8 mb-24 mt-16">
                 Ajouter un nouvel article
           </Typography>
-          <Button type="submit" className="py-10 px-32" variant="contained" color="secondary" size="small" aria-label="post" onClick={obtenirDateActuelle}>
+          {/* <Button type="submit" className="py-10 px-32" variant="contained" color="secondary" size="small" aria-label="post" onClick={obtenirDateActuelle}>
             Publier
-          </Button>
+          </Button> */}
+          <LoadingButton
+            type="submit"
+            onClick={obtenirDateActuelle}
+            disabled={!titreActualite || !titreActualite.trim()}
+            endIcon={<SendIcon />}
+            loading={loadingBouton}
+            loadingPosition="end"
+            variant="contained"
+            color="secondary" 
+            aria-label="post"
+          >
+              <span>Publier</span>
+          </LoadingButton>
         </div>
         
         <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 py-24 mb-24">
@@ -421,6 +456,8 @@ function AddActualityTab() {
             id="titre"
             label="Saisissez votre titre ici"
             variant="outlined"
+            value={titreActualite}
+            onChange={(e) => {setTitreActualite(e.target.value);}}
             required
             fullWidth
           />
@@ -441,7 +478,7 @@ function AddActualityTab() {
               <ReactQuill className="h-full" theme="snow" value={wysiwygContent} onChange={handleWysiwygChange} modules={modules} />
             </Card>
 
-              <Card
+            <Card
               component={motion.div}
               variants={item}
               className="w-full overflow-hidden mb-32"
@@ -458,6 +495,28 @@ function AddActualityTab() {
                 disableUnderline
               />
             </Card>
+            {privateBlock && privateBlock == "privee" && 
+            (
+            <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 pt-24 mb-32">
+              <div className="flex justify-between items-center pb-16">
+                <Typography className="text-2xl font-semibold leading-tight">
+                  Groupe
+                </Typography>
+              </div>
+
+              <CardContent className="p-0 mb-16">    
+                <FormControl required fullWidth>
+                  <Autocomplete
+                    multiple
+                    options={['Mahatsangy', 'Ivohasina', 'Fivoarana', 'CP', 'CE', 'CP&CE', 'collaborateurs', 'RH', 'Direction']}
+                    renderInput={(params) => <TextField {...params}/>}
+                  />
+                </FormControl>
+                </CardContent>
+            </Card> 
+            )
+            
+            } 
           </div>
 
           <div className="flex flex-col w-full md:w-320 md:rtl:ml-32 ml-32">
@@ -469,7 +528,7 @@ function AddActualityTab() {
               </div>
 
               <CardContent className="p-0 mb-16">    
-                <FormControl required fullWidth>
+                <FormControl fullWidth>
                   <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
                      Etiquettes
                   </FormLabel>
@@ -506,7 +565,7 @@ function AddActualityTab() {
                   </Button>
                 </div>
                 )}   
-                <FormControl className="mt-24" required fullWidth>
+                <FormControl className="mt-24" fullWidth>
                   <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
                     Catégories
                   </FormLabel>
@@ -544,7 +603,7 @@ function AddActualityTab() {
                   </Button>
                 </div>
                 )}
-                <FormControl className="mt-24" required fullWidth>
+                <FormControl className="mt-24" fullWidth>
                     <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
                       Types
                     </FormLabel>
@@ -554,7 +613,7 @@ function AddActualityTab() {
                       getOptionLabel={(option) => option.nom}
                       value={selectedTypes}
                       onChange={handleTypesChange}
-                      renderInput={(params) => <TextField {...params} />}
+                      renderInput={(params) => <TextField {...params}/>}
                     />
                 </FormControl>
                 <Link color="inherit" href="#" onClick={handleLinkClickAddType} >
@@ -623,7 +682,7 @@ function AddActualityTab() {
                   <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
                     visibilité
                   </FormLabel>
-                  <Select name="visibilite" id="visibilite" defaultValue="public" variant="outlined" fullWidth>
+                  <Select name="visibilite" id="visibilite" defaultValue="public" variant="outlined" onChange={(e) => {setPrivateBlock(e.target.value)}} fullWidth>
                     <MenuItem value="public">publique</MenuItem>
                     <MenuItem value="privee">privée</MenuItem>
                   </Select>

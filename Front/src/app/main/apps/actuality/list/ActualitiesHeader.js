@@ -1,14 +1,23 @@
-import Button from '@mui/material/Button';
-import Input from '@mui/material/Input';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import { Typography, Button, Paper, Input } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
-function ActualitiesHeader(props) {
+function ActualitiesHeader({ updateSearchResults}) {
   const dispatch = useDispatch();
+
+  const [searchTerm, setSearhTerm] = useState('');
+
+
+
+    const handleChange = (e) => {
+        const term = e.target.value;
+        // console.log(term)
+        setSearhTerm(term);
+        updateSearchResults(term.trim());
+    };
 
   return (
     <div className="flex flex-col sm:flex-row space-y-16 sm:space-y-0 flex-1 w-full items-center justify-between py-32 px-24 md:px-32">
@@ -36,9 +45,11 @@ function ActualitiesHeader(props) {
             className="flex flex-1"
             disableUnderline
             fullWidth
+            value={searchTerm}
             inputProps={{
               'aria-label': 'Search',
             }}
+            onChange={handleChange}
           
           />
         </Paper>
