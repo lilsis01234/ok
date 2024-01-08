@@ -98,7 +98,8 @@ const userConnected = JSON.parse(storedUser)
 let initialState
 if (userConnected) {
   initialState = {
-    role : userConnected.RoleHierarchique?.roleHierarchique,
+    role : userConnected.RoleHierarchique?.Role?.titreRole,
+    roleHierarchique :  userConnected.RoleHierarchique?.roleHierarchique,
     data : {
       displayName : userConnected.Collab?.nom + ' ' + userConnected.Collab?.prenom,
       email : userConnected.email,

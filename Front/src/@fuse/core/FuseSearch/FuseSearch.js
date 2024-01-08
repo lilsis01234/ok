@@ -17,6 +17,7 @@ import { memo, useEffect, useReducer, useRef } from 'react';
 import Autosuggest from 'react-autosuggest';
 import withRouter from '@fuse/core/withRouter';
 import FuseSvgIcon from '../FuseSvgIcon';
+import FuseLoading from '../FuseLoading/FuseLoading';
 
 const Root = styled('div')(({ theme }) => ({
   '& .FuseSearch-container': {

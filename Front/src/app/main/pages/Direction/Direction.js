@@ -6,7 +6,7 @@ import DirectionItem from './DirectionItem';
 import FuseLoading from '@fuse/core/FuseLoading/FuseLoading';
 
 function Direction() {
-    const [membreDirection, setMembreDirection] = useState();
+    const [membreDirection, setMembreDirection] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const fetchDirection = () => {
@@ -44,6 +44,21 @@ function Direction() {
     if(loading){
         return(<FuseLoading/>)
     }
+
+    if (!Array.isArray(membreDirection)) {
+        return (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.1 } }}
+            className="flex flex-1 items-center justify-center h-full"
+          >
+            <Typography color="text.secondary" variant="h5">
+              Il n'a pas de donnée enregistrée!
+            </Typography>
+          </motion.div>
+        );
+      }
+    
 
 
     return (

@@ -8,6 +8,7 @@ const fs = require('fs');
 const { Actualite, Categorie, ActuCateg} = require('../../Modele/ActualityModel/associationActuCateg');
 const {  Tag, ActuTag} = require('../../Modele/ActualityModel/associationActuTag');
 const { Type, ActuType } = require('../../Modele/ActualityModel/associationActuType');
+const { Op } = require('sequelize');
 
 //Configuration du stockages des fichiers uploader
 const storage = multer.diskStorage({
@@ -75,7 +76,7 @@ router.post('/new', async (req, res) => {
                     console.log('actualitetype non sauvegardé', typeId)
                 }
 
-                const actualitetype = await ActType.create({
+                const actualitetype = await ActuType.create({
                     act_id: savedActuality.id,
                     type_id: typeId
                 })
@@ -92,7 +93,7 @@ router.post('/new', async (req, res) => {
                     console.log('actualitetag non sauvegardé', tagId)
                 }
 
-                const actualitetag = await ActTag.create({
+                const actualitetag = await ActuTag.create({
                     act_id: savedActuality.id,
                     tag_id: tagId
                 })
@@ -139,11 +140,31 @@ router.get('/all', async (req, res) => {
     try {
         const actualities = await Actualite.findAll({
             order: [['date_publication', 'DESC']],
-            include: [{
-                model: Compte,
-                attributes: ["id", "email"],
-                include : [ { model : Collab, attributes: ["nom", "prenom"]} ]
-            }]
+            include: [
+                {
+                    model: Compte,
+                    attributes: ["id", "email"],
+                    include : [ { model : Collab, attributes: ["nom", "prenom"]} ]
+                },
+                {
+                    model: Categorie,
+                    as: "categorie",
+                    attributes: ["nom"],
+                    through: { attributes: [] }
+                },
+                {
+                    model: Tag,
+                    as: "Tag",
+                    attributes: ["nom"],
+                    through: { attributes: [] }
+                },
+                {
+                    model: Type,
+                    as: "Type",
+                    attributes: ["nom"],
+                    through: { attributes: [] }
+                }
+            ]
         })
 
         res.status(200).json(actualities)
@@ -202,10 +223,15 @@ router.get('/categorie/:id', async (req, res) => {
             ]
           })
 
-        res.status(200).json(actuality)
+          const category = await Categorie.findByPk(id);
+
+          if (!category) {
+            return res.status(404).json({ error: 'categorie introuvable' });
+          }
+
+        res.status(200).json({actuality,category })
     }
     catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
     }
 })
@@ -226,10 +252,15 @@ router.get('/tag/:id', async (req, res) => {
             ]
           })
 
-        res.status(200).json(actuality)
+          const tag = await Tag.findByPk(id);
+
+          if (!tag) {
+            return res.status(404).json({ error: 'tag introuvable' });
+          }
+
+        res.status(200).json({actuality, tag})
     }
     catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Une erreur s'est produit dans la récupération des données" })
     }
 })
@@ -251,7 +282,13 @@ router.get('/type/:id', async (req, res) => {
             ]
           })
 
-        res.status(200).json(actuality)
+          const type = await Type.findByPk(id);
+
+          if (!type) {
+            return res.status(404).json({ error: 'type introuvable' });
+          }
+
+        res.status(200).json({actuality, type})
     }
     catch (error) {
         console.error(error);
@@ -261,31 +298,56 @@ router.get('/type/:id', async (req, res) => {
 
 
 
+//prendre l'id d'image par son nom dans actualityimgs
+router.get('/getidimg', async (req, res) => {
+    const { name } = req.query;
+    try {
+        const actualityImg = await ActualityImg.findOne({
+
+            where: {
+                nom: name
+              }
+        });
+
+        if (!actualityImg) {
+            return res.status(404).json({ error: 'Image Actualité introuvable' });
+        }
+
+        
+
+        res.json({ actualityImg });
+    }
+    catch (err) {
+        console.error('Erreur lors de la récupération de l\'actualité', err);
+        res.status(500).json({ error: 'Erreur lors de la récupération de l\'actualité' })
+    }
+})
 //Afficher une actualitée
-router.get('/:id', async (req, res) => {
+router.get('/:id(\\d+)', async (req, res) => {
     const { id } = req.params;
     try {
         const actuality = await Actualite.findByPk(id, {
             include: [{
                 model: Compte,
                 attributes: ["id", "email"],
+                include: [{
+                    model: Collab,
+                    attributes: ["id", "nom", "prenom"],
+                }]
             },
             {
                 model: Categorie,
                 as: "categorie",
-                attributes: ["id", "nom"],
                 through: { attributes: [] }
             },
             {
                 model: Tag,
                 as: "Tag",
-                attributes: ["id", "nom"],
                 through: { attributes: [] }
             },
             {
                 model: Type,
                 as: "Type",
-                attributes: ["id", "nom"],
                 through: { attributes: [] }
             }
         ]
@@ -302,27 +364,233 @@ router.get('/:id', async (req, res) => {
 })
 
 
-//Mettre à jour un Actualité existant 
-router.put('/:id', upload.single('image'), async (req, res) => {
+//prendre les articles similaires par l'id de l'article
+router.get('/related/:actualiteId', async (req, res) => {
 
-    const image = req.file;
+    const { actualiteId } = req.params;
+
+    try {
+        // Récupérer la catégorie de l'actualité spécifiée
+        const categorieIds = await ActuCateg.findAll({
+            attributes: ['categ_id'],
+            where: {
+                act_id: actualiteId
+            }
+        });
+
+        // Récupérer les deux actualités similaires par catégorie
+        const actualitesSimilaires = await Actualite.findAll({
+            include: [
+                {
+                    model: Compte,
+                    attributes: ["id", "email"],
+                    include: [{
+                        model: Collab,
+                        attributes: ["id", "nom", "prenom"],
+                    }]
+                },
+                {
+                    model: Categorie,
+                    as: "categorie",
+                    where: {
+                        id: categorieIds.map(c => c.categ_id)
+                    },
+                    through: { attributes: [] } // Pour éviter de récupérer les colonnes de la table de liaison
+                }
+            ],
+            where: {
+                id: {
+                    [Op.not]: actualiteId // Exclure l'actualité spécifiée
+                }
+            },
+            order: [['date_publication', 'DESC']], // Tri par date de publication, du plus récent au plus ancien
+            limit: 2 // Limiter à deux actualités similaires
+        });
+
+        res.json(actualitesSimilaires);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des actualités similaires', error);
+        res.status(500).json({ error: 'Erreur lors de la récupération des actualités similaires' });
+    }
+})
+
+
+//Prendre Le Actuelité next et prev d'une actualité par son id
+router.get('/prevandnext/:id', async (req, res) => {
+    const actualiteId = req.params.id;
+
+    try {
+        // Récupérer l'ID de l'actualité précédente
+        const actualitePrecedente = await Actualite.findOne({
+            where: {
+                id: {
+                    [Op.lt]: actualiteId // Utilisez l'opérateur de comparaison "inférieur à"
+                }
+            },
+            order: [['id', 'DESC']], // Trier par ID dans l'ordre décroissant
+            attributes: ['id'], // Sélectionner seulement l'ID
+            limit: 1 // Limiter à une seule actualité
+        });
+
+        // Récupérer l'ID de l'actualité suivante
+        const actualiteSuivante = await Actualite.findOne({
+            where: {
+                id: {
+                    [Op.gt]: actualiteId // Utilisez l'opérateur de comparaison "supérieur à"
+                }
+            },
+            order: [['id', 'ASC']], // Trier par ID dans l'ordre croissant
+            attributes: ['id'], // Sélectionner seulement l'ID
+            limit: 1 // Limiter à une seule actualité
+        });
+
+        res.json({
+            actualitePrecedente: actualitePrecedente ? actualitePrecedente.id : null,
+            actualiteSuivante: actualiteSuivante ? actualiteSuivante.id : null,
+        });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des actualités précédente et suivante', error);
+        res.status(500).json({ error: 'Erreur lors de la récupération des actualités précédente et suivante' });
+    }
+});
+
+//Mettre à jour un Actualité existant 
+router.put('/:id', async (req, res) => {
+
     const { id } = req.params;
 
     try {
         const updateActuality = await Actualite.findByPk(id);
-        const imageActulity = updateActuality.image
+
         if (!updateActuality) {
             return res.status(404).json({ error: 'Actualité introuvable' });
         }
+
         const updatedActuality = await updateActuality.update({
             titre: req.body.titre,
             contenu: req.body.contenu,
             date_publication: req.body.date_publication,
-            image: image ? image.path : imageActulity,
+            image: req.body.image,
             extrait: req.body.extrait,
             etat: req.body.etat,
             visibilite: req.body.visibilite,
             compte_id: req.body.compte_id
+        });
+
+        const savedActuality = await updatedActuality.save();
+
+        const category = req.body.category;
+        const type = req.body.type;
+        const tag = req.body.tag;
+
+
+        await ActuCateg.destroy({
+            where: {
+                act_id: savedActuality.id
+            }
+        });
+
+        await ActuType.destroy({
+            where: {
+                act_id: savedActuality.id
+            }
+        });
+
+        await ActuTag.destroy({
+            where: {
+                act_id: savedActuality.id
+            }
+        });
+
+        if (category.length > 0 && !category.every(element => element === "")) {
+
+            for (const categoryId of category) {
+
+                const categoryInstance = await Categorie.findByPk(categoryId)
+
+                if (!categoryInstance) {
+                    console.log('actualitecategory non sauvegardé', categoryId)
+                    continue;  // Pass to the next iteration if categoryInstance doesn't exist
+                }
+
+                else {
+
+                    const actualitecategory = await ActuCateg.create({
+                        act_id: savedActuality.id,
+                        categ_id: categoryId
+                    });
+
+                }
+            }
+
+        }
+        if  (type.length > 0 && !type.every(element => element === "")) {
+
+            for (const typeId of type) {
+
+                const typeInstance = await Type.findByPk(typeId)
+
+                if (!typeInstance) {
+                    console.log('actualitetype non sauvegardé', typeId)
+                    continue;  // Pass to the next iteration if categoryInstance doesn't exist
+                } else {
+        
+                    const actualitecategory = await ActuType.create({
+                        act_id: savedActuality.id,
+                        type_id: typeId
+                    });
+                }   
+            }
+
+        }
+        if  (tag.length > 0 && !tag.every(element => element === "")) {
+
+            for (const tagId of tag) {
+
+                const tagInstance = await Tag.findByPk(tagId)
+
+                if (!tagInstance) {
+                    console.log('actualitetag non sauvegardé', tagId)
+                    continue;  // Pass to the next iteration if categoryInstance doesn't exist
+                }
+
+                else {
+        
+                    const actualitecategory = await ActuTag.create({
+                        act_id: savedActuality.id,
+                        tag_id: tagId
+                    });
+
+                 } 
+            }
+
+        }
+
+
+
+        res.status(201).json(updatedActuality)
+    }
+    catch (error) {
+        console.error('Erreur lors de la mise à jour de l\'actualité', error);
+        res.status(500).json({ error: 'Erreur lors de la mise à jour de l\'actualité' });
+    }
+})
+
+
+//Mettre à jour un Actualité existant 
+router.put('/image/:id', async (req, res) => {
+
+    const { id } = req.params;
+
+    try {
+        const updateActuality = await Actualite.findByPk(id);
+
+        if (!updateActuality) {
+            return res.status(404).json({ error: 'Actualité introuvable' });
+        }
+
+        const updatedActuality = await updateActuality.update({
+            image: ''
         })
 
 

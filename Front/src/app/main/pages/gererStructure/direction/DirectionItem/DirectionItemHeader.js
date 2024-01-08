@@ -8,13 +8,13 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 
-function DirectionItemHeader({formValues}) {
+function DirectionItemHeader({ formValues }) {
     const methods = useFormContext();
     const { formState, watch, getValues } = methods ? methods : {};
-    const { isValid, isDirty  } = formState ? formState : {}
+    const { isValid, isDirty } = formState ? formState : {}
 
-    const {id} = formValues
-    const {nomDirection} = formValues
+    const { id } = formValues
+    const { nomDirection } = formValues
     console.log(id)
     const theme = useTheme();
     const navigate = useNavigate();
@@ -24,24 +24,34 @@ function DirectionItemHeader({formValues}) {
     }
 
     const handleSaveDirection = async () => {
-        if (id){
+        if (id) {
             try {
                 await axios.put(`http://localhost:4000/api/direction/edit/${id}`, data)
-                alert('Direction Update succesfully')
+                alert('Direction modifié avec succès')
                 navigate('/business/manage/direction')
-            } catch (error){
+            } catch (error) {
                 console.log(error)
             }
         } else {
             try {
                 await axios.post('http://localhost:4000/api/direction/new', data)
-                alert('Direction create succesfully')
+                alert('Direction crée avec succés')
                 navigate('/business/manage/direction')
-            } catch (error){
+            } catch (error) {
                 console.log(error)
             }
         }
     }
+
+    const handleDeleteDirection = async () => {
+        const confirmation = window.confirm(`Vous voulez vraiment supprimer la direction ${nomDirection}`)
+        if (confirmation) {
+            await axios.delete(`http://localhost:4000/api/direction/delete/${id}`, data)
+            alert('Direction supprimée avec succès')
+            navigate('/business/manage/direction')
+        }
+    }
+
 
 
 
@@ -59,7 +69,7 @@ function DirectionItemHeader({formValues}) {
                         to="/business/manage/direction"
                         color="inherit"
                     >
-                        <FuseSvgIcon size={20}> 
+                        <FuseSvgIcon size={20}>
                             {theme.direction === 'ltr'
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
@@ -69,26 +79,36 @@ function DirectionItemHeader({formValues}) {
                 </motion.div>
                 <div className="flex items-center max-w-full">
                     <motion.div
-                          className="flex flex-col items-center sm:items-start min-w-0 mx-8 sm:mx-16"
-                          initial={{ x: -20 }}
-                          animate={{ x: 0, transition: { delay: 0.3 } }}
+                        className="flex flex-col items-center sm:items-start min-w-0 mx-8 sm:mx-16"
+                        initial={{ x: -20 }}
+                        animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
                         <Typography className="text-16 sm:text-20 truncate font-semibold">{nomDirection || 'New Direction'} </Typography>
                         <Typography variant="caption" className="font-medium"> Direction Detail </Typography>
-                    </motion.div>   
+                    </motion.div>
                 </div>
             </div>
             <motion.div
-                 className="flex"
-                 initial={{ opacity: 0, x: 20 }}
-                 animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+                className="flex"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
             >
-                <Button 
-                     className="whitespace-nowrap mx-4"
-                     variant="contained"
-                     color="secondary"
+                {id && (
+                    <Button
+                        className="whitespace-nowrap mx-4"
+                        variant="contained"
+                        color="error"
+                        onClick={handleDeleteDirection}
+                    >
+                        Supprimer
+                    </Button>
+                )}
+                <Button
+                    className="whitespace-nowrap mx-4"
+                    variant="contained"
+                    color="secondary"
                     //  disabled={!isDirty  || !isValid}
-                     onClick={handleSaveDirection}
+                    onClick={handleSaveDirection}
                 >
                     Save
                 </Button>

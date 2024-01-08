@@ -81,21 +81,21 @@ function UserMenu(props) {
           </>
         ) : ( */}
           <>
-            <MenuItem component={Link} to="/apps/profile" onClick={userMenuClose} role="button">
+            <MenuItem component={Link} to="/account/myprofile" onClick={userMenuClose} role="button">
               <ListItemIcon className="min-w-40">
                 <FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
               </ListItemIcon>
-              <ListItemText primary="My Profile" />
+              <ListItemText primary="Mon profile" />
             </MenuItem>
-            <MenuItem component={Link} to="/apps/mailbox" onClick={userMenuClose} role="button">
+            <MenuItem component={Link} to="/settings/account" onClick={userMenuClose} role="button">
               <ListItemIcon className="min-w-40">
-                <FuseSvgIcon>heroicons-outline:mail-open</FuseSvgIcon>
+                <FuseSvgIcon>heroicons-outline:cog</FuseSvgIcon>
               </ListItemIcon>
-              <ListItemText primary="Inbox" />
+              <ListItemText primary="Paramètre de compte" />
             </MenuItem>
             <MenuItem
               component={NavLink}
-              to="/sign-out"
+              to="/sign-out"  
               onClick={() => {
                 userMenuClose();
               }}
@@ -103,7 +103,7 @@ function UserMenu(props) {
               <ListItemIcon className="min-w-40">
                 <FuseSvgIcon>heroicons-outline:logout</FuseSvgIcon>
               </ListItemIcon>
-              <ListItemText primary="Sign out" />
+              <ListItemText primary="Déconnexion" />
             </MenuItem>
           </>
         {/* )} */}

@@ -51,11 +51,7 @@ const Profil = () => {
 
 
     useEffect(() => {
-<<<<<<< HEAD
         axios.get(`http://localhost:4000/api/user/${idProfile}/profile`)
-=======
-        axios.get(`http://localhost:4000/api/user/${idProfile}/profile`)
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             .then(response => {
                 setCollaborateurData(response.data)
             })

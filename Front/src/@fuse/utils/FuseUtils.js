@@ -326,41 +326,67 @@ class FuseUtils {
   }
 
 
-  static hasPermission(authArr, userRole) {
-    /**
-     * If auth array is not defined
-     * Pass and allow
-     */
+  // static hasPermission(authArr, userRole) {
+  //   /**
+  //    * If auth array is not defined
+  //    * Pass and allow
+  //    */
 
-    if (authArr === null || authArr === undefined) {
-      // console.info("auth is null || undefined:", authArr);
-      return true;
-    }
-     
-    if (authArr.length === 0) {
-      /**
-       * if auth array is empty means,
-       * allow only user role is guest (null or empty[])
-       */
-      // console.info("auth is empty[]:", authArr);
-      return !userRole || userRole.length === 0;
-    }
-    /**
-     * Check if user has grants
-     */
-    // console.info("auth arr:", authArr);
-    /*
-            Check if user role is array,
-            */
-    if (userRole && Array.isArray(userRole)) {
-      return authArr.some((r) => userRole.indexOf(r) >= 0);
-    }
+  //   if (authArr === null || authArr === undefined) {
+  //     // console.info("auth is null || undefined:", authArr);
+  //     return true;
+  //   }
 
-    /*
-            Check if user role is string,
-            */
-    return authArr.includes(userRole);
+  //   if (authArr.length === 0) {
+  //     /**
+  //      * if auth array is empty means,
+  //      * allow only user role is guest (null or empty[])
+  //      */
+  //     // console.info("auth is empty[]:", authArr);
+  //     return !userRole || userRole.length === 0;
+  //   }
+  //   /**
+  //    * Check if user has grants
+  //    */
+  //   // console.info("auth arr:", authArr);
+  //   /*
+  //           Check if user role is array,
+  //           */
+  //   if (userRole && Array.isArray(userRole)) {
+  //     return authArr.some((r) => userRole.indexOf(r) >= 0);
+  //   }
+
+  //   /*
+  //           Check if user role is string,
+  //           */
+  //   return authArr.includes(userRole);
+  // }
+
+
+
+  static hasPermission(userPermissions, requiredRoles, requiredRoleHierarchiques, requiredPermission, requireAll = false) {
+    if (userPermissions) {
+      const { role, roleHierarchique, permission } = userPermissions || {}; // Assure-toi que userPermissions est défini
+  
+      const rolesArray = Array.isArray(requiredRoles) ? requiredRoles : [requiredRoles];
+      const roleHierarchiquesArray = Array.isArray(requiredRoleHierarchiques) ? requiredRoleHierarchiques : [requiredRoleHierarchiques];
+      const permissionsArray = Array.isArray(requiredPermission) ? requiredPermission : [requiredPermission];
+  
+      const hasRequiredRoles = rolesArray.some(roles => role && role.includes(roles)); // Assure-toi que role est défini
+      const hasRequiredRoleHierarchique = roleHierarchiquesArray.some(roleHierarchiques => roleHierarchique && roleHierarchique.includes(roleHierarchiques)); // Assure-toi que roleHierarchique est défini
+      const hasRequiredPermission = permissionsArray.some(permissions => permission && permission.includes(permissions)); // Assure-toi que permission est défini
+  
+      if (requireAll) {
+        return hasRequiredRoles && hasRequiredRoleHierarchique && hasRequiredPermission;
+      } else {
+        return hasRequiredRoles || hasRequiredRoleHierarchique || hasRequiredPermission;
+      }
+    } else {
+      console.log("Non autorisé");
+      return false;
+    }
   }
+  
 
 
   // static hasPermission(authArr, userRole, userRoleHierarchique, userPermission){
@@ -377,7 +403,7 @@ class FuseUtils {
   //     const hasValidPermission = authArr.some((p) => userPermission && userPermission.includes(p))
   //     const hasValidRoleHierarchique = userRoleHierarchique ? authArr.some((r2) => userRoleHierarchique.includes(r2)) : true;
 
-      
+
   //     return hasValidRole || hasValidPermission || hasValidRoleHierarchique
 
   //   }
@@ -396,27 +422,27 @@ class FuseUtils {
     return !data
       ? null
       : data.reduce((list, entry) => {
-          let clone = null;
-          if (predicate(entry)) {
-            // if the object matches the filter, clone it as it is
-            clone = { ...entry };
+        let clone = null;
+        if (predicate(entry)) {
+          // if the object matches the filter, clone it as it is
+          clone = { ...entry };
+        }
+        if (entry.children != null) {
+          // if the object has childrens, filter the list of children
+          const children = this.filterRecursive(entry.children, predicate);
+          if (children.length > 0) {
+            // if any of the children matches, clone the parent object, overwrite
+            // the children list with the filtered list
+            clone = { ...entry, children };
           }
-          if (entry.children != null) {
-            // if the object has childrens, filter the list of children
-            const children = this.filterRecursive(entry.children, predicate);
-            if (children.length > 0) {
-              // if any of the children matches, clone the parent object, overwrite
-              // the children list with the filtered list
-              clone = { ...entry, children };
-            }
-          }
+        }
 
-          // if there's a cloned object, push it to the output list
-          if (clone) {
-            list.push(clone);
-          }
-          return list;
-        }, []);
+        // if there's a cloned object, push it to the output list
+        if (clone) {
+          list.push(clone);
+        }
+        return list;
+      }, []);
   }
 }
 

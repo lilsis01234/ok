@@ -1,19 +1,20 @@
-const {DataTypes, Model} = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../../database/database');
 const TestDepartement = require('../Structure/TestDepartement');
 const TestPoste = require('../Structure/TestPoste');
 const Projet = require('../Structure/Projet');
 const Equipe = require('../Structure/Equipe');
+const Site = require('../Structure/Site');
 
 
-class ArchiveCollaborateur extends Model{};
+class ArchiveCollaborateur extends Model { };
 
 ArchiveCollaborateur.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-      },
+    },
     matricule: {
         type: DataTypes.STRING(10),
         allowNull: false,
@@ -32,8 +33,8 @@ ArchiveCollaborateur.init({
     dateNaissance: {
         type: DataTypes.DATE()
     },
-    lieuNaissance : {
-        type : DataTypes.STRING(20)
+    lieuNaissance: {
+        type: DataTypes.STRING(20)
     },
     lot: {
         type: DataTypes.STRING(15)
@@ -41,158 +42,163 @@ ArchiveCollaborateur.init({
     quartier: {
         type: DataTypes.STRING(60)
     },
-    ville: { 
-        type: DataTypes.STRING(20) 
+    ville: {
+        type: DataTypes.STRING(20)
     },
-    adresse2 : {
-        type : DataTypes.STRING(60)
+    adresse2: {
+        type: DataTypes.STRING(60)
     },
-    tel: { 
-        type: DataTypes.STRING(14) 
+    tel: {
+        type: DataTypes.STRING(14)
     },
-    telurgence : {
-        type : DataTypes.STRING(15)
+    telurgence: {
+        type: DataTypes.STRING(15)
     },
-    CIN : {
-        type : DataTypes.STRING(15),
-        unique : true
+    CIN: {
+        type: DataTypes.STRING(15),
+        unique: true
     },
-    dateDelivrance : {
-        type : DataTypes.DATE
+    dateDelivrance: {
+        type: DataTypes.DATE
     },
-    lieuDelivrance : {
-        type : DataTypes.STRING(20),
+    lieuDelivrance: {
+        type: DataTypes.STRING(20),
     },
-    statutmatrimoniale : {
-        type : DataTypes.STRING(20)
+    statutmatrimoniale: {
+        type: DataTypes.STRING(20)
     },
-    nbEnfant : {
+    nbEnfant: {
         type: DataTypes.INTEGER
     },
-    numCnaps : {
+    numCnaps: {
         type: DataTypes.STRING(15),
-        unique : true
+        unique: true
     },
-    entreprise : {
-        type : DataTypes.STRING(25),
-        allowNull: false, 
+    entreprise: {
+        type: DataTypes.STRING(25),
+        allowNull: false,
     },
-    dateEmbauche: { 
-        type: DataTypes.DATE 
+    dateEmbauche: {
+        type: DataTypes.DATE
     },
-    site: { 
-        type: DataTypes.STRING(20) 
+    entreprise: {
+        type: DataTypes.STRING(25),
+        allowNull: false,
     },
-    entreprise : {
-        type : DataTypes.STRING(25),
-        allowNull: false, 
-    },
-    poste : {
-        type : DataTypes.INTEGER,
-        allowNull : false,
-        references : {
-            model : TestPoste,
-            key : 'id'
-        }
-    }, 
-    poste2 : {
-        type : DataTypes.INTEGER,
-        allowNull : true,
-        references : {
+    poste: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
             model: TestPoste,
-            key : 'id'
+            key: 'id'
         }
-    },  
-    departement : {
-        type : DataTypes.INTEGER,
-        allowNull : false,
-        references : {
-            model : {
-                model : TestDepartement,
-                key : 'id'
+    },
+    poste2: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: TestPoste,
+            key: 'id'
+        }
+    },
+    departement: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: {
+                model: TestDepartement,
+                key: 'id'
             }
         }
-    }, 
-    departement2 : {
+    },
+    departement2: {
         type: DataTypes.INTEGER,
-        allowNull : true,
-        references : {
-            model : TestDepartement,
-            key : 'id'
+        allowNull: true,
+        references: {
+            model: TestDepartement,
+            key: 'id'
         }
-    }, projet : {
+    }, projet: {
         type: DataTypes.INTEGER,
-        references : {
-            model : Projet,
-            key : 'id'
+        references: {
+            model: Projet,
+            key: 'id'
         }
     },
-    projet2 : {
+    projet2: {
         type: DataTypes.INTEGER,
-        references : {
-            model : Projet,
-            key : 'id'
-        }
-    }, 
-    equipe : {
-        type : DataTypes.INTEGER,
-        references : {
-            model : Equipe,
-            key : 'id'
+        references: {
+            model: Projet,
+            key: 'id'
         }
     },
-    equipe2 : {
-        type : DataTypes.INTEGER,
-        references : {
-            model : Equipe,
-            key : 'id'
+    equipe: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Equipe,
+            key: 'id'
         }
     },
-    statut : {
+    equipe2: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Equipe,
+            key: 'id'
+        }
+    },
+    statut: {
         type: DataTypes.STRING(),
-        allowNull : false
+        allowNull: false
+    },
+    dateDebauche: {
+        type: DataTypes.STRING(),
+        allowNull: false
     }, 
-    dateDebauche : {
-        type : DataTypes.STRING(),
-        allowNull : false
+    site: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Site,
+            key: 'id'
+        }
     }
 }, {
     sequelize,
-    modelName : 'ArchiveCollab'
+    modelName: 'ArchiveCollab'
 })
 
 
 
 ArchiveCollaborateur.belongsTo(TestPoste, {
-    foreignKey : 'poste',
-    onUpdate : 'CASCADE',
-    as : 'poste1'
+    foreignKey: 'poste',
+    onUpdate: 'CASCADE',
+    as: 'poste1'
 })
 
 ArchiveCollaborateur.belongsTo(TestPoste, {
-    foreignKey : 'poste2',
-    onUpdate : 'CASCADE',
-    as : 'postes'
+    foreignKey: 'poste2',
+    onUpdate: 'CASCADE',
+    as: 'postes'
 })
 
 ArchiveCollaborateur.belongsTo(TestDepartement, {
-    foreignKey : 'departement',
-    onUpdate : 'CASCADE',
-    as : 'departement1'
+    foreignKey: 'departement',
+    onUpdate: 'CASCADE',
+    as: 'departement1'
 }
 )
 
 ArchiveCollaborateur.belongsTo(TestDepartement, {
     foreignKey: 'departement2',
-    onUpdate : 'CASCADE',
-    as : 'departements'
+    onUpdate: 'CASCADE',
+    as: 'departements'
 })
 
-ArchiveCollaborateur.belongsTo(Projet, {foreignKey:"projet", targetKey:'id',onUpdate:'CASCADE', as:'projet1'})
-ArchiveCollaborateur.belongsTo(Projet, {foreignKey:"projet2", targetKey:'id', onUpdate:'CASCADE', as:'projets'})
+ArchiveCollaborateur.belongsTo(Projet, { foreignKey: "projet", targetKey: 'id', onUpdate: 'CASCADE', as: 'projet1' })
+ArchiveCollaborateur.belongsTo(Projet, { foreignKey: "projet2", targetKey: 'id', onUpdate: 'CASCADE', as: 'projets' })
 
-ArchiveCollaborateur.belongsTo(Equipe, {foreignKey:"equipe", targetKey:'id', onUpdate:'CASCADE', as:'equipe1'})
-ArchiveCollaborateur.belongsTo(Equipe, {foreignKey:"equipe2", targetKey:'id', onUpdate:'CASCADE', as:'equipes'})
+ArchiveCollaborateur.belongsTo(Equipe, { foreignKey: "equipe", targetKey: 'id', onUpdate: 'CASCADE', as: 'equipe1' })
+ArchiveCollaborateur.belongsTo(Equipe, { foreignKey: "equipe2", targetKey: 'id', onUpdate: 'CASCADE', as: 'equipes' })
 
+ArchiveCollaborateur.belongsTo(Site, {foreignKey:"site",  targetKey:'id',onUpdate:'CASCADE',  as: 'sites'})
 
 module.exports = ArchiveCollaborateur;

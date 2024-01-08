@@ -48,7 +48,7 @@ function VisioConference() {
   }, [id]);
 
   const handleIncomingCall = (call) => {
-    navigator.mediaDevices.getUserMedia({video:true, audio: true })
+    navigator.mediaDevices.getUserMedia({video:true, audio: false })
       .then((mediaStream) => {
         currentUserVideoRef.current.srcObject = mediaStream;
         currentUserVideoRef.current.play();
