@@ -35,6 +35,7 @@ const direction = require('./routes/Poste/direction')
 const equipe = require('./routes/Poste/equipe')
 const projet = require('./routes/Poste/projet')
 const membreDirection = require('./routes/Collaborateur/dirigeant')
+const site = require('./routes/Poste/site');
 
 //CompteCollaborateur
 const compte_collab = require('./routes/Compte/compteCollab');
@@ -101,6 +102,7 @@ app.use('/api/direction', direction)
 app.use('/api/equipe', equipe)
 app.use('/api/projet', projet)
 app.use('/api/membreDirection', membreDirection)
+app.use('/api/site', site)
 
 
 //Compte collaborateur
