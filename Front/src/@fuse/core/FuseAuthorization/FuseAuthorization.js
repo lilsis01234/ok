@@ -23,7 +23,7 @@ class FuseAuthorization extends Component {
 
   componentDidMount() {  //Methode de cycke de React appelé après qu'un composant a été rendu et monté dans le DOM
     if (!this.state.accessGranted) {
-      this.redirectRoute(); 
+      this.redirectRoute();
     }
   }
 
@@ -31,38 +31,101 @@ class FuseAuthorization extends Component {
     return nextState.accessGranted !== this.state.accessGranted;
   }
 
-  componentDidUpdate() {
-    if (!this.state.accessGranted) {
-      this.redirectRoute();
+
+  componentDidUpdate(prevProps) {
+    const { location, userRole, userRoleHierarchique, userPermission } = this.props;
+    const { pathname } = location;
+
+    if (prevProps.location.pathname !== pathname) {
+      const matchedRoutes = matchRoutes(this.state.routes, pathname);
+      const matched = matchedRoutes ? matchedRoutes[0] : false;
+
+      const userHasPermission = FuseUtils.hasPermission(
+        matched?.route?.auth,
+        userRole || [],
+        userRoleHierarchique,
+        userPermission
+      );
+
+      const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404'];
+
+      if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
+        setSessionRedirectUrl(pathname);
+        this.setState({ accessGranted: false });
+      } else {
+        this.setState({ accessGranted: true });
+      }
     }
   }
+
+  // componentDidUpdate() {
+  //   if (!this.state.accessGranted) {
+  //     this.redirectRoute();
+  //   }
+  // }
 
   //Appeler chaque fois que prop change
   //Vérifie si l'utilisateur a la permission d'accéder à la route actuelle en utilisant les routes défines dans les routes et les roles utilisateurs 
-  static getDerivedStateFromProps(props, state) { //state : état actuelle du composant
-    // const { location, userRole, userRoleHierarchique, userPermission} = props; //extrait les location et les roles 
-    const { location, userRole} = props;
-    const { pathname } = location;
+  // static getDerivedStateFromProps(props, state) { //state : état actuelle du composant
+  //   // const { location, userRole, userRoleHierarchique, userPermission} = props; //extrait les location et les roles 
+  //   const { location, userRole } = props;
+  //   const { pathname } = location;
 
-    const matchedRoutes = matchRoutes(state.routes, pathname);  //faire correspondre le route de pathname avec celle de la state
+  //   const matchedRoutes = matchRoutes(state.routes, pathname);  //faire correspondre le route de pathname avec celle de la state
 
-    const matched = matchedRoutes ? matchedRoutes[0] : false;
+  //   const matched = matchedRoutes ? matchedRoutes[0] : false;
 
 
 
-    // const userHasPermission = FuseUtils.hasPermission(matched.route.auth, userRole, userRoleHierarchique, userPermission);
-    const userHasPermission = FuseUtils.hasPermission(matched.route.auth, userRole); //verifie l'authorisation de l'utilisateurs
+  //   // const userHasPermission = FuseUtils.hasPermission(matched.route.auth, userRole, userRoleHierarchique, userPermission);
+  //   const userHasPermission = FuseUtils.hasPermission(matched.route.auth, userRole); //verifie l'authorisation de l'utilisateurs
 
-    const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404']; 
+  //   const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404'];
 
-    if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
-      setSessionRedirectUrl(pathname);
-    }
+  //   if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
+  //     setSessionRedirectUrl(pathname);
+  //   }
 
-    return {
-      accessGranted: matched ? userHasPermission : true,
-    };
-  }
+  //   return {
+  //     accessGranted: matched ? userHasPermission : true,
+  //   };
+  // }
+
+
+  // static getDerivedStateFromProps(props, state) {
+  //   const { location, userRole, userRoleHierarchique, userPermission } = props
+  //   const { pathname } = location;
+
+  //   const matchedRoutes = matchRoutes(state.routes, pathname); 
+  //   const matched = matchedRoutes ? matchedRoutes[0] : false
+
+  //   console.log(matchedRoutes)
+
+  //   const userHasPermission = FuseUtils.hasPermission(
+  //     matched?.routes?.auth,
+  //     userRole,
+  //     userRoleHierarchique,
+  //     userPermission
+  //   )
+
+  //   const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404'];
+
+  //   // if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
+  //   //   setSessionRedirectUrl(pathname);
+  //   // }$
+
+  //   if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
+  //     setSessionRedirectUrl(pathname);
+  //     this.setState({ accessGranted: false });
+  //   } else {
+  //     this.setState({ accessGranted: true });
+  //   }
+
+  //   return {
+  //     accessGranted: matched ? userHasPermission : true,
+  //   };
+
+  // }
 
   redirectRoute() {
     const { userRole } = this.props;
@@ -73,7 +136,7 @@ class FuseAuthorization extends Component {
         Redirect to Login Page
         */
     // if (!userRole || userRole.length === 0 || !userRoleHierarchique || userRoleHierarchique.length === 0) {
-    if (!userRole || userRole.length === 0 ) {
+    if (!userRole || userRole.length === 0) {
       setTimeout(() => history.push('/sign-in'), 0);
     } else {
       /*

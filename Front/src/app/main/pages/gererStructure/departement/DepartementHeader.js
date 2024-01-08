@@ -29,7 +29,7 @@ function DepartementHeader() {
                      color="secondary"
                      startIcon={<FuseSvgIcon>heroicons-outline:plus</FuseSvgIcon>}
                 >
-                    Add
+                    Ajouter
                 </Button>
             </motion.div>
       </div>

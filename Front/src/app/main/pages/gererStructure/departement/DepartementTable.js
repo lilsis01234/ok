@@ -108,7 +108,7 @@ function DepartementTable(props) {
                 className="flex flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There are no departement!
+                  Il n'y a pas de département!
                 </Typography>
             </motion.div>
         );
@@ -169,7 +169,7 @@ function DepartementTable(props) {
                                         {n.nomDepartement}
                                     </TableCell>
                                     <TableCell className="p-4 md:p-16 " component="th" scope="row">
-                                        {n.Direction.nomDirection}
+                                        {n.Direction?.nomDirection}
                                     </TableCell>
 
                                 </TableRow>

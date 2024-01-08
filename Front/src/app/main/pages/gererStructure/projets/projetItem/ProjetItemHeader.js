@@ -30,7 +30,7 @@ function ProjetItemHeader({ formValues }) {
         if (id) {
             try {
                 await axios.put(`http://localhost:4000/api/projet/edit/${id}`, data)
-                alert('Project Update succesfully')
+                alert('Project Mise à jour avec succés')
                 navigate('/business/manage/project')
             } catch (error) {
                 console.log(error)
@@ -38,12 +38,22 @@ function ProjetItemHeader({ formValues }) {
         } else {
             try {
                 await axios.post(`http://localhost:4000/api/projet/new`, data)
-                alert('Project create successfully')
+                alert('Projet crée avec succés')
                 navigate('/business/manage/project')
             }
             catch (error) {
                 console.log(error)
             }
+        }
+    }
+
+
+    const handleDeleteProjet = async () => {
+        const confirmation = window.confirm(`Vous voulez vraiment supprimer le projet ${nomProjet}`)
+        if (confirmation) {
+            await axios.delete(`http://localhost:4000/api/projet/delete/${id}`, data)
+            alert('Projet supprimée avec succès')
+            navigate('/business/manage/project')
         }
     }
 
@@ -69,7 +79,7 @@ function ProjetItemHeader({ formValues }) {
                                 ? 'heroicons-outline:arrow-sm-left'
                                 : 'heroicons-outline:arrow-sm-right'}
                         </FuseSvgIcon>
-                        <span className="flex mx-4 font-medium">Project</span>
+                        <span className="flex mx-4 font-medium">Projet</span>
                     </Typography>
                 </motion.div>
                 <div className="flex items-center max-w-full">
@@ -78,27 +88,38 @@ function ProjetItemHeader({ formValues }) {
                         initial={{ x: -20 }}
                         animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomProjet || 'New Project'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Project Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomProjet || 'Nouvelle Projet'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Détail du projet </Typography>
                     </motion.div>
                 </div>
-                </div>
+            </div>
 
-                <motion.div
-                    className="flex"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-                >
+            <motion.div
+                className="flex"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+            >
+                {id && (
                     <Button
                         className="whitespace-nowrap mx-4"
                         variant="contained"
-                        color="secondary"
-                        onClick={handleSaveProject}
+                        color="error"
+                        //  disabled={!isDirty  || !isValid}
+                        onClick={handleDeleteProjet}
                     >
-                        Save
+                        Supprimer
                     </Button>
-                </motion.div>
-          
+                )}
+                <Button
+                    className="whitespace-nowrap mx-4"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleSaveProject}
+                >
+                    Enregistrer
+                </Button>
+            </motion.div>
+
         </div>
     )
 }

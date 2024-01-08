@@ -172,7 +172,7 @@ function CollaborateurTable({searchResults}) {
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.poste1?.titrePoste}</TableCell>
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.departement1?.nomDepartement}</TableCell>
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.projet1?.nomProjet}</TableCell>
-                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.site}</TableCell>
+                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.sites?.nomSite}</TableCell>
                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.entreprise}</TableCell>
                   </TableRow>
                 );

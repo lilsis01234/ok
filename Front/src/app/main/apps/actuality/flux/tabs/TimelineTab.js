@@ -98,7 +98,7 @@ function handleChangeRowsPerPage(event) {
                 .map((n) => {
                 return (
                   <div className="flex w-2/4 px-16 mb-32">   
-                    <Card className="w-full shadow-md hover:shadow-2xl hover:cursor-pointer group">
+                    <Card className="w-full shadow-md hover:shadow-2xl hover:cursor-pointer group" onClick={() => {navigate(`/actuality/${n.id}`)}} >
                       <div className="h-256 overflow-hidden">
                         {n.image ? (
 
@@ -254,7 +254,7 @@ function handleChangeRowsPerPage(event) {
                     return (
                       <li className="mb-10 text-sm flex flex-row items-center">
                         <FuseSvgIcon className="text-48 mr-10" size={16} color="secondary">heroicons-outline:document-duplicate</FuseSvgIcon>
-                        <Typography variant="caption" className="m-0 hover:underline hover:text-blue-900 hover:cursor-pointer" gutterBottom onClick={() => {navigate(`/apps/actuality/${n.id}`);}}>
+                        <Typography variant="caption" className="m-0 hover:underline hover:text-blue-900 hover:cursor-pointer" gutterBottom onClick={() => {navigate(`/actuality/${n.id}`);}}>
                           {n.titre}
                         </Typography>
                       </li>

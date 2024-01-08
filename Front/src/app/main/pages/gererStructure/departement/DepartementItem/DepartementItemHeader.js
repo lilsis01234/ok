@@ -46,6 +46,15 @@ function DepartementItemHeader({ formValues }) {
         }
     }
 
+    const handleDeleteDepartement = async () =>{
+        const confirmation = window.confirm(`Vous voulez vraiment supprimer le département ${nomDepartement}`)
+        if(confirmation){
+            await axios.delete(`http://localhost:4000/api/departement/delete/${id}`, data)
+            alert('Département supprimée avec succès')
+            navigate('/business/manage/departement')
+        }
+    }
+
 
 
 
@@ -77,8 +86,8 @@ function DepartementItemHeader({ formValues }) {
                         initial={{ x: -20 }}
                         animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomDepartement || 'New Departement'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Departement Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomDepartement || 'Nouveau Département'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Détail du département</Typography>
                     </motion.div>
                 </div>
             </div>
@@ -87,6 +96,17 @@ function DepartementItemHeader({ formValues }) {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
             >
+                {id && (
+                    <Button
+                        className="whitespace-nowrap mx-4"
+                        variant="contained"
+                        color="error"
+                        //  disabled={!isDirty  || !isValid}
+                        onClick={handleDeleteDepartement}
+                    >
+                        Supprimer
+                    </Button>
+                )}
                 <Button
                      className="whitespace-nowrap mx-4"
                      variant="contained"
@@ -94,7 +114,7 @@ function DepartementItemHeader({ formValues }) {
                     //  disabled={!isDirty  || !isValid}
                      onClick={handleSaveDirection}
                 >
-                    Save
+                    Enregistrer
                 </Button>
             </motion.div>
         </div>

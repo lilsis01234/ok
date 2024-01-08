@@ -18,23 +18,20 @@ let roles = {
 
 export const getRoles = () => roles;
 
-export const fetchRoles = () => {
-  return axios.get('http://localhost:4000/api/role/all_role')
-          .then(response => {
-              const roleFromBackend = response.data;
-              const indexedRole = roleFromBackend.map((role) => ({
-                id : role.titreRole,
-                role : role.titreRole
-              }))
-              roles = {
-                ...roles,
-                indexedRole
-              }
-
-              // console.log(roles)
-          })
-          .catch(error => {
-            console.error('Erreur lors de la récupération des rôles')
-          })
+export const fetchRoles = async () => {
+  try {
+    const response = await axios.get('http://localhost:4000/api/role/all_role');
+    const roleFromBackend = response.data;
+    const indexedRole = roleFromBackend.map((role) => ({
+      id: role.titreRole,
+      role: role.titreRole
+    }));
+    roles = {
+      ...roles,
+      indexedRole
+    };
+  } catch (error) {
+    console.error('Erreur lors de la récupération des rôles');
+  }
 }
     

@@ -8,6 +8,8 @@ import Projet from './projets/Projet';
 import ProjetItemList from './projets/projetItem/ProjetItemList';
 import Equipe from './equipe/Equipe';
 import EquipeItemList from './equipe/equipeItem/EquipeItemList';
+import Site from './site/Site';
+import SiteItemListe from './site/SiteItem/SiteItemListe';
 
 
 const Direction = lazy(() => import('./direction/Direction'))
@@ -48,6 +50,12 @@ const StructureAppConfig  = {
         }, {
             path : 'business/manage/team/:equipeId',
             element : <EquipeItemList/>
+        }, {
+            path : 'business/manage/site',
+            element : <Site/>
+        }, {
+            path : 'business/manage/site/:siteId',
+            element : <SiteItemListe/>
         }
     ]
 }

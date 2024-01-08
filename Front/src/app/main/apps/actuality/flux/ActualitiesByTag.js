@@ -6,7 +6,8 @@ import { useEffect, useState} from 'react';
 import TimelineTab from './tabs/TimelineTab';
 import useThemeMediaQuery from '../../../../../@fuse/hooks/useThemeMediaQuery';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-header': {
@@ -24,13 +25,16 @@ function ActualitiesByTag() {
 
   const {tagId} = useParams();  
   const [TagData, setTagData] = useState([]);
+  const [tag, setTag] = useState([]);
+  const navigate = useNavigate();
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
 //Récupération de la liste des actualités
 const fetchActualities = () => {
   axios.get(`http://localhost:4000/api/actualite/tag/${tagId}`)
     .then(res => {
-        setTagData(res.data);
+        setTagData(res.data.actuality);
+        setTag(res.data.tag);
     })
     .catch(err => console.log(err));
 }
@@ -51,7 +55,7 @@ useEffect(() => {
 
           <div className="flex flex-col flex-0 lg:flex-row items-center max-w-7xl w-full mx-auto px-32 lg:h-72">
             <div className="flex flex-col items-center lg:items-start mt-16 lg:mt-0 lg:ml-32">
-              <Typography color="text.secondary">Actualitées > liste des actualitées</Typography>
+              <Typography color="text.secondary">< span className="hover:cursor-pointer hover:underline hover:text-blue-900" onClick={() => navigate("/apps/timeline")}>Actualitées</span> > Tag > {tag?.nom}</Typography>
             </div>
           </div>
         </div>
