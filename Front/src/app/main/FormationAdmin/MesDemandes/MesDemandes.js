@@ -58,9 +58,12 @@ const  MesDemandes =()=>{
     return(
         <>  
         <div>
+       
+          {mesDemandesFormations.length!==0 && <Typography className="mt-6 mb-4">Les demandes de formation</Typography> }
         {mesDemandesFormations.map((demande, index) => (
             
             <div key={index} className="training-request-item">
+              
               <Typography className="theme">{demande.theme}</Typography>
               <Typography className="description">{demande.description}</Typography>
               <Typography>Destinataire : {demande.RoleHierarchique.roleHierarchique}</Typography>

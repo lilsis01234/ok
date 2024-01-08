@@ -35,11 +35,7 @@ const ModifierProfil = ({ CollabToEdit}) => {
             ville,
             tel
         }
-<<<<<<< HEAD
         axios.put(`http://localhost:4000/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
-=======
-        axios.put(`http://localhost:4000/api/collaborateur/${CollabToEdit.id}/edit`, formData, {
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
@@ -73,11 +69,7 @@ const ModifierProfil = ({ CollabToEdit}) => {
                     <AccordionHeader onClick={handleAlwaysOpen} className="font-[Poppins]">Photo de Profil</AccordionHeader>
                     <AccordionBody className="font-[Poppins] flex flex-col items-center">
                         {!selectImage && image && (
-<<<<<<< HEAD
                             <Avatar src={`http://localhost:4000/${image}`} className="w-32 h-32 rounded-full"/>
-=======
-                            <Avatar src={`http://localhost:4000/${image}`} className="w-32 h-32 rounded-full"/>
->>>>>>> 787c66a6d493c2714c4029e99f09575138720ce9
                         )}
                         {selectImage && (
                             <Avatar src={URL.createObjectURL(selectImage)} className="w-32 h-32 rounded-full" />
