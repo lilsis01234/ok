@@ -84,7 +84,55 @@ const loadFrontOfficeNavigation = () => {
           url: 'entreprise/structure'
         },
       ]
-    }
+    },
+    {
+      id: 'formation',
+      title: 'Formations',
+      type: 'group',
+      icon: 'heroicons-outline:academic-cap',
+      translate: 'Formations',
+      children : [
+        {
+          id: 'formation.mesformations',
+          title: 'Agenda',
+          type: 'item',
+          icon: 'heroicons-outline:calendar',
+          translate: 'Agenda',
+          url : 'dashboards/calendarseance',
+        },
+        {
+          id: 'formation.formations',
+          title: 'Formations',
+          type: 'item',
+          icon: 'heroicons-outline:academic-cap',
+          translate: 'Formations',
+          url : 'dashboards/listeFormation'
+        },
+        {
+          id: 'formation.demandeformations',
+          title: 'Demandes de formations',
+          type: 'item',
+          icon: 'heroicons-outline:users',
+          translate: 'Demandes',
+          url : 'dashboards/demandeFormation'
+        },
+        {
+          id: 'formation.ajoutFormation',
+          title: 'Formation',
+          type: 'item',
+          icon: 'heroicons-outline:plus',
+          translate: 'Formation',
+          url : 'formateur/addFormation',
+        },
+        {
+          id: 'formation.ajoutDemandeFormation',
+          title: 'Demande',
+          type: 'item',
+          icon: 'heroicons-outline:plus',
+          translate: 'Demande',
+          url : '/dashboards/addDemandeFormation',
+        }
+    ]}
 
 
   ]
@@ -274,8 +322,56 @@ const loadBackOfficeNavigation = () => {
               ]
             }, 
           ]
-        }
-  ]
+        },
+        {
+        id: 'formation',
+        title: 'Formations',
+        type: 'group',
+        icon: 'heroicons-outline:academic-cap',
+        translate: 'Formations',
+        children : [
+          {
+            id: 'formation.mesformations',
+            title: 'Agenda',
+            type: 'item',
+            icon: 'heroicons-outline:calendar',
+            translate: 'Agenda',
+            url : 'dashboards/calendarseance',
+          },
+          {
+            id: 'formation.formations',
+            title: 'Formations',
+            type: 'item',
+            icon: 'heroicons-outline:academic-cap',
+            translate: 'Formations',
+            url : 'dashboards/listeFormation'
+          },
+          {
+            id: 'formation.demandeformations',
+            title: 'Demandes de formations',
+            type: 'item',
+            icon: 'heroicons-outline:users',
+            translate: 'Demandes',
+            url : 'dashboards/demandeFormation'
+          },
+          {
+            id: 'formation.ajoutFormation',
+            title: 'Formation',
+            type: 'item',
+            icon: 'heroicons-outline:plus',
+            translate: 'Formation',
+            url : 'formateur/addFormation',
+          },
+          {
+            id: 'formation.ajoutDemandeFormation',
+            title: 'Demande',
+            type: 'item',
+            icon: 'heroicons-outline:plus',
+            translate: 'Demande',
+            url : '/dashboards/addDemandeFormation',
+          }
+        ]}
+      ]
 }
 
 
