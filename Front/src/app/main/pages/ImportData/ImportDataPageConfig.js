@@ -9,10 +9,16 @@ const ImportDataPageConfig =  {
     routes : [
         {
             path : 'import-data/collaborateurs',
-            element : <CollaborateurData/>
+            element : <CollaborateurData/>,
+            auth: {
+                role: ['SuperAdmin'],
+              },
         }, {
             path : 'import-data/entreprise',
-            element : <EntrepriseData/>
+            element : <EntrepriseData/>,
+            auth: {
+                role: ['SuperAdmin'],
+              },
         }
     ]
 }

@@ -10,16 +10,28 @@ const EntrepriseStrucutureConfig = {
     routes : [
         {
             path : 'entreprise/structure',
-            element : <EntrepriseStructure/>
+            element : <EntrepriseStructure/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }, {
             path : 'entreprise/structure/:departementId',
-            element : <DepartementItem/>
+            element : <DepartementItem/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }, {
             path : 'entreprise/structure/:departementId/:projectId',
-            element : <ProjectItem/>
+            element : <ProjectItem/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }, {
             path : 'entreprise/structure/:departementId/:projectId/:equipeId',
-            element : <EquipeItem/>
+            element : <EquipeItem/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }
     ]
 }

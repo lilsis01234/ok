@@ -7,7 +7,10 @@ const DirectionConfig = {
     routes : [
         {
             path : 'entreprise/direction',
-            element : <Direction/>
+            element : <Direction/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }
     ]
 }

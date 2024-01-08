@@ -9,10 +9,16 @@ const GererPermissionConfig = {
     routes : [
         {
             path : 'manage/permission',
-            element : <GererPermission/>
+            element : <GererPermission/>,
+            auth: {
+                role: ['SuperAdmin'],
+              },
         }, {
             path : 'manage/permission/:permissionId',
-            element : <PermissionListItem/>
+            element : <PermissionListItem/>,
+            auth: {
+                role: ['SuperAdmin'],
+              },
         }
     ]
 }

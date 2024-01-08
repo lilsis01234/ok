@@ -21,41 +21,77 @@ const StructureAppConfig  = {
     routes : [
         {
             path : 'business/manage/direction',
-            element : <Direction/>
+            element : <Direction/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, 
         {
             path : 'business/manage/direction/:directionId',
-            element : <DirectionListItem/>
+            element : <DirectionListItem/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/departement',
-            element : <Departement/>
+            element : <Departement/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/departement/:departementId',
-            element : <DepartementListItem/>
+            element : <DepartementListItem/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/Fonction',
-            element : <Poste/>
+            element : <Poste/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/Fonction/:posteId',
-            element : <PosteListeItem/>
+            element : <PosteListeItem/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/project',
-            element : <Projet/>
+            element : <Projet/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/project/:projectId',
-            element : <ProjetItemList/>
+            element : <ProjetItemList/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/team',
-            element : <Equipe/>
+            element : <Equipe/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/team/:equipeId',
-            element : <EquipeItemList/>
+            element : <EquipeItemList/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/site',
-            element : <Site/>
+            element : <Site/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'business/manage/site/:siteId',
-            element : <SiteItemListe/>
+            element : <SiteItemListe/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }
     ]
 }

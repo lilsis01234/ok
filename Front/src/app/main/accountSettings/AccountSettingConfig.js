@@ -11,13 +11,22 @@ const AccountSettingsConfig = {
     routes : [
         {
             path : 'settings/account',
-            element : <AccountSetting/>
+            element : <AccountSetting/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }, {
             path : 'setting/account/password',
-            element : <UpdatePassword/>
+            element : <UpdatePassword/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }, {
             path : 'settings/account/profile',
-            element : <UpdateProfile/>
+            element : <UpdateProfile/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }
     ]
 }

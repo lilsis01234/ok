@@ -12,19 +12,34 @@ const GererCollaborateurConfig = {
     routes : [
         {
             path : 'manage/collaborator',
-            element : <Collaborateur/>
+            element : <Collaborateur/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'manage/collaborator/:collaborateurId',
-            element : <CollaborateurListItem/>
+            element : <CollaborateurListItem/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'manage/collaborator/archive/:collaborateurId',
-            element : <ArchiveCollaborateurForm/>
+            element : <ArchiveCollaborateurForm/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'manage/archive/collaborateur',
-            element : <ListeArchiveCollaborateur/>
+            element : <ListeArchiveCollaborateur/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'manage/archive/collaborateur/:collaborateurId',
-            element : <ListArchiveCollaborateurItem/>
+            element : <ListArchiveCollaborateurItem/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }
     ]
 }
