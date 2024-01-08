@@ -22,7 +22,11 @@ const Dashboard = () => {
         
   const [listeActuCategDash, setlisteActuCategDash] = useState([]);
   const [formations, setFormations] = useState([]);
+  const user = localStorage.getItem('user');
+  const userConnected = JSON.parse(user);
+  // const id = userConnected.id;
 
+  console.log(user,userConnected);
   const fetchActualitiesByCateg = () => {
     axios.get('http://localhost:4000/api/categorie/25/actualites')
       .then(res => {setlisteActuCategDash(res.data)})
@@ -32,7 +36,7 @@ const Dashboard = () => {
   const fetchFormation = () => {
     axios.get('http://localhost:4000/api/formations/all_formations')
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         setFormations(res.data)
       })
       .catch(err => console.log(err));
