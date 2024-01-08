@@ -40,7 +40,7 @@ function VisioConference() {
   };
 
   useEffect(() => {
-    const peer = new Peer({ secure: false });
+    const peer = new Peer();
 
     peer.on('open', (id) => {
       setPeerId(id);
@@ -80,18 +80,22 @@ function VisioConference() {
   };
 
   return (
-    <div className="App">
-      <div>
-        <button onClick={endCall}>Arrêter l'appel</button>
+    <div className="App flex flex-col h-screen">
+      <div className="flex-1">
+        <video ref={currentUserVideoRef} className="w-full h-full object-cover" />
       </div>
-      <div>
-        <video ref={currentUserVideoRef} />
+      <div className="flex-1">
+        <video ref={remoteVideoRef} className="w-full h-full object-cover" />
       </div>
-      <div>
-        <video ref={remoteVideoRef} />
+      <div className="flex justify-center items-end pb-4">
+        <button
+          onClick={endCall}
+          className="bg-red-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+        >
+          Arrêter l'appel
+        </button>
       </div>
     </div>
   );
 }
-
 export default VisioConference;
