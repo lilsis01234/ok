@@ -268,7 +268,7 @@ const Formations = () => {
 
                 {userId === formation.Formateur.id && (
                   <>
-                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la demande</button>
+                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la formation</button>
                   </>
                 )}
   
@@ -321,7 +321,7 @@ const Formations = () => {
 
                 {userId === formation.Formateur.id && (
                   <>
-                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la demande</button>
+                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la formation</button>
                   </>
                 )}
   
