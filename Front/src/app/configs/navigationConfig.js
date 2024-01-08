@@ -36,6 +36,26 @@ const loadFrontOfficeNavigation = () => {
       ],
     },
     {
+      id: 'actuality',
+      title: 'Actualités',
+      type: 'group',
+      auth: {
+        role: ['SuperAdmin', 'User', 'Admin'],
+      },
+      children: [
+        {
+          id: 'actuality.flux',
+          title: "Flux d'actualités",
+          type: 'item',
+          icon: 'heroicons-outline:menu-alt-2',
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin'],
+          },
+          url: '/apps/timeline',
+        },
+      ]
+    },
+    {
       id: 'collaborateur',
       title: 'Collaborateurs',
       type: 'group',
@@ -55,7 +75,9 @@ const loadFrontOfficeNavigation = () => {
           url: 'collaborateurs/all',
         },
       ]
-    }, {
+    }, 
+
+    {
       id: 'entreprise',
       title: 'Entreprise',
       auth: {
@@ -158,6 +180,76 @@ const loadFrontOfficeNavigation = () => {
 const loadBackOfficeNavigation = () => {
   navigationConfig = [
     {
+      id: 'actualite',
+      title: 'Actualités',
+      type: 'group',
+      auth: {
+        role: ['SuperAdmin', 'Admin'],
+      },
+      children: [
+        {
+          id: 'actuality.list',
+          title: "Toutes les actualités",
+          type: 'item',
+          icon: 'heroicons-outline:newspaper',
+          url: 'apps/actuality/list',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          }
+        },
+        {
+          id: 'actuality.add',
+          title: "Ajout d'actualité",
+          type: 'item',
+          icon: 'heroicons-outline:document-add',
+          url: '/apps/addActuality',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          }
+        },
+        {
+          id: 'comment',
+          title: "Commentaires",
+          type: 'item',
+          icon: 'heroicons-outline:chat-alt',
+          url: '/apps/edit-comments',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          }
+        },
+        {
+          id: 'categorie',
+          title: 'Catégories',
+          type: 'item',
+          icon: 'heroicons-outline:clipboard-list',
+          url: '/apps/categorie',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          }
+        },
+        {
+          id: 'type',
+          title: 'Types',
+          type: 'item',
+          icon: 'material-outline:article',
+          url: '/apps/type',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          }
+        },
+        {
+          id: 'tag',
+          title: 'Etiquettes',
+          type: 'item',
+          icon: 'material-outline:article',
+          url: '/apps/tag',
+          auth: {
+            role: ['SuperAdmin', 'Admin'],
+          }
+        }
+      ]
+    },
+    {
       id: 'collaborateur',
       title: 'Collaborateurs',
       type: 'group',
@@ -190,7 +282,7 @@ const loadBackOfficeNavigation = () => {
           title: 'Comptes collaborateurs',
           type: 'collapse',
           icon: 'heroicons-outline:user-circle',
-          auth: {
+          auth: { 
             role: ['SuperAdmin', 'Admin'],
           },
           children: [
