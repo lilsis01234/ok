@@ -2,6 +2,7 @@ import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import jwtServiceConfig from './jwtServiceConfig';
+import { useNavigate } from 'react-router-dom';
 
 
 /* eslint-disable camelcase */
@@ -12,7 +13,7 @@ class JwtService extends FuseUtils.EventEmitter {
     this.handleAuthentication();
   }
 
- 
+  
 
   //Methode pour vérifier si l'utilisateur est connecté
   setInterceptors = () => {
