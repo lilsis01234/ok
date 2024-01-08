@@ -89,12 +89,18 @@ const loadFrontOfficeNavigation = () => {
       id: 'formation',
       title: 'Formations',
       type: 'group',
+      auth: {
+        role: ['SuperAdmin', 'User', 'Admin'],
+      },
       icon: 'heroicons-outline:academic-cap',
       translate: 'Formations',
       children : [
         {
           id: 'formation.mesformations',
           title: 'Agenda',
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin'],
+          },
           type: 'item',
           icon: 'heroicons-outline:calendar',
           translate: 'Agenda',
@@ -103,6 +109,9 @@ const loadFrontOfficeNavigation = () => {
         {
           id: 'formation.formations',
           title: 'Formations',
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin'],
+          },
           type: 'item',
           icon: 'heroicons-outline:academic-cap',
           translate: 'Formations',
@@ -111,6 +120,9 @@ const loadFrontOfficeNavigation = () => {
         {
           id: 'formation.demandeformations',
           title: 'Demandes de formations',
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin'],
+          },
           type: 'item',
           icon: 'heroicons-outline:users',
           translate: 'Demandes',
@@ -119,6 +131,9 @@ const loadFrontOfficeNavigation = () => {
         {
           id: 'formation.ajoutFormation',
           title: 'Formation',
+          auth: {
+            role: ['SuperAdmin', 'Admin', 'Formateur'],
+          },
           type: 'item',
           icon: 'heroicons-outline:plus',
           translate: 'Formation',
@@ -128,13 +143,14 @@ const loadFrontOfficeNavigation = () => {
           id: 'formation.ajoutDemandeFormation',
           title: 'Demande',
           type: 'item',
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin'],
+          },
           icon: 'heroicons-outline:plus',
           translate: 'Demande',
           url : '/dashboards/addDemandeFormation',
         }
     ]}
-
-
   ]
 }
 
@@ -327,6 +343,9 @@ const loadBackOfficeNavigation = () => {
         id: 'formation',
         title: 'Formations',
         type: 'group',
+        auth: {
+          role: ['SuperAdmin', 'User', 'Admin'],
+        },
         icon: 'heroicons-outline:academic-cap',
         translate: 'Formations',
         children : [
@@ -334,6 +353,9 @@ const loadBackOfficeNavigation = () => {
             id: 'formation.mesformations',
             title: 'Agenda',
             type: 'item',
+            auth: {
+              role: ['SuperAdmin', 'User', 'Admin'],
+            },
             icon: 'heroicons-outline:calendar',
             translate: 'Agenda',
             url : 'dashboards/calendarseance',
@@ -342,6 +364,9 @@ const loadBackOfficeNavigation = () => {
             id: 'formation.formations',
             title: 'Formations',
             type: 'item',
+            auth: {
+              role: ['SuperAdmin', 'User', 'Admin'],
+            },
             icon: 'heroicons-outline:academic-cap',
             translate: 'Formations',
             url : 'dashboards/listeFormation'
@@ -349,22 +374,20 @@ const loadBackOfficeNavigation = () => {
           {
             id: 'formation.demandeformations',
             title: 'Demandes de formations',
+            auth: {
+              role: ['SuperAdmin', 'User', 'Admin'],
+            },
             type: 'item',
             icon: 'heroicons-outline:users',
             translate: 'Demandes',
             url : 'dashboards/demandeFormation'
           },
           {
-            id: 'formation.ajoutFormation',
-            title: 'Formation',
-            type: 'item',
-            icon: 'heroicons-outline:plus',
-            translate: 'Formation',
-            url : 'formateur/addFormation',
-          },
-          {
             id: 'formation.ajoutDemandeFormation',
             title: 'Demande',
+            auth: {
+              role: ['SuperAdmin', 'User', 'Admin'],
+            },
             type: 'item',
             icon: 'heroicons-outline:plus',
             translate: 'Demande',
