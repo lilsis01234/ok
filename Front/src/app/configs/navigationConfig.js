@@ -129,17 +129,6 @@ const loadFrontOfficeNavigation = () => {
           url : 'dashboards/demandeFormation'
         },
         {
-          id: 'formation.ajoutFormation',
-          title: 'Formation',
-          auth: {
-            role: ['SuperAdmin', 'Admin', 'Formateur'],
-          },
-          type: 'item',
-          icon: 'heroicons-outline:plus',
-          translate: 'Formation',
-          url : 'formateur/addFormation',
-        },
-        {
           id: 'formation.ajoutDemandeFormation',
           title: 'Demande',
           type: 'item',
@@ -381,6 +370,17 @@ const loadBackOfficeNavigation = () => {
             icon: 'heroicons-outline:users',
             translate: 'Demandes',
             url : 'dashboards/demandeFormation'
+          },
+          {
+            id: 'formation.ajoutFormation',
+            title: 'Formation',
+            auth: {
+              role: ['SuperAdmin', 'Admin', 'Formateur'],
+            },
+            type: 'item',
+            icon: 'heroicons-outline:plus',
+            translate: 'Formation',
+            url : 'formateur/addFormation',
           },
           {
             id: 'formation.ajoutDemandeFormation',
