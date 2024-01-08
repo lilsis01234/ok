@@ -80,17 +80,21 @@ function VisioConference() {
   };
 
   return (
-    <div className="App flex flex-col h-screen">
-      <div className="flex-1">
-        <video ref={currentUserVideoRef} className="w-full h-full object-cover" />
+    <div className="App flex flex-col">
+      <div className="flex">
+        <video ref={currentUserVideoRef} className="w-48" />
       </div>
       <div className="flex-1">
-        <video ref={remoteVideoRef} className="w-full h-full object-cover" />
+        {remoteVideoRef.current && remoteVideoRef.current.map(({ peerId, ref }, index) => (
+          <div key={index}>
+            <video ref={ref} className="w-48" />
+          </div>
+        ))}
       </div>
-      <div className="flex justify-center items-end pb-4">
+      <div className="justify-center">
         <button
           onClick={endCall}
-          className="bg-red-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+          className="bg-red-500 text-white h-48 w-96 rounded focus:outline-none focus:ring focus:border-blue-300"
         >
           Arrêter l'appel
         </button>
