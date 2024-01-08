@@ -62,7 +62,7 @@ const PieceJointe = require('../Modele/conge/PiecesJointes');
 //Synchronisation de la base de donnée 
 async function syncDatabase() {
     try {
-        await sequelize.sync({ force: false });
+        await sequelize.sync({ force: true });
         const { TestPoste, TestDepartement, PosteDepartement } = association;
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });
