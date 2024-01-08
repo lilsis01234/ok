@@ -58,6 +58,24 @@ const Formations = () => {
     })
   }
 
+  const DeleteFormation = async (id) => {
+    const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette demande ?");
+    if (isConfirmed) {
+    try {
+      const response = await axios.delete(`http://localhost:4000/api/demande_formation/formation/${id}`);
+      if (response.status === 204) {
+        // Suppression réussie, mise à jour de la liste des événements
+        const updatedEvents = events.filter(event => event.id !== id);
+        setEvents(updatedEvents);
+      } else {
+        console.error('Erreur lors de la suppression de la séance');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la suppression de la séance :', error);
+    }
+  }};    
+
+
   useEffect(() => {
     fetchFormation();
     fetchFormationAdmin();
@@ -240,9 +258,18 @@ const Formations = () => {
                 </button>
   
                 {userId === formation.Formateur.id && (
+                  <>
+                  <br></br><br></br>
                   <button onClick={() => setEditingFormation(formation)} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
                     Edit
                   </button>
+                  </>
+                )}
+
+                {userId === formation.Formateur.id && (
+                  <>
+                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la demande</button>
+                  </>
                 )}
   
                 {editingFormation && editingFormation.id === formation.id && (
@@ -290,6 +317,12 @@ const Formations = () => {
                   <button onClick={() => setEditingFormation(formation)} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
                     Edit
                   </button>
+                )}
+
+                {userId === formation.Formateur.id && (
+                  <>
+                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la demande</button>
+                  </>
                 )}
   
                 {editingFormation && editingFormation.id === formation.id && (
