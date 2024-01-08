@@ -9,23 +9,6 @@ const Seance = require('../../../Modele/formation/Seance');
 const Collab = require('../../../Modele/CollabModel/Collab');
 
 router.get('/all', async (req, res) => {
-    const coatch = "coatch";
-  
-    try {
-      // Find IDs of coatch role in RoleHierarchique
-      const idCoatch = await RoleHierarchique.findAll({
-        attributes: ['id'],
-        where: {
-          roleHierarchique: {
-            [Sequelize.Op.like]: `%${coatch}%`, // Use `%` for wildcard matching
-          },
-        },
-        raw: true, // Make sure to get raw data (array of objects)
-      });
-  
-      // Extract the IDs from the array of objects
-      const coatchIds = idCoatch.map(entry => entry.id);
-  
       try {
         const demandes = await Formation.findAll({
           include: [
@@ -36,9 +19,7 @@ router.get('/all', async (req, res) => {
             },
           ],
           where: {
-            destinataireDemande: {
-              [Sequelize.Op.not]: [null, ...coatchIds], // Updated this line
-            },
+            destinataireDemande:{ [Sequelize.Op.not]: null },
             approbation: null,
           },
         });
@@ -47,10 +28,6 @@ router.get('/all', async (req, res) => {
         console.error(err);
         res.status(500).json({ error: 'Internal server error' });
       }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
-    }
 });
 
 router.get('/allWithoutForm', async(req,res)=>{
