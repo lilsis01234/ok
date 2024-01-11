@@ -59,7 +59,7 @@ const Formations = () => {
   }
 
   const DeleteFormation = async (id) => {
-    const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette demande ?");
+    const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette formation ?");
     if (isConfirmed) {
     try {
       const response = await axios.delete(`http://localhost:4000/api/demande_formation/formation/${id}`);
@@ -68,7 +68,7 @@ const Formations = () => {
         const updatedEvents = events.filter(event => event.id !== id);
         setEvents(updatedEvents);
       } else {
-        console.error('Erreur lors de la suppression de la séance');
+        console.error('Erreur lors de la suppression de la séance', error);
       }
     } catch (error) {
       console.error('Erreur lors de la suppression de la séance :', error);

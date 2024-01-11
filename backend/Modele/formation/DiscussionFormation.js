@@ -3,6 +3,7 @@ const sequelize = require('../../database/database');
 const Collaborateur = require('../../Modele/CollabModel/Collab');
 const Module = require('./Module');
 const Formation = require('./Formation');
+const DemandeFormation = require('./demandeFormation');
 
 
 class DiscussionFormation extends Model{}
@@ -22,9 +23,16 @@ DiscussionFormation.init({
     },
     formation:{
         type : DataTypes.INTEGER,
-        allowNull : false,
+        allowNull : true,
         references : {
         model : Formation,
+        key : 'id'
+    }},
+    demande:{
+        type : DataTypes.INTEGER,
+        allowNull : true,
+        references : {
+        model : DemandeFormation,
         key : 'id'
     }},
     collaborateur:{
@@ -50,6 +58,10 @@ DiscussionFormation.init({
 
 DiscussionFormation.belongsTo(Formation, {
     foreignKey : 'formation',
+    onDelete : 'CASCADE'
+})
+DiscussionFormation.belongsTo(DemandeFormation, {
+    foreignKey : 'demande',
     onDelete : 'CASCADE'
 })
 DiscussionFormation.belongsTo(Collaborateur, {

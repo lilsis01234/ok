@@ -40,6 +40,49 @@ router.get('/all_formations', async(req,res) => {
     }) 
 })
 
+router.get('/all/Coatch',async(req,res)=>{
+  const coatch = "coatch";
+
+  try {
+      // Find IDs of coatch role in RoleHierarchique
+      const idCoatch = await RoleHierarchique.findAll({
+          attributes: ['id'],
+          where: {
+              roleHierarchique: {
+                  [Sequelize.Op.like]: `%${coatch}%`, // Use `%` for wildcard matching
+              },
+          },
+          raw: true, // Make sure to get raw data (array of objects)
+      });
+
+      // Extract the IDs from the array of objects
+      const coatchIds = idCoatch.map(entry => entry.id);
+    
+      Formation.findAll({
+        include: [
+          {
+            model: Collaborateur,
+            as: 'Auteur',
+            attributes: ['nom', 'prenom','image'],
+          },
+        ],
+        attributes: ['id', 'theme', 'description', 'auteur'],
+          where:
+          {
+            approbation:1,
+            destinataireDemande:coatchIds
+          },
+      })
+      .then((formation) => {
+        res.status(200).json(formation)
+        console.log(formation)
+      }) 
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
 router.get('/all/admin', async(req,res)=>{
     Formation.findAll({
         include: [

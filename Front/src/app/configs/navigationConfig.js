@@ -90,7 +90,7 @@ const loadFrontOfficeNavigation = () => {
       title: 'Formations',
       type: 'group',
       auth: {
-        role: ['SuperAdmin', 'User', 'Admin'],
+        role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
       },
       icon: 'heroicons-outline:academic-cap',
       translate: 'Formations',
@@ -99,7 +99,7 @@ const loadFrontOfficeNavigation = () => {
           id: 'formation.mesformations',
           title: 'Agenda',
           auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
+            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
           },
           type: 'item',
           icon: 'heroicons-outline:calendar',
@@ -110,7 +110,7 @@ const loadFrontOfficeNavigation = () => {
           id: 'formation.formations',
           title: 'Formations',
           auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
+            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
           },
           type: 'item',
           icon: 'heroicons-outline:academic-cap',
@@ -118,10 +118,21 @@ const loadFrontOfficeNavigation = () => {
           url : 'dashboards/listeFormation'
         },
         {
+          id: 'formation.ajoutFormation',
+          title: 'Formation',
+          auth: {
+            role: ['SuperAdmin', 'Admin', 'Formateur'],
+          },
+          type: 'item',
+          icon: 'heroicons-outline:plus',
+          translate: 'Formation',
+          url : 'formateur/addFormation',
+        },
+        {
           id: 'formation.demandeformations',
           title: 'Demandes de formations',
           auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
+            role: ['SuperAdmin', 'User', 'Admin','Coatch'],
           },
           type: 'item',
           icon: 'heroicons-outline:users',
@@ -333,7 +344,7 @@ const loadBackOfficeNavigation = () => {
         title: 'Formations',
         type: 'group',
         auth: {
-          role: ['SuperAdmin', 'User', 'Admin'],
+          role: ['SuperAdmin', 'User', 'Admin','Coatch'],
         },
         icon: 'heroicons-outline:academic-cap',
         translate: 'Formations',
@@ -343,7 +354,7 @@ const loadBackOfficeNavigation = () => {
             title: 'Agenda',
             type: 'item',
             auth: {
-              role: ['SuperAdmin', 'User', 'Admin'],
+              role: ['SuperAdmin', 'User', 'Admin','Coatch'],
             },
             icon: 'heroicons-outline:calendar',
             translate: 'Agenda',
@@ -354,7 +365,7 @@ const loadBackOfficeNavigation = () => {
             title: 'Formations',
             type: 'item',
             auth: {
-              role: ['SuperAdmin', 'User', 'Admin'],
+              role: ['SuperAdmin', 'User', 'Admin','Coatch'],
             },
             icon: 'heroicons-outline:academic-cap',
             translate: 'Formations',
@@ -364,7 +375,7 @@ const loadBackOfficeNavigation = () => {
             id: 'formation.demandeformations',
             title: 'Demandes de formations',
             auth: {
-              role: ['SuperAdmin', 'User', 'Admin'],
+              role: ['SuperAdmin', 'User', 'Admin','Coatch'],
             },
             type: 'item',
             icon: 'heroicons-outline:users',

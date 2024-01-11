@@ -2,18 +2,19 @@ const Sequelize = require('sequelize');
 const router = require('express').Router();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
-const {  Formation2,Collab2,FormationCollab } = require('../../../Modele/formation/associationFormationCollab');
-const {  Formation,Equipe2,FormationEq } = require('../../../Modele/formation/associationFormationDep');
+const {  Formation2,Collab2,FormationCollab } = require('../../../Modele/formation/associationDemandeCollab');
+const {  Formation,Equipe2,FormationEq, DemandeFormation2 } = require('../../../Modele/formation/associationDemandeEq');
 const RoleHierarchique = require('../../../Modele/RoleModel/RoleHierarchique');
 const Seance = require('../../../Modele/formation/Seance');
 const Collab = require('../../../Modele/CollabModel/Collab');
+const DemandeFormation= require('../../../Modele/formation/demandeFormation');
 
 router.get('/all', async (req, res) => {
       try {
-        const demandes = await Formation.findAll({
+        const demandes = await DemandeFormation.findAll({
           include: [
             {
-              model: Collab2,
+              model: Collab,
               as: 'Auteur',
               attributes: ['nom', 'prenom','image'],
             },
@@ -30,7 +31,7 @@ router.get('/all', async (req, res) => {
       }
 });
 
-router.get('/allWithoutForm', async(req,res)=>{
+router.get('/allWithoutFormateurExterne', async(req,res)=>{
     try{
         const demandes = await Formation.findAll({
             include: [
@@ -141,21 +142,18 @@ router.get('/alldemande/coatch', async (req, res) => {
     const coatch = "coatch";
 
     try {
-        // Find IDs of coatch role in RoleHierarchique
         const idCoatch = await RoleHierarchique.findAll({
             attributes: ['id'],
             where: {
                 roleHierarchique: {
-                    [Sequelize.Op.like]: `%${coatch}%`, // Use `%` for wildcard matching
+                    [Sequelize.Op.like]: `%${coatch}%`, 
                 },
             },
-            raw: true, // Make sure to get raw data (array of objects)
+            raw: true, 
         });
 
-        // Extract the IDs from the array of objects
         const coatchIds = idCoatch.map(entry => entry.id);
 
-        // Find formations where destinataireDemande is in the list of coatch IDs
         const demandes = await Formation.findAll({
             include: [
                 {
@@ -179,7 +177,6 @@ router.get('/alldemande/coatch', async (req, res) => {
     }
 });
 
-//Approbation
 router.post('/approuver/:id', async(req,res)=>{
   const formationId = req.params.id;
     try{
