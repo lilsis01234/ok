@@ -5,11 +5,10 @@ router.use(cookieParser());
 
 const Formation = require('../../Modele/formation/Formation');
 const Collaborateur = require('../../Modele/CollabModel/Collab');
-const Seance = require('../../Modele/formation/Seance');
 const Module = require('../../Modele/formation/Module');
 const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
-// const Departement = require('../../Modele/Structure/TestDepartement')
 const Sequelize = require('sequelize');
+const DemandeFormation = require('../../Modele/formation/demandeFormation');
 
 
 //Toutes les formations dont tout le monde peut assister
@@ -18,26 +17,84 @@ router.get('/all_formations', async(req,res) => {
         include: [
             {
               model: Collaborateur,
-              as: 'Auteur',
-              attributes: ['id','nom', 'prenom','image'],
-            },
-            {
-              model: Collaborateur,
               as: 'Formateur',
               attributes: ['id','nom', 'prenom','image'],
             },
           ],
-          attributes: ['id', 'theme', 'description', 'auteur','formateur','approbation'],
+          attributes: ['id', 'theme', 'description', 'formateur'],
             where:
             {
-              destinataireDemande: null,
-              approbation:1
+              formateur:{ [Sequelize.Op.not]: null },
             },
     })
     .then((formation) => {
         res.status(200).json(formation)
         console.log(formation)
     }) 
+})
+
+//Toutes les demandes publiques approuvées
+router.get('/publiques_demandes', async(req,res) => {
+  DemandeFormation.findAll({
+      include: [
+          {
+            model: Collaborateur,
+            as: 'Auteur',
+            attributes: ['id','nom', 'prenom','image'],
+          },
+        ],
+        attributes: ['id', 'theme', 'description', 'auteur'],
+          where:
+          {
+            formateur:{ [Sequelize.Op.not]: null },
+          },
+  })
+  .then((formation) => {
+      res.status(200).json(formation)
+      console.log(formation)
+  }) 
+})
+
+router.get('/all/Coatch',async(req,res)=>{
+  const coatch = "coatch";
+  try {
+      // Find IDs of coatch role in RoleHierarchique
+      const idCoatch = await RoleHierarchique.findAll({
+          attributes: ['id'],
+          where: {
+              roleHierarchique: {
+                  [Sequelize.Op.like]: `%${coatch}%`, // Use `%` for wildcard matching
+              },
+          },
+          raw: true, // Make sure to get raw data (array of objects)
+      });
+
+      // Extract the IDs from the array of objects
+      const coatchIds = idCoatch.map(entry => entry.id);
+    
+      Formation.findAll({
+        include: [
+          {
+            model: Collaborateur,
+            as: 'Auteur',
+            attributes: ['nom', 'prenom','image'],
+          },
+        ],
+        attributes: ['id', 'theme', 'description', 'auteur'],
+          where:
+          {
+            approbation:1,
+            destinataireDemande:coatchIds
+          },
+      })
+      .then((formation) => {
+        res.status(200).json(formation)
+        console.log(formation)
+      }) 
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
 })
 
 router.get('/all/admin', async(req,res)=>{

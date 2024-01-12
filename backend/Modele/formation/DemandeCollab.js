@@ -1,16 +1,16 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../database/database');
 const Collab2 = require('../CollabModel/Collab');
-const Formation2 = require('./Formation');
+const DemandeFormation2 = require('./demandeFormation');
 
-const FormationCollab = sequelize.define('FormationCollab', {
+const DemandeFormationCollab = sequelize.define('FormationCollab', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true,
         autoIncrement : true, 
         allowNull : false,
     },
-    formation: {
+    demande: {
         type: DataTypes.INTEGER,
         allowNull: false, 
     },
@@ -22,8 +22,8 @@ const FormationCollab = sequelize.define('FormationCollab', {
   timestamps : false  
 })
 
-FormationCollab.belongsTo(Formation2, { foreignKey: 'formation' });
-FormationCollab.belongsTo(Collab2, { foreignKey: 'collaborateur' });
+DemandeFormationCollab.belongsTo(DemandeFormation2, { foreignKey: 'demande' });
+DemandeFormationCollab.belongsTo(Collab2, { foreignKey: 'collaborateur' });
 
 
-module.exports = FormationCollab;
+module.exports = DemandeFormationCollab;

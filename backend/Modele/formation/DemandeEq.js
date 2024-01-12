@@ -1,9 +1,9 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../database/database');
 const Equipe2 = require('../Structure/Equipe')
-const Formation = require('../formation/Formation')
+const DemandeFormation = require('./demandeFormation')
 
-const FormationEq= sequelize.define('FormationEq', {
+const DemandeFormationEq= sequelize.define('FormationEq', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true,
@@ -22,7 +22,7 @@ const FormationEq= sequelize.define('FormationEq', {
   timestamps : false  
 })
 
-FormationEq.belongsTo(Formation, { foreignKey: 'formation' });
-FormationEq.belongsTo(Equipe2, { foreignKey: 'equipe' });
+DemandeFormationEq.belongsTo(DemandeFormation, { foreignKey: 'formation' });
+DemandeFormationEq.belongsTo(Equipe2, { foreignKey: 'equipe' });
 
-module.exports = FormationEq;
+module.exports = DemandeFormationEq;

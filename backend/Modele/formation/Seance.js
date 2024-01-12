@@ -1,10 +1,10 @@
 const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../../database/database');
-const Module = require('./Module'); 
+const sequelize = require('../../database/database'); 
 const Collaborateur = require('../../Modele/CollabModel/Collab');
 const ParticipantSeance = require('./ParticipantsSeance');
 const Departement = require('../Structure/TestDepartement');
-const Formation = require('../formation/Formation')
+const Formation = require('../formation/Formation');
+const DemandeFormation = require('./demandeFormation');
 
 class Seance extends Model {}
 
@@ -23,9 +23,17 @@ Seance.init(
     },
     formation:{
       type:DataTypes.INTEGER,
-      allowNull:false,
+      allowNull:true,
       references:{
         model:Formation,
+        key:'id',
+      },
+    },
+    demande:{
+      type:DataTypes.INTEGER,
+      allowNull:true,
+      references:{
+        model:DemandeFormation,
         key:'id',
       },
     },
@@ -37,10 +45,6 @@ Seance.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    approbation:{
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-  },
   title:{
     type: DataTypes.STRING,
     allowNull: false,
@@ -54,6 +58,9 @@ Seance.init(
 
 Seance.belongsTo(Formation, {
   foreignKey: 'formation',
+});
+Seance.belongsTo(DemandeFormation, {
+  foreignKey: 'demande',
 });
 
 Seance.belongsToMany(Collaborateur, { through: ParticipantSeance, foreignKey: 'seance' });

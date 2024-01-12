@@ -19,6 +19,7 @@ const RoleHierarchique = require('../Modele/RoleModel/RoleHierarchique');
 
 
 const Formation = require('../Modele/formation/Formation');
+const DemandeFormation = require('../Modele/formation/demandeFormation');
 const CommentaireFormation = require('../Modele/formation/CommentaireFormation');
 const DiscussionFormation = require('../Modele/formation/DiscussionFormation');
 const Module = require('../Modele/formation/Module');
@@ -46,12 +47,10 @@ const associationPermission = require('../Modele/RoleModel/associationPermission
 const conge = require('../Modele/conge/CongeModel');
 
 const EquipeSeance = require('../Modele/formation/EquipeSeance');
-const FormationCollab = require('../Modele/formation/FormationCollab');
-const FormationDep = require('../Modele/formation/FormationDep');
 
 const associationSeanceCollab = require('../Modele/formation/associationSeanceCollab');
-const associationFormationEq = require('../Modele/formation/associationFormationDep');
-const associationFormationCollab= require('../Modele/formation/associationFormationCollab');
+const associationDemandeEq = require('../Modele/formation/associationDemandeEq');
+const associationDemandeCollab= require('../Modele/formation/associationDemandeCollab');
 const associationSeanceEquipe = require('../Modele/formation/associationSeanceEquipe');
 
 const DemandeConge = require('../Modele/conge/CongeModel');
@@ -63,7 +62,7 @@ const PieceJointe = require('../Modele/conge/PiecesJointes');
 
 async function syncDatabase() {
     try {
-        await sequelize.sync({ force: false });
+        await sequelize.sync({ force: true });
         const { TestPoste, TestDepartement, PosteDepartement } = association;
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });
@@ -94,13 +93,13 @@ async function syncDatabase() {
         Equipe.belongsToMany(Seance2,{through:EquipeSeance});
         Seance2.belongsToMany(Equipe,{through:EquipeSeance});
 
-        const{Formation2,Collab2,FormationCollab} = associationFormationCollab;
-        Formation2.belongsToMany(Collab2,{through:FormationCollab});
-        Collab2.belongsToMany(Formation2,{through:FormationCollab});
+        const{DemandeFormation2,Collab2,DemandeCollab} = associationDemandeCollab;
+        DemandeFormation2.belongsToMany(Collab2,{through:DemandeCollab});
+        Collab2.belongsToMany(DemandeFormation2,{through:DemandeCollab});
 
-        const{Formation,Equipe2,FormationEq} = associationFormationEq;
-        Formation.belongsToMany(Equipe2,{through:FormationEq});
-        Equipe2.belongsToMany(Formation,{through:FormationEq});
+        const{DemandeFormation,Equipe2,DemandeEq} = associationDemandeEq;
+        DemandeFormation.belongsToMany(Equipe2,{through:DemandeEq});
+        Equipe2.belongsToMany(Formation,{through:DemandeEq});
 
         console.log('La base de donnée est synchronisée avec succès')
 
