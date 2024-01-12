@@ -5,11 +5,10 @@ router.use(cookieParser());
 
 const Formation = require('../../Modele/formation/Formation');
 const Collaborateur = require('../../Modele/CollabModel/Collab');
-const Seance = require('../../Modele/formation/Seance');
 const Module = require('../../Modele/formation/Module');
 const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
-// const Departement = require('../../Modele/Structure/TestDepartement')
 const Sequelize = require('sequelize');
+const DemandeFormation = require('../../Modele/formation/demandeFormation');
 
 
 //Toutes les formations dont tout le monde peut assister
@@ -18,20 +17,14 @@ router.get('/all_formations', async(req,res) => {
         include: [
             {
               model: Collaborateur,
-              as: 'Auteur',
-              attributes: ['id','nom', 'prenom','image'],
-            },
-            {
-              model: Collaborateur,
               as: 'Formateur',
               attributes: ['id','nom', 'prenom','image'],
             },
           ],
-          attributes: ['id', 'theme', 'description', 'auteur','formateur','approbation'],
+          attributes: ['id', 'theme', 'description', 'formateur'],
             where:
             {
-              destinataireDemande: null,
-              approbation:1
+              formateur:{ [Sequelize.Op.not]: null },
             },
     })
     .then((formation) => {
@@ -40,9 +33,30 @@ router.get('/all_formations', async(req,res) => {
     }) 
 })
 
+//Toutes les demandes publiques approuvées
+router.get('/publiques_demandes', async(req,res) => {
+  DemandeFormation.findAll({
+      include: [
+          {
+            model: Collaborateur,
+            as: 'Auteur',
+            attributes: ['id','nom', 'prenom','image'],
+          },
+        ],
+        attributes: ['id', 'theme', 'description', 'auteur'],
+          where:
+          {
+            formateur:{ [Sequelize.Op.not]: null },
+          },
+  })
+  .then((formation) => {
+      res.status(200).json(formation)
+      console.log(formation)
+  }) 
+})
+
 router.get('/all/Coatch',async(req,res)=>{
   const coatch = "coatch";
-
   try {
       // Find IDs of coatch role in RoleHierarchique
       const idCoatch = await RoleHierarchique.findAll({

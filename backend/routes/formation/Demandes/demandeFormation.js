@@ -2,8 +2,8 @@ const Sequelize = require('sequelize');
 const router = require('express').Router();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
-const {  Formation2,Collab2,FormationCollab } = require('../../../Modele/formation/associationDemandeCollab');
-const {  Formation,Equipe2,FormationEq, DemandeFormation2 } = require('../../../Modele/formation/associationDemandeEq');
+const {  DemandeFormation2,Collab2,DemandeCollab } = require('../../../Modele/formation/associationDemandeCollab');
+const {  DemandeFormation,Equipe2,DemandeEq,  } = require('../../../Modele/formation/associationDemandeEq');
 const RoleHierarchique = require('../../../Modele/RoleModel/RoleHierarchique');
 const Seance = require('../../../Modele/formation/Seance');
 const Collab = require('../../../Modele/CollabModel/Collab');
@@ -33,7 +33,7 @@ router.get('/all', async (req, res) => {
 
 router.get('/allWithoutFormateurExterne', async(req,res)=>{
     try{
-        const demandes = await Formation.findAll({
+        const demandes = await DemandeFormation.findAll({
             include: [
                 {
                     model: Collab2,
@@ -59,7 +59,7 @@ router.get('/demande/:idDemande', async (req, res) => {
     const idDemande = req.params.idDemande;
 
     try {
-        const demandes = await Formation.findAll({
+        const demandes = await DemandeFormation.findAll({
             include: [
                 {
                     model: Collab2,
@@ -68,13 +68,11 @@ router.get('/demande/:idDemande', async (req, res) => {
                 },
             ],
             where: {
-                destinataireDemande: { [Sequelize.Op.not]: null },
-                // approbation: null,
                 id: idDemande,
             },
         });
 
-        const Collabs = await FormationCollab.findAll({
+        const Collabs = await DemandeCollab.findAll({
             where: { formation: idDemande },
             include:
             [
@@ -82,12 +80,12 @@ router.get('/demande/:idDemande', async (req, res) => {
                     model:Collab2
                 },
                 {
-                    model:Formation2
+                    model:DemandeFormation2
                 }
             ]
         });
 
-        const equipe = await FormationEq.findAll({
+        const equipe = await DemandeEq.findAll({
             where: { formation: idDemande },
             include : 
             [
@@ -95,7 +93,7 @@ router.get('/demande/:idDemande', async (req, res) => {
                     model:Equipe2
                 },
                 {
-                    model:Formation
+                    model:DemandeFormation
                 }
             ]
         });
@@ -121,7 +119,7 @@ router.get('/demande/:idDemande', async (req, res) => {
 router.get('/all_demande/:id', async(req,res)=>{
     const id = req.params.id
     try{
-        const mesDemandes = await Formation.findAll({
+        const demandesPourMoi = await DemandeFormation.findAll({
             include:{
                 model: RoleHierarchique,
                 attributes:['roleHierarchique']
@@ -131,56 +129,17 @@ router.get('/all_demande/:id', async(req,res)=>{
                 auteur:id
             }
         })
-        res.status(200).json(mesDemandes)
+        res.status(200).json(demandesPourMoi)
     }
     catch(err){
         console.error(err)
     }
 })
 
-router.get('/alldemande/coatch', async (req, res) => {
-    const coatch = "coatch";
-
-    try {
-        const idCoatch = await RoleHierarchique.findAll({
-            attributes: ['id'],
-            where: {
-                roleHierarchique: {
-                    [Sequelize.Op.like]: `%${coatch}%`, 
-                },
-            },
-            raw: true, 
-        });
-
-        const coatchIds = idCoatch.map(entry => entry.id);
-
-        const demandes = await Formation.findAll({
-            include: [
-                {
-                    model: Collab2,
-                    as: 'Auteur',
-                    attributes: ['nom', 'prenom','image'],
-                },
-            ],
-            where: {
-                destinataireDemande: {
-                    [Sequelize.Op.in]: coatchIds,
-                },
-                approbation: null,
-            },
-        });
-
-        res.status(200).json(demandes);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
 router.post('/approuver/:id', async(req,res)=>{
   const formationId = req.params.id;
     try{
-        const updatedFormation = await Formation.update(
+        const updatedFormation = await DemandeFormation.update(
             {
                 approbation: 1,
             },
@@ -206,7 +165,7 @@ router.post('/approuver/:id', async(req,res)=>{
 router.post('/desapprouver/:id', async(req,res)=>{
     const formationId = req.params.id;
       try{
-          const updatedFormation = await Formation.update(
+          const updatedFormation = await DemandeFormation.update(
               {
                   approbation: 0,
               },
@@ -231,11 +190,9 @@ router.post('/desapprouver/:id', async(req,res)=>{
 
 router.post('/addDemandeFormation', async (req, res) => {
     try {
-        // Create a new Formation
-        const newDemande = await Formation.create({
+        const newDemande = await DemandeFormation.create({
             theme: req.body.theme,
             description: req.body.description,
-            duree: req.body.duree,
             auteur: req.body.auteur,
             destinataireDemande: req.body.destinataire,
             approbation:null
@@ -243,16 +200,13 @@ router.post('/addDemandeFormation', async (req, res) => {
 
         const demandeFormationId = newDemande.id;
 
-        // Get collaborators from the request body
         const collaborateurs = req.body.collaborateurs;
 
         const equipe = req.body.equipe;
 
-        // Use Promise.all to wait for all FormationCollab creations
         if (collaborateurs && collaborateurs.length !== 0) {
             await Promise.all(collaborateurs.map(async (collaborateurId) => {
-                // Create FormationCollab for each collaborateur
-                await FormationCollab.create({
+                await DemandeCollab.create({
                     formation: demandeFormationId,
                     collaborateur: collaborateurId,
                 });
@@ -260,13 +214,11 @@ router.post('/addDemandeFormation', async (req, res) => {
         }
 
         if (equipe && equipe.length !== 0) {
-            await FormationEq.create({
+            await DemandeEq.create({
                 formation: demandeFormationId,
                 equipe: equipe,
             });
         }
-
-        // Respond with the created Formation
         res.status(201).json(newDemande);
     } catch (err) {
         console.error(err);
@@ -278,7 +230,7 @@ router.post('/addFormExt/:id', async(req,res)=>{
     const formationId = req.params.id;
     const formateurExt = req.body.formateurExt
     try{
-        const updatedFormation = await Formation.update(
+        const updatedFormation = await DemandeFormation.update(
             {
                 formateurExt: formateurExt,
             },
@@ -303,9 +255,9 @@ router.post('/addFormExt/:id', async(req,res)=>{
 router.delete('/formation/:id', async(req,res) =>{
     const { id } = req.params.id;
     try {
-        const deletedFormation = await Formation.findByPk(id);
+        const deletedFormation = await DemandeFormation.findByPk(id);
         if (!deletedFormation) {
-            return res.status(404).json({ error: 'discussion introuvable' });
+            return res.status(404).json({ error: 'demande introuvable' });
         }
         await deletedFormation.destroy();
         const SeancesToDelete = await Seance.findAll({
@@ -330,16 +282,16 @@ router.delete('/formation/:id', async(req,res) =>{
 router.get('/demandesPourVous/:id',async(req,res)=>{
     const id = req.params.id;
     try{
-        const demandePourVous = await FormationCollab.findAll({
+        const demandePourVous = await DemandeCollab.findAll({
             where:{
                 collaborateur:id
             },
             include:[
                 {
-                    model:Formation
+                    model:DemandeFormation2
                 },
                 {
-                    model:Collab
+                    model:Collab2
                 }
             ]
         })
@@ -351,4 +303,5 @@ router.get('/demandesPourVous/:id',async(req,res)=>{
 
 
 })
+
 module.exports = router;

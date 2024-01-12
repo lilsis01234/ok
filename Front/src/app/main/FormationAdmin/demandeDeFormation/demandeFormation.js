@@ -14,7 +14,6 @@ const DemandeFormations = () => {
   const role = user.RoleHierarchique.roleHierarchique;
   console.log(role)
 
-
   const Approuver =(id)=>{
     console.log("demande approuvé pour n°" + id);
     axios.post(`http://localhost:4000/api/demande_formation/approuver/${id}`)
