@@ -18,7 +18,7 @@ const DemandeFormations = () => {
     console.log("demande approuvé pour n°" + id);
     axios.post(`http://localhost:4000/api/demande_formation/approuver/${id}`)
     .then(res=>{
-      console.log(res)
+      console.log(res.data)
     })
     .catch((err)=>{
       console.log(err)
@@ -115,7 +115,7 @@ const DemandeFormations = () => {
         </>
       )}
 
-      {(role === 'Coatch' || role === 'SuperAdministrateur') && (
+      {(role.toLowerCase() === 'coatch' || role.toLowerCase() === 'superadministrateur') && (
         <>
           <Typography className="mt-6 mb-4">Les demandes de formation pour le coatch</Typography>
 

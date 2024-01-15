@@ -28,7 +28,7 @@ router.post('/addDemandeFormationPublic', async (req, res) => {
     }
 });
 
-router.post('/addDemandeFormationPrive', async (req, res) => {
+router.post('/addDemandeFormationPrivate', async (req, res) => {
     try {
         const newDemande = await DemandeFormation.create({
             theme: req.body.theme,
@@ -172,60 +172,58 @@ router.post('/approuver/:id', async (req, res) => {
     const DemandeformationId = req.params.id;
 
     try {
-        // Update the existing record
-        const [updatedRowsCount, updatedFormation] = await DemandeFormation.update(
-            { approbation: 1 },
-            { where: { id: DemandeformationId }, returning: true }
-        );
+        // Find the demandeFormation by primary key
+        const updatedFormation = await DemandeFormation.findByPk(DemandeformationId);
 
-        if (updatedRowsCount === 0) {
+        if (!updatedFormation) {
             return res.status(404).json({ message: "Formation not found." });
         }
-
-        // Fetch the updated record
+        // Create a new Formation based on the updatedFormation
         const formationApp = await Formation.create({
-            theme: updatedFormation[0].theme,
-            description: updatedFormation[0].description,
-            formateur: updatedFormation[0].auteur,
-            confidentialite: updatedFormation[0].confidentialite,
+            theme: updatedFormation.theme,
+            description: updatedFormation.description,
+            formateur: updatedFormation.auteur,
+            confidentialite: updatedFormation.confidentialite,
             formateurExt: null,
         });
 
-        await Sequelize.Transaction(async (t) => {
-            if (formationApp.confidentialite === 1) {
-                const Collabs = await DemandeCollab.findAll({
-                    where: { demande: DemandeformationId },
-                });
+        // Check if confidentialite is 1 and handle Collabs and Equipe
+        if (updatedFormation.confidentialite === 1) {
+            const Collabs = await DemandeCollab.findAll({
+                where: { demande: DemandeformationId },
+            });
 
-                await FormationCollab.bulkCreate(
-                    Collabs.map((collab) => ({
-                        formation: formationApp.id,
-                        collaborateur: collab.collaborateur,
-                    })),
-                    { transaction: t }
-                );
+            await FormationCollab.bulkCreate(
+                Collabs.map((collab) => ({
+                    formation: formationApp.id,
+                    collaborateur: collab.collaborateur,
+                }))
+            );
 
-                const equipe = await DemandeEq.findAll({
-                    where: { demande: DemandeformationId },
-                });
+            const equipe = await DemandeEq.findAll({
+                where: { demande: DemandeformationId },
+            });
 
-                await FormationEq.bulkCreate(
-                    equipe.map((eq) => ({
-                        formation: formationApp.id,
-                        equipe: eq.equipe,
-                    })),
-                    { transaction: t }
-                );
-            }
-        });
+            await FormationEq.bulkCreate(
+                equipe.map((eq) => ({
+                    formation: formationApp.id,
+                    equipe: eq.equipe,
+                }))
+            );
+        }
+
+        await DemandeFormation.update(
+            { approbation: 1 },
+            { where: { id: DemandeformationId }}
+        );
 
         return res.status(200).json({ message: "Formation approved successfully." });
-
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "An error occurred while approving the formation." });
     }
 });
+
 
 router.post('/desapprouver/:id', async(req,res)=>{
     const formationId = req.params.id;

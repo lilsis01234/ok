@@ -12,16 +12,25 @@ const AjoutDemandeFormation = () => {
   const [equipe, setEquipeAFormer] = useState(null);
   const[equipes,setEquipeData]=useState([]);
   const[collabs,setCollabs]=useState([]);
-  const [roleHierarchique,setRoleHierarchique]= useState([]);
-
-  const auteurPrep =localStorage.getItem('user'); 
-  console.log(auteurPrep);
-  const parsedAuteur = JSON.parse(auteurPrep);
+  const [confidentialite,setConfidentialite]= useState(null);
+  const parsedAuteur = JSON.parse(localStorage.getItem('user'));
   const auteur = parsedAuteur.id;
-  console.log(auteur);
 
-  
-  const duree = "indefini";
+  const confident = [{
+                      id:0,
+                      status:"Tout publique"
+                    },{
+                      id:1,
+                      status:"Besoin spécifique"
+                    }];
+
+  const roleHierarchique = [{
+                              id:1,
+                              roleHierarchique:"SuperAdministrateur"
+                           },{
+                              id:4,
+                              roleHierarchique:"Coatch"
+                           }]
 
   const fetchEquipe = () => {
     axios.get('http://localhost:4000/api/equipe/all')
@@ -32,17 +41,6 @@ const AjoutDemandeFormation = () => {
         console.error(err);
       });
   };
-  
-  const fetchRoleHierarchique = ()=>{
-    axios.get('http://localhost:4000/api/roleHierarchique/all')
-    .then((response)=>{
-      setRoleHierarchique(response.data);
-      console.log(response.data)
-    })
-    .catch((err)=>{
-      console.error(err)
-    })
-  }
 
   const fetchCollab = () => {
     axios.get('http://localhost:4000/api/collaborateur/all')
@@ -58,21 +56,19 @@ const AjoutDemandeFormation = () => {
  useEffect(() => {
   fetchEquipe()
   fetchCollab()
-  fetchRoleHierarchique()
 }, []) 
 
-  const handleSubmit = (event) => {
+  const handleSubmitPrivate = (event) => {
     event.preventDefault();
-    console.log(destinataire)
     axios
-      .post('http://localhost:4000/api/demande_formation/addDemandeFormation', {
+      .post('http://localhost:4000/api/demande_formation/addDemandeFormationPrivate', {
         theme,
         description,
         auteur,
         destinataire,
         equipe,
         collaborateurs,
-        duree
+        confidentialite
       })
       .then((res) => {
         console.log(res);
@@ -81,9 +77,27 @@ const AjoutDemandeFormation = () => {
       .catch((err) => console.log(err));
   };
 
+  const handleSubmit=(event)=>{
+    event.preventDefault();
+    console.log(confidentialite)
+    axios
+      .post('http://localhost:4000/api/demande_formation/addDemandeFormationPublic', {
+        theme,
+        description,
+        auteur,
+        destinataire,
+        confidentialite
+      })
+      .then((res) => {
+        console.log(res);
+        navigate('/dashboards/listeFormation');
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="form2-container">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={confidentialite === 0 ? (handleSubmit) : (handleSubmitPrivate)}>
           <div className="form2-group">
             <label>Thème</label>
             <input type="text" value={theme} onChange={(e) => setTheme(e.target.value)} />
@@ -94,8 +108,24 @@ const AjoutDemandeFormation = () => {
           </div>
 
           <div className="form2-group">
+          <label>Pour le publique ou des personnes spécifiques?</label>
+          <select
+            value={confidentialite}
+            onChange={(e) => {
+              setConfidentialite(e.target.value);
+            }}
+          >
+            {confident.map((conf) => (
+              <option key={conf.id} value={conf.id}>
+                {conf.status}
+              </option>
+            ))}
+          </select>
+        </div>
+
+          <div className="form2-group">
           <label>Destinataire de votre demande</label>
-          <select value={destinataire} onChange={(e) =>{console.log(e.target.value) 
+          <select value={destinataire} onChange={(e) =>{
                                                         setDestinataire(e.target.value)}}>
             {roleHierarchique.map((role) => (
               <option key={role.id} value={role.id}>
@@ -104,27 +134,31 @@ const AjoutDemandeFormation = () => {
             ))}
           </select>
          </div>
-
-         <div className="form2-group">
-          <label>Si pour des personnes, personnes à former:</label>
-          <select multiple value={collaborateurs} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
-            {collabs.map((collab) => (
-              <option key={collab.id} value={collab.id}>
-                {collab.nom} {collab.prenom}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form2-group">
-          <label>Si pour une équipe, équipe à former:</label>
-          <select multiple value={equipe} onChange={(e) => setEquipeAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
-            {equipes.map((eq) => (
-              <option key={eq.id} value={eq.id}>
-                {eq.nomEquipe	}
-              </option>
-            ))}
-          </select>
-        </div>
+        
+         {confidentialite === '1' && (
+          <>
+            <div className="form2-group">
+              <label>Si pour des personnes, personnes à former:</label>
+              <select multiple value={collaborateurs} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+                {collabs.map((collab) => (
+                  <option key={collab.id} value={collab.id}>
+                    {collab.nom} {collab.prenom}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form2-group">
+              <label>Si pour une équipe, équipe à former:</label>
+              <select multiple value={equipe} onChange={(e) => setEquipeAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+                {equipes.map((eq) => (
+                  <option key={eq.id} value={eq.id}>
+                    {eq.nomEquipe}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        )}
 
         <div className="form2-group">
             <button type="submit">Ajouter</button>
