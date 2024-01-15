@@ -127,7 +127,7 @@ const Formations = () => {
   
                   {formation.Formateur || formation.formateurExt ? (
                     <Typography className="formateur_name mt-2 text-gray-700">
-                      Formateur: {formation.Formateur ? `${formation.Formateur.nom} ${formation.Formateur.prenom}` : ''} {formation.Formateur && formation.formateurExt ? '|| ' : ''} {formation.formateurExt}
+                      Ajouté par: {formation.Formateur ? `${formation.Formateur.nom} ${formation.Formateur.prenom}` : ''} {formation.Formateur && formation.formateurExt ? '|| ' : ''} {formation.formateurExt}
                     </Typography>
                   ) : (
                     <button onClick={() => { Click() }} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
@@ -190,7 +190,7 @@ const Formations = () => {
   
                   {formation.Formateur ? (
                     <Typography className="formateur_name mt-2 text-gray-700">
-                      Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
+                      Ajouté par: {formation.Formateur.nom} {formation.Formateur.prenom}
                     </Typography>
                   ) : (
                     <Typography className="formateur_name mt-2 text-gray-700">Formateur externe</Typography>
@@ -243,7 +243,7 @@ const Formations = () => {
   
                 {formation.Formateur ? (
                   <Typography className="formateur_name mt-2 text-gray-700">
-                    Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
+                    Ajouté par: {formation.Formateur.nom} {formation.Formateur.prenom}
                   </Typography>
                 ) : (
                   <Typography className="formateur_name mt-2 text-gray-700">Formateur externe</Typography>
@@ -299,7 +299,7 @@ const Formations = () => {
   
                 {formation.Formateur ? (
                   <Typography className="formateur_name mt-2 text-gray-700">
-                    Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
+                    Ajouté par: {formation.Formateur.nom} {formation.Formateur.prenom}
                   </Typography>
                 ) : (
                   <Typography className="formateur_name mt-2 text-gray-700">Formateur externe</Typography>

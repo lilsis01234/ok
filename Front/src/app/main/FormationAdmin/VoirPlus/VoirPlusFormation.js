@@ -216,10 +216,10 @@ const VoirPlusFormation = () => {
                     <Typography>Thème: {informations.formation.theme}</Typography>
                     <Typography>Description: {informations.formation.description}</Typography>
                     {informations.formation.Formateur && (
-                     <Typography>Formateur: <span className="formateurInfo">{informations.formation.Formateur.nom} {informations.formation.Formateur.prenom}</span></Typography>
+                     <Typography>Ajouté par: <span className="formateurInfo">{informations.formation.Formateur.nom} {informations.formation.Formateur.prenom}</span></Typography>
                     )}
                     {informations.formation.formateurExt && (
-                     <Typography>Formateur: <span className="formateurInfo">{informations.formation.formateurExt}</span></Typography>
+                     <Typography>Consultant externe: <span className="formateurInfo">{informations.formation.formateurExt}</span></Typography>
                     )}
                     <span className="formateurInfo"><Link to={`/discussion/formation/${idFormation.id}`}>Accéder à la discussion</Link></span>
                 </div>

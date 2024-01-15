@@ -10,6 +10,7 @@ const Collab = require('../../../Modele/CollabModel/Collab');
 const Formation = require('../../../Modele/formation/Formation');
 const FormationCollab = require('../../../Modele/formation/PublicCible/PublicCibleCollab');
 const FormationEq = require('../../../Modele/formation/PublicCible/PublicCibleEquipe');
+const { Module } = require('module');
 
 router.post('/addDemandeFormationPublic', async (req, res) => {
     try {
@@ -224,7 +225,6 @@ router.post('/approuver/:id', async (req, res) => {
     }
 });
 
-
 router.post('/desapprouver/:id', async(req,res)=>{
     const formationId = req.params.id;
       try{
@@ -259,6 +259,18 @@ router.delete('/formation/:id', async(req,res) =>{
             return res.status(404).json({ error: 'demande introuvable' });
         }
         await deletedFormation.destroy();
+
+        const ModulesToDelete = await Module.findAll({
+            where:{
+                formation:deletedFormation
+            }
+        })
+
+        if(ModulesToDelete){
+            await ModulesToDelete.destroy();
+        }
+        res.sendStatus(204);
+
         const SeancesToDelete = await Seance.findAll({
             where : {
                 formation : deletedFormation

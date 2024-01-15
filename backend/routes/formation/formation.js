@@ -52,7 +52,7 @@ router.post('/addFormExt/:id', async(req,res)=>{
           return res.status(404).json({ message: "Formation not found." });
       }
 
-      return res.status(200).json({ message: "Formation approved successfully." });
+      return res.status(200).json({ message: "Formateur bien ajouté." });
   } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "An error occurred while approving the formation." });
@@ -101,8 +101,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
             console.error('Erreur lors de la récupération des informations de la formation :', error);
             res.status(500).json({ message: 'Erreur lors de la récupération des informations de la formation' });
         }
-    });
-
+});
 
 //Les formations organisées par une personne
 router.get('/formations/:idPersonne',async(req,res)=>{
