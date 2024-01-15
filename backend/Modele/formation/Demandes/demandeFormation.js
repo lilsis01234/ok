@@ -14,10 +14,6 @@ DemandeFormation.init({
         type : DataTypes.STRING(500), 
         allowNull : false, 
     },
-    formateurExt:{
-        type:DataTypes.STRING(250),
-        allowNull:true,
-    },
     auteur:{
         type : DataTypes.INTEGER,
         allowNull : false,
