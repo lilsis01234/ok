@@ -1,8 +1,8 @@
 const {DataTypes, Model} = require('sequelize');
-const sequelize = require('../../database/database');
-const Collaborateur = require('../../Modele/CollabModel/Collab');
-const Departement = require('../Structure/TestDepartement');
-const RoleHierarchique = require('../RoleModel/RoleHierarchique');
+const sequelize = require('../../../database/database');
+const Collaborateur = require('../../CollabModel/Collab');
+const Departement = require('../../Structure/TestDepartement');
+const RoleHierarchique = require('../../RoleModel/RoleHierarchique');
 
 class DemandeFormation extends Model{}
 

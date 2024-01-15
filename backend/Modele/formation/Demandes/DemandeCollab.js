@@ -1,9 +1,9 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../../database/database');
-const Collab2 = require('../CollabModel/Collab');
+const sequelize = require('../../../database/database');
+const Collab2 = require('../../CollabModel/Collab');
 const DemandeFormation2 = require('./demandeFormation');
 
-const DemandeFormationCollab = sequelize.define('FormationCollab', {
+const DemandeFormationCollab = sequelize.define('DemandeCollab', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true,

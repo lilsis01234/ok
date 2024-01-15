@@ -19,13 +19,13 @@ const RoleHierarchique = require('../Modele/RoleModel/RoleHierarchique');
 
 
 const Formation = require('../Modele/formation/Formation');
-const DemandeFormation = require('../Modele/formation/demandeFormation');
-const CommentaireFormation = require('../Modele/formation/CommentaireFormation');
-const DiscussionFormation = require('../Modele/formation/DiscussionFormation');
-const Module = require('../Modele/formation/Module');
-const Seance = require('../Modele/formation/Seance');
+const DemandeFormation = require('../Modele/formation/Demandes/demandeFormation');
+const CommentaireFormation = require('../Modele/formation/Discussions/CommentaireFormation');
+const DiscussionFormation = require('../Modele/formation/Discussions/DiscussionFormation');
+const Module = require('../Modele/formation/Modules/Module');
+const Seance = require('../Modele/formation/Seances/Seance');
 
-const ParticipantsSeance = require('../Modele/formation/ParticipantsSeance');
+const ParticipantsSeance = require('../Modele/formation/Seances/ParticipantsSeance');
 const Actualite =  require('../Modele/ActualityModel/Actualité');
 const Categorie =  require('../Modele/ActualityModel/Categorie');
 const ActuCateg =  require('../Modele/ActualityModel/ActuCateg');
@@ -46,12 +46,14 @@ const Permission = require('../Modele/RoleModel/Permission');
 const associationPermission = require('../Modele/RoleModel/associationPermission');
 const conge = require('../Modele/conge/CongeModel');
 
-const EquipeSeance = require('../Modele/formation/EquipeSeance');
+const EquipeSeance = require('../Modele/formation/Seances/EquipeSeance');
 
-const associationSeanceCollab = require('../Modele/formation/associationSeanceCollab');
-const associationDemandeEq = require('../Modele/formation/associationDemandeEq');
-const associationDemandeCollab= require('../Modele/formation/associationDemandeCollab');
-const associationSeanceEquipe = require('../Modele/formation/associationSeanceEquipe');
+const associationSeanceCollab = require('../Modele/formation/associationSeance/associationSeanceCollab');
+const associationDemandeEq = require('../Modele/formation/associationDemande/associationDemandeEq');
+const associationDemandeCollab= require('../Modele/formation/associationDemande/associationDemandeCollab');
+const associationSeanceEquipe = require('../Modele/formation/associationSeance/associationSeanceEquipe');
+const associationFormationEquipe = require('../Modele/formation/associationFormation/associationEquipeFormation');
+const associationFormationCollab = require('../Modele/formation/associationFormation/associationCollabFormation');
 
 const DemandeConge = require('../Modele/conge/CongeModel');
 const SoldeConge = require('../Modele/conge/SoldeConge');
@@ -100,6 +102,15 @@ async function syncDatabase() {
         const{DemandeFormation,Equipe2,DemandeEq} = associationDemandeEq;
         DemandeFormation.belongsToMany(Equipe2,{through:DemandeEq});
         Equipe2.belongsToMany(Formation,{through:DemandeEq});
+
+        const{Formation3,Equipe3,FormationEq} = associationFormationEquipe;
+        Formation3.belongsToMany(Equipe3,{through:FormationEq});
+        Equipe3.belongsToMany(Formation3,{through:FormationEq});
+
+        const{Formation2,Collab3,FormationCollab} = associationFormationCollab;
+        Formation2.belongsToMany(Collab3,{through:FormationCollab});
+        Collab3.belongsToMany(Formation2,{through:FormationCollab});
+
 
         console.log('La base de donnée est synchronisée avec succès')
 

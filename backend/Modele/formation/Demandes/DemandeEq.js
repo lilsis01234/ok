@@ -1,9 +1,9 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../../database/database');
-const Equipe2 = require('../Structure/Equipe')
+const sequelize = require('../../../database/database');
+const Equipe2 = require('../../Structure/Equipe')
 const DemandeFormation = require('./demandeFormation')
 
-const DemandeFormationEq= sequelize.define('FormationEq', {
+const DemandeFormationEq= sequelize.define('DemandeEq', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true,

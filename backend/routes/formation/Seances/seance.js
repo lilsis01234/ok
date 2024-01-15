@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const cookieParser = require('cookie-parser');
 const Formation = require('../../../Modele/formation/Formation');
-const Module = require('../../../Modele/formation/Module');
-const Seance = require('../../../Modele/formation/Seance');
+const Module = require('../../../Modele/formation/Modules/Module');
+const Seance = require('../../../Modele/formation/Seances/Seance');
 const Collaborateur = require('../../../Modele/CollabModel/Collab');
 // const Collab = require('../../../Modele/CollabModel/Collab');
 router.use(cookieParser());

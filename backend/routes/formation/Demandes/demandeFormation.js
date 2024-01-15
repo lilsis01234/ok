@@ -304,4 +304,27 @@ router.get('/demandesPourVous/:id',async(req,res)=>{
 
 })
 
+router.get('/demandesPourVotreEquipe/:id',async(req,res)=>{
+    const id = req.params.id;
+    try{
+        const demandePourVotreEquipe = await DemandeEq.findAll({
+            where:{
+                equipe:id
+            },
+            include:[
+                {
+                    model:DemandeFormation
+                },
+                {
+                    model:Equipe2
+                }
+            ]
+        })
+    res.status(200).json(demandePourVotreEquipe)
+    }
+    catch(err){
+        console.error(err)
+    }
+})
+
 module.exports = router;

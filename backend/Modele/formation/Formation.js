@@ -26,6 +26,10 @@ Formation.init({
         type : DataTypes.STRING(500), 
         allowNull : true, 
     },
+    confidentialite:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false
+    }
     },{
         sequelize,
         modelName : 'Formation'

@@ -1,10 +1,10 @@
 const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../../database/database'); 
-const Collaborateur = require('../../Modele/CollabModel/Collab');
+const sequelize = require('../../../database/database'); 
+const Collaborateur = require('../../CollabModel/Collab');
 const ParticipantSeance = require('./ParticipantsSeance');
-const Departement = require('../Structure/TestDepartement');
-const Formation = require('../formation/Formation');
-const DemandeFormation = require('./demandeFormation');
+const Departement = require('../../Structure/TestDepartement');
+const Formation = require('../Formation');
+const DemandeFormation = require('../Demandes/demandeFormation');
 
 class Seance extends Model {}
 
@@ -26,14 +26,6 @@ Seance.init(
       allowNull:true,
       references:{
         model:Formation,
-        key:'id',
-      },
-    },
-    demande:{
-      type:DataTypes.INTEGER,
-      allowNull:true,
-      references:{
-        model:DemandeFormation,
         key:'id',
       },
     },
