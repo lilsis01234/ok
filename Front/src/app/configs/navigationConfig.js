@@ -121,7 +121,7 @@ const loadFrontOfficeNavigation = () => {
           id: 'formation.ajoutFormation',
           title: 'Formation',
           auth: {
-            role: ['SuperAdmin', 'Admin', 'Formateur'],
+            role: ['Formateur'],
           },
           type: 'item',
           icon: 'heroicons-outline:plus',
