@@ -5,10 +5,10 @@ router.use(cookieParser());
 
 const Formation = require('../../Modele/formation/Formation');
 const Collaborateur = require('../../Modele/CollabModel/Collab');
-const Module = require('../../Modele/formation/Module');
+const Module = require('../../Modele/formation/Modules/Module');
 const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
 const Sequelize = require('sequelize');
-const DemandeFormation = require('../../Modele/formation/demandeFormation');
+const DemandeFormation = require('../../Modele/formation/Demandes/demandeFormation');
 
 
 //Toutes les formations dont tout le monde peut assister
@@ -24,7 +24,7 @@ router.get('/all_formations', async(req,res) => {
           attributes: ['id', 'theme', 'description', 'formateur'],
             where:
             {
-              formateur:{ [Sequelize.Op.not]: null },
+              confidentialite:0,
             },
     })
     .then((formation) => {
@@ -33,95 +33,30 @@ router.get('/all_formations', async(req,res) => {
     }) 
 })
 
-//Toutes les demandes publiques approuvées
-router.get('/publiques_demandes', async(req,res) => {
-  DemandeFormation.findAll({
-      include: [
+router.post('/addFormExt/:id', async(req,res)=>{
+  const formationId = req.params.id;
+  const formateurExt = req.body.formateurExt
+  try{
+      const updatedFormation = await DemandeFormation.update(
           {
-            model: Collaborateur,
-            as: 'Auteur',
-            attributes: ['id','nom', 'prenom','image'],
+              formateurExt: formateurExt,
           },
-        ],
-        attributes: ['id', 'theme', 'description', 'auteur'],
-          where:
           {
-            formateur:{ [Sequelize.Op.not]: null },
-          },
-  })
-  .then((formation) => {
-      res.status(200).json(formation)
-      console.log(formation)
-  }) 
-})
+              where: {
+                  id: formationId
+              }
+          }
+      )        
+  
+      if (updatedFormation[0] === 0) {
+          return res.status(404).json({ message: "Formation not found." });
+      }
 
-router.get('/all/Coatch',async(req,res)=>{
-  const coatch = "coatch";
-  try {
-      // Find IDs of coatch role in RoleHierarchique
-      const idCoatch = await RoleHierarchique.findAll({
-          attributes: ['id'],
-          where: {
-              roleHierarchique: {
-                  [Sequelize.Op.like]: `%${coatch}%`, // Use `%` for wildcard matching
-              },
-          },
-          raw: true, // Make sure to get raw data (array of objects)
-      });
-
-      // Extract the IDs from the array of objects
-      const coatchIds = idCoatch.map(entry => entry.id);
-    
-      Formation.findAll({
-        include: [
-          {
-            model: Collaborateur,
-            as: 'Auteur',
-            attributes: ['nom', 'prenom','image'],
-          },
-        ],
-        attributes: ['id', 'theme', 'description', 'auteur'],
-          where:
-          {
-            approbation:1,
-            destinataireDemande:coatchIds
-          },
-      })
-      .then((formation) => {
-        res.status(200).json(formation)
-        console.log(formation)
-      }) 
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-})
-
-router.get('/all/admin', async(req,res)=>{
-    Formation.findAll({
-        include: [
-            {
-              model: Collaborateur,
-              as: 'Auteur',
-              attributes: ['nom', 'prenom','image'],
-            },
-            {
-              model: Collaborateur,
-              as: 'Formateur',
-              attributes: ['id','nom', 'prenom','image'],
-            },
-          ],
-          attributes: ['id', 'theme', 'description', 'auteur','formateur','formateurExt','destinataireDemande','approbation'],
-            where:
-            {
-              approbation:1,
-              destinataireDemande:{ [Sequelize.Op.not]: null }
-            },
-    })
-    .then((formation) => {
-        res.status(200).json(formation)
-        console.log(formation)
-    }) 
+      return res.status(200).json({ message: "Formation approved successfully." });
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "An error occurred while approving the formation." });
+  }
 })
 
 //Les modules et séances d'une formation
@@ -176,17 +111,8 @@ router.get('/formations/:idPersonne',async(req,res)=>{
       include: [
         {
           model: Collaborateur,
-          as: 'Auteur',
-          attributes: ['nom', 'prenom','image'],
-        },
-        {
-          model: Role2,
-          attributes: ['roleHierarchique'],
-        },
-        {
-          model: Collaborateur,
           as: 'Formateur',
-          attributes: ['nom', 'prenom'],
+          attributes: ['nom', 'prenom','image'],
         },
         ],
         where: {
@@ -199,7 +125,6 @@ router.get('/formations/:idPersonne',async(req,res)=>{
             id: formation.id,
             theme: formation.theme,
             description: formation.description,
-            auteur: formation.Auteur ? `${formation.Auteur.nom} ${formation.Auteur.prenom}` : null,
             formateur: formation.Formateur ? `${formation.Formateur.titreRole}` : null,
           };
         }))
@@ -213,11 +138,9 @@ router.post('/addFormation',async(req,res)=>{
         const newFormation = await(Formation.create({
             theme:req.body.theme,
             description:req.body.description,
-            duree:req.body.duree,
             formateur:req.body.formateur,
-            auteur:req.body.auteur,
-            formateurExt:req.body.formateurExt,
-            approbation:1
+            confidentialite:0,
+            formateurExt:null
         }))
         const formation = await newFormation.save();
         res.status(201).json(formation);
