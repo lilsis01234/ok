@@ -1,9 +1,9 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../../database/database');
-const Collab2 = require('../../CollabModel/Collab');
-const Formation = require('../Formation');
+const Equipe2 = require('../../Structure/Equipe')
+const Formation = require('../Formation')
 
-const FormationCollab = sequelize.define('FormationCollab', {
+const FormationEq= sequelize.define('FormationEq', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true,
@@ -14,7 +14,7 @@ const FormationCollab = sequelize.define('FormationCollab', {
         type: DataTypes.INTEGER,
         allowNull: false, 
     },
-    collaborateur: {
+    equipe: {
         type: DataTypes.INTEGER,
         allowNull: false, 
     },
@@ -22,8 +22,7 @@ const FormationCollab = sequelize.define('FormationCollab', {
   timestamps : false  
 })
 
-FormationCollab.belongsTo(Formation, { foreignKey: 'formation' });
-FormationCollab.belongsTo(Collab2, { foreignKey: 'collaborateur' });
+FormationEq.belongsTo(Formation, { foreignKey: 'formation' });
+FormationEq.belongsTo(Equipe2, { foreignKey: 'equipe' });
 
-
-module.exports = FormationCollab;
+module.exports = FormationEq;
