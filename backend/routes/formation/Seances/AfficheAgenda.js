@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const  Agenda  = require('../../../Modele/formation/Seance');
+const  Agenda  = require('../../../Modele/formation/Seances/Seance');
 const Formation = require('../../../Modele/formation/Formation');
 
 // Route GET pour récupérer toutes les dates de l'agenda
