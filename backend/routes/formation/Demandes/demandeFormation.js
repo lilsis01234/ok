@@ -2,12 +2,11 @@ const Sequelize = require('sequelize');
 const router = require('express').Router();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
-const {  DemandeFormation2,Collab2,DemandeCollab } = require('../../../Modele/formation/associationDemandeCollab');
-const {  DemandeFormation,Equipe2,DemandeEq,  } = require('../../../Modele/formation/associationDemandeEq');
+const {  DemandeFormation2,Collab2,DemandeCollab } = require('../../../Modele/formation/associationDemande/associationDemandeCollab');
+const {  DemandeFormation,Equipe2,DemandeEq,  } = require('../../../Modele/formation/associationDemande/associationDemandeEq');
 const RoleHierarchique = require('../../../Modele/RoleModel/RoleHierarchique');
-const Seance = require('../../../Modele/formation/Seance');
+const Seance = require('../../../Modele/formation/Seances/Seance');
 const Collab = require('../../../Modele/CollabModel/Collab');
-const DemandeFormation= require('../../../Modele/formation/demandeFormation');
 const Formation = require('../../../Modele/formation/Formation');
 const FormationCollab = require('../../../Modele/formation/PublicCible/PublicCibleCollab');
 const FormationEq = require('../../../Modele/formation/PublicCible/PublicCibleEquipe');
@@ -227,7 +226,6 @@ router.post('/approuver/:id', async (req, res) => {
         return res.status(500).json({ message: "An error occurred while approving the formation." });
     }
 });
-
 
 router.post('/desapprouver/:id', async(req,res)=>{
     const formationId = req.params.id;
