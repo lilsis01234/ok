@@ -74,16 +74,6 @@ router.get('/all_informations/:idformation', async(req,res)=>{
               include: [
                   {
                       model: Collaborateur,
-                      as: 'Auteur',
-                      attributes: ['nom', 'prenom','image'],
-                  },
-                  {
-                      model: Role2,
-                      as: 'RoleHierarchique',
-                      attributes: ['roleHierarchique'],
-                  },
-                  {
-                      model: Collaborateur,
                       as: 'Formateur',
                       attributes: ['nom', 'prenom'],
                   },
