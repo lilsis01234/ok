@@ -18,11 +18,14 @@ function ForgotPasswordPage() {
                 dispatch(showMessage({message : 'Demande de réinitialisation du mot de passe envoyées avec succès'}))
                 setTimeout(() => {
                     setIsLoading(true);
-                }, 30 * 60 * 1000);
+                }, 30 * 60 * 1000)
+
+
             })
             .catch((error) => {
                 console.error('Erreur lors de la demande de réinitialisation du mot de passe', error);
                 dispatch(showMessage({message : 'Adresse email non trouvé'}))
+                setIsLoading(false);
             })
     };
 

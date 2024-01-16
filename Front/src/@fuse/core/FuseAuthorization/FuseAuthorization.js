@@ -63,8 +63,9 @@ class FuseAuthorization extends Component {
     )
 
     console.log(userHasPermission)
-    const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404', '/authentification/motdepasseOublie'];
     const resetPasswordRegex = /^\/authentification\/resetPassword\/\w+$/;
+    const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404', '/authentification/motdepasseOublie', resetPasswordRegex];
+    // const resetPasswordRegex = /^\/authentification\/resetPassword\/\w+$/;
 
     // if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
     //   setSessionRedirectUrl(pathname);
@@ -80,12 +81,6 @@ class FuseAuthorization extends Component {
     if (ignoredPaths.includes(pathname)) {
       return { accessGranted: true };
     } 
-
-    if (resetPasswordRegex.test(pathname) ) {
-      return { accessGranted: true };
-    }
-
-
 
 
     if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
