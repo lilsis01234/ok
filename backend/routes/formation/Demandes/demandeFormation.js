@@ -48,7 +48,7 @@ router.post('/addDemandeFormationPrivate', async (req, res) => {
         if (collaborateurs && collaborateurs.length !== 0) {
             await Promise.all(collaborateurs.map(async (collaborateurId) => {
                 await DemandeCollab.create({
-                    formation: demandeFormationId,
+                    demande: demandeFormationId,
                     collaborateur: collaborateurId,
                 });
             }));
@@ -56,7 +56,7 @@ router.post('/addDemandeFormationPrivate', async (req, res) => {
 
         if (equipe && equipe.length !== 0) {
             await DemandeEq.create({
-                formation: demandeFormationId,
+                demande: demandeFormationId,
                 equipe: equipe,
             });
         }
@@ -86,7 +86,7 @@ router.get('/demande/:idDemande', async (req, res) => {
         });
 
         const Collabs = await DemandeCollab.findAll({
-            where: { formation: idDemande },
+            where: { demande: idDemande },
             include:
             [
                 {
@@ -99,7 +99,7 @@ router.get('/demande/:idDemande', async (req, res) => {
         });
 
         const equipe = await DemandeEq.findAll({
-            where: { formation: idDemande },
+            where: { demande: idDemande },
             include : 
             [
                 {
@@ -311,8 +311,6 @@ router.get('/demandesPourVous/:id',async(req,res)=>{
     catch(err){
         console.error(err)
     }
-
-
 })
 
 router.get('/demandesPourVotreEquipe/:id',async(req,res)=>{
