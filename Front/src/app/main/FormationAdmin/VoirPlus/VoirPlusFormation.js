@@ -227,20 +227,12 @@ const VoirPlusFormation = () => {
 
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Modules</h1>
-           
-            {informations.formation && informations.formation.RoleHierarchique && informations.formation.RoleHierarchique.roleHierarchique && role === informations.formation.RoleHierarchique.roleHierarchique ? (
-              <button>
-                <Link to={`/addModule/${idFormation.id}`}>+</Link>
-              </button>
-            ) : (
-              informations.formation && informations.formation.auteur && informations.formation.auteur === userId ? (
+
+              {informations.formation && informations.formation.formateur && informations.formation.formateur === userId && (
                 <button>
                   <Link to={`/addModule/${idFormation.id}`}>+</Link>
                 </button>
-              ) : (
-                null
-              )
-            )}
+              )}
 
             </div>
                 {informations.modules ? (informations.modules.length!==0 &&
@@ -258,18 +250,10 @@ const VoirPlusFormation = () => {
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Séances</h1>
             
-            {informations.formation && informations.formation.RoleHierarchique && informations.formation.RoleHierarchique.roleHierarchique && role === informations.formation.RoleHierarchique.roleHierarchique ? (
-              <button>
-               <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
-              </button>
-            ) : (
-              informations.formation && informations.formation.auteur && informations.formation.auteur === userId ? (
+            {informations.formation && informations.formation.formateur && informations.formation.formateur === userId && (
                 <button>
                   <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
                 </button>
-              ) : (
-                null
-              )
             )}
 
             </div>
