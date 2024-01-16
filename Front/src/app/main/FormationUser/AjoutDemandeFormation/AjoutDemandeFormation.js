@@ -97,7 +97,7 @@ const AjoutDemandeFormation = () => {
 
   return (
     <div className="form2-container">
-      <form onSubmit={confidentialite === 0 ? (handleSubmit) : (handleSubmitPrivate)}>
+      <form onSubmit={confidentialite === '0' ? (handleSubmit) : (handleSubmitPrivate)}>
           <div className="form2-group">
             <label>Thème</label>
             <input type="text" value={theme} onChange={(e) => setTheme(e.target.value)} />
@@ -123,29 +123,31 @@ const AjoutDemandeFormation = () => {
           </select>
         </div>
 
-          <div className="form2-group">
-          <label>Destinataire de votre demande</label>
-          <select value={destinataire} onChange={(e) =>{
-                                                        setDestinataire(e.target.value)}}>
-            {roleHierarchique.map((role) => (
-              <option key={role.id} value={role.id}>
-                {role.roleHierarchique}
-              </option>
-            ))}
-          </select>
-         </div>
+        <div className="form2-group">
+        <label>Destinataire de votre demande</label>
+        <select value={destinataire} onChange={(e) => setDestinataire(e.target.value)}>
+          <option value="">Select Destinataire</option>
+          {roleHierarchique.map((role) => (
+            <option key={role.id} value={role.id}>
+              {role.roleHierarchique}
+            </option>
+          ))}
+        </select>
+      </div>
+
         
          {confidentialite === '1' && (
           <>
             <div className="form2-group">
-              <label>Si pour des personnes, personnes à former:</label>
-              <select multiple value={collaborateurs} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
-                {collabs.map((collab) => (
-                  <option key={collab.id} value={collab.id}>
-                    {collab.nom} {collab.prenom}
-                  </option>
-                ))}
-              </select>
+            <label>Si pour des personnes, personnes à former:</label>
+            <select multiple value={collaborateurs} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+              {collabs.map((collab) => (
+                <option key={collab.id} value={collab.id}>
+                  {collab.nom} {collab.prenom}
+                </option>
+              ))}
+            </select>
+
             </div>
             <div className="form2-group">
               <label>Si pour une équipe, équipe à former:</label>
