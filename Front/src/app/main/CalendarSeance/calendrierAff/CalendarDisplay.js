@@ -6,7 +6,7 @@ import axios from 'axios';
 import '../../FormationAdmin/VoirPlus/voirPlus.css'
 import Sary from './logo-sahaza.png'
 import { useNavigate } from 'react-router-dom';
-
+import { Typography } from '@mui/material';
 
 const localizer = momentLocalizer(moment);
 
@@ -25,17 +25,14 @@ function CalendarTraining() {
 
   const scheduleNotification = (event) => {
     if (event.start && event.end) {
-      const notificationTime = moment(event.start).subtract(10, 'minutes'); // 10 minutes before the event
+      const notificationTime = moment(event.start).subtract(10, 'minutes');
       const currentTime = moment();
-
-      console.log(notificationTime);
 
       if (notificationTime.isAfter(currentTime)) {
         const timeDifference = notificationTime.diff(currentTime);
         setTimeout(() => {
           showNotification(event.title, 'Dans 10 minutes');
         }, timeDifference);
-        console.log('ty zao ande aveo')
       } else {
         console.log('Event has already passed.');
       }
@@ -57,9 +54,7 @@ function CalendarTraining() {
               requireInteraction: true,
               icon:Sary
             });
-            console.log('lasa le notif')
             notification.onclick = function () {
-              console.log("Notification clicked!");
               handleIncomingCall();
             };
           } catch (err) {
@@ -125,7 +120,6 @@ function CalendarTraining() {
         online: false,
       })
         .then(response => {
-          console.log('Reservation successful:', response.data);
           closePopup()
           alert('Réservation à succès')
         })
@@ -183,7 +177,7 @@ function CalendarTraining() {
     .then((res) => {
       console.log(res.data);
       setParticipantData(res.data);
-      setParticipantListVisible(!isParticipantListVisible); // Inverse la visibilité
+      setParticipantListVisible(!isParticipantListVisible);
     })
     .catch(error =>
       console.error('Error fetching participant data:', error));
@@ -194,94 +188,98 @@ function CalendarTraining() {
   };
 
   return (
-    <div className ="flex justify-center items-center min-h-screen"> 
-    {/* <div className="voirPlusContainer"> */}
-      <div className="calendarContainer">
-        <div className="calendarWrapper">
-          <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            step={15}
-            onSelectEvent={handleEventSelect}
-            style={{padding: '15px', backgroundColor: 'white', borderRadius: '20px' }}
-          />
-          {showButtons && selectedEvent && (
-            <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
-              <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
-                <button
-                  className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
-                  onClick={closePopup}
-                >
-                  X
-                </button>
-                {role === 'SuperAdministrateur' && (
-                  <button
-                    className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
-                    onClick={() => {
-                      handleParticipateNowClick(selectedEvent.id);
-                    }}
-                  >
-                    Démarrer l'appel vidéo
-                  </button>
-                )}
-  
-                <button
-                  className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
-                  onClick={() => {
-                    handleReserveClick(selectedEvent.id);
-                  }}
-                >
-                  Réserver une place
-                </button>
-  
-                {selectedEvent.auteur === userid && (
-                  <button
-                    className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
-                    onClick={() => {
-                      DeleteSeance(selectedEvent.id);
-                    }}
-                  >
-                    Supprimer
-                  </button>
-                )}
-  
-                {isParticipantListVisible && (
-                  <div className="participantData mb-4">
-                    {participantData &&
-                      [...participantData.collabNames, ...participantData.collabNames2]
-                        .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
-                        .map((collab, index) => (
-                          <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
-                        ))}
-                  </div>
-                )}
-  
-                <button
-                  className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
-                  onClick={() => ShowAllParticipant(selectedEvent.id)}
-                >
-                  Liste des participants
-                </button>
-  
-                {role === 'chefEquipe' && (
-                  <button
-                    className="popupButton bg-green-500 text-white py-2 px-4 rounded"
-                    onClick={() => {
-                      handleReserveEqClick(selectedEvent.id);
-                    }}
-                  >
-                    Réserver des places pour mon équipe
-                  </button>
-                )}
-              </div>
+        <>
+          <div className="flex min-h-screen">
+            {/* Sidebar */}
+            <div className="w-1/6 p-4 bg-grey-100">
+              <Typography className="text-48 font-bold pt-56 px-32">Calendrier</Typography>
+              <Typography className="text-24 px-32 mt-16 font-bold text-yellow-800">SEANCES DE CE MOIS</Typography>
+          </div>
+            <div className="w-5/6 p-4">
+              <Calendar
+                localizer={localizer}
+                events={events}
+                startAccessor="start"
+                endAccessor="end"
+                step={15}
+                onSelectEvent={handleEventSelect}
+                className='bg-white'
+                style={{padding: '15px', borderRadius: '20px' }}
+              />
+                    {showButtons && selectedEvent && (
+                      <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
+                        <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
+                          <button
+                            className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
+                            onClick={closePopup}
+                          >
+                            X
+                          </button>
+                          {role === 'SuperAdministrateur' && (
+                            <button
+                              className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
+                              onClick={() => {
+                                handleParticipateNowClick(selectedEvent.id);
+                              }}
+                            >
+                              Démarrer l'appel vidéo
+                            </button>
+                          )}
+            
+                          <button
+                            className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
+                            onClick={() => {
+                              handleReserveClick(selectedEvent.id);
+                            }}
+                          >
+                            Réserver une place
+                          </button>
+            
+                          {selectedEvent.auteur === userid && (
+                            <button
+                              className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
+                              onClick={() => {
+                                DeleteSeance(selectedEvent.id);
+                              }}
+                            >
+                              Supprimer
+                            </button>
+                          )}
+            
+                          {isParticipantListVisible && (
+                            <div className="participantData mb-4">
+                              {participantData &&
+                                [...participantData.collabNames, ...participantData.collabNames2]
+                                  .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
+                                  .map((collab, index) => (
+                                    <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
+                                  ))}
+                            </div>
+                          )}
+            
+                          <button
+                            className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
+                            onClick={() => ShowAllParticipant(selectedEvent.id)}
+                          >
+                            Liste des participants
+                          </button>
+            
+                          {role === 'chefEquipe' && (
+                            <button
+                              className="popupButton bg-green-500 text-white py-2 px-4 rounded"
+                              onClick={() => {
+                                handleReserveEqClick(selectedEvent.id);
+                              }}
+                            >
+                              Réserver des places pour mon équipe
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
             </div>
-          )}
-        </div>
-      </div>
-    </div>
-    // </div>
+          </div>
+        </>
   );
   
   
