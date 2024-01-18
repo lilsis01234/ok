@@ -16,7 +16,7 @@ import axios from 'axios';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import { Tab, Tabs } from '@mui/material';
 import AproposTab from './tabs/AproposTab';
-
+import FormationTab from './tabs/FormationsTab';
 
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
@@ -40,6 +40,7 @@ function Profile() {
 
     const [userData, setUserData] = useState()
     const [selectedTab, setSelectedTab] = useState(0);
+    const [Formation,setFormation] = useState()
 
     useEffect(() => {
         axios.get(`http://localhost:4000/api/user/${idUser}/profile`)
@@ -180,6 +181,7 @@ function Profile() {
             content = {
                 <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
                     {selectedTab === 0 && <AproposTab userData={userData}/>}
+                    {selectedTab === 1 && <FormationTab userFormations={Formation}/>}
                 </div>
             }
             scroll={isMobile ? 'normal' : 'page'}

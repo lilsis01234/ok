@@ -269,8 +269,7 @@ const VoirPlusFormation = () => {
                     startAccessor="start"
                     endAccessor="end"
                     onSelectEvent={handleEventSelect}
-                    className="customCalendar"
-                    // resourceAccessor="resource" // Utilisez cette propriété si vous avez une propriété resource dans vos événements
+                    // className="customCalendar"
                     style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
                 />
                 {showButtons && selectedEvent && (
