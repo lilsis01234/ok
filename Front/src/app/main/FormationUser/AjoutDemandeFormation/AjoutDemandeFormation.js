@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../Formateur/AjoutFormation/AjoutFormation.css';
+import {TextField, Grid, Button, Paper, Typography} from "@mui/material";
 
 const AjoutDemandeFormation = () => {
   const navigate = useNavigate();
@@ -96,20 +97,34 @@ const AjoutDemandeFormation = () => {
   }
 
   return (
-    <div className="form2-container">
+    <Grid
+      container
+      spacing={0}
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      style={{ minHeight: '100vh' }}
+      className='mt-32'
+    >
+    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+      <Paper elevation={3} style={{ padding: 72, width: '100%' }}>
+
+        <Typography
+            className="text-32 md:text-32 font-extrabold tracking-tight"
+        >
+            Nouvelle demande de formation
+        </Typography>
+
       <form onSubmit={confidentialite === '0' ? (handleSubmit) : (handleSubmitPrivate)}>
-          <div className="form2-group">
-            <label>Thème</label>
-            <input type="text" value={theme} onChange={(e) => setTheme(e.target.value)} />
-          </div>
-          <div className="form2-group">
-            <label>Description</label>
-            <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
-          </div>
+
+            <TextField type="text" className="mt-8 mb-16" value={theme} label="Thème" onChange={(e) => setTheme(e.target.value)} />
+
+            <TextField type="text" className="mt-8 mb-16" value={description} label="Description" onChange={(e) => setDescription(e.target.value)} />
 
           <div className="form2-group">
-          <label>Pour le publique ou des personnes spécifiques?</label>
+          <Typography className="mt-8 mb-16">Pour le publique ou des personnes spécifiques?</Typography>
           <select
+            className="mt-8 mb-16"
             value={confidentialite}
             onChange={(e) => {
               setConfidentialite(e.target.value);
@@ -124,9 +139,9 @@ const AjoutDemandeFormation = () => {
         </div>
 
         <div className="form2-group">
-        <label>Destinataire de votre demande</label>
-        <select value={destinataire} onChange={(e) => setDestinataire(e.target.value)}>
-          <option value="">Select Destinataire</option>
+        <Typography className="mt-8 mb-16">Destinataire de votre demande</Typography>
+        <select className="mt-8 mb-16" value={destinataire} onChange={(e) => setDestinataire(e.target.value)}>
+          <option value="">Destinataire</option>
           {roleHierarchique.map((role) => (
             <option key={role.id} value={role.id}>
               {role.roleHierarchique}
@@ -139,8 +154,8 @@ const AjoutDemandeFormation = () => {
          {confidentialite === '1' && (
           <>
             <div className="form2-group">
-            <label>Si pour des personnes, personnes à former:</label>
-            <select multiple value={collaborateurs} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+            <Typography className="mt-8 mb-16" >Si pour des personnes, personnes à former:</Typography>
+            <select className="mt-8 mb-16" multiple value={collaborateurs} onChange={(e) => setPersonneAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
               {collabs.map((collab) => (
                 <option key={collab.id} value={collab.id}>
                   {collab.nom} {collab.prenom}
@@ -150,8 +165,8 @@ const AjoutDemandeFormation = () => {
 
             </div>
             <div className="form2-group">
-              <label>Si pour une équipe, équipe à former:</label>
-              <select multiple value={equipe} onChange={(e) => setEquipeAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
+              <Typography className="mt-8 mb-16" >Si pour une équipe, équipe à former:</Typography>
+              <select className="mt-8 mb-16" multiple value={equipe} onChange={(e) => setEquipeAFormer(Array.from(e.target.selectedOptions, option => option.value))}>
                 {equipes.map((eq) => (
                   <option key={eq.id} value={eq.id}>
                     {eq.nomEquipe}
@@ -163,10 +178,12 @@ const AjoutDemandeFormation = () => {
         )}
 
         <div className="form2-group">
-            <button type="submit">Ajouter</button>
+            <Button type="submit">Ajouter</Button>
         </div>
         </form>
-      </div>
+        </Paper>
+      </Grid>
+    </Grid>
     )
 }
 
