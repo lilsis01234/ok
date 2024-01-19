@@ -4,6 +4,7 @@ import './demandeFormation.css'
 import { Link } from 'react-router-dom'
 import { Typography} from '@mui/material'
 import MesDemandes from '../MesDemandes/MesDemandes'
+import Avatar from '@mui/material/Avatar';
 
 
 const DemandeFormations = () => {
@@ -74,11 +75,24 @@ const DemandeFormations = () => {
           )}
           {DemandeFormations.map((demande, index) => (
             <div key={index} className="training-request-item flex items-center">
-          <img
-            alt="user photo"
-            src={`http://localhost:4000/${demande.Auteur.image}`}
-            className="w-96 h-96 rounded-full mr-4"
-          />
+
+              {demande.Auteur.image ? (
+                  <Avatar
+                      key={demande.Auteur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Auteur.nom}
+                      src={`http://localhost:4000/${demande.Auteur.image}`}
+                  />
+              ) : (
+                  <Avatar
+                      key={demande.Auteur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Auteur.nom}
+                  >
+                      {demande.Auteur.nom ? demande.Auteur.nom[0] : '?'}
+                  </Avatar>
+              )}
+
           <div>
             <Typography className="font-bold">
               {demande.Auteur.nom} {demande.Auteur.prenom}
