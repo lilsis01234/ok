@@ -39,20 +39,20 @@ const  MesDemandes =()=>{
 
     const DeleteDemande = async (id) => {
       const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette demande ?");
-      if (isConfirmed) {
-      try {
-        const response = await axios.delete(`http://localhost:4000/api/demande_formation/demande_formation/${id}`);
-        if (response.status === 204) {
-          // Suppression réussie, mise à jour de la liste des événements
-          fetchDemande()
-          fetchDemandePourmoi()
-        } else {
-          console.error('Erreur lors de la suppression de la séance');
-        }
-      } catch (error) {
-        console.error('Erreur lors de la suppression de la séance :', error);
-      }
-    };   
+        if (isConfirmed) {
+            try {
+                const response = await axios.delete(`http://localhost:4000/api/demande_formation/demande_formation/${id}`);
+                if (response.status === 204) {
+                  // Suppression réussie, mise à jour de la liste des événements
+                  fetchDemande()
+                  fetchDemandePourmoi()
+                } else {
+                  console.error('Erreur lors de la suppression de la séance');
+                }
+            } catch (error) {
+              console.error('Erreur lors de la suppression de la séance :', error);
+            }
+        };   
     } 
 
     return(
@@ -60,7 +60,7 @@ const  MesDemandes =()=>{
         <div>
        
           {mesDemandesFormations.length!==0 && <Typography className="mt-6 mb-4">Les demandes de formation</Typography> }
-        {mesDemandesFormations.map((demande, index) => (
+          {mesDemandesFormations.map((demande, index) => (
             
             <div key={index} className="training-request-item">
               

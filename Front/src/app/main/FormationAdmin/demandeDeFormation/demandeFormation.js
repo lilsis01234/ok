@@ -19,7 +19,7 @@ const DemandeFormations = () => {
     axios.post(`http://localhost:4000/api/demande_formation/approuver/${id}`)
     .then(res=>{
       console.log(res.data)
-      fetchDemandes();
+      window.location.reload();
     })
     .catch((err)=>{
       console.log(err)
@@ -30,7 +30,7 @@ const DemandeFormations = () => {
     axios.post(`http://localhost:4000/api/demande_formation/desapprouver/${id}`)
     .then(res=>{
       console.log(res)
-      fetchDemandes();
+      window.location.reload();
     })
     .catch((err)=>{
       console.log(err)
