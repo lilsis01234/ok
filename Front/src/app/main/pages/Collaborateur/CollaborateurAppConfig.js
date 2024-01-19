@@ -10,9 +10,15 @@ const CollaborateurAppConfig = {
         {
             path : 'collaborateurs/all',
             element : <Collaborateur/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }, {
             path : 'collaborateurs/all/:collaborateurId',
-            element : <CollaborateurProfile/>
+            element : <CollaborateurProfile/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }
     ]
 }

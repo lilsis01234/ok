@@ -7,10 +7,12 @@ import { motion } from 'framer-motion';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 function CollaborateurItemHeader({ formValues }) {
     const methods = useFormContext();
-    const { formState, watch, getValues } = methods ? methods : {};
+    const { formState, watch, getValues, handleSubmit } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
 
     const { id, nom, prenom, dateNaissance, lieuNaissance, sexe,
@@ -22,6 +24,7 @@ function CollaborateurItemHeader({ formValues }) {
 
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
     const data = {
@@ -33,37 +36,47 @@ function CollaborateurItemHeader({ formValues }) {
     }
 
 
+
     const handleSaveCollaborateur = async () => {
-        if (id) {
+        if(!nom || !dateNaissance || !lot || !quartier || !ville ||
+            !tel || !CIN || !dateDelivrance ||!lieuDelivrance || !matricule ||
+                !dateEmbauche || !poste || !departement
+        ){
+            dispatch(showMessage({message : 'Veuillez remplir toutes les champs obligatoires (*).'}))
+        } else if (id) {
             axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                },})
+                },
+            })
                 .then(response => {
-                    alert('Information collaborateur mise à jour avec succès')
-                    console.log(response)
+                    dispatch(showMessage({message : 'Information collaborateur mise à jour avec succès.'}))
+                    // console.log(response)
                     navigate('/manage/collaborator')
                 })
                 .catch(error => {
-                    console.log(error)
+                    dispatch(showMessage({message : error.response.data.message}))
+                    // console.log(error)
                 })
         } else {
             axios.post('http://localhost:4000/api/collaborateur/new', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                },})
+                },
+            })
                 .then(response => {
-                    alert('Collaborateur ajouté avec succès')
-                    console.log(response)
+                    dispatch(showMessage({message : 'Collaborateur ajouté avec succès.'}))
+                    // console.log(response)
                     navigate('/manage/collaborator')
                 })
                 .catch(error => {
-                    console.log(error)
+                    // console.log(error)
+                    dispatch(showMessage({message : error.response.data.message}))
                 })
         }
     }
 
-    const handleArchiveCollaborateur = async() => {
+    const handleArchiveCollaborateur = async () => {
         navigate(`/manage/collaborator/archive/${id}`)
     }
 
@@ -113,15 +126,15 @@ function CollaborateurItemHeader({ formValues }) {
                     animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
                 >
                     {id && (
-                         <Button
-                         className="whitespace-nowrap mx-4"
-                         variant="contained"
-                         color="error"
-                     //  disabled={!isDirty  || !isValid}
-                      onClick={handleArchiveCollaborateur}
-                     >
-                         Archiver
-                     </Button>
+                        <Button
+                            className="whitespace-nowrap mx-4"
+                            variant="contained"
+                            color="error"
+                            //  disabled={!isDirty  || !isValid}
+                            onClick={handleArchiveCollaborateur}
+                        >
+                            Archiver
+                        </Button>
                     )}
                     <Button
                         className="whitespace-nowrap mx-4"

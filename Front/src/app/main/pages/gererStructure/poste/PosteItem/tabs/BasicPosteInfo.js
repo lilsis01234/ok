@@ -49,7 +49,7 @@ function BasicPosteInfo(props) {
                         error={!!errors.titrePoste}
                         required
                         helperText={errors?.titrePoste?.message}
-                        label="Fonction Name"
+                        label="Intitulé du poste"
                         autoFocus
                         id="titrePoste"
                         variant="outlined"
@@ -75,8 +75,8 @@ function BasicPosteInfo(props) {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                placeholder="Select multiple departement"
-                                label="Departement"
+                                placeholder="Sélectionner plusieurs département"
+                                label="Département"
                                 variant="outlined"
                                 InputLabelProps={{
                                   shrink: true,

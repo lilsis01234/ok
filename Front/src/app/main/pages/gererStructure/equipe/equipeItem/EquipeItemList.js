@@ -14,8 +14,8 @@ const { useForm, FormProvider } = require("react-hook-form");
 const { yupResolver } = require("@hookform/resolvers/yup");
 
 const schema = yup.object().shape({
-  nomEquipe: yup.string().required("You must enter a team name"),
-  // .min(5, 'The product name must be at least 5 characters'),
+  nomEquipe: yup.string().required("Veuillez entrer le nom de l'équipe."),
+
 });
 
 function EquipeItemList() {
@@ -48,7 +48,7 @@ function EquipeItemList() {
             .get(`http://localhost:4000/api/equipe/view/${equipeId}`)
             .then(response => {
               setEquipe(response.data.equipe);
-              console.log(response.data.equipe);
+              // console.log(response.data.equipe);
               setnoEquipe(false);
             })
             .catch((error) => {
@@ -83,8 +83,7 @@ function EquipeItemList() {
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          {" "}
-          Il n'y a pas d'équipe{" "}
+          Aucune équipe enregistrée dans la base de donnée!
         </Typography>
         <Button
           className="mt-24"
@@ -93,8 +92,7 @@ function EquipeItemList() {
           to="/business/manage/team"
           color="inherit"
         >
-          {" "}
-          Go To Teams Page{" "}
+          Retourner à la liste des équipes.
         </Button>
       </motion.div>
     );
@@ -115,7 +113,7 @@ function EquipeItemList() {
               scrollButtons="auto"
               classes={{ root: "w-full h-64 border-b-1" }}
             >
-              <Tab className="h-64" label="Equipe" />
+              <Tab className="h-64" label="Information basique" />
             </Tabs>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? "hidden" : ""}>

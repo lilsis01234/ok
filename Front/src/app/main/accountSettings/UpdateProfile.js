@@ -20,6 +20,18 @@ import PictureCollab from '../pages/gererCollaborateur/collaborateur/Collaborate
 import MatrimonialeInfo from '../pages/gererCollaborateur/collaborateur/CollaborateurItem/tabs/MatrimonialeInfo'
 import UpdateProfileHeader from './UpdateProfileHeader'
 
+const schema = yup.object().shape({
+    nom: yup.string().required('Veuillez entrer votre nom'),
+    dateNaissance : yup.date().required('Veuillez entrer votre date de naissance'),
+    lot: yup.string().required('Veuillez entrer votre lot'),
+    quartier: yup.string().required('Veuillez entrer votre quartier'),
+    ville: yup.string().required('Veuillez entrer votre ville'),
+    tel: yup.string().required('Veuillez entrer votre numéro de téléphone'),
+    CIN: yup.string().required('Veuillez entrer votre numéro CIN'),
+    dateDelivrance: yup.string().required('Veuillez entrer le date de délivrance du CIN'),
+    lieuDelivrance: yup.string().required('Veuillez entrer le lieu de délivrance du CIN'),
+});
+
 function UpdateProfile() {
     const user = useSelector(selectUser)
     const collabId = user.data?.photo?.id
@@ -33,6 +45,7 @@ function UpdateProfile() {
     const methods = useForm({
         mode: 'onChange',
         defaultValues: {},
+        resolver: yupResolver(schema)
     })
 
     const { reset, watch, control, onChange, fomState } = methods || {};

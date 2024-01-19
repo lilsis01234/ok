@@ -12,9 +12,9 @@ const HomeDashboardConfig = {
         {
             path : '/acceuil',
             element : <Dashboard/>,
-            auth : {
-                role : ['SuperAdmin', 'User', 'Admin'],
-              }, 
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }
     ]
 }

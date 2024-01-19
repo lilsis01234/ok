@@ -34,11 +34,12 @@ function BasicDirectionInfoTab(props) {
                   error={!!errors.nomDirection}
                   required
                   helperText={errors?.nomDirection?.message}
-                  label="Direction Name"
+                  label="Intitulé de la direction"
                   autoFocus
                   id="name"
                   variant="outlined"
                   fullWidth
+                  InputLabelProps={{ shrink: !!field.value }}
                 />
             )}
         />      

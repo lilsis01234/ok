@@ -47,7 +47,7 @@ router.post('/password_request_rest', async (req, res) => {
         await user.save();
 
         //Création du mail pour réinitialiser le mot de passe
-        const baseUrl = 'http://localhost:3000';
+        const baseUrl = 'http://192.168.16.46:3000';
         const resetPasswordLink = `${baseUrl}/authentification/resetPassword/${token}`
 
         //Contenu du mail 
@@ -95,13 +95,10 @@ router.post('/reset-password/:token', async (req, res) => {
     try {
         const resetRequest = await PasswordResetRequest.findOne({ where: { token } })
         if (!resetRequest) {
-            return res.status(400).json({ message: 'Jeton de réinitialisaton invalide ou expiré qu\'une réinitialisation de mot de passe toutes les 30 minutes.' })
+            return res.status(400).json({ message: 'Le jeton de réinitialisation est invalide ou expiré.' })
         }
 
         const user = await Compte.findByPk(resetRequest.userId);
-
-
-
 
         const saltRounds = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hashSync(password, saltRounds)
@@ -118,16 +115,9 @@ router.post('/reset-password/:token', async (req, res) => {
     }
     catch (error) {
         console.error('Erreur lors de la réinitialisaton du mot de passe:', error)
-        return res.status(500).json({ message: 'Une erreur est survenue lors de la réinitialisation du mot de passe' });
+        return res.status(500).json({ message: 'Erreur lors de la réinitialisation du mot de passe.' });
     }
 })
-
-
-
-
-
-
-
 
 
 module.exports = router;

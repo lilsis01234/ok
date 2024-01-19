@@ -122,7 +122,7 @@ function DirectionTable(props) {
                 className="flex flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There are no direction!
+                    Aucune direction enregistrée dans la base de donnée!
                 </Typography>
             </motion.div>
         );

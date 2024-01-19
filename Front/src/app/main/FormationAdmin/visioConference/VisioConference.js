@@ -33,7 +33,7 @@ function VisioConference() {
 
 
   useEffect(() => {
-    const peer = new Peer();
+    const peer = new Peer({secure : false});
 
     peer.on('open', (id) => {
       setPeerId(id);

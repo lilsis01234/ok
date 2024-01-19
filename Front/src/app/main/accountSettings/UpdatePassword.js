@@ -1,9 +1,10 @@
 import { selectUser } from 'app/store/userSlice'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Paper, TextField, Typography } from '@mui/material';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 function UpdatePassword() {
     const user = useSelector(selectUser)
@@ -18,27 +19,31 @@ function UpdatePassword() {
     const isStrongPassword = isPasswordValid.test(password);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            alert("Les mots de passe ne correspondent pas !");
+            dispatch(showMessage({message : 'Les mots de passe ne correspondent pas!'}))
+            // alert("Les mots de passe ne correspondent pas !");
             return;
         }
 
         if (!isPasswordValid.test(password)) {
-            alert("Le mot de passe doit contenir des chiffres, des lettres majuscules, des lettres minuscules et certains caractères spéciaux.");
+            dispatch(showMessage({message : 'Le mot de passe doit contenir des chiffres, des lettres majuscules, des lettres minuscules et certains caractères spéciaux.'}))
+            // alert("Le mot de passe doit contenir des chiffres, des lettres majuscules, des lettres minuscules et certains caractères spéciaux.");
             return;
         }
 
         axios.put(`http://localhost:4000/api/compte_collaborateur/${idUser}/editPassword`, { password })
             .then((response) => {
-                alert("Le mot de passe modifié avec succès")
+                dispatch(showMessage({message : 'Le mot de passe modifié avec succès!'}))
                 navigate("/settings/account");
             })
             .catch((error) => {
                 console.error('Erreur lors de la modification du mot de passe:', error);
+                dispatch(showMessage({message : error.response.data.message}))
             })
 
     }
@@ -99,6 +104,12 @@ function UpdatePassword() {
                         >
                             Modifier le mot de passe
                         </Button>
+                        <Typography className="mt-32 text-md font-medium" color="text.secondary">
+                            <span>Retourner à la page</span>
+                            <Link className="ml-4" to="/settings/account">
+                                précédante
+                            </Link>
+                        </Typography>
                       
                     </form>
 
