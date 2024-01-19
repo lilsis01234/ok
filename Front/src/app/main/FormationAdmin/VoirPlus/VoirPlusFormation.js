@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams,Link } from 'react-router-dom';
+import { useParams,Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './voirPlus.css'
 import { Calendar, momentLocalizer } from 'react-big-calendar';
@@ -14,6 +14,7 @@ const localizer = momentLocalizer(moment);
 
 const VoirPlusFormation = () => {
     const idFormation = useParams();
+    const navigate = useNavigate();
     const [informations, setInformations] = useState({});
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
@@ -21,9 +22,7 @@ const VoirPlusFormation = () => {
     const [participantData, setParticipantData] = useState(null);
     const [isParticipantListVisible, setParticipantListVisible] = useState(false);
     const user = JSON.parse(localStorage.getItem('user'))
-    console.log(user)
     const userId = user.id;
-    console.log(userId)
     const role = user.RoleHierarchique.roleHierarchique;
     console.log(role)
 
@@ -117,7 +116,7 @@ const VoirPlusFormation = () => {
   
   
     const handleParticipateNowClick = (id) => {
-      if (role === 'SuperAdministrateur') {
+      if (role.toLowerCase() === 'superadministrateur') {
         startVideoCall(id);
       } else {
         showNotification (<Link to={`/appelVideo/${id}`} >Cliquez ici pour participer</Link>,'L\'appel a commencé')
@@ -182,6 +181,7 @@ const VoirPlusFormation = () => {
           // Suppression réussie, mise à jour la liste des événements
           const updatedEvents = events.filter(event => event.id !== id);
           setEvents(updatedEvents);
+          closePopup()
         } else {
           console.error('Erreur lors de la suppression de la séance');
         }
@@ -258,98 +258,94 @@ const VoirPlusFormation = () => {
 
             </div>
 
-            {events.length !== 0 ? (
-            <div className ="flex justify-center items-center min-h-screen"> 
-            <div className="voirPlusContainer">
-            <div className = "calendarContainer">
-                <div className="calendarWrapper">
+            {
+              events.length !== 0 ? (
                 <Calendar
-                    localizer={localizer}
-                    events={events}
-                    startAccessor="start"
-                    endAccessor="end"
-                    onSelectEvent={handleEventSelect}
-                    // className="customCalendar"
-                    style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
+                  localizer={localizer}
+                  events={events}
+                  startAccessor="start"
+                  endAccessor="end"
+                  onSelectEvent={handleEventSelect}
+                  style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
                 />
-                {showButtons && selectedEvent && (
-                  <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
-                    <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
+              ) : (
+                <h2>Aucune séance pour le moment</h2>
+              )
+            }
+            {
+              showButtons && selectedEvent && (
+                <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
+                  <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
+                    <button
+                      className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
+                      onClick={closePopup}
+                    >
+                      X
+                    </button>
+                    {role.toLowerCase() === 'superadministrateur' && (
                       <button
-                        className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
-                        onClick={closePopup}
-                      >
-                        X
-                      </button>
-                      {role === 'SuperAdministrateur' && (
-                        <button
-                          className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
-                          onClick={() => {
-                            handleParticipateNowClick(selectedEvent.id);
-                          }}
-                        >
-                          Démarrer l'appel vidéo
-                        </button>
-                      )}
-        
-                      <button
-                        className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
+                        className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
                         onClick={() => {
-                          handleReserveClick(selectedEvent.id);
+                          handleParticipateNowClick(selectedEvent.id);
                         }}
                       >
-                        Réserver une place
+                        Démarrer l'appel vidéo
                       </button>
-        
-                      {selectedEvent.auteur === userId && (
-                        <button
-                          className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
-                          onClick={() => {
-                            DeleteSeance(selectedEvent.id);
-                          }}
-                        >
-                          Supprimer
-                        </button>
-                      )}
-        
-                      {isParticipantListVisible && (
-                        <div className="participantData mb-4">
-                          {participantData &&
-                            [...participantData.collabNames, ...participantData.collabNames2]
-                              .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
-                              .map((collab, index) => (
-                                <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
-                              ))}
-                        </div>
-                      )}
-        
+                    )}
+
+                    <button
+                      className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
+                      onClick={() => {
+                        handleReserveClick(selectedEvent.id);
+                      }}
+                    >
+                      Réserver une place
+                    </button>
+
+                    {selectedEvent.auteur === userId && (
                       <button
-                        className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
-                        onClick={() => ShowAllParticipant(selectedEvent.id)}
+                        className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
+                        onClick={() => {
+                          DeleteSeance(selectedEvent.id);
+                        }}
                       >
-                        Liste des participants
+                        Supprimer
                       </button>
-        
-                      {role === 'chefEquipe' && (
-                        <button
-                          className="popupButton bg-green-500 text-white py-2 px-4 rounded"
-                          onClick={() => {
-                            handleReserveEqClick(selectedEvent.id);
-                          }}
-                        >
-                          Réserver des places pour mon équipe
-                        </button>
-                      )}
-                    </div>
+                    )}
+
+                    {isParticipantListVisible && (
+                      <div className="participantData mb-4">
+                        {participantData &&
+                          [...participantData.collabNames, ...participantData.collabNames2]
+                            .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
+                            .map((collab, index) => (
+                              <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
+                            ))}
+                      </div>
+                    )}
+
+                    <button
+                      className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
+                      onClick={() => ShowAllParticipant(selectedEvent.id)}
+                    >
+                      Liste des participants
+                    </button>
+
+                    {role.toLowerCase() === 'chefequipe' && (
+                      <button
+                        className="popupButton bg-green-500 text-white py-2 px-4 rounded"
+                        onClick={() => {
+                          handleReserveEqClick(selectedEvent.id);
+                        }}
+                      >
+                        Réserver des places pour mon équipe
+                      </button>
+                    )}
                   </div>
-                )}
                 </div>
-            </div>
-            </div>
-            </div>
-        ) : (
-          <h2>Aucune séance pour le moment</h2>
-        )}
+              )
+            }
+
   </div>
   );
 };

@@ -10,7 +10,7 @@
 
 /* Selected event styles */
 .rbc-event {
-  background-color: #4caf50 !important; /* Color of selected events */
+  background-color: #ffb300 !important; /* Color of selected events */
   border: none !important; /* Remove borders for selected events */
 }
 .rbc-label {
