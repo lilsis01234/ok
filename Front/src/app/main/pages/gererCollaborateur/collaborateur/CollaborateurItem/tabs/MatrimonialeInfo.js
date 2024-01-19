@@ -90,7 +90,6 @@ function BasicDirectionInfoTab(props) {
             {...field}
             className="mt-8 mb-16"
             error={!!errors.numCNAPS}
-            required
             helperText={errors?.numCNAPS?.message}
             label="Numero CNAPS"
             autoFocus
@@ -109,7 +108,7 @@ function BasicDirectionInfoTab(props) {
           <TextField
             {...field}
             select
-            value={field.value || 'Célibataire'} // Assurez-vous d'avoir une valeur par défaut
+            value={field.value || 'Célibataire'} 
             className="mt-8 mb-16"
             error={!!errors.statutmatrimoniale}
             required

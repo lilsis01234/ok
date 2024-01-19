@@ -39,21 +39,18 @@ class FuseAuthorization extends Component {
     }
   }
 
-  // }
+ 
 
 
   static getDerivedStateFromProps(props, state) {
     const { location, userRole, userRoleHierarchique, userPermission } = props
     const { pathname, history} = location;
 
-    const isUserLoggedIn = userRole ? true : false;
+    const user = localStorage.getItem('user'); 
 
-
+  
     const matchedRoutes = matchRoutes(state.routes, pathname);
     const matched = matchedRoutes ? matchedRoutes[0] : false
-
-    console.log(matchedRoutes)
-    console.log(matched)
 
     const userHasPermission =  matched && FuseUtils.hasPermission(
       matched?.route?.auth,
@@ -62,23 +59,20 @@ class FuseAuthorization extends Component {
       userPermission
     )
 
-    console.log(userHasPermission)
-    const resetPasswordRegex = /^\/authentification\/resetPassword\/\w+$/;
-    const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404', '/authentification/motdepasseOublie', resetPasswordRegex];
+    const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404', '/authentification/motdepasseOublie'];
     // const resetPasswordRegex = /^\/authentification\/resetPassword\/\w+$/;
 
     // if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
     //   setSessionRedirectUrl(pathname);
     // }$
 
-    // if (pathname === '/sign-in' && isUserLoggedIn){
-    //   window.location.href = '/acceuil';
-    //   // history.push('/acceuil')
-    //   return { accessGranted: false };
-    // } 
+    if (pathname === '/sign-in' && user){
+      window.location.href = '/acceuil';
+      return { accessGranted: false };
+    } 
 
 
-    if (ignoredPaths.includes(pathname)) {
+    if (ignoredPaths.includes(pathname) || pathname.includes('/authentification/resetPassword')) {
       return { accessGranted: true };
     } 
 

@@ -8,14 +8,14 @@ const rows = [
         id: 'poste',
         align: 'left',
         disablePadding: false,
-        label: 'Fonction',
+        label: 'Poste',
         sort: true
     }, 
     {
         id: 'departement',
         align: 'left',
         disablePadding: false,
-        label: 'Departement',
+        label: 'Département',
         sort: true
     }, 
 ]

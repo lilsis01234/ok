@@ -11,6 +11,7 @@ import { useSelect } from '@mui/base';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, setUser } from 'app/store/userSlice';
 import JwtService from 'src/app/auth/services/jwtService';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 function UpdateProfileHeader({ formValues }) {
 
@@ -43,38 +44,45 @@ function UpdateProfileHeader({ formValues }) {
 
     const fetchUserDataConnected = () => {
         axios.get(`http://localhost:4000/api/user/${userId}/profile`)
-        .then(response => {
-            setUserData(response.data)
-            console.log(response.data)
-        })
-        .catch(error => {
-            console.error('Erreur lors de la récupération des informations des utilisateurs connectés')
-        })
+            .then(response => {
+                setUserData(response.data)
+                // console.log(response.data)
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération des informations des utilisateurs connectés')
+            })
     }
 
-    useEffect(()=> {
-       fetchUserDataConnected()
+    useEffect(() => {
+        fetchUserDataConnected()
     }, [userId])
 
 
     const handleSaveCollaborateur = async () => {
-        axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        })
-            .then(response => {
-                
-                alert('Information collaborateur mise à jour avec succès')
-                // console.log(response)
-                // dispatch(setUser(userData))
-                // window.location.reload()
-                // JwtService.signInWithToken()
-                navigate('/settings/account')
+        if (!nom || !dateNaissance || !lot || !quartier || !ville ||
+            !tel || !CIN || !dateDelivrance || !lieuDelivrance
+        ) {
+            dispatch(showMessage({message : 'Veuillez remplir toutes les champs obligatoires (*).'}))
+        } else {
+            axios.put(`http://localhost:4000/api/collaborateur/${id}/edit`, data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             })
-            .catch(error => {
-                console.log(error)
-            })
+                .then(response => {
+                    dispatch(showMessage({ message: 'Informations collaborateur mise à jour avec succès' }))
+                    // console.log(response)
+                    // dispatch(setUser(userData))
+                    // window.location.reload()
+                    // JwtService.signInWithToken()
+                    navigate('/settings/account')
+                })
+                .catch(error => {
+                    dispatch(showMessage({ message: error.response.data.message }))
+                    console.log(error)
+                })
+        }
+
 
     }
 

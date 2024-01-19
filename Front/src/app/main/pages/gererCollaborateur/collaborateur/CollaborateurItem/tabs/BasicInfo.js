@@ -90,7 +90,6 @@ function BasicInfo(props) {
             {...field}
             className="mt-8 mb-16"
             error={!!errors.lieuNaissance}
-            required
             helperText={errors?.lieuNaissance?.message}
             label="Lieu de Naissance"
             autoFocus

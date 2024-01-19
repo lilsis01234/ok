@@ -24,7 +24,7 @@ function ForgotPasswordPage() {
             })
             .catch((error) => {
                 console.error('Erreur lors de la demande de réinitialisation du mot de passe', error);
-                dispatch(showMessage({message : 'Adresse email non trouvé'}))
+                dispatch(showMessage({message : error.response.data.message}))
                 setIsLoading(false);
             })
     };

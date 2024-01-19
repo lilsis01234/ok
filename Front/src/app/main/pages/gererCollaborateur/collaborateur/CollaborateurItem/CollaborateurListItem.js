@@ -21,30 +21,23 @@ import PictureCollab from './tabs/PictureCollab';
 
 
 
-const schema = yup.object().shape(
-    // {
-    // matricule: yup
-    //     .string()
-    //     .required('Veuillez entrer une matricule')
-    // }, 
-    {
-        nom: yup
-            .string()
-            .required('Veuillez entrer un nom')
-    }, {
-    dateEmbauche: yup
-        .date()
-        .required('Veuillez entrer une date d\'embauche')
-}, {
-    poste: yup
-        .string()
-        .required('Veuillez entrer une poste')
-}, {
-    departement: yup
-        .string()
-        .required('Veuillez entrer un département')
-},
-);
+const schema = yup.object().shape({
+    nom: yup.string().required('Veuillez entrer un nom'),
+    dateNaissance : yup.date().required('Veuillez entrer un date de naissance'),
+    lot: yup.string().required('Veuillez entrer un lot'),
+    quartier: yup.string().required('Veuillez entrer un quartier'),
+    ville: yup.string().required('Veuillez entrer une ville'),
+    tel: yup.string().required('Veuillez entrer un numéro de téléphone'),
+    CIN: yup.string().required('Veuillez entrer un numéro CIN'),
+    dateDelivrance: yup.string().required('Veuillez entrer le date de délivrance du CIN'),
+    lieuDelivrance: yup.string().required('Veuillez entrer le lieu de délivrance du CIN'),
+    matricule: yup.string().required('Veuillez entrer un matricule'),
+    dateEmbauche: yup.date().required('Veuillez entrer une date d\'embauche'),
+    poste: yup.string().required('Veuillez selectionner une poste'),
+    departement: yup.string().required('Veuillez selectionner un département'),
+    
+});
+
 
 
 function CollaborateurListItem(props) {
@@ -64,7 +57,7 @@ function CollaborateurListItem(props) {
     })
 
 
-    const { reset, watch, control, onChange, fomState } = methods || {};
+    const { reset, watch, control, onChange, fomState, handleSubmit} = methods || {};
     const form = watch();
 
 

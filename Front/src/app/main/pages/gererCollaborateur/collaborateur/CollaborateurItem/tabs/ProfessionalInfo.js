@@ -128,7 +128,7 @@ function ProfessionalInfo(props) {
           <TextField
             {...field}
             select
-            value={field.value || null} // Assurez-vous d'avoir une valeur par défaut
+            value={field.value || null} 
             className="mt-8 mb-16"
             error={!!errors.site}
             required
@@ -155,7 +155,7 @@ function ProfessionalInfo(props) {
           <TextField
             {...field}
             select
-            value={field.value || 'Advalorem'} // Assurez-vous d'avoir une valeur par défaut
+            value={field.value || 'Advalorem'} 
             className="mt-8 mb-16"
             error={!!errors.entreprise}
             required

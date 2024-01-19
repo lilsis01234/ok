@@ -15,8 +15,7 @@ import BasicInfoProject from './tabs/BasicInfoProject';
 const schema = yup.object().shape({
     nomProjet: yup
         .string()
-        .required('You must enter a project name')
-    // .min(5, 'The product name must be at least 5 characters'),
+        .required('Veuillez insérer l\'intitulé de la direction')
 });
 
 function ProjetItemList(props) {
@@ -93,7 +92,7 @@ function ProjetItemList(props) {
                 className="flex flex-col flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There is no such project!
+                    Il n'y a pas de projet!
                 </Typography>
                 <Button
                      className="mt-24"
@@ -102,7 +101,7 @@ function ProjetItemList(props) {
                      to="/business/manage/project"
                      color="inherit"
                 >
-                    Go To projects Page
+                   Retourner à la listes de projets.
                 </Button>
             </motion.div>
         )
@@ -126,7 +125,7 @@ function ProjetItemList(props) {
                           scrollButtons="auto"
                           classes={{ root: 'w-full h-64 border-b-1' }}
                     >
-                         <Tab className="h-64" label="Basic Project Info" />
+                         <Tab className="h-64" label="Information basique" />
                     </Tabs>
                     <div className="p-16 sm:p-24 max-w-3xl">
                         <div className={tabValue !== 0 ? 'hidden' : ''}>

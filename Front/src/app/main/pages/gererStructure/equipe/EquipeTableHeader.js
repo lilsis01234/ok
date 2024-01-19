@@ -9,14 +9,14 @@ const rows = [
         id: 'equipe',
         align: 'left',
         disablePadding: false,
-        label: 'Teams',
+        label: 'Equipe',
         sort: true
     },
     {
         id: 'projet',
         align: 'left',
         disablePadding: false,
-        label: 'Project',
+        label: 'Projet',
         sort: true
     },
 ]

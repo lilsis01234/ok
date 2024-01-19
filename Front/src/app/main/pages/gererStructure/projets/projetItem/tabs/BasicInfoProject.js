@@ -43,7 +43,7 @@ function BasicInfoProject(props) {
                         error={!!errors.nomProjet}
                         required
                         helperText={errors?.nomProjet?.message}
-                        label="Project Name"
+                        label="Intitulé du projet"
                         autoFocus
                         id="nomProjet"
                         variant="outlined"
@@ -63,7 +63,7 @@ function BasicInfoProject(props) {
                         error={!!errors.departement}
                         required
                         helperText={errors?.departement?.message}
-                        label="Departement"
+                        label="Département"
                         autoFocus
                         id="departement"
                         variant="outlined"
