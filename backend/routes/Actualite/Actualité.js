@@ -8,6 +8,7 @@ const fs = require('fs');
 const { Actualite, Categorie, ActuCateg} = require('../../Modele/ActualityModel/associationActuCateg');
 const {  Tag, ActuTag} = require('../../Modele/ActualityModel/associationActuTag');
 const { Type, ActuType } = require('../../Modele/ActualityModel/associationActuType');
+const Commentaire = require('../../Modele/ActualityModel/Commentaire');
 const { Sequelize, Op } = require('sequelize');
 
 
@@ -40,7 +41,8 @@ router.post('/new', async (req, res) => {
             extrait: req.body.extrait,
             etat: req.body.etat,
             visibilite: req.body.visibilite,
-            compte_id: req.body.compte_id
+            compte_id: req.body.compte_id,
+            commentaire: req.body.commentaire
         })
 
         
@@ -140,7 +142,21 @@ router.post('/image',upload.single('nom'), async (req, res) => {
 router.get('/all', async (req, res) => {
     try {
         const actualities = await Actualite.findAll({
-            order: [['date_publication', 'DESC']],
+            order: [['createdAt', 'DESC']],
+            attributes: [
+                'id',
+                'titre',
+                'contenu',
+                'date_publication',
+                'image',
+                'extrait',
+                'etat',
+                'visibilite',
+                'compte_id',
+                'createdAt',
+                'updatedAt',
+                [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = Actualite.id AND Commentaires.approuver = true)'), 'nombre_commentaires']
+            ],
             include: [
                 {
                     model: Compte,
@@ -328,6 +344,21 @@ router.get('/:id(\\d+)', async (req, res) => {
     const { id } = req.params;
     try {
         const actuality = await Actualite.findByPk(id, {
+            attributes: [
+                'id',
+                'titre',
+                'contenu',
+                'date_publication',
+                'image',
+                'extrait',
+                'etat',
+                'visibilite',
+                'compte_id',
+                'createdAt',
+                'updatedAt',
+                'commentaire',
+                [Sequelize.literal(`(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = ${id} AND Commentaires.approuver = true)`), 'nombre_commentaires']
+            ],
             include: [{
                 model: Compte,
                 attributes: ["id", "email"],
@@ -460,6 +491,20 @@ router.get('/search', async (req, res) => {
     const { q } = req.query;
     try {
         const searchResult = await Actualite.findAll({
+            attributes: [
+                'id',
+                'titre',
+                'contenu',
+                'date_publication',
+                'image',
+                'extrait',
+                'etat',
+                'visibilite',
+                'compte_id',
+                'createdAt',
+                'updatedAt',
+                [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = Actualite.id AND Commentaires.approuver = true)'), 'nombre_commentaires']
+            ],
             where: {
                 [Op.or]: [
                     { id: { [Op.like]: `%${q}%` } },
@@ -526,7 +571,8 @@ router.put('/:id', async (req, res) => {
             extrait: req.body.extrait,
             etat: req.body.etat,
             visibilite: req.body.visibilite,
-            compte_id: req.body.compte_id
+            compte_id: req.body.compte_id,
+            commentaire: req.body.commentaire
         });
 
         const savedActuality = await updatedActuality.save();

@@ -53,7 +53,7 @@ const actualityAppConfig = {
       element: <ActualitiesByType />
     },
     {
-      path: `/apps/edit-comments`,
+      path: `/apps/commentaires`,
       element: <Comment />
     },
     {

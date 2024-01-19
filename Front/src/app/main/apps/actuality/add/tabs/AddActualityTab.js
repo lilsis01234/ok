@@ -391,7 +391,8 @@ function AddActualityTab() {
       type,
       tag,
       image,
-      compte_id
+      compte_id,
+      commentaire
 
     };
 

@@ -16,6 +16,7 @@ import Slider from "react-slick";
 import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
+import { useNavigate } from 'react-router-dom';
 import { pink,yellow } from '@mui/material/colors';
 
 const Dashboard = () => {
@@ -42,7 +43,7 @@ const Dashboard = () => {
       .catch(err => console.log(err));
   }
   
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchActualitiesByCateg();
     fetchFormation();
@@ -192,12 +193,12 @@ const Dashboard = () => {
                                 <div className="mt-14">
                                   <div  className="flex flex-row items-end">
                                     <Typography className="text-lg font-semibold mr-14">
-                                        DIGITAL
+                                        BLOG
                                     </Typography>
                                     <span className="text-sm" >{formatDate(actualite.date_publication)}</span>
                                   </div>
                                   <div className="mt-2">
-                                    <h3 className="font-bold text-2xl">{actualite.titre}</h3>
+                                    <h3 className="font-bold text-2xl hover:cursor-pointer hover:underline hover:text-blue-900" onClick={() => {navigate(`/actuality/${actualite.id}`)}}>{actualite.titre}</h3>
                                   </div>
                                   <div  className="flex flex-row mt-14">
                                     <span className="flex flex-row mr-10"><FavoriteIcon fontSize="small" sx={{ color: pink[300]  }} /><Typography className="text-xs ml-2">22</Typography></span>
