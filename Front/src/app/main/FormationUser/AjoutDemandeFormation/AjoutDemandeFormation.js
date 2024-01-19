@@ -116,11 +116,15 @@ const AjoutDemandeFormation = () => {
         </Typography>
 
       <form onSubmit={confidentialite === '0' ? (handleSubmit) : (handleSubmitPrivate)}>
-
+          
+          <div className='flex items-stretch'>
+            
             <TextField type="text" className="mt-8 mb-16" value={theme} label="Thème" onChange={(e) => setTheme(e.target.value)} />
 
             <TextField type="text" className="mt-8 mb-16 lg:ml-20" value={description} label="Description" onChange={(e) => setDescription(e.target.value)} />
-
+          
+          </div>
+          
           <div className="form2-group">
           <Typography className="mt-8 mb-16">Pour le publique ou des personnes spécifiques?</Typography>
           <select
@@ -136,7 +140,7 @@ const AjoutDemandeFormation = () => {
               </option>
             ))}
           </select>
-        </div>
+          </div>
 
         <div className="form2-group">
         <Typography className="mt-8 mb-16">Destinataire de votre demande</Typography>

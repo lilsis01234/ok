@@ -41,11 +41,11 @@ const  MesDemandes =()=>{
       const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette demande ?");
       if (isConfirmed) {
       try {
-        const response = await axios.delete(`http://localhost:4000/api/demande_formation/formation/${id}`);
+        const response = await axios.delete(`http://localhost:4000/api/demande_formation/demande_formation/${id}`);
         if (response.status === 204) {
           // Suppression réussie, mise à jour de la liste des événements
-          const updatedEvents = events.filter(event => event.id !== id);
-          setEvents(updatedEvents);
+          fetchDemande()
+          fetchDemandePourmoi()
         } else {
           console.error('Erreur lors de la suppression de la séance');
         }
