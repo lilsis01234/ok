@@ -275,14 +275,14 @@ const Formations = () => {
                           {formation.Formateur.image ? (
                               <Avatar
                                   key={formation.Formateur.id}
-                                  className="w-84 h-84"
+                                  className="w-96 h-96"
                                   alt={formation.Formateur.nom}
                                   src={`http://localhost:4000/${formation.Formateur.image}`}
                               />
                           ) : (
                               <Avatar
                                   key={formation.Formateur.id}
-                                  className="w-84 h-84"
+                                  className="w-96 h-96"
                                   alt={formation.Formateur.nom}
                               >
                                   {formation.Formateur.nom ? formation.Formateur.nom[0] : '?'}
@@ -291,7 +291,7 @@ const Formations = () => {
                       </div>
 
                     {formation.Formateur ? (
-                      <Typography className="mt-2 text-gray-700">
+                      <Typography className="mt-8 text-black font-bold text-2xl">
                         {formation.Formateur.nom} {formation.Formateur.prenom}
                       </Typography>
                     ) : (

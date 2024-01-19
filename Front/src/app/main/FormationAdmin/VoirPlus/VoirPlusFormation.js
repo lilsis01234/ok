@@ -10,9 +10,8 @@ import { Typography} from '@mui/material'
 import Sary from './logo-sahaza.png'
 
 
-const localizer = momentLocalizer(moment);
-
 const VoirPlusFormation = () => {
+    const localizer = momentLocalizer(moment);
     const idFormation = useParams();
     const navigate = useNavigate();
     const [informations, setInformations] = useState({});
@@ -27,6 +26,7 @@ const VoirPlusFormation = () => {
     console.log(role)
 
     const fetchFormation = () => {
+
         axios.get(`http://localhost:4000/api/formations/all_informations/${idFormation.id}`)
             .then(res => {
                 console.log(res.data)
@@ -36,24 +36,25 @@ const VoirPlusFormation = () => {
                 console.log(err);
             });
 
-            axios.get(`http://localhost:4000/api/seances/seancesParFormation/${idFormation.id}`)
+        axios.get(`http://localhost:4000/api/seances/seancesParFormation/${idFormation.id}`)
             .then((res) => {
-            console.log(res.data)
-            const formattedEvents = res.data.map((event) => {
-              return {
-                auteur: event.Formation.formateur,
-                id:event.id,
-                title: `${event.title} - ${event.nombreDePlaces} places`,
-                start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), 
-                end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(),
-              };
-            });
-            setEvents(formattedEvents);
-            formattedEvents.forEach((event) => scheduleNotification(event));
-            }) 
+              console.log(res.data)
+                const formattedEvents = res.data.map((event) => {
+                  return {
+                    auteur: event.Formation.formateur,
+                    id:event.id,
+                    title: `${event.title} - ${event.nombreDePlaces} places`,
+                    start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), 
+                    end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(),
+                  };
+                });
+                setEvents(formattedEvents);
+                formattedEvents.forEach((event) => scheduleNotification(event));
+              }) 
             .catch((err) => {
             console.log(err);
-            });
+        });
+
     };
 
     useEffect(() => {
@@ -152,23 +153,23 @@ const VoirPlusFormation = () => {
   
     const handleReserveEqClick = (id) =>{
       if (id) {
-      axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
-        seance: id,
-        equipe: equipe, 
-        online: false,
-      })
-        .then(response => {
-          console.log('Reservation successful:', response.data);
-          closePopup()
-          alert('Réservation à succès')
+        axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
+          seance: id,
+          equipe: equipe, 
+          online: false,
         })
-        .catch(error => {
-          console.error('Error reserving place:', error);
-        });
-    } 
-    else {
-      console.log('No event selected.');
-    }
+          .then(response => {
+            console.log('Reservation successful:', response.data);
+            closePopup()
+            alert('Réservation à succès')
+          })
+          .catch(error => {
+            console.error('Error reserving place:', error);
+          });
+      } 
+      else {
+        console.log('No event selected.');
+      }
     }
     
     
@@ -226,128 +227,127 @@ const VoirPlusFormation = () => {
             )}
 
             <div className='header-container'>
-            <h1 className="collabListes_title font-bold">Modules</h1>
+              <h1 className="collabListes_title font-bold">Modules</h1>
 
-              {informations.formation && informations.formation.formateur && informations.formation.formateur === userId && (
-                <button>
-                  <Link to={`/addModule/${idFormation.id}`}>+</Link>
-                </button>
-              )}
-
+                {informations.formation && informations.formation.formateur && informations.formation.formateur === userId && (
+                  <button>
+                    <Link to={`/addModule/${idFormation.id}`}>+</Link>
+                  </button>
+                )}
             </div>
+
                 {informations.modules ? (informations.modules.length!==0 &&
-                <div>
-                    {informations.modules.map(module => (
-                        <div key={module.id} className='moduleBox'>
-                            <div className="moduleTitle">Titre: {module.titreModule}</div>
-                            <div className="moduleDescription">Description: {module.description}</div>
-                        </div>
-                    ))}
-                </div>
-            ):(
-                <h2>Pas encore de module pour le moment</h2>
-            )}
-            <div className='header-container'>
-            <h1 className="collabListes_title font-bold">Séances</h1>
-            
-            {informations.formation && informations.formation.formateur && informations.formation.formateur === userId && (
-                <button>
-                  <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
-                </button>
-            )}
+                    <div>
+                        {informations.modules.map(module => (
+                            <div key={module.id} className='moduleBox'>
+                                <div className="moduleTitle">Titre: {module.titreModule}</div>
+                                <div className="moduleDescription">Description: {module.description}</div>
+                            </div>
+                        ))}
+                    </div>
+                ):(
+                    <h2>Pas encore de module pour le moment</h2>
+                )}
 
+            <div className='header-container'>
+              <h1 className="collabListes_title font-bold">Séances</h1>
+              
+                {informations.formation && informations.formation.formateur && informations.formation.formateur === userId && (
+                    <button>
+                      <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
+                    </button>
+                )}
             </div>
 
-            {
-              events.length !== 0 ? (
-                <Calendar
-                  localizer={localizer}
-                  events={events}
-                  startAccessor="start"
-                  endAccessor="end"
-                  onSelectEvent={handleEventSelect}
-                  style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
-                />
-              ) : (
-                <h2>Aucune séance pour le moment</h2>
-              )
-            }
-            {
-              showButtons && selectedEvent && (
-                <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
-                  <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
-                    <button
-                      className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
-                      onClick={closePopup}
-                    >
-                      X
-                    </button>
-                    {role.toLowerCase() === 'superadministrateur' && (
-                      <button
-                        className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
-                        onClick={() => {
-                          handleParticipateNowClick(selectedEvent.id);
-                        }}
-                      >
-                        Démarrer l'appel vidéo
-                      </button>
-                    )}
+                {
+                  events.length !== 0 ? (
+                    <Calendar
+                      localizer={localizer}
+                      events={events}
+                      startAccessor="start"
+                      endAccessor="end"
+                      onSelectEvent={handleEventSelect}
+                      style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
+                    />
+                  ) : (
+                    <h2>Aucune séance pour le moment</h2>
+                  )
+                }
+                {
+                  showButtons && selectedEvent && (
+                    <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
+                      <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
+                        <button
+                          className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
+                          onClick={closePopup}
+                        >
+                          X
+                        </button>
+                        {role.toLowerCase() === 'superadministrateur' && (
+                          <button
+                            className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
+                            onClick={() => {
+                              handleParticipateNowClick(selectedEvent.id);
+                            }}
+                          >
+                            Démarrer l'appel vidéo
+                          </button>
+                        )}
 
-                    <button
-                      className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
-                      onClick={() => {
-                        handleReserveClick(selectedEvent.id);
-                      }}
-                    >
-                      Réserver une place
-                    </button>
+                        <button
+                          className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
+                          onClick={() => {
+                            handleReserveClick(selectedEvent.id);
+                          }}
+                        >
+                          Réserver une place
+                        </button>
 
-                    {selectedEvent.auteur === userId && (
-                      <button
-                        className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
-                        onClick={() => {
-                          DeleteSeance(selectedEvent.id);
-                        }}
-                      >
-                        Supprimer
-                      </button>
-                    )}
+                        {selectedEvent.auteur === userId && (
+                          <button
+                            className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
+                            onClick={() => {
+                              DeleteSeance(selectedEvent.id);
+                            }}
+                          >
+                            Supprimer
+                          </button>
+                        )}
 
-                    {isParticipantListVisible && (
-                      <div className="participantData mb-4">
-                        {participantData &&
-                          [...participantData.collabNames, ...participantData.collabNames2]
-                            .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
-                            .map((collab, index) => (
-                              <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
-                            ))}
+                        {isParticipantListVisible && (
+                          <div className="participantData mb-4">
+                            {participantData &&
+                              [...participantData.collabNames, ...participantData.collabNames2]
+                                .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
+                                .map((collab, index) => (
+                                  <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
+                                ))}
+                          </div>
+                        )}
+
+                        <button
+                          className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
+                          onClick={() => ShowAllParticipant(selectedEvent.id)}
+                        >
+                          Liste des participants
+                        </button>
+
+                        {role.toLowerCase() === 'chefequipe' && (
+                          <button
+                            className="popupButton bg-green-500 text-white py-2 px-4 rounded"
+                            onClick={() => {
+                              handleReserveEqClick(selectedEvent.id);
+                            }}
+                          >
+                            Réserver des places pour mon équipe
+                          </button>
+                        )}
                       </div>
-                    )}
-
-                    <button
-                      className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
-                      onClick={() => ShowAllParticipant(selectedEvent.id)}
-                    >
-                      Liste des participants
-                    </button>
-
-                    {role.toLowerCase() === 'chefequipe' && (
-                      <button
-                        className="popupButton bg-green-500 text-white py-2 px-4 rounded"
-                        onClick={() => {
-                          handleReserveEqClick(selectedEvent.id);
-                        }}
-                      >
-                        Réserver des places pour mon équipe
-                      </button>
-                    )}
-                  </div>
-                </div>
-              )
-            }
-
-  </div>
-  );
+                    </div>
+                  )
+                }
+        </div>
+    );
 };
 
 export default VoirPlusFormation;
