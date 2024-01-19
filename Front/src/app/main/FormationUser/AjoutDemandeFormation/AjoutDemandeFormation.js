@@ -119,7 +119,7 @@ const AjoutDemandeFormation = () => {
 
             <TextField type="text" className="mt-8 mb-16" value={theme} label="Thème" onChange={(e) => setTheme(e.target.value)} />
 
-            <TextField type="text" className="mt-8 mb-16" value={description} label="Description" onChange={(e) => setDescription(e.target.value)} />
+            <TextField type="text" className="mt-8 mb-16 lg:ml-20" value={description} label="Description" onChange={(e) => setDescription(e.target.value)} />
 
           <div className="form2-group">
           <Typography className="mt-8 mb-16">Pour le publique ou des personnes spécifiques?</Typography>

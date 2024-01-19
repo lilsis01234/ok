@@ -190,12 +190,14 @@ function CalendarTraining() {
   return (
         <>
           <div className="flex min-h-screen">
+
             {/* Sidebar */}
-            <div className="w-1/6 p-4 bg-grey-100">
+            <div className="w-1/6 p-4 bg-grey-100 xl:block lg:hidden md:hidden sm:hidden xs:hidden">
               <Typography className="text-48 font-bold pt-56 px-32">Calendrier</Typography>
-              <Typography className="text-24 px-32 mt-16 font-bold text-yellow-800">SEANCES DE CE MOIS</Typography>
-          </div>
-            <div className="w-5/6 p-4">
+              <Typography className="text-24 pl-32 mt-16 font-bold text-yellow-800">SEANCES DE CE MOIS</Typography>
+            </div>
+
+            <div className="w-5/6 p-4 md:w-full sm:w-full">
               <Calendar
                 localizer={localizer}
                 events={events}

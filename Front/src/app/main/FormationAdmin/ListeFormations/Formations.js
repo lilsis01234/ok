@@ -65,13 +65,12 @@ const Formations = () => {
       const response = await axios.delete(`http://localhost:4000/api/demande_formation/formation/${id}`);
       if (response.status === 204) {
         // Suppression réussie, mise à jour de la liste des événements
-        const updatedEvents = events.filter(event => event.id !== id);
-        setEvents(updatedEvents);
+        fetchFormation()
       } else {
-        console.error('Erreur lors de la suppression de la séance', error);
+        console.error('Erreur lors de la suppression de la formation', error);
       }
     } catch (error) {
-      console.error('Erreur lors de la suppression de la séance :', error);
+      console.error('Erreur lors de la suppression de la formation :', error);
     }
   }};    
 

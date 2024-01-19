@@ -42,7 +42,7 @@ const AjoutFormation = ()=>{
           <div className='flex hidden md:hidden sm:hidden lg:flex'>
             <img src={Sary} className='mt-[-60px]'/>
             <Typography 
-              className="text-32 md:text-64 font-extrabold tracking-tight"
+              className="text-32 md:text-64 font-extrabold tracking-tight pr-20"
             >
               Nouvelle formation
             </Typography>

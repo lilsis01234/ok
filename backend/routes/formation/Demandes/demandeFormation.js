@@ -10,7 +10,7 @@ const Collab = require('../../../Modele/CollabModel/Collab');
 const Formation = require('../../../Modele/formation/Formation');
 const FormationCollab = require('../../../Modele/formation/PublicCible/PublicCibleCollab');
 const FormationEq = require('../../../Modele/formation/PublicCible/PublicCibleEquipe');
-const { Module } = require('module');
+const Module = require('../../../Modele/formation/Modules/Module');
 
 router.post('/addDemandeFormationPublic', async (req, res) => {
     try {
@@ -251,7 +251,47 @@ router.post('/desapprouver/:id', async(req,res)=>{
       
 })
 
-router.delete('/formation/:id', async(req,res) =>{
+router.delete('/formation/:id', async (req, res) => {
+    const { id } = req.params;
+    
+    try {
+        const deletedFormation = await Formation.findByPk(id);
+        if (!deletedFormation) {
+            return res.status(500).json({ error: 'formation introuvable' });
+        }
+
+        const ModulesToDelete = await Module.findAll({
+            where: {
+                formation: deletedFormation.id
+            }
+        });
+
+        // Parcourir les modules
+        for (const moduleInstance of ModulesToDelete) {
+            await moduleInstance.destroy();
+        }
+
+        const SeancesToDelete = await Seance.findAll({
+            where: {
+                formation: deletedFormation.id
+            }
+        });
+
+        // Parcourir les séances
+        for (const seanceInstance of SeancesToDelete) {
+            await seanceInstance.destroy();
+        }
+
+        await deletedFormation.destroy();
+        res.sendStatus(204);
+    } catch (error) {
+        console.error('Erreur lors de la suppression :', error);
+        res.status(500).json({ message: 'Erreur lors de la suppression' });
+    }
+});
+
+
+router.delete('/demande_formation/:id',async(req,res)=>{
     const { id } = req.params.id;
     try {
         const deletedFormation = await DemandeFormation.findByPk(id);
@@ -259,35 +299,12 @@ router.delete('/formation/:id', async(req,res) =>{
             return res.status(404).json({ error: 'demande introuvable' });
         }
         await deletedFormation.destroy();
-
-        const ModulesToDelete = await Module.findAll({
-            where:{
-                formation:deletedFormation
-            }
-        })
-
-        if(ModulesToDelete){
-            await ModulesToDelete.destroy();
-        }
-        res.sendStatus(204);
-
-        const SeancesToDelete = await Seance.findAll({
-            where : {
-                formation : deletedFormation
-            }
-        }
-        )
-        if(SeancesToDelete){
-            await SeancesToDelete.destroy();
-        }
         res.sendStatus(204);
     }
-    
     catch (error) {
         console.error('Erreur lors de la suppression :', error)
         res.status(500).json({ message: 'Erreur lors de la suppression' })
     }
-
 })
 
 router.get('/demandesPourVous/:id',async(req,res)=>{
