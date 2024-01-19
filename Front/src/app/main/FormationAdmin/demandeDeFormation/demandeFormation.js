@@ -16,10 +16,10 @@ const DemandeFormations = () => {
   console.log(role)
 
   const Approuver =(id)=>{
-    console.log("demande approuvé pour n°" + id);
     axios.post(`http://localhost:4000/api/demande_formation/approuver/${id}`)
     .then(res=>{
       console.log(res.data)
+      fetchDemandes();
     })
     .catch((err)=>{
       console.log(err)
@@ -27,22 +27,21 @@ const DemandeFormations = () => {
   }
 
   const Desapprouver=(id)=>{
-    console.log("demande refusé pour n°" + id);
     axios.post(`http://localhost:4000/api/demande_formation/desapprouver/${id}`)
     .then(res=>{
       console.log(res)
+      fetchDemandes();
     })
     .catch((err)=>{
       console.log(err)
     })
   }
 
-  useEffect(()=>{
+  const fetchDemandes = ()=>{
     axios.get('http://localhost:4000/api/demande_formation/all')
     .then((res)=>
       { 
         setDemandes(res.data)
-        console.log(res.data)
       })
     .catch(err=>console.log(err))
 
@@ -61,6 +60,10 @@ const DemandeFormations = () => {
         console.log(res.data)
       })
     .catch(err=>console.log(err))
+  }
+
+  useEffect(()=>{
+    fetchDemandes();
   },[])
   
   return (

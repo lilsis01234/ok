@@ -242,8 +242,8 @@ router.post('/desapprouver/:id', async(req,res)=>{
           if (updatedFormation[0] === 0) {
               return res.status(404).json({ message: "Formation not found." });
           }
-    
-          return res.status(200).json({ message: "Formation approved successfully." });
+          
+          return res.status(200).json({ message: "success." });
       } catch (error) {
           console.error(error);
           return res.status(500).json({ message: "An error occurred while approving the formation." });
@@ -292,7 +292,7 @@ router.delete('/formation/:id', async (req, res) => {
 
 
 router.delete('/demande_formation/:id',async(req,res)=>{
-    const { id } = req.params.id;
+    const { id } = req.params;
     try {
         const deletedFormation = await DemandeFormation.findByPk(id);
         if (!deletedFormation) {
