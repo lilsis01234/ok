@@ -45,7 +45,6 @@ const  MesDemandes =()=>{
                 if (response.status === 204) {
                   // Suppression réussie, mise à jour de la liste des événements
                   fetchDemande()
-                  fetchDemandePourmoi()
                 } else {
                   console.error('Erreur lors de la suppression de la séance');
                 }

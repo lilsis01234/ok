@@ -290,7 +290,6 @@ router.delete('/formation/:id', async (req, res) => {
     }
 });
 
-
 router.delete('/demande_formation/:id',async(req,res)=>{
     const { id } = req.params;
     try {
