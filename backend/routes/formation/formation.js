@@ -8,6 +8,8 @@ const Collaborateur = require('../../Modele/CollabModel/Collab');
 const Module = require('../../Modele/formation/Modules/Module');
 const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
 const Sequelize = require('sequelize');
+const { Formation2, Collab3, FormationCollab} = require('../../Modele/formation/associationFormation/associationCollabFormation');
+const { DemandeFormation2 } = require('../../Modele/formation/associationDemande/associationDemandeCollab');
 
 
 //Toutes les formations dont tout le monde peut assister
@@ -118,6 +120,25 @@ router.get('/formations/:idPersonne',async(req,res)=>{
         }))
         console.log(formation)
     }) 
+})
+
+router.get('/formationsPourMoi/:idPersonne',async(req,res)=>{
+
+  const id = req.params.idPersonne;
+  try{
+    const formation = await FormationCollab.findAll({
+      include : {
+        model : Formation2
+      },
+      where : {
+        collaborateur:id
+      }
+    })
+      res.status(200).json(formation)
+  }
+  catch(error){
+    console.error(error)
+  }
 })
 
 //Ajout de formation par un formateur interne de l'entreprise

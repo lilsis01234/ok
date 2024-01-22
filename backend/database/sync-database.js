@@ -49,9 +49,11 @@ const conge = require('../Modele/conge/CongeModel');
 const EquipeSeance = require('../Modele/formation/Seances/EquipeSeance');
 
 const associationSeanceCollab = require('../Modele/formation/associationSeance/associationSeanceCollab');
+const associationSeanceEquipe = require('../Modele/formation/associationSeance/associationSeanceEquipe');
+
 const associationDemandeEq = require('../Modele/formation/associationDemande/associationDemandeEq');
 const associationDemandeCollab= require('../Modele/formation/associationDemande/associationDemandeCollab');
-const associationSeanceEquipe = require('../Modele/formation/associationSeance/associationSeanceEquipe');
+
 const associationFormationEquipe = require('../Modele/formation/associationFormation/associationEquipeFormation');
 const associationFormationCollab = require('../Modele/formation/associationFormation/associationCollabFormation');
 
@@ -64,7 +66,7 @@ const PieceJointe = require('../Modele/conge/PiecesJointes');
 
 async function syncDatabase() {
     try {
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ force: false });
         const { TestPoste, TestDepartement, PosteDepartement } = association;
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });

@@ -56,62 +56,62 @@ const  MesDemandes =()=>{
 
     return(
         <>  
-        <div>
-       
-          {mesDemandesFormations.length!==0 && <Typography className="mt-6 mb-4">Les demandes de formation</Typography> }
-          {mesDemandesFormations.map((demande, index) => (
-            
-            <div key={index} className="training-request-item">
+          <div>
+        
+            {mesDemandesFormations.length!==0 && <Typography className="mt-6 mb-4">Les demandes de formation</Typography> }
+            {mesDemandesFormations.map((demande, index) => (
               
-              <Typography className="theme">{demande.theme}</Typography>
-              <Typography className="description">{demande.description}</Typography>
-              <Typography>Destinataire : {demande.RoleHierarchique.roleHierarchique}</Typography>
-              
-              <Typography
-                className={`${
-                    demande.approbation === true ? 'text-green-500' :
-                    demande.approbation === null ? 'text-yellow-800' :
-                    'text-red-500'
-                }`}
-              >
-                {demande.approbation === true ? 'APPROUVÉE ' :
-                demande.approbation === null ? 'PAS ENCORE APPROUVÉE ' :
-                'REFUSÉE'}
-              </Typography>
+              <div key={index} className="training-request-item">
+                
+                <Typography className="theme">{demande.theme}</Typography>
+                <Typography className="description">{demande.description}</Typography>
+                <Typography>Destinataire : {demande.RoleHierarchique.roleHierarchique}</Typography>
+                
+                <Typography
+                  className={`${
+                      demande.approbation === true ? 'text-green-500' :
+                      demande.approbation === null ? 'text-yellow-800' :
+                      'text-red-500'
+                  }`}
+                >
+                  {demande.approbation === true ? 'APPROUVÉE ' :
+                  demande.approbation === null ? 'PAS ENCORE APPROUVÉE ' :
+                  'REFUSÉE'}
+                </Typography>
 
-              {demande.approbation === true &&
-              <>
-              <button>
-                <Link to={`/admin/formation/${demande.id}`}>Modules & séances</Link>
-              </button>
-              <br></br>
-              </>
-              }
-              <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link>
-                            
-              {demande.approbation === null &&
-              <>
-              <br></br><button onClick={() => { DeleteDemande(demande.id) }}>Annuler la demande</button>
-              </>
-              }
+                {demande.approbation === true &&
+                <>
+                  <button>
+                    <Link to={`/admin/formation/${demande.id}`}>Modules & séances</Link>
+                  </button>
+                <br></br>
+                </>
+                }
+                <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link>
+                              
+                {demande.approbation === null &&
+                <>
+                <br></br><button onClick={() => { DeleteDemande(demande.id) }}>Annuler la demande</button>
+                </>
+                }
 
-              {demande.approbation === false &&
-              <>
-              <br></br><button onClick={() => { DeleteDemande(demande.id) }}>Supprimer la demande</button>
-              </>
-              }
+                {demande.approbation === false &&
+                <>
+                <br></br><button onClick={() => { DeleteDemande(demande.id) }}>Supprimer la demande</button>
+                </>
+                }
 
-            </div>
+              </div>
 
-        ))}
-        </div>
-        <div>
-            {demandesPourMoi.length !== 0 && demandesPourMoi.map((demande)=>(
-              <>
-               
-              </>
-            ))}
-        </div>
+          ))}
+          </div>
+          <div>
+              {demandesPourMoi.length !== 0 && demandesPourMoi.map((demande)=>(
+                <>
+                
+                </>
+              ))}
+          </div>
         </>
     )
   }
