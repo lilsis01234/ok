@@ -46,10 +46,10 @@ const  MesDemandes =()=>{
                   // Suppression réussie, mise à jour de la liste des événements
                   fetchDemande()
                 } else {
-                  console.error('Erreur lors de la suppression de la séance');
+                  console.error('Erreur lors de la suppression');
                 }
             } catch (error) {
-              console.error('Erreur lors de la suppression de la séance :', error);
+              console.error('Erreur lors de la suppression:', error);
             }
         };   
     } 
