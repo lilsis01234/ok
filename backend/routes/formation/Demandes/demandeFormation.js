@@ -3,12 +3,12 @@ const router = require('express').Router();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 const {  DemandeFormation2,Collab2,DemandeCollab } = require('../../../Modele/formation/associationDemande/associationDemandeCollab');
-const {  DemandeFormation,Equipe2,DemandeEq,  } = require('../../../Modele/formation/associationDemande/associationDemandeEq');
+const {  DemandeFormation,Equipe2,DemandeEq} = require('../../../Modele/formation/associationDemande/associationDemandeEq');
 const RoleHierarchique = require('../../../Modele/RoleModel/RoleHierarchique');
 const Seance = require('../../../Modele/formation/Seances/Seance');
 const Collab = require('../../../Modele/CollabModel/Collab');
 const Formation = require('../../../Modele/formation/Formation');
-const FormationCollab = require('../../../Modele/formation/PublicCible/PublicCibleCollab');
+const { Formation2, Collab3, FormationCollab} = require('../../../Modele/formation/associationFormation/associationCollabFormation');
 const FormationEq = require('../../../Modele/formation/PublicCible/PublicCibleEquipe');
 const Module = require('../../../Modele/formation/Modules/Module');
 
@@ -195,23 +195,23 @@ router.post('/approuver/:id', async (req, res) => {
                 where: { demande: DemandeformationId },
             });
 
-            await FormationCollab.bulkCreate(
+            await FormationCollab.create(
                 Collabs.map((collab) => ({
                     formation: formationApp.id,
-                    collaborateur: collab.collaborateur,
+                    collaborateur: collab.collaborateur
                 }))
             );
 
-            const equipe = await DemandeEq.findAll({
-                where: { demande: DemandeformationId },
-            });
+        //     const equipe = await DemandeEq.findAll({
+        //         where: { demande: DemandeformationId },
+        //     });
 
-            await FormationEq.bulkCreate(
-                equipe.map((eq) => ({
-                    formation: formationApp.id,
-                    equipe: eq.equipe,
-                }))
-            );
+        //     await FormationEq.create(
+        //         equipe.map((eq) => ({
+        //             formation: formationApp.id,
+        //             equipe: eq.equipe,
+        //         }))
+        //     );
         }
 
         await DemandeFormation.update(
