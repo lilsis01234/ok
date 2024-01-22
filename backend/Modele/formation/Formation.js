@@ -29,6 +29,10 @@ Formation.init({
     confidentialite:{
         type:DataTypes.BOOLEAN,
         allowNull:false
+    },
+    demande:{
+        type:DataTypes.BOOLEAN,
+        allowNull:true
     }
     },{
         sequelize,
