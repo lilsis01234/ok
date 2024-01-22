@@ -8,7 +8,6 @@ const Collaborateur = require('../../Modele/CollabModel/Collab');
 const Module = require('../../Modele/formation/Modules/Module');
 const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
 const Sequelize = require('sequelize');
-const DemandeFormation = require('../../Modele/formation/Demandes/demandeFormation');
 
 
 //Toutes les formations dont tout le monde peut assister
@@ -21,7 +20,7 @@ router.get('/all_formations', async(req,res) => {
               attributes: ['id','nom', 'prenom','image'],
             },
           ],
-          attributes: ['id', 'theme', 'description', 'formateur'],
+          attributes: ['id', 'theme', 'description', 'formateur','formateurExterne'],
             where:
             {
               confidentialite:0,
@@ -37,9 +36,9 @@ router.post('/addFormExt/:id', async(req,res)=>{
   const formationId = req.params.id;
   const formateurExt = req.body.formateurExt
   try{
-      const updatedFormation = await DemandeFormation.update(
+      const updatedFormation = await Formation.update(
           {
-              formateurExt: formateurExt,
+            formateurExterne: formateurExt,
           },
           {
               where: {

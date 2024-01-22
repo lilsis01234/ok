@@ -26,39 +26,11 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 const Formations = () => {
 
   const[Formation,setFormations] = useState([]);
-  const[formExt, setFormExt] = useState(null);
   const [FormationAdmin, setFormationAdmin] = useState([]);
-  const [showButtons, setShowButtons] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const role = user.RoleHierarchique.roleHierarchique;
   const userId = user.id;
   const [editingFormation, setEditingFormation] = useState(null);
-
-
-  const addFormateur = (id) => {
-    console.log(id);
-    axios
-      .post(`http://localhost:4000/api/demande_formation/addFormExt/${id}`, {
-        formateurExt: formExt,
-      })
-      .then((res) => {
-        console.log(res);
-        setFormExt(null);
-        setShowButtons(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleFormSubmit = (e, id) => {
-    e.preventDefault();
-    addFormateur(id);
-  };
-
-  const Click = () =>{
-    setShowButtons(!showButtons);
-  }
 
   const fetchFormation = () => {
     axios.get('http://localhost:4000/api/formations/all_formations')
@@ -155,14 +127,15 @@ const Formations = () => {
                           )}
                       </div>
 
-                      {formation.Formateur || formation.formateurExt ? (
+                      {formation.Formateur && (
                         <Typography className="mt-2 text-gray-700">
-                          {formation.Formateur ? `${formation.Formateur.nom} ${formation.Formateur.prenom}` : ''} {formation.Formateur && formation.formateurExt ? '|| ' : ''} {formation.formateurExt}
+                          {formation.Formateur && `${formation.Formateur.nom} ${formation.Formateur.prenom}`} 
                         </Typography>
-                      ) : (
-                        <button onClick={() => { Click() }} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
-                          Ajouter un formateur
-                        </button>
+                      )}
+                      {formation.formateurExterne && (
+                        <Typography className="mt-2 text-gray-700">
+                        {formation.formateurExterne} 
+                        </Typography>
                       )}
 
                       <Link to={`/admin/formation/${formation.id}`}>
@@ -174,18 +147,6 @@ const Formations = () => {
                       <Typography className="mt-2 text-gray-700">
                         {formation.description}
                       </Typography>
-
-      
-                      {showButtons &&
-                        <div className="popup mt-2">
-                          <div className="popupContent p-4 bg-white rounded-md shadow-l">
-                            <input type='text' placeholder='Nom du formateur' value={formExt} onChange={(e) => setFormExt(e.target.value)} className="p-2 border border-gray-300 rounded-md focus:outline-none" />
-                            <button type='submit' onClick={(e) => handleFormSubmit(e, formation.id)} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
-                              Valider
-                            </button>
-                          </div>
-                        </div>
-                      }
       
                       <Link to={`/discussion/formation/${formation.id}`} className="text-blue-500 mt-2 hover:underline">
                         Accéder à la discussion
@@ -290,13 +251,16 @@ const Formations = () => {
                           )}
                       </div>
 
-                    {formation.Formateur ? (
-                      <Typography className="mt-8 text-black font-bold text-2xl">
-                        {formation.Formateur.nom} {formation.Formateur.prenom}
-                      </Typography>
-                    ) : (
-                      <Typography className="mt-2 text-gray-700">Formateur externe</Typography>
-                    )}
+                      {formation.Formateur && (
+                        <Typography className="mt-2 text-gray-700">
+                          Ajouté par: {formation.Formateur && `${formation.Formateur.nom} ${formation.Formateur.prenom}`} 
+                        </Typography>
+                      )}
+                      {formation.formateurExterne && (
+                        <Typography className="mt-2 text-gray-700">
+                          Consultant externe: {formation.formateurExterne} 
+                        </Typography>
+                      )}
 
                     <Link to={`/admin/formation/${formation.id}`}>
                       <Typography variant="h4" className="text-xl font-semibold text-blue-900 hover:underline uppercase">
