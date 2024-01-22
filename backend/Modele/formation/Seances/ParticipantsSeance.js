@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../../database/database');
+const sequelize = require('../../../database/database');
 
 
-const EquipeSeance = sequelize.define('EquipeSeance', {
+const ParticipantsSeance = sequelize.define('ParticipantsSeance', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true,
@@ -17,7 +17,7 @@ const EquipeSeance = sequelize.define('EquipeSeance', {
       type:DataTypes.INTEGER,
       allowNull:false
     },
-    equipe: {
+    collaborateur: {
       type: DataTypes.INTEGER,
       allowNull: false,
     }
@@ -25,4 +25,4 @@ const EquipeSeance = sequelize.define('EquipeSeance', {
   timestamps : false  
 })
 
-module.exports = EquipeSeance;
+module.exports = ParticipantsSeance;

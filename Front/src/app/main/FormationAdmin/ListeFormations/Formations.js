@@ -59,7 +59,7 @@ const Formations = () => {
   }
 
   const DeleteFormation = async (id) => {
-    const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette demande ?");
+    const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette formation ?");
     if (isConfirmed) {
     try {
       const response = await axios.delete(`http://localhost:4000/api/demande_formation/formation/${id}`);
@@ -68,7 +68,7 @@ const Formations = () => {
         const updatedEvents = events.filter(event => event.id !== id);
         setEvents(updatedEvents);
       } else {
-        console.error('Erreur lors de la suppression de la séance');
+        console.error('Erreur lors de la suppression de la séance', error);
       }
     } catch (error) {
       console.error('Erreur lors de la suppression de la séance :', error);
@@ -107,7 +107,7 @@ const Formations = () => {
   
       {role === "SuperAdministrateur" && (
         <>
-          <Typography variant="h2" className="text-lg mt-12 mb-12 ml-12 text-gray-1000">
+          <Typography variant="h2" className="text-lg mt-10 mb-12 ml-12 text-gray-1000">
             Les formations approuvées
           </Typography>
   
@@ -127,7 +127,7 @@ const Formations = () => {
   
                   {formation.Formateur || formation.formateurExt ? (
                     <Typography className="formateur_name mt-2 text-gray-700">
-                      Formateur: {formation.Formateur ? `${formation.Formateur.nom} ${formation.Formateur.prenom}` : ''} {formation.Formateur && formation.formateurExt ? '|| ' : ''} {formation.formateurExt}
+                      Ajouté par: {formation.Formateur ? `${formation.Formateur.nom} ${formation.Formateur.prenom}` : ''} {formation.Formateur && formation.formateurExt ? '|| ' : ''} {formation.formateurExt}
                     </Typography>
                   ) : (
                     <button onClick={() => { Click() }} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
@@ -190,7 +190,7 @@ const Formations = () => {
   
                   {formation.Formateur ? (
                     <Typography className="formateur_name mt-2 text-gray-700">
-                      Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
+                      Ajouté par: {formation.Formateur.nom} {formation.Formateur.prenom}
                     </Typography>
                   ) : (
                     <Typography className="formateur_name mt-2 text-gray-700">Formateur externe</Typography>
@@ -243,7 +243,7 @@ const Formations = () => {
   
                 {formation.Formateur ? (
                   <Typography className="formateur_name mt-2 text-gray-700">
-                    Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
+                    Ajouté par: {formation.Formateur.nom} {formation.Formateur.prenom}
                   </Typography>
                 ) : (
                   <Typography className="formateur_name mt-2 text-gray-700">Formateur externe</Typography>
@@ -268,7 +268,7 @@ const Formations = () => {
 
                 {userId === formation.Formateur.id && (
                   <>
-                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la demande</button>
+                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la formation</button>
                   </>
                 )}
   
@@ -299,7 +299,7 @@ const Formations = () => {
   
                 {formation.Formateur ? (
                   <Typography className="formateur_name mt-2 text-gray-700">
-                    Formateur: {formation.Formateur.nom} {formation.Formateur.prenom}
+                    Ajouté par: {formation.Formateur.nom} {formation.Formateur.prenom}
                   </Typography>
                 ) : (
                   <Typography className="formateur_name mt-2 text-gray-700">Formateur externe</Typography>
@@ -321,7 +321,7 @@ const Formations = () => {
 
                 {userId === formation.Formateur.id && (
                   <>
-                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la demande</button>
+                  <br></br><button onClick={() => { DeleteFormation(formation.id) }}>Supprimer la formation</button>
                   </>
                 )}
   

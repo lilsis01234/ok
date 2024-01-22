@@ -77,7 +77,7 @@ function CalendarTraining() {
       .then((response) => {
         console.log(response.data)
         // Formatter les données pour les rendre compatibles avec React Big Calendar
-        const formattedEvents = response.data.filter((res) => res.Formation.destinataireDemande === null).map((event) => {
+        const formattedEvents = response.data.filter((res) => res.Formation.confidentialite === 0).map((event) => {
           return {
             auteur: event.Formation.formateur,
             id:event.id,
@@ -195,7 +195,7 @@ function CalendarTraining() {
 
   return (
     <div className ="flex justify-center items-center min-h-screen"> 
-    <div className="voirPlusContainer">
+    {/* <div className="voirPlusContainer"> */}
       <div className="calendarContainer">
         <div className="calendarWrapper">
           <Calendar
@@ -281,7 +281,7 @@ function CalendarTraining() {
         </div>
       </div>
     </div>
-    </div>
+    // </div>
   );
   
   

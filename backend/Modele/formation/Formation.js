@@ -14,10 +14,6 @@ Formation.init({
         type : DataTypes.STRING(500), 
         allowNull : false, 
     },
-    duree:{
-        type : DataTypes.STRING(8), 
-        allowNull : false,
-    },
     formateur:{
         type : DataTypes.INTEGER,
         allowNull : true,
@@ -26,30 +22,14 @@ Formation.init({
         key : 'id'
     }
     },
-    formateurExt:{
-        type:DataTypes.STRING(250),
-        allowNull:true,
+    formateurExterne:{
+        type : DataTypes.STRING(500), 
+        allowNull : true, 
     },
-    auteur:{
-        type : DataTypes.INTEGER,
-        allowNull : false,
-        references : {
-        model : Collaborateur,
-        key : 'id'
-    }
-    },
-    destinataireDemande:{
-        type : DataTypes.INTEGER,
-        allowNull : true,
-        references : {
-        model : RoleHierarchique,
-        key : 'id'
-    }
-    },
-    approbation:{
+    confidentialite:{
         type:DataTypes.BOOLEAN,
-        allowNull:true,
-    },
+        allowNull:false
+    }
     },{
         sequelize,
         modelName : 'Formation'
@@ -59,13 +39,5 @@ Formation.init({
         as: 'Formateur',
         onDelete : 'CASCADE'
     })
-    Formation.belongsTo(Collaborateur, {
-        foreignKey : 'auteur',
-        as: 'Auteur',
-        onDelete : 'CASCADE'
-    })
-    Formation.belongsTo(RoleHierarchique, {
-        foreignKey: 'destinataireDemande', // Alias défini ici
-    });
 
     module.exports = Formation;

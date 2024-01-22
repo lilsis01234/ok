@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const  Agenda  = require('../../../Modele/formation/Seance');
+const  Agenda  = require('../../../Modele/formation/Seances/Seance');
 const Formation = require('../../../Modele/formation/Formation');
 
 // Route GET pour récupérer toutes les dates de l'agenda
@@ -10,7 +10,7 @@ router.get('/agenda', async (req, res) => {
     const agendaEntries = await Agenda.findAll({
       include: {
         model: Formation,
-        attributes: ['theme', 'auteur', 'formateur','destinataireDemande']
+        attributes: ['theme','formateur','confidentialite']
       }
     });
     // Retournez les entrées de l'agenda en tant que réponse JSON

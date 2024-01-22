@@ -8,8 +8,8 @@ const fs = require('fs');
 
 
 const Collaborateur = require('../../../Modele/CollabModel/Collab');
-const DiscussionFormation = require('../../../Modele/formation/DiscussionFormation');
-const Module = require('../../../Modele/formation/Module');
+const DiscussionFormation = require('../../../Modele/formation/Discussions/DiscussionFormation');
+const Module = require('../../../Modele/formation/Modules/Module');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

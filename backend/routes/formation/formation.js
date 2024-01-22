@@ -5,11 +5,10 @@ router.use(cookieParser());
 
 const Formation = require('../../Modele/formation/Formation');
 const Collaborateur = require('../../Modele/CollabModel/Collab');
-const Seance = require('../../Modele/formation/Seance');
-const Module = require('../../Modele/formation/Module');
+const Module = require('../../Modele/formation/Modules/Module');
 const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
-// const Departement = require('../../Modele/Structure/TestDepartement')
 const Sequelize = require('sequelize');
+const DemandeFormation = require('../../Modele/formation/Demandes/demandeFormation');
 
 
 //Toutes les formations dont tout le monde peut assister
@@ -18,20 +17,14 @@ router.get('/all_formations', async(req,res) => {
         include: [
             {
               model: Collaborateur,
-              as: 'Auteur',
-              attributes: ['id','nom', 'prenom','image'],
-            },
-            {
-              model: Collaborateur,
               as: 'Formateur',
               attributes: ['id','nom', 'prenom','image'],
             },
           ],
-          attributes: ['id', 'theme', 'description', 'auteur','formateur','approbation'],
+          attributes: ['id', 'theme', 'description', 'formateur'],
             where:
             {
-              destinataireDemande: null,
-              approbation:1
+              confidentialite:0,
             },
     })
     .then((formation) => {
@@ -40,31 +33,30 @@ router.get('/all_formations', async(req,res) => {
     }) 
 })
 
-router.get('/all/admin', async(req,res)=>{
-    Formation.findAll({
-        include: [
-            {
-              model: Collaborateur,
-              as: 'Auteur',
-              attributes: ['nom', 'prenom','image'],
-            },
-            {
-              model: Collaborateur,
-              as: 'Formateur',
-              attributes: ['id','nom', 'prenom','image'],
-            },
-          ],
-          attributes: ['id', 'theme', 'description', 'auteur','formateur','formateurExt','destinataireDemande','approbation'],
-            where:
-            {
-              approbation:1,
-              destinataireDemande:{ [Sequelize.Op.not]: null }
-            },
-    })
-    .then((formation) => {
-        res.status(200).json(formation)
-        console.log(formation)
-    }) 
+router.post('/addFormExt/:id', async(req,res)=>{
+  const formationId = req.params.id;
+  const formateurExt = req.body.formateurExt
+  try{
+      const updatedFormation = await DemandeFormation.update(
+          {
+              formateurExt: formateurExt,
+          },
+          {
+              where: {
+                  id: formationId
+              }
+          }
+      )        
+  
+      if (updatedFormation[0] === 0) {
+          return res.status(404).json({ message: "Formation not found." });
+      }
+
+      return res.status(200).json({ message: "Formateur bien ajouté." });
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "An error occurred while approving the formation." });
+  }
 })
 
 //Les modules et séances d'une formation
@@ -80,16 +72,6 @@ router.get('/all_informations/:idformation', async(req,res)=>{
           
             const formation = await Formation.findByPk(formationId, {
               include: [
-                  {
-                      model: Collaborateur,
-                      as: 'Auteur',
-                      attributes: ['nom', 'prenom','image'],
-                  },
-                  {
-                      model: Role2,
-                      as: 'RoleHierarchique',
-                      attributes: ['roleHierarchique'],
-                  },
                   {
                       model: Collaborateur,
                       as: 'Formateur',
@@ -109,8 +91,7 @@ router.get('/all_informations/:idformation', async(req,res)=>{
             console.error('Erreur lors de la récupération des informations de la formation :', error);
             res.status(500).json({ message: 'Erreur lors de la récupération des informations de la formation' });
         }
-    });
-
+});
 
 //Les formations organisées par une personne
 router.get('/formations/:idPersonne',async(req,res)=>{
@@ -119,17 +100,8 @@ router.get('/formations/:idPersonne',async(req,res)=>{
       include: [
         {
           model: Collaborateur,
-          as: 'Auteur',
-          attributes: ['nom', 'prenom','image'],
-        },
-        {
-          model: Role2,
-          attributes: ['roleHierarchique'],
-        },
-        {
-          model: Collaborateur,
           as: 'Formateur',
-          attributes: ['nom', 'prenom'],
+          attributes: ['nom', 'prenom','image'],
         },
         ],
         where: {
@@ -142,7 +114,6 @@ router.get('/formations/:idPersonne',async(req,res)=>{
             id: formation.id,
             theme: formation.theme,
             description: formation.description,
-            auteur: formation.Auteur ? `${formation.Auteur.nom} ${formation.Auteur.prenom}` : null,
             formateur: formation.Formateur ? `${formation.Formateur.titreRole}` : null,
           };
         }))
@@ -156,11 +127,9 @@ router.post('/addFormation',async(req,res)=>{
         const newFormation = await(Formation.create({
             theme:req.body.theme,
             description:req.body.description,
-            duree:req.body.duree,
             formateur:req.body.formateur,
-            auteur:req.body.auteur,
-            formateurExt:req.body.formateurExt,
-            approbation:1
+            confidentialite:0,
+            formateurExt:null
         }))
         const formation = await newFormation.save();
         res.status(201).json(formation);

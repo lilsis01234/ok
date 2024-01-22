@@ -216,10 +216,10 @@ const VoirPlusFormation = () => {
                     <Typography>Thème: {informations.formation.theme}</Typography>
                     <Typography>Description: {informations.formation.description}</Typography>
                     {informations.formation.Formateur && (
-                     <Typography>Formateur: <span className="formateurInfo">{informations.formation.Formateur.nom} {informations.formation.Formateur.prenom}</span></Typography>
+                     <Typography>Ajouté par: <span className="formateurInfo">{informations.formation.Formateur.nom} {informations.formation.Formateur.prenom}</span></Typography>
                     )}
                     {informations.formation.formateurExt && (
-                     <Typography>Formateur: <span className="formateurInfo">{informations.formation.formateurExt}</span></Typography>
+                     <Typography>Consultant externe: <span className="formateurInfo">{informations.formation.formateurExt}</span></Typography>
                     )}
                     <span className="formateurInfo"><Link to={`/discussion/formation/${idFormation.id}`}>Accéder à la discussion</Link></span>
                 </div>
@@ -227,20 +227,12 @@ const VoirPlusFormation = () => {
 
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Modules</h1>
-           
-            {informations.formation && informations.formation.RoleHierarchique && informations.formation.RoleHierarchique.roleHierarchique && role === informations.formation.RoleHierarchique.roleHierarchique ? (
-              <button>
-                <Link to={`/addModule/${idFormation.id}`}>+</Link>
-              </button>
-            ) : (
-              informations.formation && informations.formation.auteur && informations.formation.auteur === userId ? (
+
+              {informations.formation && informations.formation.formateur && informations.formation.formateur === userId && (
                 <button>
                   <Link to={`/addModule/${idFormation.id}`}>+</Link>
                 </button>
-              ) : (
-                null
-              )
-            )}
+              )}
 
             </div>
                 {informations.modules ? (informations.modules.length!==0 &&
@@ -258,18 +250,10 @@ const VoirPlusFormation = () => {
             <div className='header-container'>
             <h1 className="collabListes_title font-bold">Séances</h1>
             
-            {informations.formation && informations.formation.RoleHierarchique && informations.formation.RoleHierarchique.roleHierarchique && role === informations.formation.RoleHierarchique.roleHierarchique ? (
-              <button>
-               <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
-              </button>
-            ) : (
-              informations.formation && informations.formation.auteur && informations.formation.auteur === userId ? (
+            {informations.formation && informations.formation.formateur && informations.formation.formateur === userId && (
                 <button>
                   <Link to={`/dashboards/addSeance/${idFormation.id}`}>+</Link>
                 </button>
-              ) : (
-                null
-              )
             )}
 
             </div>
