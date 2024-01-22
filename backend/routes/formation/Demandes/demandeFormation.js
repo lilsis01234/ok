@@ -186,6 +186,7 @@ router.post('/approuver/:id', async (req, res) => {
             formateur: updatedFormation.auteur,
             confidentialite: updatedFormation.confidentialite,
             formateurExt: null,
+            demande:1
         });
 
         // Check if confidentialite is 1 and handle Collabs and Equipe
@@ -444,7 +445,8 @@ router.get('/allWithoutForm',async(req,res)=>{
             ],
 
             where:{
-                formateurExterne:null
+                formateurExterne:null,
+                demande:1
             }
         })
         res.status(200).json(formations);
