@@ -266,9 +266,15 @@ router.delete('/formation/:id', async (req, res) => {
             }
         });
 
-        // Parcourir les modules
-        for (const moduleInstance of ModulesToDelete) {
-            await moduleInstance.destroy();
+        if(ModulesToDelete.length!==0){
+            if(ModulesToDelete.length>1){
+                for (const moduleInstance of ModulesToDelete) {
+                    await moduleInstance.destroy();
+                }
+            }
+            else{
+                ModulesToDelete[0].destroy()
+            }
         }
 
         const SeancesToDelete = await Seance.findAll({
@@ -277,34 +283,108 @@ router.delete('/formation/:id', async (req, res) => {
             }
         });
 
-        // Parcourir les séances
-        for (const seanceInstance of SeancesToDelete) {
-            await seanceInstance.destroy();
+        if(SeancesToDelete.length!==0){
+            if(SeancesToDelete.length > 1){
+            // Parcourir les séances
+            for (const seanceInstance of SeancesToDelete) {
+                await seanceInstance.destroy();
+            }
+            }
+            else{
+                await SeancesToDelete[0].destroy()
+            }
+        }
+
+        const FormationPersonneToDelete = await FormationCollab.findAll({
+            where:{
+                formation:deletedFormation.id
+            }
+        })
+
+        if(FormationPersonneToDelete.length !==0){
+            if(FormationPersonneToDelete.length>1){
+                for(const form of FormationPersonneToDelete){
+                    await form.destroy();
+                }
+            }
+            else{
+                FormationPersonneToDelete[0].destroy()
+            }
+        }
+
+        const FormationEquipeToDelete = await FormationEq.findAll({
+            where:{
+                formation:deletedFormation.id
+            }
+        })
+
+        if(FormationEquipeToDelete.length!==0){
+            if(FormationEquipeToDelete.length>1){
+                for(const formEq of FormationEquipeToDelete){
+                    await formEq.destroy();
+                }
+            }
+            else{
+                FormationEquipeToDelete[0].destroy()
+            }
         }
 
         await deletedFormation.destroy();
         res.sendStatus(204);
+
     } catch (error) {
         console.error('Erreur lors de la suppression :', error);
         res.status(500).json({ message: 'Erreur lors de la suppression' });
     }
 });
 
-router.delete('/demande_formation/:id',async(req,res)=>{
+router.delete('/demande_formation/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const deletedFormation = await DemandeFormation.findByPk(id);
-        if (!deletedFormation) {
+        const deletedDemande = await DemandeFormation.findByPk(id);
+        if (!deletedDemande) {
             return res.status(404).json({ error: 'demande introuvable' });
         }
-        await deletedFormation.destroy();
+
+        const demandeCollabToDelete = await DemandeCollab.findAll({
+            where: {
+                demande: deletedDemande.id
+            }
+        });
+
+        if (demandeCollabToDelete.length !== 0) {
+            if (demandeCollabToDelete.length > 1) {
+                for (const demandeInstance of demandeCollabToDelete) {
+                    await demandeInstance.destroy();
+                }
+            } else {
+                await demandeCollabToDelete[0].destroy();
+            }
+        }
+
+        const demandeEqToDelete = await DemandeEq.findAll({
+            where: {
+                demande: deletedDemande.id
+            }
+        });
+
+        if (demandeEqToDelete.length !== 0) {
+            if (demandeEqToDelete.length > 1) {
+                for (const demandeEqInstance of demandeEqToDelete) {
+                    await demandeEqInstance.destroy();
+                }
+            } else {
+                await demandeEqToDelete[0].destroy();
+            }
+        }
+
+        await deletedDemande.destroy();
         res.sendStatus(204);
+    } catch (error) {
+        console.error('Erreur lors de la suppression :', error);
+        res.status(500).json({ message: 'Erreur lors de la suppression' });
     }
-    catch (error) {
-        console.error('Erreur lors de la suppression :', error)
-        res.status(500).json({ message: 'Erreur lors de la suppression' })
-    }
-})
+});
 
 router.get('/demandesPourVous/:id',async(req,res)=>{
     const id = req.params.id;
@@ -349,6 +429,29 @@ router.get('/demandesPourVotreEquipe/:id',async(req,res)=>{
     }
     catch(err){
         console.error(err)
+    }
+})
+
+router.get('/allWithoutForm',async(req,res)=>{
+    try {
+        const formations = await Formation.findAll({
+            include: [
+                {
+                  model: Collab,
+                  as: 'Formateur',
+                  attributes: ['nom', 'prenom','image'],
+                },
+            ],
+
+            where:{
+                formateurExterne:null
+            }
+        })
+        res.status(200).json(formations);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
     }
 })
 

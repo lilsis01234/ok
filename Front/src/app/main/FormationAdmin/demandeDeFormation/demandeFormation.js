@@ -13,7 +13,8 @@ const DemandeFormations = () => {
   const[DemandeCoatch, setDemandeCoatch] = useState([])
   const user = JSON.parse(localStorage.getItem('user'));
   const role = user.RoleHierarchique.roleHierarchique;
-  console.log(role)
+  const [showButtons, setShowButtons] = useState(false);
+  const[formExt, setFormExt] = useState(null);
 
   const Approuver =(id)=>{
     axios.post(`http://localhost:4000/api/demande_formation/approuver/${id}`)
@@ -42,6 +43,7 @@ const DemandeFormations = () => {
     .then((res)=>
       { 
         setDemandes(res.data)
+        // console.log(res.data)
       })
     .catch(err=>console.log(err))
 
@@ -57,9 +59,33 @@ const DemandeFormations = () => {
     .then((res)=>
       { 
         setDemandeCoatch(res.data)
-        console.log(res.data)
+        // console.log(res.data)
       })
     .catch(err=>console.log(err))
+  }
+
+  const addFormateur = (id) => {
+    axios
+      .post(`http://localhost:4000/api/formations/addFormExt/${id}`, {
+        formateurExt: formExt,
+      })
+      .then((res) => {
+        console.log(res);
+        setFormExt(null);
+        setShowButtons(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleFormSubmit = (e, id) => {
+    e.preventDefault();
+    addFormateur(id);
+  };
+
+  const Click = () =>{
+    setShowButtons(!showButtons);
   }
 
   useEffect(()=>{
@@ -120,13 +146,44 @@ const DemandeFormations = () => {
           {DemandeConsExt.length !== 0 && (
             <Typography className="mt-6 mb-4">Les demandes approuvées sans consultant externe</Typography>
           )}
-          {DemandeConsExt.map((demande, index) => (
+
+          {DemandeConsExt.length!==0 && DemandeConsExt.map((demande, index) => (
             <div key={index} className="training-request-item">
-              <Typography className="font-bold">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
+              {demande.Formateur.image ? (
+                  <Avatar
+                      key={demande.Formateur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Formateur.nom}
+                      src={`http://localhost:4000/${demande.Formateur.image}`}
+                  />
+              ) : (
+                  <Avatar
+                      key={demande.Formateur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Formateur.nom}
+                  >
+                      {demande.Formateur.nom ? demande.Formateur.nom[0] : '?'}
+                  </Avatar>
+              )}
+              <Typography className="font-bold">{demande.Formateur.nom} {demande.Formateur.prenom}</Typography>
               <Typography className="text-gray-600">{demande.theme}</Typography>
               <Link to={`/voirPlus/demande/${demande.id}`} className="text-blue-500 underline mb-2 block">
                 Voir plus
               </Link>
+              <button onClick={() => { Click() }} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
+                Ajouter un formateur
+              </button>
+
+              {showButtons &&
+                <div className="popup mt-2">
+                  <div className="popupContent p-4 bg-white rounded-md shadow-l">
+                    <input type='text' placeholder='Nom du formateur' value={formExt} onChange={(e) => setFormExt(e.target.value)} className="p-2 border border-gray-300 rounded-md focus:outline-none" />
+                    <button type='submit' onClick={(e) => handleFormSubmit(e, demande.id)} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
+                      Valider
+                    </button>
+                  </div>
+                </div>
+              }
             </div>
           ))}
         </>
