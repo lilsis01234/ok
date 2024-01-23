@@ -214,7 +214,7 @@ router.post('/approuver/:id', async (req, res) => {
 
             const formationEquipeData = equipe.map((eq) => ({
                 formation: formationApp.id,
-                equipe: equipe.equipe,
+                equipe: eq.equipe,
             }));
 
             const formationEquipe = await FormationEq.bulkCreate(formationEquipeData);
