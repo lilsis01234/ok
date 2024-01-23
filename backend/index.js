@@ -64,7 +64,6 @@ const categorie = require('./routes/Actualite/Categorie');
 const tag = require('./routes/Actualite/Tag');
 const type = require('./routes/Actualite/Type');
 
-
 //Module Chat
 const io = require('socket.io')(server);
 
@@ -76,7 +75,6 @@ const messageEvents = require('./events/Chat/messageEvents')(io)
 const discussionChat = require('./routes/Chat/discussion')
 const membrer = require('./routes/Chat/membre')
 const message = require('./routes/Chat/message')
-
 
 //Protection contre les attaques cors
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
@@ -91,7 +89,6 @@ app.use('/photo', express.static(path.join(__dirname, 'photoCollab')))
 //utilisation des routes middleware
 //Config
 app.use('/api', api_config)
-
 
 //Module Profile
 app.use('/api/departement', departementRouter); 

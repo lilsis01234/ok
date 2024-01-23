@@ -120,13 +120,13 @@ const loadFrontOfficeNavigation = () => {
         {
           id: 'formation.mesformations',
           title: 'Agenda',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
-          },
           type: 'item',
           icon: 'heroicons-outline:calendar',
           translate: 'Agenda',
-          url : 'dashboards/calendarseance',
+          url : 'dashboards/calendarseance',          
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
+          },
         },
         {
           id: 'formation.formations',
@@ -137,7 +137,7 @@ const loadFrontOfficeNavigation = () => {
           type: 'item',
           icon: 'heroicons-outline:academic-cap',
           translate: 'Formations',
-          url : 'dashboards/listeFormation'
+          url : 'dashboards/listeFormation',
         },
         {
           id: 'formation.ajoutFormation',

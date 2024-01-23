@@ -14,7 +14,7 @@ const HomeDashboardConfig = {
             element : <Dashboard/>,
             auth: {
                 role: ['SuperAdmin', 'Admin', 'User'],
-              },
+            },
         }
     ]
 }
