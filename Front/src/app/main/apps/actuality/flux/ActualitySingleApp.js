@@ -152,6 +152,7 @@ function ActualitiesByCategorie() {
               </Card>
             </div>
           )}
+          
           <div className="w-3xl flex mb-32">
             <ButtonGroup className="w-full" variant="contained" aria-label="outlined button group">
               <Button 
@@ -172,6 +173,25 @@ function ActualitiesByCategorie() {
                 Next post
               </Button>
             </ButtonGroup>
+          </div>
+          <div className='w-2xl p-32 border-4'>
+            <div className='flex justify-center border-b-2 border-slate-900 mb-32'>
+              <div>
+                <Typography 
+                  className='after:content-[" "] after:w-full after:absolute after:right-0 after:left-0 after:bottom-0 after:h-3 after:bg-[#818cf8] text-2xl font-bold text-center pb-10 inline-block relative' 
+                  color="text.secondary"
+                >
+                    Commentaires
+                </Typography>
+              </div>
+              <Typography 
+                className='text-center' 
+                color="text.secondary"
+              >
+                  Les champs requis sont indiqués *
+              </Typography>
+
+            </div>
           </div>
           <div className='w-3xl flex justify-center border-b-2 border-slate-900 my-32'>
             <Typography className='after:content-[" "] after:w-full after:absolute after:right-0 after:left-0 after:bottom-0 after:h-3 after:bg-[#818cf8] text-2xl font-bold text-center pb-10 inline-block relative' color="text.secondary">Articles Similaires</Typography>

@@ -1,4 +1,4 @@
-import Collaborateur from "./collaborateur/Collaborateur"
+import Actualities from "./collaborateur/Collaborateur"
 import CollaborateurListItem from "./collaborateur/CollaborateurItem/CollaborateurListItem"
 import ArchiveCollaborateurForm from "./collaborateur/archiverCollaborateur/ArchiverCollaborateurForm"
 import ListArchiveCollaborateurItem from "./collaborateur/archiverCollaborateur/ListArchiveCollaborateurItem"
@@ -12,34 +12,19 @@ const GererCollaborateurConfig = {
     routes : [
         {
             path : 'manage/collaborator',
-            element : <Collaborateur/>,
-            auth: {
-                role: ['SuperAdmin', 'Admin'],
-              },
+            element : <Collaborateur/>
         }, {
             path : 'manage/collaborator/:collaborateurId',
-            element : <CollaborateurListItem/>,
-            auth: {
-                role: ['SuperAdmin', 'Admin'],
-              },
+            element : <CollaborateurListItem/>
         }, {
             path : 'manage/collaborator/archive/:collaborateurId',
-            element : <ArchiveCollaborateurForm/>,
-            auth: {
-                role: ['SuperAdmin', 'Admin'],
-              },
+            element : <ArchiveCollaborateurForm/>
         }, {
             path : 'manage/archive/collaborateur',
-            element : <ListeArchiveCollaborateur/>,
-            auth: {
-                role: ['SuperAdmin', 'Admin'],
-              },
+            element : <ListeArchiveCollaborateur/>
         }, {
             path : 'manage/archive/collaborateur/:collaborateurId',
-            element : <ListArchiveCollaborateurItem/>,
-            auth: {
-                role: ['SuperAdmin', 'Admin'],
-              },
+            element : <ListArchiveCollaborateurItem/>
         }
     ]
 }

@@ -58,10 +58,10 @@ function SignInPage() {
     jwtService
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        // No need to do anything, user data will be set at app/auth/AuthContex
-        console.log('Utilisateur authentifié avec succès')
-        navigate('/acceuil')
-        window.location.reload();
+        // No need to do anything, user data will be set at app/auth/AuthContexts
+          // console.log('Utilisateur authentifié avec succès')
+          navigate('/acceuil')
+          window.location.reload();
       })
       .catch((error) => {
         setError('generic', {
@@ -280,8 +280,8 @@ function SignInPage() {
                 >
                   {collaborateur.map((collab) => (
                     collab.image ? (
-                        <Avatar src={`http://localhost:4000/${collab.image}`} />
-                      ) : (
+                      <Avatar src={`http://localhost:4000/${collab.image}`} />
+                    ) : (
                       <Avatar >{collab.nom ? collab.nom[0] : '?'}</Avatar>
                     )
 

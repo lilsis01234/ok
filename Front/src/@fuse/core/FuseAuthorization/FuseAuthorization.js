@@ -1,7 +1,7 @@
 import FuseUtils from '@fuse/utils';
 import AppContext from 'app/AppContext';  //Pour partager les données entre différents composants sans passer dans des props
 import { Component } from 'react';
-import { matchRoutes } from 'react-router-dom';
+import { matchRoutes, useNavigate } from 'react-router-dom';
 import withRouter from '@fuse/core/withRouter'; //Composant HOC
 import history from '@history';
 import {
@@ -9,6 +9,8 @@ import {
   setSessionRedirectUrl,
   resetSessionRedirectUrl,
 } from '@fuse/core/FuseAuthorization/sessionRedirectUrl';
+import { useSelector } from 'react-redux';
+import { selectUser } from 'app/store/userSlice';
 
 class FuseAuthorization extends Component {
   constructor(props, context) {
@@ -31,101 +33,73 @@ class FuseAuthorization extends Component {
     return nextState.accessGranted !== this.state.accessGranted;
   }
 
-
-  componentDidUpdate(prevProps) {
-    const { location, userRole, userRoleHierarchique, userPermission } = this.props;
-    const { pathname } = location;
-
-    if (prevProps.location.pathname !== pathname) {
-      const matchedRoutes = matchRoutes(this.state.routes, pathname);
-      const matched = matchedRoutes ? matchedRoutes[0] : false;
-
-      const userHasPermission = FuseUtils.hasPermission(
-        matched?.route?.auth,
-        userRole || [],
-        userRoleHierarchique,
-        userPermission
-      );
-
-      const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404'];
-
-      if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
-        setSessionRedirectUrl(pathname);
-        this.setState({ accessGranted: false });
-      } else {
-        this.setState({ accessGranted: true });
-      }
+  componentDidUpdate() {
+    if (!this.state.accessGranted) {
+      this.redirectRoute();
     }
   }
 
-  // componentDidUpdate() {
-  //   if (!this.state.accessGranted) {
-  //     this.redirectRoute();
-  //   }
-  // }
-
-  //Appeler chaque fois que prop change
-  //Vérifie si l'utilisateur a la permission d'accéder à la route actuelle en utilisant les routes défines dans les routes et les roles utilisateurs 
-  // static getDerivedStateFromProps(props, state) { //state : état actuelle du composant
-  //   // const { location, userRole, userRoleHierarchique, userPermission} = props; //extrait les location et les roles 
-  //   const { location, userRole } = props;
-  //   const { pathname } = location;
-
-  //   const matchedRoutes = matchRoutes(state.routes, pathname);  //faire correspondre le route de pathname avec celle de la state
-
-  //   const matched = matchedRoutes ? matchedRoutes[0] : false;
+ 
 
 
+  static getDerivedStateFromProps(props, state) {
+    const { location, userRole, userRoleHierarchique, userPermission } = props
+    const { pathname, history} = location;
 
-  //   // const userHasPermission = FuseUtils.hasPermission(matched.route.auth, userRole, userRoleHierarchique, userPermission);
-  //   const userHasPermission = FuseUtils.hasPermission(matched.route.auth, userRole); //verifie l'authorisation de l'utilisateurs
+    const user = localStorage.getItem('user'); 
 
-  //   const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404'];
+  
+    const matchedRoutes = matchRoutes(state.routes, pathname);
+    const matched = matchedRoutes ? matchedRoutes[0] : false
 
-  //   if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
-  //     setSessionRedirectUrl(pathname);
-  //   }
+    const userHasPermission =  matched && FuseUtils.hasPermission(
+      matched?.route?.auth,
+      userRole,
+      userRoleHierarchique,
+      userPermission
+    )
 
-  //   return {
-  //     accessGranted: matched ? userHasPermission : true,
-  //   };
-  // }
+    const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404', '/authentification/motdepasseOublie'];
+    // const resetPasswordRegex = /^\/authentification\/resetPassword\/\w+$/;
+
+    // if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
+    //   setSessionRedirectUrl(pathname);
+    // }$
+
+    if (pathname === '/sign-in' && user){
+      window.location.href = '/acceuil';
+      return { accessGranted: false };
+    } 
 
 
-  // static getDerivedStateFromProps(props, state) {
-  //   const { location, userRole, userRoleHierarchique, userPermission } = props
-  //   const { pathname } = location;
+    if (ignoredPaths.includes(pathname) || pathname.includes('/authentification/resetPassword')) {
+      return { accessGranted: true };
+    } 
 
-  //   const matchedRoutes = matchRoutes(state.routes, pathname); 
-  //   const matched = matchedRoutes ? matchedRoutes[0] : false
 
-  //   console.log(matchedRoutes)
+    if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
+      setSessionRedirectUrl(pathname);
+      // this.setState({ accessGranted: false });
+      return { accessGranted: false };
+    } 
+    else {
+      // this.setState({ accessGranted: true });
+      // return { accessGranted: true };
+     
+      return {
+        accessGranted: matched ? userHasPermission : true,
+      };
+    }
 
-  //   const userHasPermission = FuseUtils.hasPermission(
-  //     matched?.routes?.auth,
-  //     userRole,
-  //     userRoleHierarchique,
-  //     userPermission
-  //   )
+  
 
-  //   const ignoredPaths = ['/', '/callback', '/sign-in', '/sign-out', '/logout', '/404'];
+     
 
-  //   // if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
-  //   //   setSessionRedirectUrl(pathname);
-  //   // }$
+    // return {
+    //   accessGranted: matched ? userHasPermission : true,
+    // };
 
-  //   if (matched && !userHasPermission && !ignoredPaths.includes(pathname)) {
-  //     setSessionRedirectUrl(pathname);
-  //     this.setState({ accessGranted: false });
-  //   } else {
-  //     this.setState({ accessGranted: true });
-  //   }
-
-  //   return {
-  //     accessGranted: matched ? userHasPermission : true,
-  //   };
-
-  // }
+  }
 
   redirectRoute() {
     const { userRole } = this.props;

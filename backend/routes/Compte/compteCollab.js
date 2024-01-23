@@ -125,7 +125,7 @@ router.put('/:id/editPassword', async (req, res) => {
     }
     catch (err) {
         console.error("Erreur lors de la mise à jour du compte", err);
-        res.status(500).json({ error: 'Erreur lors de la mise à jour du compte' })
+        res.status(500).json({ error: 'Erreur lors de la mise à jour du mot de passe' })
     }
 })
 

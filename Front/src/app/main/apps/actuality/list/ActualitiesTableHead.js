@@ -76,7 +76,7 @@ function ActualitiesTableHead() {
   return (
     <TableHead>
       <TableRow className="h-48 sm:h-64">
-        <TableCell
+        {/* <TableCell
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === 'light'
@@ -87,7 +87,7 @@ function ActualitiesTableHead() {
           className="w-40 md:w-64 text-center z-99"
         >
           <Checkbox />
-        </TableCell>
+        </TableCell> */}
         {rows.map((row) => {
           return (
             <TableCell

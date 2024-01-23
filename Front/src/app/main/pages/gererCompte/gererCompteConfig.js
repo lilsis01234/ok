@@ -9,10 +9,16 @@ const GererCompteConfig = {
     routes : [
         {
             path : 'manage/account',
-            element : <CompteCollaborateur/>
+            element : <CompteCollaborateur/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }, {
             path : 'manage/account/:accoundId',
-            element : <CompteCollaborateurItem/>
+            element : <CompteCollaborateurItem/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin'],
+              },
         }
     ]
 }

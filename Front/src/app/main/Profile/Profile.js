@@ -178,11 +178,12 @@ function Profile() {
 
                 </div>
             }
-            content = {
+            content={
                 <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
                     {selectedTab === 0 && <AproposTab userData={userData}/>}
                     {selectedTab === 1 && <FormationTab userFormations={Formation}/>}
                 </div>
+
             }
             scroll={isMobile ? 'normal' : 'page'}
         />

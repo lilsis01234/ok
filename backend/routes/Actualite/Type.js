@@ -5,6 +5,15 @@ const Type = require('../../Modele/ActualityModel/Type');
 //Ajouter une nouvelle type d'actualité
 router.post('/new', async (req, res) => {
     try {
+
+        const existingType = await Type.findOne({
+            where: { nom: req.body.nom }
+        });
+
+        if (existingType) {
+            return res.status(400).json({ message: 'Le nom du type d\'actualité existe déjà.' });
+        }
+
         const newType = await Type.create({ nom: req.body.nom });
 
         const savedType = await newType.save();
@@ -13,8 +22,8 @@ router.post('/new', async (req, res) => {
 
     }
     catch (err) {
-        console.error('Erreur lors de la création d\'une type actualitée: ', err);
-        res.status(201).json({ message: 'Erreur lors de la création d\'une type actualitée' });
+        console.error('Erreur lors de la création d\'une type d\'actualitée: ', err);
+        res.status(201).json({ message: 'Erreur lors de la création d\'une type d\'actualitée' });
     }
 })
 

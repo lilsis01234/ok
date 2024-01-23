@@ -1,25 +1,31 @@
 import { Button, Paper, TextField, Typography } from '@mui/material';
+import { showMessage } from 'app/store/fuse/messageSlice';
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function ForgotPasswordPage() {
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
         axios.post('http://localhost:4000/api/password/password_request_rest', { email })
             .then((response) => {
-                alert("Demande de réinitialisation du mot de passe envoyées avec succès")
+                dispatch(showMessage({message : 'Demande de réinitialisation du mot de passe envoyées avec succès'}))
                 setTimeout(() => {
-                    setIsLoading(false);
-                }, 30 * 60 * 1000);
+                    setIsLoading(true);
+                }, 30 * 60 * 1000)
+
+
             })
             .catch((error) => {
                 console.error('Erreur lors de la demande de réinitialisation du mot de passe', error);
-                alert("Une erreur est survenue lors de la demande de réinitialisation");
+                dispatch(showMessage({message : error.response.data.message}))
+                setIsLoading(false);
             })
     };
 

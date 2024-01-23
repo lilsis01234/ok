@@ -14,7 +14,7 @@ function EquipeHeader() {
         delay={300}
         className="text-24 md:text-32 font-extrabold tracking-tight"
       >
-        Teams
+        Equipes
       </Typography>
       <div className="flex flex-col w-full sm:w-auto sm:flex-row space-y-16 sm:space-y-0 flex-1 items-center justify-end space-x-8">
         <motion.div
@@ -29,7 +29,7 @@ function EquipeHeader() {
             color="secondary"
             startIcon={<FuseSvgIcon>heroicons-outline:plus</FuseSvgIcon>}
           >
-            Add
+            Ajouter
           </Button>
         </motion.div>
       </div>

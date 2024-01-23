@@ -7,6 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 
 function ArchiverCollaborateurHeaderForm({ formValues, id }) {
@@ -15,38 +17,44 @@ function ArchiverCollaborateurHeaderForm({ formValues, id }) {
   const { isValid, isDirty } = formState ? formState : {}
 
 
-  const { statut, dateDebauche} = formValues
+  const { statut, dateDebauche } = formValues
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const data = { statut, dateDebauche }
 
   const handleArchiveCollaborateur = async () => {
-    axios.post(`http://localhost:4000/api/archive/collab/${id}`, data)
-    .then(response => {
-      alert('Collaborateur archivé avec succès')
-      console.log(response)
-      navigate('/manage/collaborator')
-    })
-      .catch(error => {
-        console.log(error)
+    if (!statut || !dateDebauche) {
+      dispatch(showMessage({ message: 'Veuillez remplir toutes les champs obligatoires (*).' }))
+    } else {
+      axios.post(`http://localhost:4000/api/archive/collab/${id}`, data)
+      .then(response => {
+        dispatch(showMessage({ message: 'Collaborateur archivé avec succès.' }))
+        // console.log(response)
+        navigate('/manage/collaborator')
       })
+      .catch(error => {
+        // console.log(error)
+        dispatch(showMessage({message : error.response.data.message}))
+      })
+    }
   }
 
 
   //Récuparation des informations du collaborateur à archiver
-  const [collabToArchive, setCollabToArchive] = useState([]) 
+  const [collabToArchive, setCollabToArchive] = useState([])
 
   useEffect(() => {
-    async function fetchData(){
+    async function fetchData() {
       axios.get(`http://localhost:4000/api/collaborateur/view/${id}`)
-      .then(response => {
-        // console.log(response.data.collaborateur)
-        setCollabToArchive(response.data.collaborateur)
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des collaborateurs', error)
-      })
+        .then(response => {
+          // console.log(response.data.collaborateur)
+          setCollabToArchive(response.data.collaborateur)
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération des collaborateurs', error)
+        })
     }
     fetchData();
   }, [id])

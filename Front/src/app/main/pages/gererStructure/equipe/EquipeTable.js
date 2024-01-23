@@ -105,7 +105,7 @@ function EquipeTable(props) {
                 className="flex flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There are no team!
+                  Aucune équipe enregistré dans la base de donnée!
                 </Typography>
             </motion.div>
         );

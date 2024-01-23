@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import { Button, Typography } from '@mui/material';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 function EquipeItemHeader({ formValues }) {
     const methods = useFormContext();
@@ -18,6 +20,7 @@ function EquipeItemHeader({ formValues }) {
 
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const data = {
         nomEquipe,
@@ -27,21 +30,27 @@ function EquipeItemHeader({ formValues }) {
     // console.log(data)
 
     const handleSaveEquipe = async () => {
-        if (id) {
+        if(!nomEquipe || !projet){
+            dispatch(showMessage({message : 'Veuillez remplir toutes les champs obligatoires (*).'}))
+        } else if (id) {
             try {
                 await axios.put(`http://localhost:4000/api/equipe/edit/${id}`, data)
-                alert('Equipe mise à jour avec succès')
+                dispatch(showMessage({message : 'Equipe mise à jour avec succés.'}))
+                // alert('Equipe mise à jour avec succès')
                 navigate('/business/manage/team')
             } catch (error) {
                 console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         } else {
             try {
                 await axios.post('http://localhost:4000/api/equipe/new', data)
-                alert('Equipe ajouté avec succés')
+                dispatch(showMessage({message : 'Equipe créé avec succés.'})) 
+                // alert('Equipe ajouté avec succés')
                 navigate('/business/manage/team')
             } catch (error) {
                 console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         }
     }
@@ -50,7 +59,8 @@ function EquipeItemHeader({ formValues }) {
         const confirmation = window.confirm(`Vous voulez vraiment supprimer l'équipe ${nomEquipe}`)
         if(confirmation){
             await axios.delete(`http://localhost:4000/api/equipe/delete/${id}`, data)
-            alert('Equipe supprimée avec succès')
+            dispatch(showMessage({message : 'Equipe supprimée avec succés.'}))
+            // alert('Equipe supprimée avec succès')
             navigate('/business/manage/team')
         }
     }

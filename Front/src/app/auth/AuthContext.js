@@ -5,6 +5,7 @@ import FuseSplashScreen from '@fuse/core/FuseSplashScreen';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { logoutUser, setUser } from 'app/store/userSlice';
 import jwtService from './services/jwtService';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = React.createContext();
 
@@ -52,7 +53,7 @@ function AuthProvider({ children }) {
 
     jwtService.init();
 
-    function success(user, message) {
+    function success(user, message) {      
       if (message) {
         dispatch(showMessage({ message }));
       }
@@ -64,6 +65,7 @@ function AuthProvider({ children }) {
         setWaitAuthCheck(false);
         setIsAuthenticated(true);
       });
+
     }
 
     function pass(message) {

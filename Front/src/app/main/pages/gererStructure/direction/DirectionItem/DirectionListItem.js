@@ -17,7 +17,7 @@ import BasicDirectionInfoTab from './tabs/BasicDirectionInfoTab';
 const schema = yup.object().shape({
     nomDirection: yup
         .string()
-        .required('You must enter a direction name')
+        .required('Veuillez entrer l\'intitulé de la direction')
     // .min(5, 'The product name must be at least 5 characters'),
 });
 
@@ -46,11 +46,11 @@ function DirectionListItem(props) {
         async function fetchData() {
             try {
                 if (directionId === 'new') {
-                    console.log('Ajout d\'un nouvelle direction')
+                    // console.log('Ajout d\'un nouvelle direction')
                     setNoDirection(false)
 
                 } else {
-                    console.log('Affichage d\'un  direction existante')
+                    // console.log('Affichage d\'un  direction existante')
                     axios.get(`http://localhost:4000/api/direction/view/${directionId}`)
                         .then(response => {
                             setDirection(response.data.direction)
@@ -102,7 +102,7 @@ function DirectionListItem(props) {
                 className="flex flex-col flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There is no such direction!
+                   Aucune direction enregistrée dans la base de donnée!
                 </Typography>
                 <Button
                     className="mt-24"
@@ -111,7 +111,7 @@ function DirectionListItem(props) {
                     to="/business/manage/direction"
                     color="inherit"
                 >
-                    Go To Directions Page
+                   Retourner à la page de direction.
                 </Button>
             </motion.div>
         )
@@ -140,7 +140,7 @@ function DirectionListItem(props) {
                             scrollButtons="auto"
                             classes={{ root: 'w-full h-64 border-b-1' }}
                         >
-                            <Tab className="h-64" label="Basic Direction Info" />
+                            <Tab className="h-64" label="Information basique" />
                         </Tabs>
                         <div className="p-16 sm:p-24 max-w-3xl">
                             <div className={tabValue !== 0 ? 'hidden' : ''}>

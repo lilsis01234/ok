@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Paper, TextField, Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 function ResetPasswordPage() {
+    console.log('Rendu de la page ResetPasswordPage')
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -12,8 +15,9 @@ function ResetPasswordPage() {
     const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+={}:;<>,.?]).{8,}$/;
 
     const isStrongPassword = isPasswordValid.test(password);
+    const dispatch = useDispatch();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e) => {  
         e.preventDefault();
 
         if (password !== confirmPassword) {
@@ -28,11 +32,12 @@ function ResetPasswordPage() {
 
         axios.post(`http://localhost:4000/api/password/reset-password/${token}`, { password })
             .then((response) => {
-                alert("Le mot de passe a été réinitialisé avec succès")
+                dispatch(showMessage({message : 'Le mot de passe a été réinitialisé avec succès'}))
                 navigate("/sign-in");
             })
             .catch((error) => {
                 console.error('Erreur lors de la réinitialisation du mot de passe:', error);
+                dispatch(showMessage({message : error.response.data.message}))
             })
 
     }
@@ -93,7 +98,7 @@ function ResetPasswordPage() {
                         <Typography className="mt-32 text-md font-medium" color="text.secondary">
                             <span>Retourner à la page</span>
                             <Link className="ml-4" to="/sign-in">
-                                sign in
+                                de connexion
                             </Link>
                         </Typography>
                     </form>

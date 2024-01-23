@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { Button, Typography } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
+import { useDispatch } from 'react-redux';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 function PosteItemHeader({ formValues }) {
     const methods = useFormContext();
@@ -14,6 +16,8 @@ function PosteItemHeader({ formValues }) {
 
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
 
     const { id } = formValues
     const { titrePoste } = formValues
@@ -35,23 +39,28 @@ function PosteItemHeader({ formValues }) {
     // console.log(formValues)
 
     const handleSavePoste = async () => {
-        if (id) {
-            console.log(departement)
+        if(!titrePoste || !departement){
+            dispatch(showMessage({message : 'Veuillez remplir toutes les champs obligatoires (*).'}))
+        } else if (id) {
+            // console.log(departement)
             try {
                 await axios.put(`http://localhost:4000/api/poste/${id}/edit`, data)
-                alert('Fonction Update succesfully')
+                dispatch(showMessage({message : 'Poste mise à jour avec succés.'}))
+                // alert('Fonction Update succesfully')
                 navigate('/business/manage/Fonction')
             } catch (error) {
-                console.log(error)
+                // console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         } else {
             console.log('Ajout nouvelle poste poste')
             try {
                 await axios.post(`http://localhost:4000/api/poste/new`, data)
-                alert('Fonction create succesfully')
+                dispatch(showMessage({message : 'Poste créé avec succés.'}))
                 navigate('/business/manage/Fonction')
             } catch (error) {
-                console.log(error)
+                // console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         }
     }
@@ -60,7 +69,8 @@ function PosteItemHeader({ formValues }) {
         const confirmation = window.confirm(`Vous voulez vraiment supprimer le poste ${titrePoste}`)
         if(confirmation){
             await axios.delete(`http://localhost:4000/api/poste/${id}/delete`, data)
-            alert('Poste supprimée avec succès')
+            dispatch(showMessage({message : 'Poste supprimée avec succés.'}))
+            // alert('Poste supprimée avec succès')
             navigate('/business/manage/Fonction')
         }
     }

@@ -18,6 +18,8 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
 
 const style = {
   position: 'absolute',
@@ -68,7 +70,7 @@ function ModernComingSoonPage() {
   const [idTagEdit, setidTagEdit] = useState('');
   const [nomToEdit, setNomToEdit] = useState('');
 
-
+  const dispatch = useDispatch();
   const formRef = useRef(null);
   
   const openDeleteModal = (id) => {
@@ -110,7 +112,11 @@ const handleSubmit = async (e) => { e.preventDefault();
               setNomInput('');
           }
         })
-        .catch(err => console.log(err));  
+        .catch (err => {
+          console.log(err);
+          dispatch(showMessage({message : err.response.data.message}));
+          setNomInput('');
+        }); 
   } else {
     setBoutonDesable(true);
   }

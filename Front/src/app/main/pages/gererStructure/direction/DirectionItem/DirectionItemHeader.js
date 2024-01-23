@@ -7,6 +7,8 @@ import { motion } from 'framer-motion';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 function DirectionItemHeader({ formValues }) {
     const methods = useFormContext();
@@ -15,30 +17,38 @@ function DirectionItemHeader({ formValues }) {
 
     const { id } = formValues
     const { nomDirection } = formValues
-    console.log(id)
+
+
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const data = {
         nomDirection
     }
 
     const handleSaveDirection = async () => {
-        if (id) {
+        if(!nomDirection){
+            dispatch(showMessage({message : 'Veuillez remplir toutes les champs obligatoires (*).'}))
+        } else if (id) {
             try {
                 await axios.put(`http://localhost:4000/api/direction/edit/${id}`, data)
-                alert('Direction modifié avec succès')
+                dispatch(showMessage({message : 'Direction modifiée avec succés.'}))
+                // alert('Direction modifié avec succès')
                 navigate('/business/manage/direction')
             } catch (error) {
-                console.log(error)
+                // console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         } else {
             try {
                 await axios.post('http://localhost:4000/api/direction/new', data)
-                alert('Direction crée avec succés')
+                dispatch(showMessage({message : 'Direction crée avec succés.'}))
+                // alert('Direction crée avec succés')
                 navigate('/business/manage/direction')
             } catch (error) {
                 console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         }
     }
@@ -83,8 +93,8 @@ function DirectionItemHeader({ formValues }) {
                         initial={{ x: -20 }}
                         animate={{ x: 0, transition: { delay: 0.3 } }}
                     >
-                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomDirection || 'New Direction'} </Typography>
-                        <Typography variant="caption" className="font-medium"> Direction Detail </Typography>
+                        <Typography className="text-16 sm:text-20 truncate font-semibold">{nomDirection || 'Nouvelle direction'} </Typography>
+                        <Typography variant="caption" className="font-medium"> Détail de la direction </Typography>
                     </motion.div>
                 </div>
             </div>
@@ -110,7 +120,7 @@ function DirectionItemHeader({ formValues }) {
                     //  disabled={!isDirty  || !isValid}
                     onClick={handleSaveDirection}
                 >
-                    Save
+                    Enregistrer
                 </Button>
             </motion.div>
         </div>

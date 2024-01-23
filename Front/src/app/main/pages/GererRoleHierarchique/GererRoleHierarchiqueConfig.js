@@ -9,10 +9,16 @@ const GererRoleHierarchiqueConfig = {
     routes : [
         {
             path : 'manage/role',
-            element : <GererRoleHierarchique/>
+            element : <GererRoleHierarchique/>,
+            auth: {
+                role: ['SuperAdmin']
+              },
         }, {
             path : 'manage/role/:roleId',
-            element : <RoleHierarchiqueItem/>
+            element : <RoleHierarchiqueItem/>,
+            auth: {
+                role: ['SuperAdmin']
+              },
         }
     ]
 }

@@ -58,7 +58,7 @@ function BasicInfoEquipe(props) {
                         error={!!errors.projet}
                         required
                         helperText={errors?.projet?.message}
-                        label="Project"
+                        label="Projet"
                         autoFocus
                         id="project"
                         variant="outlined"

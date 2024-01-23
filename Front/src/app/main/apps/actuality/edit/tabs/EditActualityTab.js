@@ -193,7 +193,11 @@ function AddActualityTab() {
               setIsInputCategVisible(false);
           }
         })
-        .catch(err => console.log(err)); 
+        .catch (err => {
+          dispatch(showMessage({message : err.response.data.message}));
+          setnewCategName('');
+          setIsInputCategVisible(false);
+        }); 
       } else {
         setBoutonDesableCateg(true);
         setIsInputCategVisible(false);
@@ -221,7 +225,11 @@ function AddActualityTab() {
               setIsInputTypeVisible(false);
           }
         })
-        .catch(err => console.log(err)); 
+        .catch (err => {
+          dispatch(showMessage({message : err.response.data.message}));
+          setnewTypeName('');
+          setIsInputTypeVisible(false);
+        }); 
       } else {
         setBoutonDesableType(true);
         setIsInputTypeVisible(false);
@@ -249,7 +257,11 @@ function AddActualityTab() {
               setIsInputTagVisible(false);
           }
         })
-        .catch(err => console.log(err)); 
+        .catch (err => {
+          dispatch(showMessage({message : err.response.data.message}));
+          setnewTagName('');
+          setIsInputTagVisible(false);
+        });  
       } else {
         setBoutonDesableTag(true);
         setIsInputTagVisible(false);
@@ -560,7 +572,7 @@ function AddActualityTab() {
               </div>
 
               <CardContent className="p-0 mb-16">    
-                <FormControl required fullWidth>
+                <FormControl fullWidth>
                   <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
                      Etiquettes
                   </FormLabel>
@@ -597,7 +609,7 @@ function AddActualityTab() {
                   </Button>
                 </div>
                 )}   
-                <FormControl className="mt-24" required fullWidth>
+                <FormControl className="mt-24" fullWidth>
                   <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
                     Catégories
                   </FormLabel>
@@ -635,7 +647,7 @@ function AddActualityTab() {
                   </Button>
                 </div>
                 )}
-                <FormControl className="mt-24" required fullWidth>
+                <FormControl className="mt-24" fullWidth>
                     <FormLabel htmlFor="visibilite" className="font-medium text-14" component="legend">
                       Types
                     </FormLabel>

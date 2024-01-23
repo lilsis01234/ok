@@ -6,6 +6,8 @@ import { useTheme } from '@mui/styles';
 import { motion } from 'framer-motion';
 import { Button, Typography } from '@mui/material';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
+import { showMessage } from 'app/store/fuse/messageSlice';
+import { useDispatch } from 'react-redux';
 
 function ProjetItemHeader({ formValues }) {
     const methods = useFormContext();
@@ -18,6 +20,7 @@ function ProjetItemHeader({ formValues }) {
 
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const data = {
         nomProjet,
@@ -27,22 +30,28 @@ function ProjetItemHeader({ formValues }) {
     // console.log(formValues)
 
     const handleSaveProject = async () => {
-        if (id) {
+        if(!nomProjet || !departement){
+            dispatch(showMessage({message : 'Veuillez remplir toutes les champs obligatoires (*).'}))
+        }else if (id) {
             try {
                 await axios.put(`http://localhost:4000/api/projet/edit/${id}`, data)
-                alert('Project Mise à jour avec succés')
+                dispatch(showMessage({message : 'Projet mise à jour avec succés.'}))
+                // alert('Project Mise à jour avec succés')
                 navigate('/business/manage/project')
             } catch (error) {
-                console.log(error)
+                // console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         } else {
             try {
                 await axios.post(`http://localhost:4000/api/projet/new`, data)
-                alert('Projet crée avec succés')
+                dispatch(showMessage({message : 'Projet créé avec succés.'}))
+                // alert('Projet crée avec succés')
                 navigate('/business/manage/project')
             }
             catch (error) {
-                console.log(error)
+                // console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         }
     }
@@ -52,7 +61,7 @@ function ProjetItemHeader({ formValues }) {
         const confirmation = window.confirm(`Vous voulez vraiment supprimer le projet ${nomProjet}`)
         if (confirmation) {
             await axios.delete(`http://localhost:4000/api/projet/delete/${id}`, data)
-            alert('Projet supprimée avec succès')
+            dispatch(showMessage({message : 'Projet supprimé avec succés.'}))
             navigate('/business/manage/project')
         }
     }
