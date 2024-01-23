@@ -9,7 +9,7 @@ const Seance = require('../../../Modele/formation/Seances/Seance');
 const Collab = require('../../../Modele/CollabModel/Collab');
 const Formation = require('../../../Modele/formation/Formation');
 const { Formation2, Collab3, FormationCollab} = require('../../../Modele/formation/associationFormation/associationCollabFormation');
-const FormationEq = require('../../../Modele/formation/PublicCible/PublicCibleEquipe');
+const { Formation3,Equipe3,FormationEq} = require('../../../Modele/formation/associationFormation/associationEquipeFormation');
 const Module = require('../../../Modele/formation/Modules/Module');
 
 router.post('/addDemandeFormationPublic', async (req, res) => {
@@ -179,6 +179,12 @@ router.post('/approuver/:id', async (req, res) => {
         if (!updatedFormation) {
             return res.status(404).json({ message: "Formation not found." });
         }
+
+        await DemandeFormation.update(
+            { approbation: 1 },
+            { where: { id: DemandeformationId }}
+        );
+
         // Create a new Formation based on the updatedFormation
         const formationApp = await Formation.create({
             theme: updatedFormation.theme,
@@ -190,36 +196,34 @@ router.post('/approuver/:id', async (req, res) => {
         });
 
         // Check if confidentialite is 1 and handle Collabs and Equipe
-        if (updatedFormation.confidentialite === 1) {
+        if (formationApp.confidentialite === true) {
             const Collabs = await DemandeCollab.findAll({
                 where: { demande: DemandeformationId },
             });
 
-            await FormationCollab.create(
-                Collabs.map((collab) => ({
-                    formation: formationApp.id,
-                    collaborateur: collab.collaborateur
-                }))
-            );
+            const formationCollabData = Collabs.map((collab) => ({
+                formation: formationApp.id,
+                collaborateur: collab.collaborateur,
+            }));
+            
+            const formationCollab = await FormationCollab.bulkCreate(formationCollabData);
 
-        //     const equipe = await DemandeEq.findAll({
-        //         where: { demande: DemandeformationId },
-        //     });
+            const equipe = await DemandeEq.findAll({
+                where: { demande: DemandeformationId },
+            });
 
-        //     await FormationEq.create(
-        //         equipe.map((eq) => ({
-        //             formation: formationApp.id,
-        //             equipe: eq.equipe,
-        //         }))
-        //     );
+            const formationEquipeData = equipe.map((eq) => ({
+                formation: formationApp.id,
+                equipe: equipe.equipe,
+            }));
+
+            const formationEquipe = await FormationEq.bulkCreate(formationEquipeData);
+            return res.status(200).json({ formationApp, formationEquipe, formationCollab });
+
         }
 
-        await DemandeFormation.update(
-            { approbation: 1 },
-            { where: { id: DemandeformationId }}
-        );
-
-        return res.status(200).json({ message: "Formation approved successfully." });
+        return res.status(200).json({ formationApp});
+        
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "An error occurred while approving the formation." });
