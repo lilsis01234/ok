@@ -31,6 +31,11 @@ Actualite.init({
         type: DataTypes.ENUM('privee', 'public'),
         allowNull: false,
     },
+    commentaire: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+    },
     compte_id: {
         type: DataTypes.INTEGER,
         references : {

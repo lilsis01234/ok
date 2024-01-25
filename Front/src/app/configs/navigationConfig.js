@@ -47,7 +47,7 @@ const loadFrontOfficeNavigation = () => {
           id: 'actuality.flux',
           title: "Flux d'actualités",
           type: 'item',
-          icon: 'heroicons-outline:menu-alt-2',
+          icon: 'heroicons-solid:newspaper',
           auth: {
             role: ['SuperAdmin', 'User', 'Admin'],
           },
@@ -212,7 +212,7 @@ const loadBackOfficeNavigation = () => {
           title: "Commentaires",
           type: 'item',
           icon: 'heroicons-outline:chat-alt',
-          url: '/apps/edit-comments',
+          url: '/apps/commentaires',
           auth: {
             role: ['SuperAdmin', 'Admin'],
           }
@@ -241,7 +241,7 @@ const loadBackOfficeNavigation = () => {
           id: 'tag',
           title: 'Etiquettes',
           type: 'item',
-          icon: 'material-outline:article',
+          icon: 'heroicons-outline:tag',
           url: '/apps/tag',
           auth: {
             role: ['SuperAdmin', 'Admin'],

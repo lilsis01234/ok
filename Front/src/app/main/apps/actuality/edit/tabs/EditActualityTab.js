@@ -44,6 +44,7 @@ function AddActualityTab() {
   const [selectedEtat, setSelectedEtat] = useState('');
   const [idImageToChange, setidImageToChange] = useState(null);
   const [nameImgActu, setNameImgActu] = useState('');
+  const [isChecked, setChecked] = useState(false);
   
   const fetchActualityToEdit = () => {
     axios.get(`http://localhost:4000/api/actualite/${actualityId}`)
@@ -59,6 +60,7 @@ function AddActualityTab() {
       setSelectedVisibilite(res.data.actuality?.visibilite);
       setSelectedEtat(res.data.actuality?.etat);
       setNameImgActu(res.data.actuality?.image);
+      setChecked(res.data.actuality?.commentaire);
     })
     .catch(err => console.log(err));
   }
@@ -98,7 +100,6 @@ function AddActualityTab() {
   const [boutonDesableCateg, setBoutonDesableCateg] = useState(true);
   const [boutonDesableType, setBoutonDesableType] = useState(true);
   const [boutonDesableTag, setBoutonDesableTag] = useState(true);
-  const [isChecked, setChecked] = useState(false);
   const [dateActuelle, setDateActuelle] = useState('');
 
 
@@ -458,7 +459,7 @@ function AddActualityTab() {
     const updatedAt = dateActuelle;
     // const date_publication = dateActuelle;
     const image = imgMiseEnAvant;
-    // const commentaire = isChecked;
+    const commentaire = isChecked;
     
 
 
@@ -473,6 +474,7 @@ function AddActualityTab() {
       type,
       tag,
       image,
+      commentaire
 
     };
 

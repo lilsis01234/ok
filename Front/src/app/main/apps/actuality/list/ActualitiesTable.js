@@ -109,7 +109,6 @@ function ActualitiesTable({searchResults}) {
     );
   }
 
-
   return (
     <div className="w-full flex flex-col min-h-full">
       <FuseScrollbars className="grow overflow-x-auto">
@@ -182,7 +181,7 @@ function ActualitiesTable({searchResults}) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      0
+                      {n?.nombre_commentaires}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row" align="right">

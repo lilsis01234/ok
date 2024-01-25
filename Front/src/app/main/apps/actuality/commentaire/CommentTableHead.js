@@ -41,6 +41,13 @@ const rows = [
     disablePadding: false,
     label: 'approuver',
     sort: true,
+  },
+  {
+    id: 'supprimer',
+    align: 'right',
+    disablePadding: false,
+    label: 'supprimer',
+    sort: true,
   }
 ];
 
@@ -48,7 +55,7 @@ function CommentTableHead() {
   return (
     <TableHead>
       <TableRow className="h-48 sm:h-64">
-        <TableCell
+        {/* <TableCell
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === 'light'
@@ -59,7 +66,7 @@ function CommentTableHead() {
           className="w-40 md:w-64 text-center z-99"
         >
           <Checkbox />
-        </TableCell>
+        </TableCell> */}
         {rows.map((row) => {
           return (
             <TableCell

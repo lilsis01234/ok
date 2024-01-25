@@ -9,13 +9,16 @@ import {TablePagination} from '@mui/material';
 import Link from '@mui/material/Link';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
-import { pink,yellow } from '@mui/material/colors';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { pink,yellow,blue } from '@mui/material/colors';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 
 function TimelineTab(props) {
 
@@ -180,8 +183,8 @@ function handleChangeRowsPerPage(event) {
                         </div>
                       </div>
                       <div className="flex flex-row py-20 w-full justify-evenly border-t-[0.5px]">
-                        <span className="flex flex-row items-center"><FavoriteIcon sx={{ color: pink[300]  }} /><Typography className="text-xs ml-2">22</Typography></span>
-                        <span className="flex flex-row items-center"><CommentIcon  sx={{ color: yellow[400]  }}  /><Typography className="text-xs ml-2">4</Typography></span>
+                        <span className="flex flex-row items-center"><ThumbUpIcon sx={{ color: blue[700]  }} /><Typography className="text-xs ml-2">22</Typography></span>
+                        <span className="flex flex-row items-center"><CommentIcon  sx={{ color: yellow[600]  }}  /><Typography className="text-xs ml-2">{n.nombre_commentaires || 0}</Typography></span>
                       </div>
                     </Card>
                   </div>
