@@ -461,4 +461,23 @@ router.get('/allWithoutForm',async(req,res)=>{
     }
 })
 
+router.get('/alldemande/coatch', async (req, res) => {
+    const coatch = 'coatch'
+    const Coatch = await RoleHierarchique.findAll({
+        where: {
+        roleHierarchique: {
+            [Sequelize.Op.like]: `%${coatch}%`
+        }
+        }
+    });
+    const coatchIds = Coatch.map(coatch => coatch.id);
+    const demandes = await DemandeFormation.findAll({
+        where:{
+            destinataireDemande : coatchIds
+        }
+    })
+    res.status(200).json(demandes)
+});
+
+      
 module.exports = router;
