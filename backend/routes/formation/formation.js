@@ -6,10 +6,8 @@ router.use(cookieParser());
 const Formation = require('../../Modele/formation/Formation');
 const Collaborateur = require('../../Modele/CollabModel/Collab');
 const Module = require('../../Modele/formation/Modules/Module');
-const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
 const Sequelize = require('sequelize');
 const { Formation2, Collab3, FormationCollab} = require('../../Modele/formation/associationFormation/associationCollabFormation');
-const { DemandeFormation2 } = require('../../Modele/formation/associationDemande/associationDemandeCollab');
 
 
 //Toutes les formations dont tout le monde peut assister
