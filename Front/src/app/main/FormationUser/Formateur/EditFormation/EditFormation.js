@@ -24,15 +24,11 @@ const EditFormation = ({ formationId, theme, description }) => {
     <div className="form-container">
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <br></br>
         <label>Thème</label>
-        <br></br>
         <input type="text" value={newTheme} onChange={(e) => setNewTheme(e.target.value)} />
       </div>
       <div className="form-group">
-      <br></br>
         <label>Description</label>
-        <br></br>
         <input type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
       </div>
       <div className="form-group">

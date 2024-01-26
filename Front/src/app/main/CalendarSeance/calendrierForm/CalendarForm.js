@@ -10,7 +10,6 @@ const localizer = momentLocalizer(moment);
 function CalendarForm() {
   const [events, setEvents] = useState([]);
   const formation = useParams()
-  console.log(formation)
 
   const idformation = formation.id
   
@@ -18,18 +17,18 @@ function CalendarForm() {
 
   const handleSelect = ({ start, end }) => {
     const titre = window.prompt('Nom de l\'événement :');
-    if (titre) {
-      const placesString = window.prompt('Nombre de places :');
-      const nombrePlaces = parseInt(placesString, 10) || 0;
+      if (titre) {
+        const placesString = window.prompt('Nombre de places :');
+        const nombrePlaces = parseInt(placesString, 10) || 0;
 
-      const newEvent = {
-        start: new Date(Date.parse(start)),
-        end: new Date(Date.parse(end)),
-        title: titre,
-        nombreDePlaces: nombrePlaces,
-      };
-      setEvents([...events, newEvent]);
-    }
+        const newEvent = {
+          start: new Date(Date.parse(start)),
+          end: new Date(Date.parse(end)),
+          title: titre,
+          nombreDePlaces: nombrePlaces,
+        };
+        setEvents([...events, newEvent]);
+      }
   };
 
   const handleSave = () => {

@@ -11,7 +11,6 @@ const AjoutModule = () => {
   const navigate = useNavigate()
 
   const idformation = formation.id;
-  console.log('id de formation:',idformation)
   const handleSubmit = (event)=>{
     event.preventDefault();
 
