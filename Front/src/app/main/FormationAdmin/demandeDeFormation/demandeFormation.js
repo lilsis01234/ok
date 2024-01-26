@@ -48,19 +48,21 @@ const DemandeFormations = () => {
     .catch(err=>console.log(err))
   }
 
+  const fecthDemandePourCoatch = ()=>{
+    axios.get('http://localhost:4000/api/demande_formation/alldemande/coatch')
+    .then((res)=>
+      { 
+        setDemandeCoatch(res.data)
+        console.log(res.data)
+      })
+    .catch(err=>console.log(err))
+  }
+
   const fetchDemandes = ()=>{
     axios.get('http://localhost:4000/api/demande_formation/all')
     .then((res)=>
       { 
         setDemandes(res.data)
-        console.log(res.data)
-      })
-    .catch(err=>console.log(err))
-
-    axios.get('http://localhost:4000/api/demande_formation/alldemande/coatch')
-    .then((res)=>
-      { 
-        setDemandeCoatch(res.data)
         console.log(res.data)
       })
     .catch(err=>console.log(err))
@@ -94,6 +96,7 @@ const DemandeFormations = () => {
   useEffect(()=>{
     fetchDemandes();
     fetchWithoutForm();
+    fecthDemandePourCoatch();
   },[])
   
   return (
