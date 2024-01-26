@@ -67,12 +67,15 @@ function VisioConference() {
   }, [id]);
 
   const endCall = () => {
-    const tracks = currentUserVideoRef.current.srcObject.getTracks();
-    tracks.forEach((track) => track.stop());
-
-    if (peerInstance.current) {
-      peerInstance.current.destroy();
-    }
+    const tracks = currentUserVideoRef?.current.srcObject?.getTracks();
+    
+      if(tracks){
+        tracks.forEach((track) => track.stop());
+      }
+      
+      if (peerInstance.current) {
+        peerInstance.current.destroy();
+      }
   };
 
   return (
