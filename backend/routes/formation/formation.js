@@ -34,6 +34,27 @@ router.get('/all_formations', async(req,res) => {
     }) 
 })
 
+router.get('/all_private', async(req,res) => {
+  Formation.findAll({
+      include: [
+          {
+            model: Collaborateur,
+            as: 'Formateur',
+            attributes: ['id','nom', 'prenom','image'],
+          },
+        ],
+        attributes: ['id', 'theme', 'description', 'formateur','formateurExterne'],
+          where:
+          {
+            confidentialite:1,
+          },
+  })
+  .then((formation) => {
+      res.status(200).json(formation)
+      console.log(formation)
+  }) 
+})
+
 router.get('/all_from_demande',async(req,res)=>{
   Formation.findAll({
     include: [
@@ -48,12 +69,14 @@ router.get('/all_from_demande',async(req,res)=>{
         {
           demande:1,
         },
+  })
+  .then((formation) => {
+      res.status(200).json(formation)
+      console.log(formation)
+  }) 
 })
-.then((formation) => {
-    res.status(200).json(formation)
-    console.log(formation)
-}) 
-})
+
+
 router.post('/addFormExt/:id', async(req,res)=>{
   const formationId = req.params.id;
   const formateurExt = req.body.formateurExt
