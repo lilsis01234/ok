@@ -18,7 +18,7 @@ const DemandeFormations = () => {
 
   const Approuver =(id)=>{
     axios.post(`http://localhost:4000/api/demande_formation/approuver/${id}`)
-    .then(res=>{1
+    .then(res=>{
       console.log(res.data)
       window.location.reload();
     })
