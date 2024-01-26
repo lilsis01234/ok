@@ -24,6 +24,22 @@ function MesFormations (){
         })
     }
 
+    const DeleteFormation = async (id) => {
+      const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette formation ?");
+      if (isConfirmed) {
+      try {
+        const response = await axios.delete(`http://localhost:4000/api/demande_formation/formation/${id}`);
+        if (response.status === 204) {
+          fetchFormation()
+        } else {
+          console.error('Erreur lors de la suppression de la formation', error);
+        }
+      } catch (error) {
+        console.error('Erreur lors de la suppression de la formation :', error);
+      }
+    }};   
+
+
     useEffect(()=>{
         fetchFormation()
     },[])
@@ -60,6 +76,8 @@ function MesFormations (){
                   <Typography className="formation_description">{formation.description}</Typography>
                   
                   <Link to={`/discussion/formation/${formation.id}`}><span className="lien">Accéder à la discussion</span></Link>
+                  
+                  <button onClick={() => { DeleteFormation(formation.id) }}>Supprimer</button>
 
                   <button className="voir_plus_button">
                     <Link to={`/admin/formation/${formation.id}`}>?</Link>
@@ -87,6 +105,8 @@ function MesFormations (){
                    
                     <Link to={`/discussion/formation/${formation.id}`}><span className="lien">Accéder à la discussion</span></Link>
                     
+                    <button onClick={() => { DeleteFormation(formation.id) }}>Supprimer</button>
+
                     <button className="voir_plus_button">
                       <Link to={`/admin/formation/${formation.id}`}>?</Link>
                     </button>
