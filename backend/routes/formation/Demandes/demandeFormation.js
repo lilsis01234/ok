@@ -465,13 +465,20 @@ router.get('/alldemande/coatch', async (req, res) => {
     const coatch = 'coatch'
     const Coatch = await RoleHierarchique.findAll({
         where: {
-        roleHierarchique: {
-            [Sequelize.Op.like]: `%${coatch}%`
-        }
+            roleHierarchique: {
+                [Sequelize.Op.like]: `%${coatch}%`
+            }
         }
     });
     const coatchIds = Coatch.map(coatch => coatch.id);
     const demandes = await DemandeFormation.findAll({
+        include: [
+            {
+              model: Collab,
+              as: 'Auteur',
+              attributes: ['nom', 'prenom','image'],
+            },
+        ],
         where:{
             destinataireDemande : coatchIds
         }
