@@ -20,6 +20,7 @@ function CalendarTraining() {
   const userid = user.id;
   const equipe = user.Collab.equipe;
   const role = user.RoleHierarchique.roleHierarchique;
+  const[opacity,setOpacity] = useState(1);
   const navigate = useNavigate();
 
 
@@ -94,6 +95,7 @@ function CalendarTraining() {
     setSelectedEvent(event);
     setShowButtons(true);
     console.log('Selected event ID:', event);
+    setOpacity(0);
   };
 
 
@@ -185,6 +187,7 @@ function CalendarTraining() {
 
   const closePopup = () => {
     setShowButtons(false);
+    setOpacity(1);
   };
 
   return (
@@ -206,7 +209,7 @@ function CalendarTraining() {
                 step={15}
                 onSelectEvent={handleEventSelect}
                 className='bg-white'
-                style={{padding: '15px', borderRadius: '20px' }}
+                style={{padding: '15px', borderRadius: '20px', opacity:opacity }}
               />
                     {showButtons && selectedEvent && (
                       <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
