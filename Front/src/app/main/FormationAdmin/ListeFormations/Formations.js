@@ -358,7 +358,7 @@ const Formations = () => {
                   ))
                 )
               ) : (
-                <Typography variant="h3" className="mt-4 text-gray-800">Aucune formation pour le moment</Typography>
+                <Typography variant="h5" className="mt-4 text-gray-800 text-center">Aucune formation pour le moment</Typography>
               )}
             </div>
           </div>

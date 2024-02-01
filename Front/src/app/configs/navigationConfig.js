@@ -131,13 +131,13 @@ const loadFrontOfficeNavigation = () => {
         {
           id: 'formation.formations',
           title: 'Formations',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
-          },
           type: 'item',
           icon: 'heroicons-outline:academic-cap',
           translate: 'Formations',
           url : 'dashboards/listeFormation',
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
+          },
         },
         {
           id: 'formation.ajoutFormation',

@@ -6,10 +6,8 @@ router.use(cookieParser());
 const Formation = require('../../Modele/formation/Formation');
 const Collaborateur = require('../../Modele/CollabModel/Collab');
 const Module = require('../../Modele/formation/Modules/Module');
-const Role2 = require('../../Modele/RoleModel/RoleHierarchique');
 const Sequelize = require('sequelize');
 const { Formation2, Collab3, FormationCollab} = require('../../Modele/formation/associationFormation/associationCollabFormation');
-const { DemandeFormation2 } = require('../../Modele/formation/associationDemande/associationDemandeCollab');
 
 
 //Toutes les formations dont tout le monde peut assister
@@ -33,6 +31,49 @@ router.get('/all_formations', async(req,res) => {
         console.log(formation)
     }) 
 })
+
+router.get('/all_private', async(req,res) => {
+  Formation.findAll({
+      include: [
+          {
+            model: Collaborateur,
+            as: 'Formateur',
+            attributes: ['id','nom', 'prenom','image'],
+          },
+        ],
+        attributes: ['id', 'theme', 'description', 'formateur','formateurExterne'],
+          where:
+          {
+            confidentialite:1,
+          },
+  })
+  .then((formation) => {
+      res.status(200).json(formation)
+      console.log(formation)
+  }) 
+})
+
+router.get('/all_from_demande',async(req,res)=>{
+  Formation.findAll({
+    include: [
+        {
+          model: Collaborateur,
+          as: 'Formateur',
+          attributes: ['id','nom', 'prenom','image'],
+        },
+      ],
+      attributes: ['id', 'theme', 'description', 'formateur','formateurExterne'],
+        where:
+        {
+          demande:1,
+        },
+  })
+  .then((formation) => {
+      res.status(200).json(formation)
+      console.log(formation)
+  }) 
+})
+
 
 router.post('/addFormExt/:id', async(req,res)=>{
   const formationId = req.params.id;

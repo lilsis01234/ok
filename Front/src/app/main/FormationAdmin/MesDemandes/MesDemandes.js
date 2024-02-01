@@ -52,7 +52,7 @@ const  MesDemandes = () => {
               console.error('Erreur lors de la suppression:', error);
             }
         };   
-    } 
+    }  
 
     return(
         <>  

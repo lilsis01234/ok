@@ -21,71 +21,72 @@ const AjoutFormation = ()=>{
             navigate('/dashboards/listeFormation');
         }).catch(err =>console.log(err));
     }
+
     return(
-    <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      style={{ minHeight: '100vh' }}
-    >
-      <Grid item xs={12} sm={12} md={12} lg={12} xl={10}>
-        <Paper elevation={3} style={{ padding: 64, width: '100%' }}>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: '100vh' }}
+      >
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={10}>
+          <Paper elevation={3} style={{ padding: 64, width: '100%' }}>
 
-        <Typography
-            className="text-24 md:text-32 font-extrabold tracking-tight sm:block lg:hidden md:hidden"
-        >
-            Nouvelle formation
-        </Typography>
-
-          <div className='flex hidden md:hidden sm:hidden lg:flex'>
-            <img src={Sary} className='mt-[-60px]'/>
-            <Typography 
-              className="text-32 md:text-64 font-extrabold tracking-tight pr-20"
-            >
+          <Typography
+              className="text-24 md:text-32 font-extrabold tracking-tight sm:block lg:hidden md:hidden"
+          >
               Nouvelle formation
-            </Typography>
-          </div>
-         
-          <form onSubmit={handleSubmit}>
-            <div>
-              <TextField
-                className="mt-8 mb-16"
-                type="text"
-                value={theme}
-                onChange={(e) => setTheme(e.target.value)}
-                required
-                label="Thème"
-                fullWidth
-                autoFocus
-              />
+          </Typography>
 
-              <TextField
-                className="mt-8 mb-16"
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                fullWidth
-                required
-                label="Description"
-              />
-
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                className="mt-8 mb-16"
-                style={{ marginTop: 16 }}
+            <div className='flex hidden md:hidden sm:hidden lg:flex'>
+              <img src={Sary} className='mt-[-60px]'/>
+              <Typography 
+                className="text-32 md:text-64 font-extrabold tracking-tight pr-20"
               >
-                Ajouter
-              </Button>
+                Nouvelle formation
+              </Typography>
             </div>
-          </form>
-        </Paper>
+          
+            <form onSubmit={handleSubmit}>
+              <div>
+                <TextField
+                  className="mt-8 mb-16"
+                  type="text"
+                  value={theme}
+                  onChange={(e) => setTheme(e.target.value)}
+                  required
+                  label="Thème"
+                  fullWidth
+                  autoFocus
+                />
+
+                <TextField
+                  className="mt-8 mb-16"
+                  type="text"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  fullWidth
+                  required
+                  label="Description"
+                />
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  className="mt-8 mb-16"
+                  style={{ marginTop: 16 }}
+                >
+                  Ajouter
+                </Button>
+              </div>
+            </form>
+          </Paper>
+        </Grid>
       </Grid>
-    </Grid>
     )
 }
 

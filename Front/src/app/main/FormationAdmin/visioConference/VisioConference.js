@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 
 function VisioConference() {
   const [peerId, setPeerId] = useState('');
-  const [remotePeerIdValue, setRemotePeerIdValue] = useState('');
   const remoteVideoRef = useRef(null);
   const currentUserVideoRef = useRef(null);
   const peerInstance = useRef(null);
@@ -40,56 +39,56 @@ function VisioConference() {
   };
 
   useEffect(() => {
-    const peer = new Peer({secure : false});
+    var peer = new Peer();
 
     peer.on('open', (id) => {
       setPeerId(id);
     });
 
     peer.on('call', (call) => {
-      handleIncomingCall(call);
+      // Automatically answer any incoming call
+      navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then((mediaStream) => {
+          currentUserVideoRef.current.srcObject = mediaStream;
+          currentUserVideoRef.current.play();
+          call.answer(mediaStream);
+          call.on('stream', (remoteStream) => {
+            remoteVideoRef.current.srcObject = remoteStream;
+            remoteVideoRef.current.play();
+          });
+        })
+        .catch((error) => {
+          console.error('Error accessing audio devices:', error);
+        });
     });
 
     peerInstance.current = peer;
     call(id);
   }, [id]);
 
-  const handleIncomingCall = (call) => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-      .then((mediaStream) => {
-        currentUserVideoRef.current.srcObject = mediaStream;
-        currentUserVideoRef.current.play();
-        call.answer(mediaStream);
-        call.on('stream', (remoteStream) => {
-          remoteVideoRef.current.srcObject = remoteStream;
-          remoteVideoRef.current.play();
-        });
-      })
-      .catch((error) => {
-        console.error('Error accessing audio devices:', error);
-      });
-  };
-
   const endCall = () => {
-    const tracks = currentUserVideoRef.current.srcObject.getTracks();
-    tracks.forEach((track) => track.stop());
-
-    if (peerInstance.current) {
-      peerInstance.current.destroy();
-    }
+    const tracks = currentUserVideoRef?.current.srcObject?.getTracks();
+    
+      if(tracks){
+        tracks.forEach((track) => track.stop());
+      }
+      
+      if (peerInstance.current) {
+        peerInstance.current.destroy();
+      }
   };
 
   return (
     <div className="App flex flex-col">
       <div className="flex">
-        <video ref={currentUserVideoRef} className="w-48" />
+        <video ref={currentUserVideoRef} className="w-3/6" />
       </div>
       <div className="flex-1">
-        {remoteVideoRef.current && remoteVideoRef.current.map(({ peerId, ref }, index) => (
-          <div key={index}>
-            <video ref={ref} className="w-48" />
+        {remoteVideoRef.current && (
+          <div>
+            <video ref={remoteVideoRef} className="w-48" />
           </div>
-        ))}
+        )}
       </div>
       <div className="justify-center">
         <button
@@ -102,4 +101,5 @@ function VisioConference() {
     </div>
   );
 }
+
 export default VisioConference;

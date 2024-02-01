@@ -20,6 +20,7 @@ function CalendarTraining() {
   const userid = user.id;
   const equipe = user.Collab.equipe;
   const role = user.RoleHierarchique.roleHierarchique;
+  const[opacity,setOpacity] = useState(1);
   const navigate = useNavigate();
 
 
@@ -45,7 +46,8 @@ function CalendarTraining() {
   const showNotification = (title, customMessage) => {
     if (!("Notification" in window)) {
       console.log("This browser does not support desktop notification");
-    } else {
+    } 
+    else {
       Notification.requestPermission().then(function (permission) {
         if (permission === "granted") {
           try {
@@ -70,17 +72,16 @@ function CalendarTraining() {
     // Récupérer les données de l'API backend
     axios.get('http://localhost:4000/api/calendrier/agenda')
       .then((response) => {
-        console.log(response.data)
         // Formatter les données pour les rendre compatibles avec React Big Calendar
         const formattedEvents = response.data.filter((res) => res.Formation.confidentialite === false).map((event) => {
-          return {
-            auteur: event.Formation.formateur,
-            id:event.id,
-            title: `${event.title} - ${event.nombreDePlaces} places`,
-            start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), 
-            end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(),
-          };
-        });
+            return {
+              auteur: event.Formation.formateur,
+              id:event.id,
+              title: `${event.title} - ${event.nombreDePlaces} places`,
+              start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), 
+              end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(),
+            };
+          });
         setEvents(formattedEvents);
         formattedEvents.forEach((event) => scheduleNotification(event)); 
       })
@@ -94,6 +95,7 @@ function CalendarTraining() {
     setSelectedEvent(event);
     setShowButtons(true);
     console.log('Selected event ID:', event);
+    setOpacity(0);
   };
 
 
@@ -134,23 +136,23 @@ function CalendarTraining() {
 
   const handleReserveEqClick = (id) =>{
     if (id) {
-    axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
-      seance: id,
-      equipe: equipe, 
-      online: false,
-    })
-      .then(response => {
-        console.log('Reservation successful:', response.data);
-        closePopup()
-        alert('Réservation à succès')
+      axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
+        seance: id,
+        equipe: equipe, 
+        online: false,
       })
-      .catch(error => {
-        console.error('Error reserving place:', error);
-      });
-  } 
-  else {
-    console.log('No event selected.');
-  }
+        .then(response => {
+          console.log('Reservation successful:', response.data);
+          closePopup()
+          alert('Réservation à succès')
+        })
+        .catch(error => {
+          console.error('Error reserving place:', error);
+        });
+    } 
+    else {
+      console.log('No event selected.');
+    }
   }
   
   
@@ -180,11 +182,13 @@ function CalendarTraining() {
       setParticipantListVisible(!isParticipantListVisible);
     })
     .catch(error =>
-      console.error('Error fetching participant data:', error));
+      console.error('Error fetching participant data:', error)
+    );
   };
 
   const closePopup = () => {
     setShowButtons(false);
+    setOpacity(1);
   };
 
   return (
@@ -206,79 +210,79 @@ function CalendarTraining() {
                 step={15}
                 onSelectEvent={handleEventSelect}
                 className='bg-white'
-                style={{padding: '15px', borderRadius: '20px' }}
+                style={{padding: '15px', borderRadius: '20px', opacity:opacity }}
               />
-                    {showButtons && selectedEvent && (
-                      <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
-                        <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
-                          <button
-                            className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
-                            onClick={closePopup}
-                          >
-                            X
-                          </button>
-                          {role === 'SuperAdministrateur' && (
-                            <button
-                              className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
-                              onClick={() => {
-                                handleParticipateNowClick(selectedEvent.id);
-                              }}
-                            >
-                              Démarrer l'appel vidéo
-                            </button>
-                          )}
-            
-                          <button
-                            className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
-                            onClick={() => {
-                              handleReserveClick(selectedEvent.id);
-                            }}
-                          >
-                            Réserver une place
-                          </button>
-            
-                          {selectedEvent.auteur === userid && (
-                            <button
-                              className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
-                              onClick={() => {
-                                DeleteSeance(selectedEvent.id);
-                              }}
-                            >
-                              Supprimer
-                            </button>
-                          )}
-            
-                          {isParticipantListVisible && (
-                            <div className="participantData mb-4">
-                              {participantData &&
-                                [...participantData.collabNames, ...participantData.collabNames2]
-                                  .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
-                                  .map((collab, index) => (
-                                    <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
-                                  ))}
-                            </div>
-                          )}
-            
-                          <button
-                            className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
-                            onClick={() => ShowAllParticipant(selectedEvent.id)}
-                          >
-                            Liste des participants
-                          </button>
-            
-                          {role === 'chefEquipe' && (
-                            <button
-                              className="popupButton bg-green-500 text-white py-2 px-4 rounded"
-                              onClick={() => {
-                                handleReserveEqClick(selectedEvent.id);
-                              }}
-                            >
-                              Réserver des places pour mon équipe
-                            </button>
-                          )}
+                {showButtons && selectedEvent && (
+                  <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
+                    <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
+                      <button
+                        className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
+                        onClick={closePopup}
+                      >
+                        X
+                      </button>
+                      {role === 'SuperAdministrateur' && (
+                        <button
+                          className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
+                          onClick={() => {
+                            handleParticipateNowClick(selectedEvent.id);
+                          }}
+                        >
+                          Démarrer l'appel vidéo
+                        </button>
+                      )}
+        
+                      <button
+                        className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
+                        onClick={() => {
+                          handleReserveClick(selectedEvent.id);
+                        }}
+                      >
+                        Réserver une place
+                      </button>
+        
+                      {selectedEvent.auteur === userid && (
+                        <button
+                          className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
+                          onClick={() => {
+                            DeleteSeance(selectedEvent.id);
+                          }}
+                        >
+                          Supprimer
+                        </button>
+                      )}
+        
+                      {isParticipantListVisible && (
+                        <div className="participantData mb-4">
+                          {participantData &&
+                            [...participantData.collabNames, ...participantData.collabNames2]
+                              .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
+                              .map((collab, index) => (
+                                <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
+                              ))}
                         </div>
-                      </div>
-                    )}
+                      )}
+        
+                      <button
+                        className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
+                        onClick={() => ShowAllParticipant(selectedEvent.id)}
+                      >
+                        Liste des participants
+                      </button>
+        
+                      {role === 'chefEquipe' && (
+                        <button
+                          className="popupButton bg-green-500 text-white py-2 px-4 rounded"
+                          onClick={() => {
+                            handleReserveEqClick(selectedEvent.id);
+                          }}
+                        >
+                          Réserver des places pour mon équipe
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
             </div>
           </div>
         </>

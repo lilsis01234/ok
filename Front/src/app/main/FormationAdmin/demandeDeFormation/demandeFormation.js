@@ -18,7 +18,7 @@ const DemandeFormations = () => {
 
   const Approuver =(id)=>{
     axios.post(`http://localhost:4000/api/demande_formation/approuver/${id}`)
-    .then(res=>{1
+    .then(res=>{
       console.log(res.data)
       window.location.reload();
     })
@@ -38,15 +38,7 @@ const DemandeFormations = () => {
     })
   }
 
-  const fetchDemandes = ()=>{
-    axios.get('http://localhost:4000/api/demande_formation/all')
-    .then((res)=>
-      { 
-        setDemandes(res.data)
-        // console.log(res.data)
-      })
-    .catch(err=>console.log(err))
-
+  const fetchWithoutForm = () =>{
     axios.get('http://localhost:4000/api/demande_formation/allWithoutForm')
     .then((res)=>
       { 
@@ -54,12 +46,24 @@ const DemandeFormations = () => {
         console.log(res.data)
       })
     .catch(err=>console.log(err))
+  }
 
+  const fecthDemandePourCoatch = ()=>{
     axios.get('http://localhost:4000/api/demande_formation/alldemande/coatch')
     .then((res)=>
       { 
         setDemandeCoatch(res.data)
-        // console.log(res.data)
+        console.log(res.data)
+      })
+    .catch(err=>console.log(err))
+  }
+
+  const fetchDemandes = ()=>{
+    axios.get('http://localhost:4000/api/demande_formation/all')
+    .then((res)=>
+      { 
+        setDemandes(res.data)
+        console.log(res.data)
       })
     .catch(err=>console.log(err))
   }
@@ -73,6 +77,7 @@ const DemandeFormations = () => {
         console.log(res);
         setFormExt(null);
         setShowButtons(false);
+        fetchWithoutForm();
       })
       .catch((err) => {
         console.log(err);
@@ -90,6 +95,8 @@ const DemandeFormations = () => {
 
   useEffect(()=>{
     fetchDemandes();
+    fetchWithoutForm();
+    fecthDemandePourCoatch();
   },[])
   
   return (
@@ -102,29 +109,29 @@ const DemandeFormations = () => {
           {DemandeFormations.length !== 0 && (
             <Typography className="mt-6 mb-4">Les demandes de formation</Typography>
           )}
-          {DemandeFormations.map((demande, index) => (
+          {DemandeFormations.length !== 0 && DemandeFormations.map((demande, index) => (
             <div key={index} className="training-request-item flex items-center">
 
-              {demande.Auteur.image ? (
+              {demande.Auteur?.image ? (
                   <Avatar
-                      key={demande.Auteur.id}
+                      key={demande.Auteur?.id}
                       className="w-96 h-96 mr-10"
-                      alt={demande.Auteur.nom}
-                      src={`http://localhost:4000/${demande.Auteur.image}`}
+                      alt={demande.Auteur?.nom}
+                      src={`http://localhost:4000/${demande.Auteur?.image}`}
                   />
               ) : (
                   <Avatar
-                      key={demande.Auteur.id}
+                      key={demande.Auteur?.id}
                       className="w-96 h-96 mr-10"
-                      alt={demande.Auteur.nom}
+                      alt={demande.Auteur?.nom}
                   >
-                      {demande.Auteur.nom ? demande.Auteur.nom[0] : '?'}
+                      {demande.Auteur?.nom ? demande.Auteur?.nom[0] : '?'}
                   </Avatar>
               )}
 
           <div>
             <Typography className="font-bold">
-              {demande.Auteur.nom} {demande.Auteur.prenom}
+              {demande.Auteur?.nom} {demande.Auteur?.prenom}
             </Typography>
             <Typography className="text-gray-600">{demande.theme}</Typography>
             <Link to={`/voirPlus/demande/${demande.id}`} className="text-blue-500 underline mb-2 block">
@@ -195,7 +202,23 @@ const DemandeFormations = () => {
 
           {DemandeCoatch.map((demande, index) => (
             <div key={index} className="training-request-item">
-              <Typography className="font-bold">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
+              {demande.Auteur.image ? (
+                  <Avatar
+                      key={demande.Auteur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Auteur.nom}
+                      src={`http://localhost:4000/${demande.Auteur.image}`}
+                  />
+              ) : (
+                  <Avatar
+                      key={demande.Auteur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Auteur.nom}
+                  >
+                      {demande.Auteur.nom ? demande.Auteur.nom[0] : '?'}
+                  </Avatar>
+              )}
+              <Typography className="font-bold">{demande.Auteur?.nom} {demande.Auteur?.prenom}</Typography>
               <Typography className="text-gray-600">{demande.theme}</Typography>
               <Link to={`/voirPlus/demande/${demande.id}`} className="text-blue-500 underline mb-2 block">
                 Voir plus
