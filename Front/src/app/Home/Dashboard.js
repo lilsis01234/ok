@@ -27,7 +27,7 @@ const Dashboard = () => {
   const userConnected = JSON.parse(user);
   // const id = userConnected.id;
 
-  console.log(user,userConnected);
+  // console.log(user,userConnected);
   const fetchActualitiesByCateg = () => {
     axios.get('http://localhost:4000/api/categorie/25/actualites')
       .then(res => {setlisteActuCategDash(res.data)})
@@ -71,12 +71,10 @@ const Dashboard = () => {
       <>
       {/* affichage du slider */}
         <Slider {...settings}>
-        {sary.map(photo =>(
-          <>
-          <div className="flex-auto mb-32">
+        {sary.map((photo, index) =>(
+          <div className="flex-auto mb-32" key={index}>
             <img src={`http://localhost:4000/photo/${photo}`} className="rounded-xl" alt="Sahaza Group" />
           </div>
-          </>
         ))
         }
         </Slider>  
@@ -185,8 +183,8 @@ const Dashboard = () => {
                       <div>
                         {listeActuCategDash.map((categorie) => (
                           <div key={categorie.id}>
-                              {categorie.Actualites.map((actualite) => (
-                              <div className="mb-32">
+                              {categorie.Actualites.map((actualite, index) => (
+                              <div className="mb-32" key={index}>
                                 <div>
                                   <img src={`http://localhost:4000/${actualite.image}` } className="rounded-xl" alt="actuality image"/>
                                 </div>

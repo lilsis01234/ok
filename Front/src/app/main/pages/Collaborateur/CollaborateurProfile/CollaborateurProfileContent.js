@@ -36,7 +36,7 @@ function CollaborateurProfileContent(props) {
         axios.get(`http://localhost:4000/api/collaborateur/sameProject/${collabId}/${collabProjet}`)
         .then((response) => {
             setCollabSameProject(response.data)
-            console.log(response.data)
+            // console.log(response.data)
         })
         .catch((error) => {
             console.error('Erreur lors de la récupération des données', error)
