@@ -38,12 +38,14 @@ import ResetPasswordPageConfig from '../main/resetPassword/ResetPasswordPageConf
 import AccountSettingsConfig from '../main/accountSettings/AccountSettingConfig';
 import ProfileConfig from '../main/Profile/ProfileConfig';
 import ImportDataPageConfig from '../main/pages/ImportData/ImportDataPageConfig';
+import AgendaAppConfig from '../main/Agenda/AgendaAppConfig';
 
 
 
 const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
   ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,CongeConfig,
+  AgendaAppConfig,
   //Module Profil
   // ContactConfig,
   CollaborateurAppConfig,
