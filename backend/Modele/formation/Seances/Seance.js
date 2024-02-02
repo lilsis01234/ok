@@ -44,7 +44,7 @@ Seance.init(
   },
   {
     sequelize,
-    modelName: 'Seance', 
+    modelName: 'Formation_Seance', 
   }
 );
 

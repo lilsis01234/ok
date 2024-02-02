@@ -32,7 +32,7 @@ CommentaireFormation.init({
     },
 },{
     sequelize,
-    modelName:'CommentaireFormation'
+    modelName:'Formation_CommentaireFormation'
 })
 
 CommentaireFormation.belongsTo(DiscussionFormation, {

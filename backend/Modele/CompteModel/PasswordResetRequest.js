@@ -30,7 +30,7 @@ PasswordResetRequest.init({
     
 }, {
     sequelize,
-    modelName : 'PasswordResetRequest'
+    modelName : 'Profil_PasswordResetRequest'
 })
 
 

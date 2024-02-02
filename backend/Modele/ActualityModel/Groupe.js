@@ -12,7 +12,7 @@ Groupe.init({
 }, {
 
     sequelize,
-    modelName: 'Groupe'
+    modelName: 'Actualite_Groupe'
 
 })
 

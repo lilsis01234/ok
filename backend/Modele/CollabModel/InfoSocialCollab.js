@@ -26,7 +26,7 @@ InfoSocialCollab.init({
     }
 }, {
     sequelize,
-    modelName: 'InfoSocialCollab'
+    modelName: 'Profil_InfoSocialCollab'
 })
 InfoSocialCollab.belongsTo(Collab, {
     foreignKey : 'collaborateur',

@@ -10,7 +10,7 @@ Type.init({
     },
     },{
         sequelize,
-        modelName : 'Type'
+        modelName : 'Conge_Type'
     })
 
 module.exports = Type;

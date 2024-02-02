@@ -1,4 +1,6 @@
 const sequelize = require('../database/database');
+
+//Modele et asociation Module PROFILE ICI
 const Collab = require('../Modele/CollabModel/Collab')
 const Compte = require('../Modele/CompteModel/Compte')
 const InfoSocialCollab = require('../Modele/CollabModel/InfoSocialCollab')
@@ -9,42 +11,23 @@ const TestDepartement = require('../Modele/Structure/TestDepartement')
 const PosteDepartement = require('../Modele/Structure/PosteDepartement')
 const Direction = require('../Modele/Structure/Direction')
 const Projet = require('../Modele/Structure/Projet')
-const Collaborateur = require('../Modele/CollabModel/Collaborateur')
 const Eqquipe = require('../Modele/Structure/Equipe')
 const Site = require('../Modele/Structure/Site')
-const association = require('../Modele/Structure/association')
-
 const RoleCollab = require('../Modele/RoleModel/Role');
 const RoleHierarchique = require('../Modele/RoleModel/RoleHierarchique');
+const Permission = require('../Modele/RoleModel/Permission');
 
+const associationPermission = require('../Modele/RoleModel/associationPermission');
+const association = require('../Modele/Structure/association')
 
+//Modele et association Module FORMATION ICI
 const Formation = require('../Modele/formation/Formation');
 const DemandeFormation = require('../Modele/formation/Demandes/demandeFormation');
 const CommentaireFormation = require('../Modele/formation/Discussions/CommentaireFormation');
 const DiscussionFormation = require('../Modele/formation/Discussions/DiscussionFormation');
 const Module = require('../Modele/formation/Modules/Module');
 const Seance = require('../Modele/formation/Seances/Seance');
-
 const ParticipantsSeance = require('../Modele/formation/Seances/ParticipantsSeance');
-const Actualite =  require('../Modele/ActualityModel/Actualité');
-const Categorie =  require('../Modele/ActualityModel/Categorie');
-const ActuCateg =  require('../Modele/ActualityModel/ActuCateg');
-const associationActuCateg =  require('../Modele/ActualityModel/associationActuCateg');
-const Commentaire =  require('../Modele/ActualityModel/Commentaire');
-const GroupCompte =  require('../Modele/ActualityModel/GroupCompte');
-const associationGroupCompte =  require('../Modele/ActualityModel/associationGroupCompte');
-const Groupe =  require('../Modele/ActualityModel/Groupe');
-const Reaction =  require('../Modele/ActualityModel/Reaction');
-const ActualityImg =  require('../Modele/ActualityModel/ActualityImg');
-const Type = require('../Modele/ActualityModel/Type');
-const ActuType = require('../Modele/ActualityModel/ActuType');
-const associationActuType = require('../Modele/ActualityModel/associationActuType');
-const Tag = require('../Modele/ActualityModel/Tag');
-const ActuTag = require('../Modele/ActualityModel/ActuTag');
-const associationActuTag = require('../Modele/ActualityModel/associationActuTag');
-const Permission = require('../Modele/RoleModel/Permission');
-const associationPermission = require('../Modele/RoleModel/associationPermission');
-const conge = require('../Modele/conge/CongeModel');
 
 const EquipeSeance = require('../Modele/formation/Seances/EquipeSeance');
 
@@ -57,15 +40,42 @@ const associationDemandeCollab= require('../Modele/formation/associationDemande/
 const associationFormationEquipe = require('../Modele/formation/associationFormation/associationEquipeFormation');
 const associationFormationCollab = require('../Modele/formation/associationFormation/associationCollabFormation');
 
+//Modele et association Module ACTUALITE ICI
+const Actualite =  require('../Modele/ActualityModel/Actualité');
+const Categorie =  require('../Modele/ActualityModel/Categorie');
+const ActuCateg =  require('../Modele/ActualityModel/ActuCateg');
+const Commentaire =  require('../Modele/ActualityModel/Commentaire');
+const GroupCompte =  require('../Modele/ActualityModel/GroupCompte');
+const Groupe =  require('../Modele/ActualityModel/Groupe');
+const Reaction =  require('../Modele/ActualityModel/Reaction');
+const ActualityImg =  require('../Modele/ActualityModel/ActualityImg');
+const Type = require('../Modele/ActualityModel/Type');
+const ActuType = require('../Modele/ActualityModel/ActuType');
+
+const Tag = require('../Modele/ActualityModel/Tag');
+const ActuTag = require('../Modele/ActualityModel/ActuTag');
+
+
+const associationActuCateg =  require('../Modele/ActualityModel/associationActuCateg');
+const associationGroupCompte =  require('../Modele/ActualityModel/associationGroupCompte');
+const associationActuType = require('../Modele/ActualityModel/associationActuType');
+const associationActuTag = require('../Modele/ActualityModel/associationActuTag');
+
+//Modele et association Module CONGE ICI
+
+const conge = require('../Modele/conge/CongeModel');
 const DemandeConge = require('../Modele/conge/CongeModel');
 const SoldeConge = require('../Modele/conge/SoldeConge');
 const TypeConge = require('../Modele/conge/Types');
 const PieceJointe = require('../Modele/conge/PiecesJointes');
 
+//Modele et association Module CHAT ICI
+
 //Synchronisation de la base de donnée 
 
 async function syncDatabase() {
     try {
+        //Modele et asociation Module PROFILE ICI
         await sequelize.sync({ force: false });
         const { TestPoste, TestDepartement, PosteDepartement } = association;
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
@@ -73,22 +83,7 @@ async function syncDatabase() {
 
         const { RoleHierarchique, Permission, RolePermission } = associationPermission
 
-        const { Actualite, Categorie, ActuCateg} = associationActuCateg;
-        Actualite.belongsToMany(Categorie, {through: ActuCateg});
-        Categorie.belongsToMany(Actualite, {through: ActuCateg});
-
-        const { Type, ActuType} = associationActuType;
-        Actualite.belongsToMany(Type, {through: ActuType});
-        Type.belongsToMany(Actualite, {through: ActuType});
-
-        const { Tag, ActuTag} = associationActuTag;
-        Actualite.belongsToMany(Tag, {through: ActuTag});
-        Tag.belongsToMany(Actualite, {through: ActuTag});
-
-        const { Compte, Groupe, GroupCompte} = associationGroupCompte;
-        Compte.belongsToMany(Groupe, {through: GroupCompte});
-        Groupe.belongsToMany(Compte, {through: GroupCompte});
-
+        //Modele et asociation Module FORMATION ICI
         const{ Seance, Collaborateur ,ParticipantsSeance} = associationSeanceCollab;
         Collaborateur.belongsToMany(Seance,{through:ParticipantsSeance});
         Seance.belongsToMany(Collaborateur,{through:ParticipantsSeance});
@@ -112,6 +107,24 @@ async function syncDatabase() {
         const{Formation2,Collab3,FormationCollab} = associationFormationCollab;
         Formation2.belongsToMany(Collab3,{through:FormationCollab});
         Collab3.belongsToMany(Formation2,{through:FormationCollab});
+
+          //Modele et association Module ACTUALITE ICI
+        const { Actualite, Categorie, ActuCateg} = associationActuCateg;
+        Actualite.belongsToMany(Categorie, {through: ActuCateg});
+        Categorie.belongsToMany(Actualite, {through: ActuCateg});
+
+        const { Type, ActuType} = associationActuType;
+        Actualite.belongsToMany(Type, {through: ActuType});
+        Type.belongsToMany(Actualite, {through: ActuType});
+
+        const { Tag, ActuTag} = associationActuTag;
+        Actualite.belongsToMany(Tag, {through: ActuTag});
+        Tag.belongsToMany(Actualite, {through: ActuTag});
+
+        const { Compte, Groupe, GroupCompte} = associationGroupCompte;
+        Compte.belongsToMany(Groupe, {through: GroupCompte});
+        Groupe.belongsToMany(Compte, {through: GroupCompte});
+
 
 
         console.log('La base de donnée est synchronisée avec succès')

@@ -41,7 +41,7 @@ DemandeFormation.init({
     },
     {
         sequelize,
-        modelName : 'DemandeFormation'
+        modelName : 'Formation_DemandeFormation'
     })
     DemandeFormation.belongsTo(Collaborateur, {
         foreignKey : 'auteur',

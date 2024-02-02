@@ -12,7 +12,7 @@ Direction.init({
     },
 }, {
     sequelize,
-    modelName : 'Direction'
+    modelName : 'Profile_Direction'
 })
 
 module.exports = Direction;

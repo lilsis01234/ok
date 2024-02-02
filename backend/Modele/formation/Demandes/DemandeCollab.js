@@ -3,7 +3,7 @@ const sequelize = require('../../../database/database');
 const Collab2 = require('../../CollabModel/Collab');
 const DemandeFormation2 = require('./demandeFormation');
 
-const DemandeFormationCollab = sequelize.define('DemandeCollab', {
+const DemandeFormationCollab = sequelize.define('Formation_DemandeCollab', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true,

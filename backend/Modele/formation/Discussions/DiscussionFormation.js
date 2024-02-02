@@ -45,7 +45,7 @@ DiscussionFormation.init({
     }
     }},{
     sequelize,
-    modelName:'DiscussionFormation'
+    modelName:'Formation_DiscussionFormation'
 }
 )
 

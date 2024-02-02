@@ -30,7 +30,7 @@ Compte.init({
 },
 {
     sequelize,
-    modelName : 'Compte'
+    modelName : 'Profil_Compte'
 })
 
 Compte.belongsTo(Collab, {

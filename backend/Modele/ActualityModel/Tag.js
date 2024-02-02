@@ -11,7 +11,7 @@ Tag.init({
 
 }, {
     sequelize,
-    modelName: 'Tag',
+    modelName: 'Actualite_Tag',
     timestamps : false
 })
 
