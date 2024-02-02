@@ -11,7 +11,7 @@ Permission.init({
     },
 }, {
     sequelize,
-    modelName : 'Permission'
+    modelName : 'Profile_Permission'
 })
 
 module.exports = Permission;

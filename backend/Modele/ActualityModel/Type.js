@@ -11,7 +11,7 @@ Type.init({
 
 }, {
     sequelize,
-    modelName: 'Type',
+    modelName: 'Actualite_Type',
     timestamps : false
 })
 

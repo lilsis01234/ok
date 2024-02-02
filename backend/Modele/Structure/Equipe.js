@@ -19,7 +19,7 @@ Equipe.init({
     }
 }, {
     sequelize,
-    modelName : 'Equipe'
+    modelName : 'Profile_Equipe'
 })
 
 Equipe.belongsTo(Projet, {foreignKey:'projet', targetKey:'id', onUpdate:'CASCADE', onDelete:'CASCADE'})

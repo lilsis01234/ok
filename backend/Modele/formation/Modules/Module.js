@@ -24,7 +24,7 @@ Module.init({
     ,
     {
         sequelize,
-        modelName : 'Module'
+        modelName : 'Formation_Module'
     }
 )
 

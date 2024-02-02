@@ -11,7 +11,7 @@ Type.init(
     },
     {
         sequelize,
-        modelName : 'TypeCongé'
+        modelName : 'Conge_TypeCongé'
     }
     )
 module.exports = Type;

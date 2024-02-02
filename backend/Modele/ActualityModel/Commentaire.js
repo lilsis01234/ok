@@ -38,7 +38,7 @@ Commentaire.init({
 
 }, {
     sequelize,
-    modelName: 'Commentaire'
+    modelName: 'Actualite_Commentaire'
 });
 
 Commentaire.belongsTo(Actualite, {

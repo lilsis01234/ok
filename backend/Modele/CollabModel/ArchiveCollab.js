@@ -163,7 +163,7 @@ ArchiveCollaborateur.init({
     }
 }, {
     sequelize,
-    modelName: 'ArchiveCollab'
+    modelName: 'Profile_ArchiveCollab'
 })
 
 

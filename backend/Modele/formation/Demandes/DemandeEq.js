@@ -3,7 +3,7 @@ const sequelize = require('../../../database/database');
 const Equipe2 = require('../../Structure/Equipe')
 const DemandeFormation = require('./demandeFormation')
 
-const DemandeFormationEq= sequelize.define('DemandeEq', {
+const DemandeFormationEq= sequelize.define('Formation_DemandeEq', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true,

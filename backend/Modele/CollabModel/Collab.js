@@ -156,7 +156,7 @@ Collab.init({
 
 }, {
     sequelize,
-    modelName: 'Collab'
+    modelName: 'Profil_Collab'
 })
 
 
