@@ -63,7 +63,7 @@ router.get('/view/:id', async(req, res) => {
     const {id} = req.params;
     try {
         const compteCollab = await Compte.findByPk(id, {
-            attributes: ['id', 'email',  'collaborateur', 'RoleHierarchiqueId'],
+            attributes: ['id', 'email',  'collaborateur', 'ProfileRoleHierarchiqueId'],
             include: [
                 {
                     model: Collab,
@@ -140,7 +140,7 @@ router.put('/:id/edit', async(req, res) => {
 
         const updatedCompte = await updateCompte.update({
             // email : req.body.email,
-            RoleHierarchiqueId : req.body.RoleHierarchiqueId
+            ProfileRoleHierarchiqueId : req.body.ProfileRoleHierarchiqueId
         })
 
         return res.status(201).json(updatedCompte);

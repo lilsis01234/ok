@@ -93,17 +93,17 @@ export const updateUserData = (user) => async (dispatch, getState) => {
 
 const storedUser = localStorage.getItem('user');    
 const userConnected = JSON.parse(storedUser)
-// console.log(userConnected)
+console.log(userConnected)
 
 let initialState
 if (userConnected) {
   initialState = {
-    role : userConnected.RoleHierarchique?.Role?.titreRole,
-    roleHierarchique :  userConnected.RoleHierarchique?.roleHierarchique,
+    role : userConnected.Profile_RoleHierarchique?.Profile_Role?.titreRole,
+    roleHierarchique :  userConnected.Profile_RoleHierarchique?.roleHierarchique,
     data : {
-      displayName : userConnected.Collab?.nom + ' ' + userConnected.Collab?.prenom,
+      displayName : userConnected.Profil_Collab?.nom + ' ' + userConnected.Profil_Collab?.prenom,
       email : userConnected.email,
-      photo : userConnected.Collab,
+      photo : userConnected.Profil_Collab,
       CompteId : userConnected.id,
     }
   }

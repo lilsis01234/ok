@@ -80,13 +80,13 @@ function CompteCollaborateurTable() {
                                     key={n.id}
                                     onClick={(event) => handleClick(n)}
                                 >
-                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Collab?.matricule}</TableCell>
-                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Collab?.nom} {n.Collab?.prenom}</TableCell>
-                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Collab?.poste1?.titrePoste}</TableCell>
-                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Collab?.departement1?.nomDepartement}</TableCell>
+                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Profil_Collab?.matricule}</TableCell>
+                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Profil_Collab?.nom} {n.Profil_Collab?.prenom}</TableCell>
+                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Profil_Collab?.poste1?.titrePoste}</TableCell>
+                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Profil_Collab?.departement1?.nomDepartement}</TableCell>
                                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.email}</TableCell>
-                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.RoleHierarchique?.roleHierarchique}</TableCell>
-                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.RoleHierarchique?.Role?.titreRole}</TableCell>
+                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Profile_RoleHierarchique?.roleHierarchique}</TableCell>
+                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Profile_RoleHierarchique?.Profile_Role?.titreRole}</TableCell>
                                 </TableRow>
                             ))
                         }

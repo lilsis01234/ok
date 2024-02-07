@@ -12,9 +12,9 @@ function CollaborateurProfileContent(props) {
     const [collabSameDepartement, setCollabSameDepartement] = useState([])
     const [collabSameProject, setCollabSameProject] = useState([])
 
-    const collabId = collabData.Collab?.id
-    const collabDepartement = collabData.Collab?.departement
-    const collabProjet = collabData.Collab?.projet
+    const collabId = collabData.Profil_Collab?.id
+    const collabDepartement = collabData.Profil_Collab?.departement
+    const collabProjet = collabData.Profil_Collab?.projet
 
     const fetchCollabData = () => {
         axios.get(`http://localhost:4000/api/collaborateur/sameDepartement/${collabId}/${collabDepartement}`)
@@ -74,19 +74,19 @@ function CollaborateurProfileContent(props) {
                             <CardContent className="px-32 py-24">
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Sexe</Typography>
-                                    <Typography>{collabData.Collab?.sexe}</Typography>
+                                    <Typography>{collabData.Profil_Collab?.sexe}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Adresse</Typography>
-                                    <Typography>{collabData.Collab?.quartier}</Typography>
+                                    <Typography>{collabData.Profil_Collab?.quartier}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Site</Typography>
-                                    <Typography>{collabData.Collab?.sites?.nomSite}</Typography>
+                                    <Typography>{collabData.Profil_Collab?.sites?.nomSite}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Entreprise</Typography>
-                                    <Typography>{collabData.Collab?.entreprise}</Typography>
+                                    <Typography>{collabData.Profil_Collab?.entreprise}</Typography>
                                 </div>
 
                             </CardContent>
@@ -102,52 +102,52 @@ function CollaborateurProfileContent(props) {
                             <CardContent className="px-32 py-24">
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Postes</Typography>
-                                    <Typography>{collabData.Collab?.poste1?.titrePoste}</Typography>
+                                    <Typography>{collabData.Profil_Collab?.poste1?.titrePoste}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Département</Typography>
-                                    <Typography>{collabData.Collab?.departement1?.nomDepartement}</Typography>
+                                    <Typography>{collabData.Profil_Collab?.departement1?.nomDepartement}</Typography>
                                 </div>
-                                {collabData.Collab?.projet1?.nomProjet && (
+                                {collabData.Profil_Collab?.projet1?.nomProjet && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Projet</Typography>
-                                        <Typography>{collabData.Collab?.projet1?.nomProjet}</Typography>
+                                        <Typography>{collabData.Profil_Collab?.projet1?.nomProjet}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.equipe1?.nomEquipe && (
+                                {collabData.Profil_Collab?.equipe1?.nomEquipe && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Equipe</Typography>
-                                        <Typography>{collabData.Collab?.equipe1?.nomEquipe}</Typography>
+                                        <Typography>{collabData.Profil_Collab?.equipe1?.nomEquipe}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.shift && (
+                                {collabData.Profil_Collab?.shift && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Shift</Typography>
-                                        <Typography>{collabData.Collab?.shift}</Typography>
+                                        <Typography>{collabData.Profil_Collab?.shift}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.postes?.titrePoste && (
+                                {collabData.Profil_Collab?.postes?.titrePoste && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Poste</Typography>
-                                        <Typography>{collabData.Collab?.postes?.titrePoste}</Typography>
+                                        <Typography>{collabData.Profil_Collab?.postes?.titrePoste}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.departements?.nomDepartement && (
+                                {collabData.Profil_Collab?.departements?.nomDepartement && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Département</Typography>
-                                        <Typography>{collabData.Collab?.departements?.nomDepartement}</Typography>
+                                        <Typography>{collabData.Profil_Collab?.departements?.nomDepartement}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.projets?.nomProjet && (
+                                {collabData.Profil_Collab?.projets?.nomProjet && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Projet</Typography>
-                                        <Typography>{collabData.Collab?.projets?.nomProjet}</Typography>
+                                        <Typography>{collabData.Profil_Collab?.projets?.nomProjet}</Typography>
                                     </div>
                                 )}
-                                {collabData.Collab?.projets?.equipes && (
+                                {collabData.Profil_Collab?.projets?.equipes && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Equipe</Typography>
-                                        <Typography>{collabData.Collab?.projets?.equipes}</Typography>
+                                        <Typography>{collabData.Profil_Collab?.projets?.equipes}</Typography>
                                     </div>
                                 )}
 
@@ -170,7 +170,7 @@ function CollaborateurProfileContent(props) {
 
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Téléphone</Typography>
-                                    <Typography>{collabData.Collab?.tel}</Typography>
+                                    <Typography>{collabData.Profil_Collab?.tel}</Typography>
                                 </div>
                             </CardContent>
 

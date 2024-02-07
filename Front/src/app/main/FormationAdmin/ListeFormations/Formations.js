@@ -28,7 +28,7 @@ const Formations = () => {
   const[Formation,setFormations] = useState([]);
   const [FormationAdmin, setFormationAdmin] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
-  const role = user.RoleHierarchique.roleHierarchique;
+  const role = user.Profile_RoleHierarchique?.roleHierarchique;
   const userId = user.id;
   const [editingFormation, setEditingFormation] = useState(null);
 

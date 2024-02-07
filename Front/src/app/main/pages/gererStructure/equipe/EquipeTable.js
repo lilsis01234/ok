@@ -164,7 +164,7 @@ function EquipeTable(props) {
                                             {n.nomEquipe}
                                         </TableCell>
                                         <TableCell className="p-4 md:p-16 " component="th" scope="row">
-                                            {n.Projet?.nomProjet}
+                                            {n.Profile_Equipe?.nomProjet}
                                         </TableCell>
 
                                     </TableRow>

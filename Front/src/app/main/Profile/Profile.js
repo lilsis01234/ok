@@ -121,22 +121,22 @@ function Profile() {
                         </div>
                         <div className="-mt-96 lg:-mt-88 rounded-full">
                             <motion.div initial={{ scale: 0 }} animate={{ scale: 1, transition: { delay: 0.1 } }}>
-                                {userData.Collab?.image ? (
+                                {userData.Profil_Collab?.image ? (
                                     <Avatar
                                         sx={{ borderColor: 'background.paper' }}
                                         className="w-128 h-128 border-4"
-                                        src={`http://localhost:4000/${userData.Collab?.image}`}
+                                        src={`http://localhost:4000/${userData.Profil_Collab?.image}`}
                                         alt="User avatar"
                                     />
                                 ) : (
                                     <Avatar sx={{ borderColor: 'background.paper' }}
-                                        className="w-128 h-128 border-4">{userData.Collab?.nom ? userData.Collab?.nom[0] : '?'}</Avatar>
+                                        className="w-128 h-128 border-4">{userData.Profil_Collab?.nom ? userData.Profil_Collab?.nom[0] : '?'}</Avatar>
                                 )}
                             </motion.div>
                         </div>
                         <div className="flex flex-col items-center lg:items-start mt-16 lg:mt-0 lg:ml-32">
-                            <Typography className="text-lg font-bold leading-none">{userData.Collab?.nom} {userData.Collab?.prenom} </Typography>
-                            <Typography color="text.secondary">{userData.Collab?.matricule}</Typography>
+                            <Typography className="text-lg font-bold leading-none">{userData.Profil_Collab?.nom} {userData.Profil_Collab?.prenom} </Typography>
+                            <Typography color="text.secondary">{userData.Profil_Collab?.matricule}</Typography>
                         </div>
                         <div className="flex flex-1 justify-end my-16 lg:my-0">
                             <Tabs
@@ -181,7 +181,7 @@ function Profile() {
             content={
                 <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
                     {selectedTab === 0 && <AproposTab userData={userData}/>}
-                    {selectedTab === 1 && <FormationTab userFormations={Formation}/>}
+                    {/* {selectedTab === 1 && <FormationTab userFormations={Formation}/>} */}
                 </div>
 
             }

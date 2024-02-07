@@ -169,7 +169,7 @@ function DepartementTable(props) {
                                         {n.nomDepartement}
                                     </TableCell>
                                     <TableCell className="p-4 md:p-16 " component="th" scope="row">
-                                        {n.Direction?.nomDirection}
+                                        {n.Profile_Direction?.nomDirection}
                                     </TableCell>
 
                                 </TableRow>

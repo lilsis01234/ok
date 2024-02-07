@@ -12,7 +12,7 @@ const DemandeFormations = () => {
   const[DemandeConsExt, setDemandeConsExt] = useState([])
   const[DemandeCoatch, setDemandeCoatch] = useState([])
   const user = JSON.parse(localStorage.getItem('user'));
-  const role = user.RoleHierarchique.roleHierarchique;
+  const role = user.Profile_RoleHierarchique.roleHierarchique;
   const [showButtons, setShowButtons] = useState(false);
   const[formExt, setFormExt] = useState(null);
 

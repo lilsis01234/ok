@@ -13,9 +13,9 @@ function AproposTab(props) {
     const [collabSameDepartement, setCollabSameDepartement] = useState([])
     const [collabSameProject, setCollabSameProject] = useState([])
 
-    const collabId = userData.Collab?.id
-    const collabDepartement = userData.Collab?.departement
-    const collabProjet = userData.Collab?.projet
+    const collabId = userData.Profil_Collab?.id
+    const collabDepartement = userData.Profil_Collab?.departement
+    const collabProjet = userData.Profil_Collab?.projet
 
     const fetchCollabData = () => {
         axios.get(`http://localhost:4000/api/collaborateur/sameDepartement/${collabId}/${collabDepartement}`)
@@ -62,9 +62,9 @@ function AproposTab(props) {
         },
     };
 
-    const formattedDateBirth = moment(userData.Collab?.dateNaissance).format('DD MMMM YYYY');
-    const formattedDateDelivrance = moment(userData.Collab?.dateDelivrance).format('DD MMMM YYYY');
-    const formattedDateEmbauche = moment(userData.Collab?.dateEmbauche).format('DD MMMM YYYY')
+    const formattedDateBirth = moment(userData.Profil_Collab?.dateNaissance).format('DD MMMM YYYY');
+    const formattedDateDelivrance = moment(userData.Profil_Collab?.dateDelivrance).format('DD MMMM YYYY');
+    const formattedDateEmbauche = moment(userData.Profil_Collab?.dateEmbauche).format('DD MMMM YYYY')
 
     return (
         <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
@@ -84,50 +84,50 @@ function AproposTab(props) {
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Lieu de naissance</Typography>
-                                    <Typography>{userData.Collab?.lieuNaissance}</Typography>
+                                    <Typography>{userData.Profil_Collab?.lieuNaissance}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Sexe</Typography>
-                                    <Typography> {userData.Collab?.sexe}</Typography>
+                                    <Typography> {userData.Profil_Collab?.sexe}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Adresse</Typography>
-                                    <Typography>{userData.Collab?.lot} {userData.Collab?.quartier} {userData.Collab?.quartier}</Typography>
+                                    <Typography>{userData.Profil_Collab?.lot} {userData.Profil_Collab?.quartier} {userData.Profil_Collab?.quartier}</Typography>
                                 </div>
-                                {userData.Collab?.adresse2 && (
+                                {userData.Profil_Collab?.adresse2 && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Adresse</Typography>
-                                        <Typography>{userData.Collab?.adresse2}</Typography>
+                                        <Typography>{userData.Profil_Collab?.adresse2}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.CIN && (
+                                {userData.Profil_Collab?.CIN && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">CIN</Typography>
-                                        <Typography>{userData.Collab?.CIN}</Typography>
+                                        <Typography>{userData.Profil_Collab?.CIN}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.dateDelivrance && (
+                                {userData.Profil_Collab?.dateDelivrance && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Date de délivrance</Typography>
                                         <Typography>{formattedDateDelivrance}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.lieuDelivrance && (
+                                {userData.Profil_Collab?.lieuDelivrance && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Lieu de délivrance</Typography>
-                                        <Typography>{userData.Collab?.lieuDelivrance}</Typography>
+                                        <Typography>{userData.Profil_Collab?.lieuDelivrance}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.statutmatrimoniale && (
+                                {userData.Profil_Collab?.statutmatrimoniale && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Statut matrimoniale</Typography>
-                                        <Typography>{userData.Collab?.statutmatrimoniale}</Typography>
+                                        <Typography>{userData.Profil_Collab?.statutmatrimoniale}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.nbEnfant && (
+                                {userData.Profil_Collab?.nbEnfant && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Nombre d'enfant</Typography>
-                                        <Typography>{userData.Collab?.nbEnfant}</Typography>
+                                        <Typography>{userData.Profil_Collab?.nbEnfant}</Typography>
                                     </div>
                                 )}
 
@@ -148,60 +148,60 @@ function AproposTab(props) {
                             <CardContent className="px-32 py-24">
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Postes</Typography>
-                                    <Typography>{userData.Collab?.poste1?.titrePoste}</Typography>
+                                    <Typography>{userData.Profil_Collab?.poste1?.titrePoste}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Département</Typography>
-                                    <Typography>{userData.Collab?.departement1?.nomDepartement}</Typography>
+                                    <Typography>{userData.Profil_Collab?.departement1?.nomDepartement}</Typography>
                                 </div>
-                                {userData.Collab?.projet1?.nomProjet && (
+                                {userData.Profil_Collab?.projet1?.nomProjet && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Projet</Typography>
-                                        <Typography>{userData.Collab?.projet1?.nomProjet}</Typography>
+                                        <Typography>{userData.Profil_Collab?.projet1?.nomProjet}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.equipe1?.nomEquipe && (
+                                {userData.Profil_Collab?.equipe1?.nomEquipe && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Equipe</Typography>
-                                        <Typography>{userData.Collab?.equipe1?.nomEquipe}</Typography>
+                                        <Typography>{userData.Profil_Collab?.equipe1?.nomEquipe}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.shift && (
+                                {userData.Profil_Collab?.shift && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Shift</Typography>
-                                        <Typography>{userData.Collab?.shift}</Typography>
+                                        <Typography>{userData.Profil_Collab?.shift}</Typography>
                                     </div>
                                 )}
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Site</Typography>
-                                    <Typography>{userData.Collab?.sites?.nomSite}</Typography>
+                                    <Typography>{userData.Profil_Collab?.sites?.nomSite}</Typography>
                                 </div>
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Entreprise</Typography>
-                                    <Typography>{userData.Collab?.entreprise}</Typography>
+                                    <Typography>{userData.Profil_Collab?.entreprise}</Typography>
                                 </div>
-                                {userData.Collab?.postes?.titrePoste && (
+                                {userData.Profil_Collab?.postes?.titrePoste && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Poste</Typography>
-                                        <Typography>{userData.Collab?.postes?.titrePoste}</Typography>
+                                        <Typography>{userData.Profil_Collab?.postes?.titrePoste}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.departements?.nomDepartement && (
+                                {userData.Profil_Collab?.departements?.nomDepartement && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Département</Typography>
-                                        <Typography>{userData.Collab?.departements?.nomDepartement}</Typography>
+                                        <Typography>{userData.Profil_Collab?.departements?.nomDepartement}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.projets?.nomProjet && (
+                                {userData.Profil_Collab?.projets?.nomProjet && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Projet</Typography>
-                                        <Typography>{userData.Collab?.projets?.nomProjet}</Typography>
+                                        <Typography>{userData.Profil_Collab?.projets?.nomProjet}</Typography>
                                     </div>
                                 )}
-                                {userData.Collab?.projets?.equipes && (
+                                {userData.Profil_Collab?.projets?.equipes && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Equipe</Typography>
-                                        <Typography>{userData.Collab?.projets?.equipes}</Typography>
+                                        <Typography>{userData.Profil_Collab?.projets?.equipes}</Typography>
                                     </div>
                                 )}
                             </CardContent>
@@ -221,12 +221,12 @@ function AproposTab(props) {
 
                                 <div className="mb-24">
                                     <Typography className="font-semibold mb-4 text-15">Téléphone</Typography>
-                                    <Typography>{userData.Collab?.tel}</Typography>
+                                    <Typography>{userData.Profil_Collab?.tel}</Typography>
                                 </div>
-                                {userData.Collab?.tel2 && (
+                                {userData.Profil_Collab?.tel2 && (
                                     <div className="mb-24">
                                         <Typography className="font-semibold mb-4 text-15">Deuxième Téléphone</Typography>
-                                        <Typography>{userData.Collab?.tel2}</Typography>
+                                        <Typography>{userData.Profil_Collab?.tel2}</Typography>
                                     </div>
                                 )}
                             </CardContent>

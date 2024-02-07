@@ -10,9 +10,9 @@ import moment from 'moment';
 
 function FormationTab (props){
     const {Formation} = props;
-    const Theme = Formation.Theme;
-    const description = Formation.description;
-    const confidentialite = Formation.confidentialite;
+    // const Theme = Formation.Theme;
+    // const description = Formation.description;
+    // const confidentialite = Formation.confidentialite;
     
     return(
         <h1>Test</h1>

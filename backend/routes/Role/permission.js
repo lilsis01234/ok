@@ -21,7 +21,9 @@ router.post('/new', async (req, res) => {
         // Si des rôles sont associés, les ajouter à la table RolePermission
         if (role && role.length > 0) {
             for (const roleId of role) {
-                const roleInstance = await RoleHierarchique.findByPk(roleId);
+                const roleInstance = await RoleHierarchique.findByPk({
+                    ProfileRoleId : roleId,
+                });
                 if (!roleInstance) {
                     console.log('RolePermission non sauvegardé', roleId);
                 }
