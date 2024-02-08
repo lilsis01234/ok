@@ -62,23 +62,23 @@ function CollaborateurList(props) {
                 >
                     <div className="flex flex-col flex-auto w-full p-32 text-center pointer" >
                         <div className="w-128 h-128 mx-auto rounded-full overflow-hidden">
-                            {collab.Collab?.image ? (
+                            {collab.Profil_Collab?.image ? (
                                 <Avatar
                                     sx={{
                                         backgroundColor: 'background.paper',
                                         color: 'text.secondary',
                                     }}
-                                    className="avatar text-32 font-bold w-96 h-96" alt="user photo" src={`http://localhost:4000/${collab.Collab?.image}`} />
+                                    className="avatar text-32 font-bold w-96 h-96" alt="user photo" src={`http://localhost:4000/${collab.Profil_Collab?.image}`} />
                             ) : (
                                 <Avatar sx={{
                                     backgroundColor: 'background.paper',
                                     color: 'text.secondary',
                                 }}
-                                    className="avatar text-32 font-bold w-96 h-96">{collab.Collab?.nom ? collab.Collab?.nom[0] : '?'}</Avatar>
+                                    className="avatar text-32 font-bold w-96 h-96">{collab.Profil_Collab?.nom ? collab.Profil_Collab?.nom[0] : '?'}</Avatar>
                             )}
                         </div>
-                        <Typography className="mt-24 font-medium">{collab.Collab?.nom} {collab.Collab?.prenom}</Typography>
-                        <Typography color="text.secondary">{collab.Collab?.poste1?.titrePoste}</Typography>
+                        <Typography className="mt-24 font-medium">{collab.Profil_Collab?.nom} {collab.Profil_Collab?.prenom}</Typography>
+                        <Typography color="text.secondary">{collab.Profil_Collab?.poste1?.titrePoste}</Typography>
                     </div>
                     <div className="flex items-center w-full border-t divide-x">
                         <a

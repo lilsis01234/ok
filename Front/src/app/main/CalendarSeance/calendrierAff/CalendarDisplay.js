@@ -18,8 +18,8 @@ function CalendarTraining() {
   const [isParticipantListVisible, setParticipantListVisible] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const userid = user.id;
-  const equipe = user.Collab.equipe;
-  const role = user.RoleHierarchique.roleHierarchique;
+  const equipe = user.Profil_Collab?.equipe;
+  const role = user.Profile_RoleHierarchique?.roleHierarchique;
   const[opacity,setOpacity] = useState(1);
   const navigate = useNavigate();
 

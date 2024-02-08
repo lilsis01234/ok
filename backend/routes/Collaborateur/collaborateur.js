@@ -123,7 +123,7 @@ router.post('/new', upload.single('image'), async (req, res) => {
 
 
         //Définition du formulaire par défaut
-        let role = req.body.RoleHierarchiqueId
+        let role = req.body.ProfileRoleHierarchiqueId
         if (!role) {
             const UserRole = await RoleHierarchique.findOne({
                 where: { RoleHierarchique: "User" }
@@ -142,7 +142,7 @@ router.post('/new', upload.single('image'), async (req, res) => {
             email: req.body.email,
             password: hashedPassword,
             collaborateur: savedCollab.id,
-            RoleHierarchiqueId: role
+            ProfileRoleHierarchiqueId: role
         })
         const savedCompte = await newCompte.save();
 
@@ -497,7 +497,7 @@ router.post('/import-excel', uploads.single('excel'), async (req, res) => {
                         const generatePassword = generateRandomPassword();
                         const hashedPassword = await bcrypt.hash(generatePassword, saltRounds)
 
-                        let role = req.body.RoleHierarchiqueId
+                        let role = req.body.ProfileRoleHierarchiqueId
                         if (!role) {
                             const UserRole = await RoleHierarchique.findOne({
                                 where: { RoleHierarchique: 'User' }
@@ -522,7 +522,7 @@ router.post('/import-excel', uploads.single('excel'), async (req, res) => {
                             email: email,
                             password: hashedPassword,
                             collaborateur: saved.id,
-                            RoleHierarchiqueId: role
+                            ProfileRoleHierarchiqueId: role
                         })
 
                         // const mailOptions = {

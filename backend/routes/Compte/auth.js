@@ -45,7 +45,8 @@ router.post('/connect', (req, res, next) => {
                         return res.status(401).json({ message: 'Mot de passe incorrect' })
                     }
 
-                    const userRoleId = comptes.RoleHierarchiqueId;
+                    const userRoleId = comptes.ProfileRoleHierarchiqueId;
+                    console.log(userRoleId)
 
                     RoleHierarchique.findOne({
                         where: { id: userRoleId },
@@ -76,7 +77,7 @@ router.post('/connect', (req, res, next) => {
                                 compte: comptesWithoutPassword,
                                 token: token,
                                 refresh_token,
-                                role: roles.Role.titreRole,
+                                role: roles.Role?.titreRole,
                             })
                             console.log('Utilisateur connecté avec succés')
 
@@ -174,7 +175,7 @@ router.post('/access-token', async (req, res) => {
                     model : Collab,
                     attributes: ['id','nom', 'prenom', 'matricule', 'image']
                 }],
-                attributes: ['email', 'collaborateur', 'lastResetRequest', 'RoleHierarchiqueId']
+                attributes: ['email', 'collaborateur', 'lastResetRequest', 'ProfileRoleHierarchiqueId']
             })
             console.log(compte)
 

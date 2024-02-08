@@ -17,7 +17,7 @@ router.get('/:id/profile', async(req, res) => {
             where : {
                 id : id,
             },
-            attributes : ['email', 'RoleHierarchiqueId'],
+            attributes : ['email', 'ProfileRoleHierarchiqueId'],
             include : [
                 {
                     model : Collab,
