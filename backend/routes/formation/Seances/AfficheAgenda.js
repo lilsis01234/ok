@@ -37,4 +37,49 @@ router.delete('/seance/:id',async(req,res) =>{
     }
 })
 
+
+//Route pour mettre à jour un formation existants
+router.put('/edit/:id', async(req, res) => {
+  try {
+    const eventsData = req.body.events;
+    const formation = req.body.idformation;
+
+    const {id} = req.params;
+  
+    const agendaEntries = await Promise.all(eventsData.map(async event => {
+      const { start, end, title, nombreDePlaces } = event;
+
+      const sceanceToEdit = await Agenda.findByPk(id);
+
+      if(!sceanceToEdit){
+        res.status(404).json({error : 'Scéance introuvable'})
+      }
+
+      const agendaEntry = await sceanceToEdit.update({
+        date : start,
+        heureStart : start,
+        heureEnd : end, 
+        nombreDePlacesReservees : 0,
+        nombreDePlaces : nombreDePlaces,
+        title : title,
+        formation,
+        approbation : 1
+      });
+
+      return agendaEntry;
+
+
+    }))
+
+
+    res.status(201).json(agendaEntries)
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({error : 'Erreur serveur'})
+  }
+})
+
+
+
 module.exports = router;

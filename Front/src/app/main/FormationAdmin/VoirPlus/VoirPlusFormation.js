@@ -22,7 +22,7 @@ const VoirPlusFormation = () => {
     const [isParticipantListVisible, setParticipantListVisible] = useState(false);
     const user = JSON.parse(localStorage.getItem('user'))
     const userId = user.id;
-    const role = user.RoleHierarchique.roleHierarchique;
+    const role = user.Profile_RoleHierarchique?.roleHierarchique;
     console.log(role)
 
     const fetchFormation = () => {
