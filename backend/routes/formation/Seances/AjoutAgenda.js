@@ -33,4 +33,30 @@ router.post('/agenda', async (req, res) => {
   }
 });
 
+//Pour ajouter des scéances à une formation
+router.post('/addSceance', async(req, res) => {
+  try {
+    const {title, start, end, nombreDePlaces, formation} = req.body;
+
+    const agendaEntry = await Agenda.create({
+      date : start,
+      heureStart : start,
+      heureEnd : end,
+      nombreDePlacesReservees : 0,
+      nombreDePlaces : nombreDePlaces,
+      title : title,
+      formation : formation,
+      approbation : 1
+    })
+
+    res.status(201).json(agendaEntry)
+
+
+
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({error : 'Erreur lors de l\'ajout des scéances'})
+  }
+})
+
 module.exports = router;

@@ -136,32 +136,28 @@ router.get('/all_informations/:idformation', async(req,res)=>{
 });
 
 //Les formations organisées par une personne
-router.get('/formations/:idPersonne',async(req,res)=>{
-    const idPersonne = req.params.idPersonne;
-    Formation.findAll({
-      include: [
-        {
-          model: Collaborateur,
-          as: 'Formateur',
-          attributes: ['nom', 'prenom','image'],
-        },
-        ],
-        where: {
-            formateur: idPersonne,
-        }
+router.get('/formations/:idPersonne', async(req, res) => {
+  const idPersonne = req.params.idPersonne
+  try {
+    const formation = await Formation.findAll({
+      where : {
+        formateur : idPersonne
+      }, 
+      include : {
+        model : Collaborateur,
+        as : 'Formateur',
+        attributes : ['nom', 'prenom', 'matricule', 'image']
+      },
     })
-    .then((formation) => {
-        res.status(200).json(formation.map((formation) => {
-          return {
-            id: formation.id,
-            theme: formation.theme,
-            description: formation.description,
-            formateur: formation.Formateur ? `${formation.Formateur.titreRole}` : null,
-          };
-        }))
-        console.log(formation)
-    }) 
+
+    res.status(200).json(formation)
+  } catch (error) {
+    console.error('Error');
+    res.status(404).json('Erreur lors de la récupération des formation organisé par une personne')
+  }
 })
+
+
 
 router.get('/formationsPourMoi/:idPersonne',async(req,res)=>{
 

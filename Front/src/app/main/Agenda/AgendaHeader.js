@@ -1,12 +1,38 @@
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { IconButton, Tooltip, Typography } from '@mui/material';
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion';
 import AgendaViewMenu from './AgendaViewMenu';
+import { useDispatch } from 'react-redux';
+import { openNewEventDialog } from './store/eventsSlice';
+import EventDialog from './dialog/event/EventDialog';
 
 function AgendaHeader(props) {
     const { calendarRef, currentDate, onToggleLeftSidebar } = props;
     const calendarApi = () => calendarRef.current?.getApi();
+
+    const [isEventDialogOpen, setIsEventDialogOpen] = useState(false);
+
+    
+    //pour récupérer la position du boîte de dialogue
+    const [dialogPosition, setDialogPosition] = useState({x : 0, y : 0});
+
+
+    const handleDialogOpen = (ev) => {
+        // Récupérer les coordonnées du clic de souris par rapport à la fenêtre
+        setIsEventDialogOpen(true)
+        const positionX = ev.clientX;
+        const positionY = ev.clientY;
+        
+        // Mettre à jour l'état avec les nouvelles coordonnées
+        setDialogPosition({ x: positionX, y: positionY });
+    };
+
+    //Pour fermer le PopOvez
+    const closePopover = () => {
+        setIsEventDialogOpen(false);
+    }
+ 
 
 
 
@@ -59,12 +85,17 @@ function AgendaHeader(props) {
                 <IconButton
                      className="mx-8"
                      aria-label="add"
+                     onClick={handleDialogOpen}
                 >
                     <FuseSvgIcon>heroicons-outline:plus-circle</FuseSvgIcon>
                 </IconButton>
-                <AgendaViewMenu currentDate={currentDate} calendarApi={calendarApi}/>
+                <AgendaViewMenu currentDate={currentDate} calendarApi={calendarApi} />
 
             </motion.div>
+
+            {isEventDialogOpen && (
+                <EventDialog open={isEventDialogOpen} type={'new'} position={dialogPosition} closePopover={closePopover}/>
+            )}
 
 
         </div>

@@ -9,7 +9,13 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import frLocale from '@fullcalendar/core/locales/fr';
 import AgendaAppSideBar from './AgendaAppSideBar';
-
+import EventDialog from './dialog/event/EventDialog';
+import { useDispatch } from 'react-redux';
+import { getSceanceEvents, openNewEventDialog, selectFilteredEvents } from './store/eventsSlice';
+import axios from 'axios';
+import moment from 'moment-timezone';
+import AgendaAppEventContent from './AgendaAppEventContent';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
     '& a': {
@@ -86,14 +92,18 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 function AgendaApp() {
     const [currentDate, setCurrentDate] = useState();
     const [events, setEvents] = useState();
+    // const events = dispatch(selectFilteredEvents)
     const calenderRef = useRef();
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
     const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile)
     const theme = useTheme()
     const [labels, setLabels] = useState();
 
-    //Récupérer les labels et les évenements ici 
+    const dispatch = useDispatch();
 
+
+
+    //Récupérer les labels et les évenements ici 
 
     useEffect(() => {
         setLeftSidebarOpen(!isMobile);
@@ -107,18 +117,119 @@ function AgendaApp() {
     }, [leftSidebarOpen]);
 
 
-    const handleDateSelect = (selectInfo) => {
-        const { start, end } = selectInfo;
-        //Mettre le code qui permet de faire quelque chose quand une date est selectionnée
+    //Pour récupérer la position de la boîte de dialogue
+    const [dialogPosition, setDialogPosition] = useState({ x: 0, y: 0 })
+
+
+    //Pour ouvrir la boîte de dialogue
+    const [isEventDialogOpen, setIsEventDialogOpen] = useState(false);
+
+
+    //Pour fermer la boîte de dialogue
+    const handleDialogClose = (e) => {
+        setIsEventDialogOpen(false)
     }
 
-    const handleEventDrop=(eventDropInfo) => {
-        //Mettre le code qui s'affiche quand un évenement est cliqué
+    //pour définir le type de la boite de dialogue (édition ou ajout)
+    const [type, setType] = useState('')
+
+    const [data, setData] = useState({});
+
+    const handleDateSelect = (selectInfo) => {
+        const { start, end, jsEvent } = selectInfo || 'null';
+        //Mettre le code qui permet de faire quelque chose quand une date est selectionnée
+        setType('new');
+        setIsEventDialogOpen(true);
+        const positionX = jsEvent?.clientX;
+        const positionY = jsEvent?.clientY;
+
+        setData({
+            eventStart: start,
+            eventEnd: end
+        })
+
+        setDialogPosition({ x: positionX, y: positionY })
     }
+
+    
+    //Pour mettre à jour les scéances existants quand on change l'emplacement des evenements
+    const updateEvents = (id, data) =>{
+        axios.put(`http://localhost:4000/api/calendrier/edit/${id}`, data)
+           .then(response => {
+                dispatch(showMessage({message : 'Scéance mise à jour avec succès'}))
+           })
+           .catch(error => {
+                dispatch(showMessage({message : 'Erreur lors de la mise à jour des calendrier'}))
+                console.error(error);
+            })
+    }
+
+
+    const handleEventDrop = (eventDropInfo) => {
+        //Mettre le code qui s'execute quand on change l'emplacement d'une évenement
+        console.log(eventDropInfo)
+        const {event} = eventDropInfo;
+        const {start, end} = event;
+
+        const idEvent = event?._def?.publicId
+        const id = parseInt(idEvent, 10);
+
+        const data = {
+            start,
+            end,
+        }
+
+        updateEvents(id, data);
+
+    }
+
+
+
+
+    //Récupérer l'id de l'évenement cliqué
+    const [idEventClick, setIdEventClick] = useState();
+
+    //Récupérer les informations concernant l'évenement cliqué
+    //Evenement de type scéance
+    const getSceanceEvent = (id) => {
+        axios.get(`http://localhost:4000/api/calendrier/view/${id}`)
+            .then((response) => {
+                setData({
+                    //    eventStart : response.data.heureStart,
+                    //    eventEnd :  response.data.heureEnd,
+                    eventStart: moment.tz(response.data.heureStart, 'Africa/Nairobi').toDate(),
+                    eventEnd: moment.tz(response.data.heureEnd, 'Africa/Nairobi').toDate(),
+                    titleEvents: response.data.title,
+                    nombrePlaces: response.data.nombreDePlaces,
+                    formation: response.data.formation,
+                })
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
+
+
 
     const handleEventClick = (clickInfo) => {
-        //Mettre le code qui permet de faire quelque chose quand une date est cliquée
+        //Mettre le code qui s'execute quand un évenement est cliqué
+        const { event, jsEvent } = clickInfo || 'null';
+        const idEvent = event?._def?.publicId
+        const id = parseInt(idEvent, 10);
+
+        setType('edit');
+        setIsEventDialogOpen(true);
+        setIdEventClick(id);
+        getSceanceEvent(id);
+
+        const positionX = jsEvent?.clientX;
+        const positionY = jsEvent?.clientY;
+
+        setDialogPosition({ x: positionX, y: positionY })
     }
+
+
+
 
     const handleDates = (rangeInfo) => {
         setCurrentDate(rangeInfo)
@@ -133,6 +244,26 @@ function AgendaApp() {
     function handleToggleLeftSidebar() {
         setLeftSidebarOpen(!leftSidebarOpen);
     }
+
+    //Récupération des evenements type Scéances
+    useEffect(() => {
+        axios.get('http://localhost:4000/api/calendrier/agenda')
+            .then((response) => {
+                const formattedEvents = response.data.filter((res) => res.Formation?.confidentialite === false).map((event) => {
+                    return {
+                        auteur: event.Formation.formateur,
+                        id: event.id,
+                        title: `${event.title} - ${event.nombreDePlaces} places`,
+                        start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(),
+                        end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(),
+                    };
+                });
+                setEvents(formattedEvents);
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }, [])
 
 
 
@@ -149,7 +280,7 @@ function AgendaApp() {
                 content={
                     <FullCalendar
                         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                        locale={frLocale} 
+                        locale={frLocale}
                         headerToolbar={false}
                         initialView="dayGridMonth"
                         editable
@@ -160,7 +291,7 @@ function AgendaApp() {
                         datesSet={handleDates}
                         select={handleDateSelect}
                         events={events}
-                        // eventContent={(eventInfo) => <CalendarAppEventContent eventInfo={eventInfo} />}
+                        eventContent={(eventInfo) => <AgendaAppEventContent eventInfo={eventInfo} />}
                         eventClick={handleEventClick}
                         eventAdd={handleEventAdd}
                         eventChange={handleEventChange}
@@ -175,6 +306,14 @@ function AgendaApp() {
                 leftSidebarOnClose={() => setLeftSidebarOpen(false)}
                 leftSidebarWidth={240}
                 scroll="content"
+            />
+            <EventDialog
+                open={isEventDialogOpen}
+                type={type}
+                position={dialogPosition}
+                closePopover={handleDialogClose}
+                data={data}
+                idEvent={idEventClick}
             />
         </>
     )

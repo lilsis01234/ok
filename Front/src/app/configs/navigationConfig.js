@@ -123,7 +123,7 @@ const loadFrontOfficeNavigation = () => {
           type: 'item',
           icon: 'heroicons-outline:calendar',
           translate: 'Agenda',
-          url : 'dashboards/calendarseance',          
+          url : '/agenda',          
           auth: {
             role: ['SuperAdmin', 'User', 'Admin'],
           },

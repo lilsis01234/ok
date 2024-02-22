@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const  Agenda  = require('../../../Modele/formation/Seances/Seance');
+const Agenda = require('../../../Modele/formation/Seances/Seance');
 const Formation = require('../../../Modele/formation/Formation');
+const Collab = require('../../../Modele/CollabModel/Collab');
 
 // Route GET pour récupérer toutes les dates de l'agenda
 router.get('/agenda', async (req, res) => {
@@ -10,7 +11,7 @@ router.get('/agenda', async (req, res) => {
     const agendaEntries = await Agenda.findAll({
       include: {
         model: Formation,
-        attributes: ['theme','formateur','confidentialite']
+        attributes: ['theme', 'formateur', 'confidentialite']
       }
     });
     // Retournez les entrées de l'agenda en tant que réponse JSON
@@ -21,62 +22,87 @@ router.get('/agenda', async (req, res) => {
   }
 });
 
-router.delete('/seance/:id',async(req,res) =>{
+router.delete('/seance/:id', async (req, res) => {
   const { id } = req.params;
-    try {
-        const deletedSeance = await Agenda.findByPk(id);
-        if (!deletedSeance) {
-            return res.status(404).json({ error: 'discussion introuvable' });
-        }
-        await deletedSeance.destroy();
-        res.sendStatus(204);
+  try {
+    const deletedSeance = await Agenda.findByPk(id);
+    if (!deletedSeance) {
+      return res.status(404).json({ error: 'discussion introuvable' });
     }
-    catch (error) {
-        console.error('Erreur lors de la suppression de la séance :', error)
-        res.status(500).json({ message: 'Erreur lors de la suppression' })
-    }
+    await deletedSeance.destroy();
+    res.sendStatus(204);
+  }
+  catch (error) {
+    console.error('Erreur lors de la suppression de la séance :', error)
+    res.status(500).json({ message: 'Erreur lors de la suppression' })
+  }
 })
 
 
-//Route pour mettre à jour un formation existants
-router.put('/edit/:id', async(req, res) => {
+//Route pour mettre à jour un sceance existants
+router.put('/edit/:id', async (req, res) => {
   try {
-    const eventsData = req.body.events;
-    const formation = req.body.idformation;
+    const {title, start, end, nombreDePlaces, formation} = req.body;
 
-    const {id} = req.params;
+    const { id } = req.params;
+
   
-    const agendaEntries = await Promise.all(eventsData.map(async event => {
-      const { start, end, title, nombreDePlaces } = event;
-
       const sceanceToEdit = await Agenda.findByPk(id);
 
-      if(!sceanceToEdit){
-        res.status(404).json({error : 'Scéance introuvable'})
+      if (!sceanceToEdit) {
+        res.status(404).json({ error: 'Scéance introuvable' })
       }
 
       const agendaEntry = await sceanceToEdit.update({
         date : start,
         heureStart : start,
-        heureEnd : end, 
+        heureEnd : end,
         nombreDePlacesReservees : 0,
         nombreDePlaces : nombreDePlaces,
         title : title,
-        formation,
+        formation : formation,
         approbation : 1
       });
 
-      return agendaEntry;
 
-
-    }))
-
-
-    res.status(201).json(agendaEntries)
+    res.status(201).json(agendaEntry)
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({error : 'Erreur serveur'})
+    res.status(500).json({ error: 'Erreur serveur' })
+  }
+})
+
+
+//Récupérer les informations d'une concernant une formation
+router.get('/view/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const sceance = await Agenda.findByPk(
+      id, 
+      {
+      include: [{
+        model: Formation,
+        include : {
+          model: Collab,
+          as: 'Formateur',
+          attributes: ['id','nom', 'prenom','image'],
+        }
+      }],
+      attributes: ['id', 'date', 'heureStart', 'heureEnd', 'formation', 'nombreDePlaces', 'title']
+
+    });
+
+    if (!sceance) {
+      res.status(404).json({ error: 'Scéance introuvable' })
+    }
+
+
+    res.status(201).json(sceance)
+  } catch (error) {
+    console.error("Une erreur s'est produite lors de la récupération des scéances", error);
+    res.status(500).json({ error: 'Erreur lors de la récupération des informations concernant les formations' })
   }
 })
 

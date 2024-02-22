@@ -1,6 +1,7 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import newsWithComments from "../../apps/actuality/api/mockComment";
+import formatISO from 'date-fns/formatISO';
+
 
 export const dateFormat = 'YYYY-MM-DDTHH:mm:ss.sssZ';
 
@@ -37,7 +38,7 @@ export const {
     selectAll: selectEvents,
     selectIds: selectEventIds,
     selectById: selectEventbYId,
-} = eventsAdapter.getSelectors((state) => state.calendarApp.event);
+} = eventsAdapter.getSelectors((state) => state.calendarApp?.event);
 
 const eventsSlice = createSlice({
     name: 'calendarApp/events',
@@ -62,8 +63,8 @@ const eventsSlice = createSlice({
                         anchorPosition: { top: jsEvent.pageY, left: jsEvent.pageX },
                     },
                     data: {
-                        start: formatIso(new Date(start)),
-                        end: formatIso(new Date(end)),
+                        start: formatISO(new Date(start)),
+                        end: formatISO(new Date(end)),
                     },
                 };
                 return { payload };
@@ -120,10 +121,10 @@ const eventsSlice = createSlice({
         },
     },
     extraReducers: {
-        [getEvents.fulfilled]: eventsAdapter.setAll,
-        [addEvent.fulfilled]: eventsAdapter.addOne,
-        [updateEvent.fulfilled]: eventsAdapter.upsertOne,
-        [removeEvent.fulfilled]: eventsAdapter.removeOne,
+        [getSceanceEvents.fulfilled]: eventsAdapter.setAll,
+        [addSceanceEvents.fulfilled]: eventsAdapter.addOne,
+        [updateSceanceEvent.fulfilled]: eventsAdapter.upsertOne,
+        [removeSceanceEvent.fulfilled]: eventsAdapter.removeOne,
     },
 })
 
@@ -135,13 +136,14 @@ export const {
 } = eventsSlice.actions;
 
 export const selectFilteredEvents = createSelector(
-    [selectSelectedLabels, selectEvents],
-    (selectedLabels, events) => {
-        return events.filter((item) => selectedLabels.includes(item.extendedProps.label));
+    [selectEvents],
+    ( events) => {
+        // return events.filter((item) => selectedLabels.includes(item.extendedProps.label));
+        return events;
     }
 );
 
-export const selectEventDialog = ({ calendarApp }) => calendarApp.events.eventDialog;
+export const selectEventDialog = ({ calendarApp }) => calendarApp?.events?.eventDialog;
 
 export default eventsSlice.reducer;
 
