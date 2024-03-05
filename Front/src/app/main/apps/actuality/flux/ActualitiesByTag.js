@@ -26,6 +26,9 @@ function ActualitiesByTag() {
   const {tagId} = useParams();  
   const [TagData, setTagData] = useState([]);
   const [tag, setTag] = useState([]);
+  const [updateSearchResults, setUpdateSearchResults] = useState('');
+  const [hideSearchBlock, setHideSearchBlock] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
@@ -41,8 +44,8 @@ const fetchActualities = () => {
 
 useEffect(() => {
   fetchActualities();
+  setHideSearchBlock(true);
 }, [tagId])
-
 
 
   return (
@@ -61,8 +64,8 @@ useEffect(() => {
         </div>
       }
       content={
-        <div className="flex flex-auto justify-center w-full max-w-7xl mx-auto p-24 sm:p-32">
-          <TimelineTab listeActuality={TagData} />
+        <div className="flex flex-auto justify-center w-full max-w-7xl mx-auto p-24 sm:p-32 xs:flex-col md:flex-row">
+          <TimelineTab listeActuality={TagData} updateSearchResults={updateSearchResults} hideSearchBlock={hideSearchBlock}/>
         </div>
       }
       scroll={isMobile ? 'normal' : 'page'}

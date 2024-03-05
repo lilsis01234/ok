@@ -1189,10 +1189,13 @@ module.exports = {
       150: '1.5',
     },
     screens: {
+      xs: '300px',
       sm: '600px',
       md: '960px',
+      ps: '1200px',
       lg: '1280px',
-      xl: '1920px',
+      xl: '1536px',
+      xl2: '1900px',
       print: { raw: 'print' },
     },
     scrollMargin: ({ theme }) => ({

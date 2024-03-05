@@ -22,14 +22,19 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 
 function TimelineTab(props) {
 
+const {listeActuality} = props;
+const {updateSearchResults} = props;
+const {hideSearchBlock} = props;
+
 const [listeFiveActuality, setListFiveActuality] = useState([]);
 const [listeCategories, setListCategories] = useState([]);
 const [listeTags, setListTags] = useState([]);
 const [listeTypes, setListTypes] = useState([]);
 const [page, setPage] = useState(0);
 const [rowPerPage, setRowsPerPage] = useState(10);
+const [searchTerm, setSearhTerm] = useState('');
+// const [searchResults, setSearchResults] = useState([]);
 
-const {listeActuality} = props;
 
 const navigate = useNavigate();
 
@@ -40,6 +45,11 @@ const gradientBackground = {
 
 const maxChars = 100;
 const maxCharsTitle = 40;
+
+
+const search = () => {
+  updateSearchResults(searchTerm.trim());
+};
 
 
 //Récupération de la liste des 5 dernier actualités
@@ -70,6 +80,8 @@ const fetchAllTypes = () => {
     .catch(err => console.log(err));
 }
 
+
+
 useEffect(() => {
   fetchAllCategorie();
   fetchFiveActualities();
@@ -77,6 +89,27 @@ useEffect(() => {
   fetchAllTypes();
 }, [])
 
+
+// useEffect(() => {
+//   axios
+//     .get("http://localhost:4000/api/actualite/all")
+//     .then((response) => {
+//       setSearchResults(response.data)
+//       updateSearchResults('');
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//     });
+// }, [])
+
+// const updateSearchResults = async (term) => {
+//   const response = await axios.get(`http://localhost:4000/api/actualite/search`, {
+//     params: {
+//       q: term,
+//     },
+//   });
+//   setSearchResults(response.data)
+// };
 
 function handleChangePage(event, value) {
   setPage(value);
@@ -90,17 +123,17 @@ function handleChangeRowsPerPage(event) {
   return (
 
       <>
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 w-3/4 md:w-4/6 xs:w-full">
 
           { listeActuality.length != 0 ? (
           <>
-            <div className="py-32 px-32 flex flex-row flex-wrap">
+            <div className="py-32 sm:px-32 flex lg:flex-row md:flex-row xs:flex-col xs:content-center ps:justify-center flex-wrap">
               { 
                 listeActuality
                 .slice(page * rowPerPage, page * rowPerPage + rowPerPage)
                 .map((n) => {
                 return (
-                  <div className="flex w-2/4 px-16 mb-32">   
+                  <div key={n.id} className="flex lg:w-2/4 md:w-2/4 ps:w-3/4 sm:w-3/4 xs:w-full sm:px-16 mb-32">   
                     <Card className="w-full shadow-md hover:shadow-2xl hover:cursor-pointer group" onClick={() => {navigate(`/actuality/${n.id}`)}} >
                       <div className="h-256 overflow-hidden">
                         {n.image ? (
@@ -110,7 +143,7 @@ function handleChangeRowsPerPage(event) {
                         ) : (
 
                           <Box
-                            className="h-256  w-full bg-cover bg-center relative overflow-hidden"
+                            className="h-256 w-full bg-cover bg-center relative overflow-hidden"
                             sx={{ backgroundColor: 'primary.dark' }}
                           >
                             <svg
@@ -183,7 +216,7 @@ function handleChangeRowsPerPage(event) {
                         </div>
                       </div>
                       <div className="flex flex-row py-20 w-full justify-evenly border-t-[0.5px]">
-                        <span className="flex flex-row items-center"><ThumbUpIcon sx={{ color: blue[700]  }} /><Typography className="text-xs ml-2">22</Typography></span>
+                        <span className="flex flex-row items-center"><ThumbUpIcon sx={{ color: blue[700]  }} /><Typography className="text-xs ml-2">{n.nombre_reactions}</Typography></span>
                         <span className="flex flex-row items-center"><CommentIcon  sx={{ color: yellow[600]  }}  /><Typography className="text-xs ml-2">{n.nombre_commentaires || 0}</Typography></span>
                       </div>
                     </Card>
@@ -217,34 +250,42 @@ function handleChangeRowsPerPage(event) {
             <Card 
               className="w-full p-32"
             >
-              <Typography className="text-7xl" color="text.secondary">
+              <Typography className="text-7xl xs:text-4xl" color="text.secondary">
                 Pas d'actualité
               </Typography>
             </Card>
           </div>
           )}
         </div>
-        <div className="flex flex-col w-full md:w-320">
+        <div className="flex flex-col w-1/4 md:w-2/6 xs:w-full">
           <div className="py-32 flex flex-col">
-            <Card 
-              className="w-full p-32 mb-32"
-            >
-              <Paper
-                component="form"
-                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center'}}
-                className="caret-blue-950"
-                >
-                  <InputBase
-                  sx={{ ml: 1, flex: 1 }}
-                  placeholder="Rechercher une actualité"
-                  inputProps={{ 'aria-label': 'recherche d\'actualité' }}
-
-                />
-                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                  <SearchIcon />
-                </IconButton>
-              </Paper>
-            </Card>
+            {!hideSearchBlock && (
+              <Card 
+                className="w-full p-32 mb-32"
+              >
+                <Paper
+                  component="form"
+                  sx={{ p: '2px 4px', display: 'flex', alignItems: 'center'}}
+                  className="caret-blue-950"
+                  >
+                    <InputBase
+                      sx={{ ml: 1, flex: 1 }}
+                      placeholder="Rechercher une actualité"
+                      inputProps={{ 'aria-label': 'recherche d\'actualité' }}
+                      value={searchTerm}
+                      onChange= {(e) => {setSearhTerm(e.target.value)}}
+                    />
+                  <IconButton 
+                    type="button" 
+                    sx={{ p: '10px' }} 
+                    aria-label="search"
+                    onClick={search}
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                </Paper>
+              </Card>
+            )}
             <Card className="flex w-full p-32 mb-32">
               <div className="flex flex-col">
                 <Typography variant="h5" gutterBottom 
@@ -255,7 +296,7 @@ function handleChangeRowsPerPage(event) {
                   <ul>
                   { listeFiveActuality.map((n) => {
                     return (
-                      <li className="mb-10 text-sm flex flex-row items-center">
+                      <li key={n.id} className="mb-10 text-sm flex flex-row items-center">
                         <FuseSvgIcon className="text-48 mr-10" size={16} color="secondary">heroicons-outline:document-duplicate</FuseSvgIcon>
                         <Typography variant="caption" className="m-0 hover:underline hover:text-blue-900 hover:cursor-pointer" gutterBottom onClick={() => {navigate(`/actuality/${n.id}`);}}>
                           {n.titre}
@@ -277,7 +318,7 @@ function handleChangeRowsPerPage(event) {
                   <ul>
                   { listeCategories.map((n) => {
                     return (
-                      <li className="mb-10 text-sm flex flex-row items-center">
+                      <li key={n.id} className="mb-10 text-sm flex flex-row items-center">
                         <FuseSvgIcon className="text-48 mr-10" size={16} color="secondary">heroicons-outline:chevron-right</FuseSvgIcon>
                         <Typography variant="caption" className="m-0 hover:underline hover:text-blue-900 hover:cursor-pointer" gutterBottom onClick={() => {navigate(`/apps/timeline/categorie/${n.id}`);}}>
                           {n.nom}
@@ -299,7 +340,7 @@ function handleChangeRowsPerPage(event) {
                   <ul className="text-sm flex flex-row flex-wrap">
                   { listeTags.map((n) => {
                     return (
-                      <li className="mb-11 mr-2.5 ">
+                      <li key={n.id} className="mb-11 mr-2.5 ">
                         <Typography variant="caption" className="p-5 border border-slate-600 m-0 hover:text-blue-600 hover:cursor-pointer" gutterBottom onClick={() => {navigate(`/apps/timeline/tag/${n.id}`);}}>
                           {n.nom}
                         </Typography>
@@ -320,7 +361,7 @@ function handleChangeRowsPerPage(event) {
                   <ul>
                   { listeTypes.map((n) => {
                     return (
-                      <li className="mb-10 text-sm flex flex-row items-center">
+                      <li key={n.id} className="mb-10 text-sm flex flex-row items-center">
                         <FuseSvgIcon className="text-48 mr-10" size={16} color="secondary">material-twotone:arrow_right</FuseSvgIcon>
                         <Typography variant="caption" className="m-0 hover:underline hover:text-blue-900 hover:cursor-pointer" gutterBottom onClick={() => {navigate(`/apps/timeline/type/${n.id}`);}}>
                           {n.nom}

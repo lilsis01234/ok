@@ -11,7 +11,8 @@ Categorie.init({
 
 }, {
     sequelize,
-    modelName: 'Categorie'
+    modelName: 'Categorie',
+    timestamps : false
 })
 
 module.exports = Categorie;

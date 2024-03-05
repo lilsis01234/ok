@@ -25,7 +25,10 @@ function ActualitiesByCategorie() {
 
   const {categorieId} = useParams();
   const [CategorieData, setCategorieData] = useState([]);
+  const [hideSearchBlock, setHideSearchBlock] = useState('');
   const [Categorie, setCategorie] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [updateSearchResults, setUpdateSearchResults] = useState('');
   const navigate = useNavigate();
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
@@ -41,6 +44,7 @@ const fetchActualities = () => {
 
 useEffect(() => {
   fetchActualities();
+  setHideSearchBlock(true);
 }, [categorieId]);
 
 
@@ -60,8 +64,8 @@ useEffect(() => {
         </div>
       }
       content={
-        <div className="flex flex-auto justify-center w-full max-w-7xl mx-auto p-24 sm:p-32">
-          <TimelineTab listeActuality={CategorieData} />
+        <div className="flex flex-auto justify-center w-full max-w-7xl mx-auto p-24 sm:p-32 xs:flex-col md:flex-row">
+          <TimelineTab listeActuality={CategorieData} updateSearchResults={updateSearchResults} hideSearchBlock={hideSearchBlock}/>
         </div>
       }
       scroll={isMobile ? 'normal' : 'page'}

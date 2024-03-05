@@ -64,6 +64,7 @@ const categorie = require('./routes/Actualite/Categorie');
 const tag = require('./routes/Actualite/Tag');
 const type = require('./routes/Actualite/Type');
 const commentaire = require('./routes/Actualite/Commentaire');
+const reaction = require('./routes/Actualite/Reaction');
 
 
 //Module Chat
@@ -135,6 +136,7 @@ app.use('/api/categorie',categorie );
 app.use('/api/type',type );
 app.use('/api/tag',tag );
 app.use('/api/commentaire', commentaire);
+app.use('/api/reaction', reaction);
 
 //Module chat
 app.use('/api/chat/discussion', discussionChat)

@@ -142,7 +142,7 @@ function ActualitiesTable({searchResults}) {
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                         {n.categorie && n.categorie.map((categorie) => ( 
-                        <Typography>
+                        <Typography key={categorie.id}>
                             {categorie.nom}
                         </Typography>
                         ))} 
@@ -151,7 +151,7 @@ function ActualitiesTable({searchResults}) {
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                         {n.Type && n.Type.map((type) => ( 
-                            <Typography>
+                            <Typography key={type.id}>
                             {type.nom}
                             </Typography>
                         ))} 

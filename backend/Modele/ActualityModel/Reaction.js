@@ -18,14 +18,14 @@ Reaction.init({
             key : 'id'
         }
     },
-    id_compt: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references : {
-            model : Compte,
-            key : 'id'
-        }
-    }
+    // id_compt: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //     references : {
+    //         model : Compte,
+    //         key : 'id'
+    //     }
+    // }
 
 }, {
     sequelize,

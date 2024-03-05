@@ -584,6 +584,7 @@ function AddActualityTab() {
                     getOptionLabel={(option) => option.nom}
                     value={selectedTag}
                     onChange={handleTagChange}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </FormControl>
@@ -621,6 +622,7 @@ function AddActualityTab() {
                     getOptionLabel={(option) => option.nom}
                     value={selectedCategory}
                     onChange={handleCategoryChange}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </FormControl>
@@ -659,6 +661,7 @@ function AddActualityTab() {
                       getOptionLabel={(option) => option.nom}
                       value={selectedTypes}
                       onChange={handleTypesChange}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
                       renderInput={(params) => <TextField {...params} />}
                     />
                 </FormControl>

@@ -155,7 +155,8 @@ router.get('/all', async (req, res) => {
                 'compte_id',
                 'createdAt',
                 'updatedAt',
-                [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = Actualite.id AND Commentaires.approuver = true)'), 'nombre_commentaires']
+                [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = Actualite.id AND Commentaires.approuver = true)'), 'nombre_commentaires'],
+                [Sequelize.literal('(SELECT COUNT(*) FROM Reactions WHERE Reactions.act_id = Actualite.id)'), 'nombre_reactions'],
             ],
             include: [
                 {
@@ -221,6 +222,21 @@ router.get('/categorie/:id', async (req, res) => {
 
     try {
         const actuality = await Actualite.findAll({
+            attributes: [
+                'id',
+                'titre',
+                'contenu',
+                'date_publication',
+                'image',
+                'extrait',
+                'etat',
+                'visibilite',
+                'compte_id',
+                'createdAt',
+                'updatedAt',
+                [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = Actualite.id AND Commentaires.approuver = true)'), 'nombre_commentaires'],
+                [Sequelize.literal('(SELECT COUNT(*) FROM Reactions WHERE Reactions.act_id = Actualite.id)'), 'nombre_reactions'],
+            ],
             include: [
                 {
                     model: Categorie,
@@ -260,6 +276,21 @@ router.get('/tag/:id', async (req, res) => {
 
     try {
         const actuality = await Actualite.findAll({
+            attributes: [
+                'id',
+                'titre',
+                'contenu',
+                'date_publication',
+                'image',
+                'extrait',
+                'etat',
+                'visibilite',
+                'compte_id',
+                'createdAt',
+                'updatedAt',
+                [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = Actualite.id AND Commentaires.approuver = true)'), 'nombre_commentaires'],
+                [Sequelize.literal('(SELECT COUNT(*) FROM Reactions WHERE Reactions.act_id = Actualite.id)'), 'nombre_reactions'],
+            ],
             include: [
                 {
                     model: Tag,
@@ -290,6 +321,21 @@ router.get('/type/:id', async (req, res) => {
 
     try {
         const actuality = await Actualite.findAll({
+            attributes: [
+                'id',
+                'titre',
+                'contenu',
+                'date_publication',
+                'image',
+                'extrait',
+                'etat',
+                'visibilite',
+                'compte_id',
+                'createdAt',
+                'updatedAt',
+                [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = Actualite.id AND Commentaires.approuver = true)'), 'nombre_commentaires'],
+                [Sequelize.literal('(SELECT COUNT(*) FROM Reactions WHERE Reactions.act_id = Actualite.id)'), 'nombre_reactions'],
+            ],
             include: [
                 {
                     model: Type,
@@ -491,6 +537,7 @@ router.get('/search', async (req, res) => {
     const { q } = req.query;
     try {
         const searchResult = await Actualite.findAll({
+            order: [['createdAt', 'DESC']],
             attributes: [
                 'id',
                 'titre',
@@ -503,14 +550,15 @@ router.get('/search', async (req, res) => {
                 'compte_id',
                 'createdAt',
                 'updatedAt',
-                [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = Actualite.id AND Commentaires.approuver = true)'), 'nombre_commentaires']
+                [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = Actualite.id AND Commentaires.approuver = true)'), 'nombre_commentaires'],
+                [Sequelize.literal('(SELECT COUNT(*) FROM Reactions WHERE Reactions.act_id = Actualite.id)'), 'nombre_reactions'],
             ],
             where: {
                 [Op.or]: [
-                    { id: { [Op.like]: `%${q}%` } },
+                    // { id: { [Op.like]: `%${q}%` } },
                     { titre: { [Op.like]: `%${q}%` } },
                     { contenu: { [Op.like]: `%${q}%` } },
-                    { date_publication: { [Op.like]: `%${q}%` } },
+                    // { date_publication: { [Op.like]: `%${q}%` } },
                     { extrait: { [Op.like]: `%${q}%` } },
                     // Sequelize.literal(`"$Compte.collaborateur.nom$" LIKE '%${q}%'`),
                     // Sequelize.literal(`"$Compte.collaborateur.prenom$" LIKE '%${q}%'`)
