@@ -2,10 +2,10 @@ const router = require('express').Router();
 const cookieParser = require('cookie-parser')
 router.use(cookieParser());
 
-const ParticipantsSeanceCollab = require('../../../Modele/formation/ParticipantsSeance');
-const ParticipantsSeanceEquipe = require('../../../Modele/formation/EquipeSeance');
+const ParticipantsSeanceCollab = require('../../../Modele/formation/Seances/ParticipantsSeance');
+const ParticipantsSeanceEquipe = require('../../../Modele/formation/Seances/EquipeSeance');
 const Collab = require('../../../Modele/CollabModel/Collab');
-const Seance = require('../../../Modele/formation/Seance');
+const Seance = require('../../../Modele/formation/Seances/Seance');
 const Equipe = require('../../../Modele/Structure/Equipe');
 const { where } = require('sequelize');
 

@@ -27,7 +27,7 @@ PieceJointe.init({
     }
 }},{
     sequelize,
-    modelName : 'DemandeConge'
+    modelName : 'Conge_DemandeConge'
 });
 
 PieceJointe.belongsTo(DemandeConge, {

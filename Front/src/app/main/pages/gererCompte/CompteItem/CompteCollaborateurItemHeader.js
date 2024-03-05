@@ -12,13 +12,13 @@ function CompteCollaborateurItemHeader({ formValues }) {
     const { formState, watch, getValues } = methods ? methods : {};
     const { isValid, isDirty } = formState ? formState : {}
 
-    const {id, Collab, RoleHierarchiqueId } = formValues
+    const {id, Collab, ProfileRoleHierarchiqueId } = formValues
     const theme = useTheme();
 
     const navigate = useNavigate();
     console.log(Collab)
 
-    const data = { RoleHierarchiqueId }
+    const data = { ProfileRoleHierarchiqueId }
 
     const handleSaveCompteCollaborateur = async () => {
         axios.put(`http://localhost:4000/api/compte_collaborateur/${id}/edit`, data)

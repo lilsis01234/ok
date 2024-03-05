@@ -8,7 +8,10 @@ const ProfileConfig = {
     routes : [
         {
             path : 'account/myprofile',
-            element : <Profile/>
+            element : <Profile/>,
+            auth: {
+                role: ['SuperAdmin', 'Admin', 'User'],
+              },
         }
     ]
 }

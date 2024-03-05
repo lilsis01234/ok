@@ -11,7 +11,7 @@ ActualityImg.init({
 
 }, {
     sequelize,
-    modelName: 'ActualityImg',
+    modelName: 'Actualite_ActualityImg',
     timestamps : false
 })
 

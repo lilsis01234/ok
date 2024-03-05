@@ -19,7 +19,7 @@ TestDepartement.init({
     }
 }, {
     sequelize,
-    modelName : 'TestDepartement'
+    modelName : 'Profil_Departement'
 })
 
 

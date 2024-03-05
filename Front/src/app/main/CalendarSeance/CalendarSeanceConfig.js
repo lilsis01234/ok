@@ -7,6 +7,9 @@ const CalendarConfig = {
                 {
                     path: 'dashboards/calendarseance',
                     element: <CalendarTraining />,
+                    auth: {
+                        role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
+                    },
                 },
             ],
 };

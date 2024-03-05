@@ -6,7 +6,7 @@ import axios from 'axios';
 import '../../FormationAdmin/VoirPlus/voirPlus.css'
 import Sary from './logo-sahaza.png'
 import { useNavigate } from 'react-router-dom';
-
+import { Typography } from '@mui/material';
 
 const localizer = momentLocalizer(moment);
 
@@ -18,24 +18,22 @@ function CalendarTraining() {
   const [isParticipantListVisible, setParticipantListVisible] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const userid = user.id;
-  const equipe = user.Collab.equipe;
-  const role = user.RoleHierarchique.roleHierarchique;
+  const equipe = user.Profil_Collab?.equipe;
+  const role = user.Profile_RoleHierarchique?.roleHierarchique;
+  const[opacity,setOpacity] = useState(1);
   const navigate = useNavigate();
 
 
   const scheduleNotification = (event) => {
     if (event.start && event.end) {
-      const notificationTime = moment(event.start).subtract(10, 'minutes'); // 10 minutes before the event
+      const notificationTime = moment(event.start).subtract(10, 'minutes');
       const currentTime = moment();
-
-      console.log(notificationTime);
 
       if (notificationTime.isAfter(currentTime)) {
         const timeDifference = notificationTime.diff(currentTime);
         setTimeout(() => {
           showNotification(event.title, 'Dans 10 minutes');
         }, timeDifference);
-        console.log('ty zao ande aveo')
       } else {
         console.log('Event has already passed.');
       }
@@ -48,7 +46,8 @@ function CalendarTraining() {
   const showNotification = (title, customMessage) => {
     if (!("Notification" in window)) {
       console.log("This browser does not support desktop notification");
-    } else {
+    } 
+    else {
       Notification.requestPermission().then(function (permission) {
         if (permission === "granted") {
           try {
@@ -57,9 +56,7 @@ function CalendarTraining() {
               requireInteraction: true,
               icon:Sary
             });
-            console.log('lasa le notif')
             notification.onclick = function () {
-              console.log("Notification clicked!");
               handleIncomingCall();
             };
           } catch (err) {
@@ -75,17 +72,16 @@ function CalendarTraining() {
     // Récupérer les données de l'API backend
     axios.get('http://localhost:4000/api/calendrier/agenda')
       .then((response) => {
-        console.log(response.data)
         // Formatter les données pour les rendre compatibles avec React Big Calendar
-        const formattedEvents = response.data.filter((res) => res.Formation.destinataireDemande === null).map((event) => {
-          return {
-            auteur: event.Formation.formateur,
-            id:event.id,
-            title: `${event.title} - ${event.nombreDePlaces} places`,
-            start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), 
-            end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(),
-          };
-        });
+        const formattedEvents = response.data.filter((res) => res.Formation.confidentialite === false).map((event) => {
+            return {
+              auteur: event.Formation.formateur,
+              id:event.id,
+              title: `${event.title} - ${event.nombreDePlaces} places`,
+              start: moment.tz(event.heureStart, 'Africa/Nairobi').toDate(), 
+              end: moment.tz(event.heureEnd, 'Africa/Nairobi').toDate(),
+            };
+          });
         setEvents(formattedEvents);
         formattedEvents.forEach((event) => scheduleNotification(event)); 
       })
@@ -99,6 +95,7 @@ function CalendarTraining() {
     setSelectedEvent(event);
     setShowButtons(true);
     console.log('Selected event ID:', event);
+    setOpacity(0);
   };
 
 
@@ -125,7 +122,6 @@ function CalendarTraining() {
         online: false,
       })
         .then(response => {
-          console.log('Reservation successful:', response.data);
           closePopup()
           alert('Réservation à succès')
         })
@@ -140,23 +136,23 @@ function CalendarTraining() {
 
   const handleReserveEqClick = (id) =>{
     if (id) {
-    axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
-      seance: id,
-      equipe: equipe, 
-      online: false,
-    })
-      .then(response => {
-        console.log('Reservation successful:', response.data);
-        closePopup()
-        alert('Réservation à succès')
+      axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
+        seance: id,
+        equipe: equipe, 
+        online: false,
       })
-      .catch(error => {
-        console.error('Error reserving place:', error);
-      });
-  } 
-  else {
-    console.log('No event selected.');
-  }
+        .then(response => {
+          console.log('Reservation successful:', response.data);
+          closePopup()
+          alert('Réservation à succès')
+        })
+        .catch(error => {
+          console.error('Error reserving place:', error);
+        });
+    } 
+    else {
+      console.log('No event selected.');
+    }
   }
   
   
@@ -183,105 +179,113 @@ function CalendarTraining() {
     .then((res) => {
       console.log(res.data);
       setParticipantData(res.data);
-      setParticipantListVisible(!isParticipantListVisible); // Inverse la visibilité
+      setParticipantListVisible(!isParticipantListVisible);
     })
     .catch(error =>
-      console.error('Error fetching participant data:', error));
+      console.error('Error fetching participant data:', error)
+    );
   };
 
   const closePopup = () => {
     setShowButtons(false);
+    setOpacity(1);
   };
 
   return (
-    <div className ="flex justify-center items-center min-h-screen"> 
-    <div className="voirPlusContainer">
-      <div className="calendarContainer">
-        <div className="calendarWrapper">
-          <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            step={15}
-            onSelectEvent={handleEventSelect}
-            style={{padding: '15px', backgroundColor: 'white', borderRadius: '20px' }}
-          />
-          {showButtons && selectedEvent && (
-            <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
-              <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
-                <button
-                  className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
-                  onClick={closePopup}
-                >
-                  X
-                </button>
-                {role === 'SuperAdministrateur' && (
-                  <button
-                    className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
-                    onClick={() => {
-                      handleParticipateNowClick(selectedEvent.id);
-                    }}
-                  >
-                    Démarrer l'appel vidéo
-                  </button>
-                )}
-  
-                <button
-                  className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
-                  onClick={() => {
-                    handleReserveClick(selectedEvent.id);
-                  }}
-                >
-                  Réserver une place
-                </button>
-  
-                {selectedEvent.auteur === userid && (
-                  <button
-                    className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
-                    onClick={() => {
-                      DeleteSeance(selectedEvent.id);
-                    }}
-                  >
-                    Supprimer
-                  </button>
-                )}
-  
-                {isParticipantListVisible && (
-                  <div className="participantData mb-4">
-                    {participantData &&
-                      [...participantData.collabNames, ...participantData.collabNames2]
-                        .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
-                        .map((collab, index) => (
-                          <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
-                        ))}
+        <>
+          <div className="flex min-h-screen">
+
+            {/* Sidebar */}
+            <div className="w-1/6 p-4 bg-grey-100 xl:block lg:hidden md:hidden sm:hidden xs:hidden">
+              <Typography className="text-48 font-bold pt-56 px-32">Calendrier</Typography>
+              <Typography className="text-24 pl-32 mt-16 font-bold text-yellow-800">SEANCES DE CE MOIS</Typography>
+            </div>
+
+            <div className="w-5/6 p-4 md:w-full sm:w-full">
+              <Calendar
+                localizer={localizer}
+                events={events}
+                startAccessor="start"
+                endAccessor="end"
+                step={15}
+                onSelectEvent={handleEventSelect}
+                className='bg-white'
+                style={{padding: '15px', borderRadius: '20px', opacity:opacity }}
+              />
+                {showButtons && selectedEvent && (
+                  <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
+                    <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
+                      <button
+                        className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
+                        onClick={closePopup}
+                      >
+                        X
+                      </button>
+                      {role === 'SuperAdministrateur' && (
+                        <button
+                          className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
+                          onClick={() => {
+                            handleParticipateNowClick(selectedEvent.id);
+                          }}
+                        >
+                          Démarrer l'appel vidéo
+                        </button>
+                      )}
+        
+                      <button
+                        className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
+                        onClick={() => {
+                          handleReserveClick(selectedEvent.id);
+                        }}
+                      >
+                        Réserver une place
+                      </button>
+        
+                      {selectedEvent.auteur === userid && (
+                        <button
+                          className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
+                          onClick={() => {
+                            DeleteSeance(selectedEvent.id);
+                          }}
+                        >
+                          Supprimer
+                        </button>
+                      )}
+        
+                      {isParticipantListVisible && (
+                        <div className="participantData mb-4">
+                          {participantData &&
+                            [...participantData.collabNames, ...participantData.collabNames2]
+                              .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
+                              .map((collab, index) => (
+                                <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
+                              ))}
+                        </div>
+                      )}
+        
+                      <button
+                        className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
+                        onClick={() => ShowAllParticipant(selectedEvent.id)}
+                      >
+                        Liste des participants
+                      </button>
+        
+                      {role === 'chefEquipe' && (
+                        <button
+                          className="popupButton bg-green-500 text-white py-2 px-4 rounded"
+                          onClick={() => {
+                            handleReserveEqClick(selectedEvent.id);
+                          }}
+                        >
+                          Réserver des places pour mon équipe
+                        </button>
+                      )}
+                    </div>
                   </div>
                 )}
-  
-                <button
-                  className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
-                  onClick={() => ShowAllParticipant(selectedEvent.id)}
-                >
-                  Liste des participants
-                </button>
-  
-                {role === 'chefEquipe' && (
-                  <button
-                    className="popupButton bg-green-500 text-white py-2 px-4 rounded"
-                    onClick={() => {
-                      handleReserveEqClick(selectedEvent.id);
-                    }}
-                  >
-                    Réserver des places pour mon équipe
-                  </button>
-                )}
-              </div>
             </div>
-          )}
-        </div>
-      </div>
-    </div>
-    </div>
+          </div>
+        </>
   );
   
   

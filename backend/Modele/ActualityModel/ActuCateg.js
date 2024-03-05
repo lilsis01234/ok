@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../database/database');
 
 
-const ActCateg = sequelize.define('ActCateg', {
+const ActCateg = sequelize.define('Actualite_ActCateg', {
 
     id: {
         type: DataTypes.INTEGER,
@@ -21,8 +21,7 @@ const ActCateg = sequelize.define('ActCateg', {
     },
 
 }, {
-
-  timestamps : false  
+    timestamps: false
 
 })
 

@@ -105,7 +105,7 @@ function EquipeTable(props) {
                 className="flex flex-1 items-center justify-center h-full"
             >
                 <Typography color="text.secondary" variant="h5">
-                    There are no team!
+                  Aucune équipe enregistré dans la base de donnée!
                 </Typography>
             </motion.div>
         );
@@ -164,7 +164,7 @@ function EquipeTable(props) {
                                             {n.nomEquipe}
                                         </TableCell>
                                         <TableCell className="p-4 md:p-16 " component="th" scope="row">
-                                            {n.Projet?.nomProjet}
+                                            {n.Profile_Equipe?.nomProjet}
                                         </TableCell>
 
                                     </TableRow>

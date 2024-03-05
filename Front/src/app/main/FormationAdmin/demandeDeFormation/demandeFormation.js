@@ -4,6 +4,7 @@ import './demandeFormation.css'
 import { Link } from 'react-router-dom'
 import { Typography} from '@mui/material'
 import MesDemandes from '../MesDemandes/MesDemandes'
+import Avatar from '@mui/material/Avatar';
 
 
 const DemandeFormations = () => {
@@ -11,15 +12,15 @@ const DemandeFormations = () => {
   const[DemandeConsExt, setDemandeConsExt] = useState([])
   const[DemandeCoatch, setDemandeCoatch] = useState([])
   const user = JSON.parse(localStorage.getItem('user'));
-  const role = user.RoleHierarchique.roleHierarchique;
-  console.log(role)
-
+  const role = user.Profile_RoleHierarchique.roleHierarchique;
+  const [showButtons, setShowButtons] = useState(false);
+  const[formExt, setFormExt] = useState(null);
 
   const Approuver =(id)=>{
-    console.log("demande approuvé pour n°" + id);
     axios.post(`http://localhost:4000/api/demande_formation/approuver/${id}`)
     .then(res=>{
-      console.log(res)
+      console.log(res.data)
+      window.location.reload();
     })
     .catch((err)=>{
       console.log(err)
@@ -27,25 +28,17 @@ const DemandeFormations = () => {
   }
 
   const Desapprouver=(id)=>{
-    console.log("demande refusé pour n°" + id);
     axios.post(`http://localhost:4000/api/demande_formation/desapprouver/${id}`)
     .then(res=>{
       console.log(res)
+      window.location.reload();
     })
     .catch((err)=>{
       console.log(err)
     })
   }
 
-  useEffect(()=>{
-    axios.get('http://localhost:4000/api/demande_formation/all')
-    .then((res)=>
-      { 
-        setDemandes(res.data)
-        console.log(res.data)
-      })
-    .catch(err=>console.log(err))
-
+  const fetchWithoutForm = () =>{
     axios.get('http://localhost:4000/api/demande_formation/allWithoutForm')
     .then((res)=>
       { 
@@ -53,7 +46,9 @@ const DemandeFormations = () => {
         console.log(res.data)
       })
     .catch(err=>console.log(err))
+  }
 
+  const fecthDemandePourCoatch = ()=>{
     axios.get('http://localhost:4000/api/demande_formation/alldemande/coatch')
     .then((res)=>
       { 
@@ -61,74 +56,189 @@ const DemandeFormations = () => {
         console.log(res.data)
       })
     .catch(err=>console.log(err))
+  }
+
+  const fetchDemandes = ()=>{
+    axios.get('http://localhost:4000/api/demande_formation/all')
+    .then((res)=>
+      { 
+        setDemandes(res.data)
+        console.log(res.data)
+      })
+    .catch(err=>console.log(err))
+  }
+
+  const addFormateur = (id) => {
+    axios
+      .post(`http://localhost:4000/api/formations/addFormExt/${id}`, {
+        formateurExt: formExt,
+      })
+      .then((res) => {
+        console.log(res);
+        setFormExt(null);
+        setShowButtons(false);
+        fetchWithoutForm();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleFormSubmit = (e, id) => {
+    e.preventDefault();
+    addFormateur(id);
+  };
+
+  const Click = () =>{
+    setShowButtons(!showButtons);
+  }
+
+  useEffect(()=>{
+    fetchDemandes();
+    fetchWithoutForm();
+    fecthDemandePourCoatch();
   },[])
   
   return (
-    <div className="training-request-container">
-      <h1 className="collabListes_title font-bold">Demandes de formations</h1>
-      <Typography>Vos demandes</Typography>
+    <div className="bg-gray-100 p-8 rounded-md shadow-md">
+      <h1 className="text-2xl font-bold mb-6">Demandes de formations</h1>
+      <MesDemandes />
 
-      <MesDemandes/>
-
-      {(role === 'SuperAdministrateur' || role === 'rh') &&
-      (
-      <>
-      
-      
-      {DemandeFormations.length !== 0 && 
-      <Typography>Les demandes de formation</Typography>
-      }
-      {DemandeFormations.map((demande, index) => (
-        <div key={index} className="training-request-item">
-          <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
-          <Typography className="theme">{demande.theme}</Typography>
-          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link><br></br>
-          <button onClick={()=>{Approuver(demande.id)}}>Approuver</button><br></br>
-          <button onClick={()=>{Desapprouver(demande.id)}}>Desapprouver</button>
-        </div>
-      ))}
-
-      
-      {DemandeConsExt.length !== 0 && 
-        <Typography>Les demandes approuvées sans consultant externe</Typography>
-      }
-      {DemandeConsExt.map((demande, index) => (
-        <div key={index} className="training-request-item">
-          <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
-          <Typography className="theme">{demande.theme}</Typography>
-          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus</Link><br></br>
-        </div>
-      ))}
-
-
-      </>
-      )  
-    }
-
-    {(role === 'Coatch' || role === 'SuperAdministrateur') && (
+      {(role.toLowerCase() === 'superadministrateur' || role.toLowerCase() === 'rh') && (
         <>
-      <Typography>Les demandes de formation pour le coatch</Typography>
-      
-      {DemandeCoatch.map((demande, index) => (
-        <div key={index} className="training-request-item">
-          <Typography className="name">{demande.Auteur.nom} {demande.Auteur.prenom}</Typography>
-          <Typography className="theme">{demande.theme}</Typography>
-          <Link to={`/voirPlus/demande/${demande.id}`} className="description">Voir plus </Link><br></br>
-          
-          {role === 'Coatch' &&
-          <>
-          <button onClick={()=>{Approuver(demande.id)}}>Approuver</button><br></br>
-          <button onClick={()=>{Desapprouver(demande.id)}}>Desapprouver</button>
-          </>
-          }
+          {DemandeFormations.length !== 0 && (
+            <Typography className="mt-6 mb-4">Les demandes de formation</Typography>
+          )}
+          {DemandeFormations.length !== 0 && DemandeFormations.map((demande, index) => (
+            <div key={index} className="training-request-item flex items-center">
 
-        </div>
-      ))}
-      </>
-  )
-}
+              {demande.Auteur?.image ? (
+                  <Avatar
+                      key={demande.Auteur?.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Auteur?.nom}
+                      src={`http://localhost:4000/${demande.Auteur?.image}`}
+                  />
+              ) : (
+                  <Avatar
+                      key={demande.Auteur?.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Auteur?.nom}
+                  >
+                      {demande.Auteur?.nom ? demande.Auteur?.nom[0] : '?'}
+                  </Avatar>
+              )}
 
-</div>
+          <div>
+            <Typography className="font-bold">
+              {demande.Auteur?.nom} {demande.Auteur?.prenom}
+            </Typography>
+            <Typography className="text-gray-600">{demande.theme}</Typography>
+            <Link to={`/voirPlus/demande/${demande.id}`} className="text-blue-500 underline mb-2 block">
+              Voir plus
+            </Link>
+            <div className="flex">
+              <button onClick={() => Approuver(demande.id)} className="bg-green-500 text-white px-4 py-2 rounded mr-2">
+                Approuver
+              </button>
+              <button onClick={() => Desapprouver(demande.id)} className="bg-red-500 text-white px-4 py-2 rounded">
+                Desapprouver
+              </button>
+            </div>
+          </div>
+          </div>
+
+          ))}
+
+          {DemandeConsExt.length !== 0 && (
+            <Typography className="mt-6 mb-4">Les demandes approuvées sans consultant externe</Typography>
+          )}
+
+          {DemandeConsExt.length!==0 && DemandeConsExt.map((demande, index) => (
+            <div key={index} className="training-request-item">
+              {demande.Formateur.image ? (
+                  <Avatar
+                      key={demande.Formateur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Formateur.nom}
+                      src={`http://localhost:4000/${demande.Formateur.image}`}
+                  />
+              ) : (
+                  <Avatar
+                      key={demande.Formateur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Formateur.nom}
+                  >
+                      {demande.Formateur.nom ? demande.Formateur.nom[0] : '?'}
+                  </Avatar>
+              )}
+              <Typography className="font-bold">{demande.Formateur.nom} {demande.Formateur.prenom}</Typography>
+              <Typography className="text-gray-600">{demande.theme}</Typography>
+              <Link to={`/voirPlus/demande/${demande.id}`} className="text-blue-500 underline mb-2 block">
+                Voir plus
+              </Link>
+              <button onClick={() => { Click() }} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
+                Ajouter un formateur
+              </button>
+
+              {showButtons &&
+                <div className="popup mt-2">
+                  <div className="popupContent p-4 bg-white rounded-md shadow-l">
+                    <input type='text' placeholder='Nom du formateur' value={formExt} onChange={(e) => setFormExt(e.target.value)} className="p-2 border border-gray-300 rounded-md focus:outline-none" />
+                    <button type='submit' onClick={(e) => handleFormSubmit(e, demande.id)} className="bg-blue-500 text-white p-2 rounded-md mt-2 hover:bg-blue-600 focus:outline-none">
+                      Valider
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          ))}
+        </>
+      )}
+
+      {(role.toLowerCase() === 'coatch' || role.toLowerCase() === 'superadministrateur') && (
+        <>
+          <Typography className="mt-6 mb-4">Les demandes de formation pour le coatch</Typography>
+
+          {DemandeCoatch.map((demande, index) => (
+            <div key={index} className="training-request-item">
+              {demande.Auteur.image ? (
+                  <Avatar
+                      key={demande.Auteur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Auteur.nom}
+                      src={`http://localhost:4000/${demande.Auteur.image}`}
+                  />
+              ) : (
+                  <Avatar
+                      key={demande.Auteur.id}
+                      className="w-96 h-96 mr-10"
+                      alt={demande.Auteur.nom}
+                  >
+                      {demande.Auteur.nom ? demande.Auteur.nom[0] : '?'}
+                  </Avatar>
+              )}
+              <Typography className="font-bold">{demande.Auteur?.nom} {demande.Auteur?.prenom}</Typography>
+              <Typography className="text-gray-600">{demande.theme}</Typography>
+              <Link to={`/voirPlus/demande/${demande.id}`} className="text-blue-500 underline mb-2 block">
+                Voir plus
+              </Link>
+
+              {role === 'Coatch' && (
+                <>
+                  <button onClick={() => Approuver(demande.id)} className="bg-green-500 text-white px-4 py-2 rounded mr-2">
+                    Approuver
+                  </button>
+                  <button onClick={() => Desapprouver(demande.id)} className="bg-red-500 text-white px-4 py-2 rounded">
+                    Desapprouver
+                  </button>
+                </>
+              )}
+            </div>
+          ))}
+        </>
+      )}
+    </div>
 )
 }
 

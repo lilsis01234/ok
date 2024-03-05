@@ -66,7 +66,6 @@ const type = require('./routes/Actualite/Type');
 const commentaire = require('./routes/Actualite/Commentaire');
 const reaction = require('./routes/Actualite/Reaction');
 
-
 //Module Chat
 const io = require('socket.io')(server);
 
@@ -79,9 +78,8 @@ const discussionChat = require('./routes/Chat/discussion')
 const membrer = require('./routes/Chat/membre')
 const message = require('./routes/Chat/message')
 
-
 //Protection contre les attaques cors
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: 'http://192.168.16.46:3000', credentials: true }));
 
 //Ajout de middleware express.json()
 app.use(express.json())
@@ -94,7 +92,6 @@ app.use('/photo', express.static(path.join(__dirname, 'photoCollab')))
 //Config
 app.use('/api', api_config)
 
-
 //Module Profile
 app.use('/api/departement', departementRouter); 
 app.use('/api/poste', posteRouter); 
@@ -105,7 +102,7 @@ app.use('/api/equipe', equipe)
 app.use('/api/projet', projet)
 app.use('/api/membreDirection', membreDirection)
 app.use('/api/site', site)
-
+ 
 
 //Compte collaborateur
 app.use('/api/compte_collaborateur', compte_collab); 

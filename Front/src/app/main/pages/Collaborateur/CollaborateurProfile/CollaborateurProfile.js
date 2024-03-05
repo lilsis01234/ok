@@ -117,23 +117,23 @@ function CollaborateurProfile() {
             </div>
             <div className="-mt-96 lg:-mt-88 rounded-full">
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1, transition: { delay: 0.1 } }}>
-                {collabData.Collab?.image ? (
+                {collabData.Profil_Collab?.image ? (
                   <Avatar
                     sx={{ borderColor: 'background.paper' }}
                     className="w-128 h-128 border-4"
-                    src={`http://localhost:4000/${collabData.Collab?.image}`}
+                    src={`http://localhost:4000/${collabData.Profil_Collab?.image}`}
                     alt="User avatar"
                   />
                 ) : (
                   <Avatar sx={{ borderColor: 'background.paper' }}
-                    className="w-128 h-128 border-4">{collabData.Collab?.nom ? collabData.Collab?.nom[0] : '?'}</Avatar>
+                    className="w-128 h-128 border-4">{collabData.Profil_Collab?.nom ? collabData.Profil_Collab?.nom[0] : '?'}</Avatar>
                 )}
               </motion.div>
             </div>
 
             <div className="flex flex-col items-center lg:items-start mt-16 lg:mt-0 lg:ml-32">
-              <Typography className="text-lg font-bold leading-none">{collabData.Collab?.nom} {collabData.Collab?.prenom} </Typography>
-              <Typography color="text.secondary">{collabData.Collab?.matricule}</Typography>
+              <Typography className="text-lg font-bold leading-none">{collabData.Profil_Collab?.nom} {collabData.Profil_Collab?.prenom} </Typography>
+              <Typography color="text.secondary">{collabData.Profil_Collab?.matricule}</Typography>
             </div>
           </div>
         </div>

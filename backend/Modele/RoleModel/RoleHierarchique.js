@@ -12,7 +12,7 @@ RoleHierarchique.init({
     }, 
 }, {
     sequelize,
-    modelName : 'RoleHierarchique'
+    modelName : 'Profile_RoleHierarchique'
 })
 
 

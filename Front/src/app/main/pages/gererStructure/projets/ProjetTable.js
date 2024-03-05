@@ -169,7 +169,7 @@ function ProjetTable(props) {
                                             {n.nomProjet}
                                         </TableCell>
                                         <TableCell className="p-4 md:p-16 " component="th" scope="row">
-                                            {n.TestDepartement?.nomDepartement}
+                                            {n.Profil_Departement?.nomDepartement}
                                         </TableCell>
 
                                     </TableRow>

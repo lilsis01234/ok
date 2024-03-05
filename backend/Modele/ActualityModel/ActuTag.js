@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../database/database');
 
 
-const ActuTag = sequelize.define('ActuTag', {
+const ActuTag = sequelize.define('Actualite_ActuTag', {
 
     id: {
         type: DataTypes.INTEGER,
@@ -21,8 +21,7 @@ const ActuTag = sequelize.define('ActuTag', {
     },
 
 }, {
-
-  timestamps : false  
+    timestamps : false  
 
 })
 

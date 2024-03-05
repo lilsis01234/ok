@@ -37,8 +37,8 @@ function BasicDepartementInfo(props) {
                         className="mt-8 mb-16"
                         error={!!errors.nomDepartement}
                         required
-                        helperText={errors?.nomDirection?.message}
-                        label="Nom du Département"
+                        helperText={errors?.nomDepartement?.message}
+                        label="Intitulé du département"
                         autoFocus
                         id="nomDepartement"
                         variant="outlined"

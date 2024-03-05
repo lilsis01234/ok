@@ -13,23 +13,38 @@ const CalendarFormConfig = {
                 // },
                 {
                     path:'/dashboards/addSeance/:id',
-                    element:<CalendarForm/>
+                    element:<CalendarForm/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/dashboards/addDemandeFormation',
-                    element:<AjoutDemandeFormation/>
+                    element:<AjoutDemandeFormation/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/repondre/:id',
-                    element:<AjoutCommentaire/>
+                    element:<AjoutCommentaire/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/voirPlus/:id',
-                    element:<VoirPlusDiscussion/>
+                    element:<VoirPlusDiscussion/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/appelVideo/:id',
-                    element:<AppelVideo/>
+                    element:<AppelVideo/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 }
             ],
 };

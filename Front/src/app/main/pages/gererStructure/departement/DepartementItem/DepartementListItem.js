@@ -12,12 +12,14 @@ const { useThemeMediaQuery, useDeepCompareEffect } = require("@fuse/hooks");
 const { useForm, FormProvider } = require("react-hook-form");
 const { yupResolver } = require("@hookform/resolvers/yup");
 
+
 const schema = yup.object().shape({
     nomDepartement: yup
         .string()
-        .required('You must enter a departement name')
+        .required('Veuillez entrer l\'intitulé du département')
     // .min(5, 'The product name must be at least 5 characters'),
 });
+
 
 function DepartementListItem(props) {
     const { departementId } = useParams();
@@ -42,11 +44,11 @@ function DepartementListItem(props) {
         async function fetchData() {
             try {
                 if (departementId === 'new') {
-                    console.log('Ajout d\'un nouvelle departement')
+                    // console.log('Ajout d\'un nouvelle departement')
                     setNoDepartement(false)
                 }
                 else {
-                    console.log('Affichage d\'un  departement existante')
+                    // console.log('Affichage d\'un  departement existante')
                     axios.get(`http://localhost:4000/api/departement/view/${departementId}`)
                         .then(response => {
                             setDepartement(response.data.departement)
@@ -134,7 +136,7 @@ function DepartementListItem(props) {
                              scrollButtons="auto"
                              classes={{ root: 'w-full h-64 border-b-1' }}
                         >
-                            <Tab className="h-64" label="Basic Departement Info" />
+                            <Tab className="h-64" label="Information basique" />
                         </Tabs>
                         <div className="p-16 sm:p-24 max-w-3xl">
                             <div className={tabValue !== 0 ? 'hidden' : ''}>

@@ -16,7 +16,7 @@ const { yupResolver } = require("@hookform/resolvers/yup");
 const schema = yup.object().shape({
   titrePoste: yup
     .string()
-    .required('You must enter a Fonction name')
+    .required('Veuillez entrer l\'intitulé du poste')
   // .min(5, 'The product name must be at least 5 characters'),
 });
 
@@ -125,7 +125,7 @@ function PosteListeItem(props) {
                scrollButtons="auto"
                classes={{ root: 'w-full h-64 border-b-1' }}
             >
-              <Tab className="h-64" label="Basic Fonction Info" ></Tab>
+              <Tab className="h-64" label="Information basique" ></Tab>
             </Tabs>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? 'hidden' : ''}>

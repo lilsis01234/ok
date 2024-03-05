@@ -116,7 +116,7 @@ function RoleHierarchiqueListTable(props) {
                                     onClick={(event) => handleClick(n)}
                                 >
                                     <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.roleHierarchique}</TableCell>
-                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Role?.titreRole}</TableCell>
+                                    <TableCell className="p-4 md:p-16 " component="th" scope="row">{n.Profile_Role?.titreRole}</TableCell>
                                 </TableRow>
                             ))
                         }

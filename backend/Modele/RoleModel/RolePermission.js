@@ -1,7 +1,7 @@
 const {DataTypes} = require('sequelize');
 const sequelize = require('../../database/database');
 
-const RolePermission = sequelize.define('RolePermission', {
+const RolePermission = sequelize.define('Profile_RolePermission', {
     id : {
         type : DataTypes.INTEGER,
         primaryKey : true, 

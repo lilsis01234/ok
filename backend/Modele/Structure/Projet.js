@@ -21,7 +21,7 @@ Projet.init({
 }, 
     {
         sequelize,
-        modelName : 'Projet'
+        modelName : 'Profile_Projet'
     }
 )
 

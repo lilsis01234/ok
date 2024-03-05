@@ -10,7 +10,6 @@ import { AiOutlineFileGif } from "react-icons/ai";
 import { Typography} from '@mui/material'
 
 
-
 const Discussion = () => {
     const { id } = useParams();
     console.log(id)

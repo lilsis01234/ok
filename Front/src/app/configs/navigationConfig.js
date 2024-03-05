@@ -112,7 +112,7 @@ const loadFrontOfficeNavigation = () => {
       title: 'Formations',
       type: 'group',
       auth: {
-        role: ['SuperAdmin', 'User', 'Admin'],
+        role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
       },
       icon: 'heroicons-outline:academic-cap',
       translate: 'Formations',
@@ -120,46 +120,46 @@ const loadFrontOfficeNavigation = () => {
         {
           id: 'formation.mesformations',
           title: 'Agenda',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
-          },
           type: 'item',
           icon: 'heroicons-outline:calendar',
           translate: 'Agenda',
-          url : 'dashboards/calendarseance',
+          url : 'dashboards/calendarseance',          
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
+          },
         },
         {
           id: 'formation.formations',
           title: 'Formations',
-          auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
-          },
           type: 'item',
           icon: 'heroicons-outline:academic-cap',
           translate: 'Formations',
-          url : 'dashboards/listeFormation'
-        },
-        {
-          id: 'formation.demandeformations',
-          title: 'Demandes de formations',
+          url : 'dashboards/listeFormation',
           auth: {
-            role: ['SuperAdmin', 'User', 'Admin'],
+            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
           },
-          type: 'item',
-          icon: 'heroicons-outline:users',
-          translate: 'Demandes',
-          url : 'dashboards/demandeFormation'
         },
         {
           id: 'formation.ajoutFormation',
           title: 'Formation',
           auth: {
-            role: ['SuperAdmin', 'Admin', 'Formateur'],
+            role: ['Formateur'],
           },
           type: 'item',
           icon: 'heroicons-outline:plus',
           translate: 'Formation',
           url : 'formateur/addFormation',
+        },
+        {
+          id: 'formation.demandeformations',
+          title: 'Demandes de formations',
+          auth: {
+            role: ['SuperAdmin', 'User', 'Admin','Coatch'],
+          },
+          type: 'item',
+          icon: 'heroicons-outline:users',
+          translate: 'Demandes',
+          url : 'dashboards/demandeFormation'
         },
         {
           id: 'formation.ajoutDemandeFormation',
@@ -436,7 +436,7 @@ const loadBackOfficeNavigation = () => {
         title: 'Formations',
         type: 'group',
         auth: {
-          role: ['SuperAdmin', 'User', 'Admin'],
+          role: ['SuperAdmin', 'User', 'Admin','Coatch'],
         },
         icon: 'heroicons-outline:academic-cap',
         translate: 'Formations',
@@ -446,7 +446,7 @@ const loadBackOfficeNavigation = () => {
             title: 'Agenda',
             type: 'item',
             auth: {
-              role: ['SuperAdmin', 'User', 'Admin'],
+              role: ['SuperAdmin', 'User', 'Admin','Coatch'],
             },
             icon: 'heroicons-outline:calendar',
             translate: 'Agenda',
@@ -457,7 +457,7 @@ const loadBackOfficeNavigation = () => {
             title: 'Formations',
             type: 'item',
             auth: {
-              role: ['SuperAdmin', 'User', 'Admin'],
+              role: ['SuperAdmin', 'User', 'Admin','Coatch'],
             },
             icon: 'heroicons-outline:academic-cap',
             translate: 'Formations',
@@ -467,12 +467,23 @@ const loadBackOfficeNavigation = () => {
             id: 'formation.demandeformations',
             title: 'Demandes de formations',
             auth: {
-              role: ['SuperAdmin', 'User', 'Admin'],
+              role: ['SuperAdmin', 'User', 'Admin','Coatch'],
             },
             type: 'item',
             icon: 'heroicons-outline:users',
             translate: 'Demandes',
             url : 'dashboards/demandeFormation'
+          },
+          {
+            id: 'formation.ajoutFormation',
+            title: 'Formation',
+            auth: {
+              role: ['SuperAdmin', 'Admin', 'Formateur'],
+            },
+            type: 'item',
+            icon: 'heroicons-outline:plus',
+            translate: 'Formation',
+            url : 'formateur/addFormation',
           },
           {
             id: 'formation.ajoutDemandeFormation',

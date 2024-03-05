@@ -75,8 +75,8 @@ function EntrepriseStructure() {
                 animate="show"
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 mt-32 md:mt-64"
             >
-               {departement && departement.map((departement) => (
-                    <motion.div variants={item} className="min-w-full sm:min-w-224 min-h-360" key={departement.id}>
+               {departement && departement.map((departement, index) => (
+                    <motion.div variants={item} className="min-w-full sm:min-w-224 min-h-360" key={index}>
                         {/* <DirectionItem membre={membre} key={membre.id} /> */}
                         {<EntrepriseStructureItem departements={departement} key={departement.id}/>}
                     </motion.div>

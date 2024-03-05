@@ -17,46 +17,79 @@ const FormationConfig = {
                 {
                     path: 'dashboards/listeFormation',
                     element: <Formations />,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path: 'dashboards/demandeFormation',
                     element: <DemandeFormations />,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path: 'admin/formation/:id',
                     element: <VoirPlusFormation />,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'formateur/addFormation',
-                    element: <AjoutFormation/>
+                    element: <AjoutFormation/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/addSeance/:id',
-                    element:<CalendarForm/>
+                    element:<CalendarForm/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/addModule/:id',
-                    element:<AjoutModule/>
+                    element:<AjoutModule/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'formation/addModule',
-                    element: <AjoutModule/>
+                    element: <AjoutModule/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/discussion/formation/:id',
-                    element:<Discussions/>
+                    element:<Discussions/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/addDiscussion/:id',
-                    element:<AddDiscussion/>
+                    element:<AddDiscussion/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/voirPlus/demande/:id',
-                    element:<VoirPlusDemande/>
+                    element:<VoirPlusDemande/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
                 {
                     path:'/mesFormations',
-                    element:<MesFormations/>
+                    element:<MesFormations/>,
+                    auth: {
+                        role: ['SuperAdmin', 'Admin', 'User'],
+                    },
                 },
             ],
 };

@@ -29,7 +29,7 @@ Reaction.init({
 
 }, {
     sequelize,
-    modelName: 'Reaction'
+    modelName: 'Actualite_Reaction'
 })
 
 Reaction.belongsTo(Compte, {

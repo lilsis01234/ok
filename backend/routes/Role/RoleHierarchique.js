@@ -8,7 +8,7 @@ router.post('/new', async(req, res) => {
     try {
         const newRoleHierarchique = await RoleHierarchique.create({
             roleHierarchique : req.body.roleHierarchique,
-            RoleId : req.body.RoleId
+            ProfileRoleId : req.body.RoleId
         })
         const savedRoleHierarchique = await newRoleHierarchique.save();
         return res.status(201).json(savedRoleHierarchique)
@@ -45,7 +45,7 @@ router.put('/edit/:id', async(req, res) => {
         }
         const updatedRolHierarchique = await updateRoleHierarchique.update({
             roleHierarchique : req.body.roleHierarchique,
-            RoleId : req.body.RoleId
+            ProfileRoleIdRoleId : req.body.RoleId
         })
 
         res.status(201).json(updatedRolHierarchique)

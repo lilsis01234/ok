@@ -26,7 +26,7 @@ SoldeConge.init({
     }
     }},{
         sequelize,
-        modelName : 'SoldeConge'
+        modelName : 'Conge_SoldeConge'
     })
 
 SoldeConge.belongsTo(Collaborateur, {

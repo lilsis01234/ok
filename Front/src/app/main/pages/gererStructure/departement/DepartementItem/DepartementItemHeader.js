@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon/FuseSvgIcon';
 import { Button, Typography } from '@mui/material';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 function DepartementItemHeader({ formValues }) {
     const methods = useFormContext();
@@ -18,6 +20,7 @@ function DepartementItemHeader({ formValues }) {
 
     const theme = useTheme();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const data = {
         nomDepartement,
@@ -27,21 +30,27 @@ function DepartementItemHeader({ formValues }) {
     // console.log(id)
 
     const handleSaveDirection = async () => {
-        if (id) {
+        if(!nomDepartement || !direction){
+            dispatch(showMessage({message : 'Veuillez remplir toutes les champs obligatoires (*).'}))
+        } else if (id) {
             try {
                 await axios.put(`http://localhost:4000/api/departement/edit/${id}`, data)
-                alert('Departement Update succesfully')
+                dispatch(showMessage({message : 'Département modifié avec succés.'}))
+                // alert('Departement Update succesfully')
                 navigate('/business/manage/departement')
             } catch (error) {
-                console.log(error)
+                // console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         } else {
             try {
                 await axios.post('http://localhost:4000/api/departement/new', data)
-                alert('Departement create succesfully')
+                dispatch(showMessage({message : 'Département créé avec succés.'}))
+                // alert('Departement create succesfully')
                 navigate('/business/manage/departement')
             } catch (error) {
-                console.log(error)
+                // console.log(error)
+                dispatch(showMessage({message : error.response.data.message}))
             }
         }
     }
@@ -50,7 +59,7 @@ function DepartementItemHeader({ formValues }) {
         const confirmation = window.confirm(`Vous voulez vraiment supprimer le département ${nomDepartement}`)
         if(confirmation){
             await axios.delete(`http://localhost:4000/api/departement/delete/${id}`, data)
-            alert('Département supprimée avec succès')
+            dispatch(showMessage({message : 'Département supprimé avec succés.'}))
             navigate('/business/manage/departement')
         }
     }

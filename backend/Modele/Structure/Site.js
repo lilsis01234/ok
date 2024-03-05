@@ -11,7 +11,7 @@ Site.init({
     }, 
 }, {
     sequelize,
-    modelName : 'Site'
+    modelName : 'Profil_Site'
 })
 
 module.exports = Site;

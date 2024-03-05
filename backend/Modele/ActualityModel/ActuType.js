@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../database/database');
 
 
-const ActuType = sequelize.define('ActuType', {
+const ActuType = sequelize.define('Actualite_ActuType', {
     
     id: {
         type: DataTypes.INTEGER,
@@ -21,9 +21,7 @@ const ActuType = sequelize.define('ActuType', {
     },
 
 }, {
-
-  timestamps : false  
-
+    timestamps : false  
 })
 
 module.exports = ActuType;

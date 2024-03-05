@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../database/database');
 
 
-const GroupCompte = sequelize.define('GroupCompte', {
+const GroupCompte = sequelize.define('Actualite_GroupCompte', {
     group_id: {
         type: DataTypes.INTEGER,
         allowNull: false
