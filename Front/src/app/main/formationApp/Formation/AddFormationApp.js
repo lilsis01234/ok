@@ -14,4 +14,4 @@ const AddFormationApp = () => {
   )
 }
 
-export default AddFormationAppg
+export default AddFormationApp

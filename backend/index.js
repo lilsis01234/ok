@@ -58,6 +58,9 @@ const participantSeanceRouter = require('../backend/routes/formation/Seances/par
 const commentaireRouter = require('../backend/routes/formation/Discussion/commentaire')
 const agendaCongeRouter = require('../backend/routes/Conge/ListeConge/ListeConge')
 
+const sceance = require('./routes/formation/Seances/sceances');
+const participantSeance = require('./routes/formation/Seances/participantSceance')
+
 //Module Actualité
 const actualite = require('./routes/Actualite/Actualité');
 const categorie = require('./routes/Actualite/Categorie');
@@ -125,6 +128,9 @@ app.use('/api/module', moduleRouter);
 app.use('/api/roleHierarchique',roleHierarchique);
 app.use('/api/commentaire',commentaireRouter);
 app.use('/api/participantSeance',participantSeanceRouter)
+
+app.use('/api/sceance', sceance)
+app.use('/api/participantSceance', participantSeance)
 
 
 //Module actualité

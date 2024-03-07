@@ -112,7 +112,7 @@ const loadFrontOfficeNavigation = () => {
       title: 'Formations',
       type: 'group',
       auth: {
-        role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
+        role: ['SuperAdmin', 'User', 'Admin'],
       },
       icon: 'heroicons-outline:academic-cap',
       translate: 'Formations',
@@ -123,9 +123,9 @@ const loadFrontOfficeNavigation = () => {
           type: 'item',
           icon: 'heroicons-outline:calendar',
           translate: 'Agenda',
-          url : 'dashboards/calendarseance',          
+          url : '/agenda',          
           auth: {
-            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
+            role: ['SuperAdmin', 'User', 'Admin'],
           },
         },
         {
@@ -136,7 +136,7 @@ const loadFrontOfficeNavigation = () => {
           translate: 'Formations',
           url : 'dashboards/listeFormation',
           auth: {
-            role: ['SuperAdmin', 'User', 'Admin','Coatch', 'Formateur'],
+            role: ['SuperAdmin', 'User', 'Admin'],
           },
         },
         {
@@ -441,17 +441,6 @@ const loadBackOfficeNavigation = () => {
         icon: 'heroicons-outline:academic-cap',
         translate: 'Formations',
         children : [
-          {
-            id: 'formation.mesformations',
-            title: 'Agenda',
-            type: 'item',
-            auth: {
-              role: ['SuperAdmin', 'User', 'Admin','Coatch'],
-            },
-            icon: 'heroicons-outline:calendar',
-            translate: 'Agenda',
-            url : 'dashboards/calendarseance',
-          },
           {
             id: 'formation.formations',
             title: 'Formations',

@@ -40,6 +40,12 @@ const associationDemandeCollab= require('../Modele/formation/associationDemande/
 const associationFormationEquipe = require('../Modele/formation/associationFormation/associationEquipeFormation');
 const associationFormationCollab = require('../Modele/formation/associationFormation/associationCollabFormation');
 
+//Les nouveaux modeles 
+const Demande = require('../Modele/formation/Demandes/Demande')
+const SceanceFormation = require('../Modele/formation/Seances/SceanceFormation')
+const GroupFormation = require('../Modele/formation/PublicCible/GroupFormation')
+        
+
 //Modele et association Module ACTUALITE ICI
 const Actualite =  require('../Modele/ActualityModel/Actualité');
 const Categorie =  require('../Modele/ActualityModel/Categorie');
@@ -84,9 +90,9 @@ async function syncDatabase() {
         const { RoleHierarchique, Permission, RolePermission } = associationPermission
 
         //Modele et asociation Module FORMATION ICI
-        const{ Seance, Collaborateur ,ParticipantsSeance} = associationSeanceCollab;
-        Collaborateur.belongsToMany(Seance,{through:ParticipantsSeance});
-        Seance.belongsToMany(Collaborateur,{through:ParticipantsSeance});
+        const{ SceanceFormation, Collaborateur ,ParticipantsSeance} = associationSeanceCollab;
+        Collaborateur.belongsToMany(SceanceFormation,{through:ParticipantsSeance});
+        SceanceFormation.belongsToMany(Collaborateur,{through:ParticipantsSeance});
 
         const{ Seance2, Equipe,EquipeSeance} = associationSeanceEquipe;
         Equipe.belongsToMany(Seance2,{through:EquipeSeance});
@@ -107,6 +113,9 @@ async function syncDatabase() {
         const{Formation2,Collab3,FormationCollab} = associationFormationCollab;
         Formation2.belongsToMany(Collab3,{through:FormationCollab});
         Collab3.belongsToMany(Formation2,{through:FormationCollab});
+
+
+     
 
           //Modele et association Module ACTUALITE ICI
         const { Actualite, Categorie, ActuCateg} = associationActuCateg;

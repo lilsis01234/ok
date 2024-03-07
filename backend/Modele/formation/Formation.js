@@ -27,12 +27,22 @@ Formation.init({
         allowNull : true, 
     },
     confidentialite:{
-        type:DataTypes.BOOLEAN,
+        type:DataTypes.STRING,
         allowNull:false
     },
     demande:{
         type:DataTypes.BOOLEAN,
         allowNull:true
+    },
+    dateDebutFormation : 
+    {  
+        type : DataTypes.DATE,
+        allowNull : false
+    }, 
+    dateFinFormation : {
+        type : DataTypes.DATE,
+        allowNull : false
+        
     }
     },{
         sequelize,

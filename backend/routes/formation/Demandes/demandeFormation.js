@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize');
 const router = require('express').Router();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
@@ -11,6 +10,181 @@ const Formation = require('../../../Modele/formation/Formation');
 const { Formation2, Collab3, FormationCollab} = require('../../../Modele/formation/associationFormation/associationCollabFormation');
 const { Formation3,Equipe3,FormationEq} = require('../../../Modele/formation/associationFormation/associationEquipeFormation');
 const Module = require('../../../Modele/formation/Modules/Module');
+
+const Demande = require('../../../Modele/formation/Demandes/Demande');
+const { Op } = require('sequelize');
+const GroupFormation = require('../../../Modele/formation/PublicCible/GroupFormation');
+
+
+//Route pour effectuer une demande de formation 
+router.post('/new', async(req, res) => {
+    try {
+        const newDemande = await Demande.create({
+            titre : req.body.titre,
+            detail : req.body.detail,
+            auteur : req.body.auteur,
+            typeFormation : req.body.typeFormation,
+            critereTypeFormation : req.body.critereTypeFormation,
+            approbation : 'Nouveau',
+        })
+
+        res.status(201).json(newDemande);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message : 'Erreur lors de la soumission de la demande de formation'})
+    }
+})
+
+
+//Route pour voir les demandes de formations
+router.get('/view/all', async(req, res) => {
+    try {
+        const demandes = await Demande.findAll({
+            include : [
+                {
+                    model : Collab,
+                    attributes : ['id', 'nom', 'prenom', 'image']
+                }
+            ]
+        })
+
+        res.status(200).json(demandes)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error : 'Erreur lors de la récupération des listes des demandes de formations'})
+    }
+})
+
+//Route pour voir toutes les demandes d'une collaborateur
+router.get('/view/all/:auteur', async(req, res) => {
+    try {
+        const auteur = req.params;
+        const demandesAuteur = await Demande.findAll({
+            where : {auteur : auteur},
+            include : [
+                {
+                    model : Collab,
+                    attributes : ['id', 'nom', 'prenom', 'image']
+                }
+            ]
+        })
+
+        res.status(200).json(demandesAuteur);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error : 'Erreur lors de la récupération des listes des demandes des auteurs '})        
+    }
+})
+
+
+//Route pour voir la détail d'une demande
+router.get('/view/:id', async(req, res) => {
+    const {id} = req.params.id
+    try {
+        const demande = await Demande.findByPk(id, {
+            include : {
+                model : Collab,
+                attributes : ['id', 'nom', 'prenom', 'image']
+            }
+        })
+
+        res.status(200).json(demande)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error : 'Erreur lors de la récupération du détail du demande'})
+    }
+})
+
+
+//Route pour mettre à jour une demande de formation
+router.get('/edit/:id', async(req, res) => {
+    const {id} = req.params.id;
+    try {
+        const demande = await Demande.findByPk(id)
+        const {titre, details, auteur, approbation, typeFormation, critereTypeFormation} = req.body;
+
+        const demandeUpdate = await demande.update({
+            titre : titre,
+            details : details,
+            auteur : auteur,
+            approbation : approbation,
+            typeFormation : typeFormation,
+            critereTypeFormation : critereTypeFormation,
+        })
+
+
+        function buildCriteria(criteria){
+            const where = {};
+            for (let key in criteria){
+                let value = criteria[key];
+                if(Array.isArray(value)) {
+                    where[key] = {[Op.in] : value};
+                } else {
+                    where[key] = value;
+                }
+            }
+            return where;
+        }
+
+        if(approbation === 'Accepté'){
+            //Traitement si la demande est approuvé
+            const formation = Formation.create({
+                theme : titre,
+                description : details,
+                confidentialite : typeFormation,
+                demande : 'true',
+            })
+
+            if(formation.confidentialite === 'Privée'){
+                if(critereTypeFormation){
+                    const collaborateur = Collab.findAll({
+                        where : buildCriteria(critereTypeFormation)
+                    })
+
+
+                    for (const collab in collaborateur){
+                        const groupFormation = await GroupFormation.create(
+                            {
+                                formation : formation.id,
+                                collaborateur : collab.id,
+                            }
+                        )
+                    }
+                    
+                    res.status(201).json(formation)
+
+                }
+                
+            }
+          
+        } 
+
+            return res.status(201).json(demandeUpdate)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error : 'Erreur lors de la mise à jour des demandes de formations'})
+    }
+})
+
+//Route pour supprimer une demande de formation
+router.delete('/demande/:id', async(req, res) => {
+    const {id} = req.params;
+
+    try {
+        const demandeToDelete = await Demande.findByPk(id);
+        if(deleteDemande ){
+            res.status(404).json({error : 'Demande introuvable'})
+        }
+
+        demandeToDelete.destroy();
+        res.status(200).json({error : 'Demande de formation supprimé avec succès'})
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error : 'Erreur lors de la suppresson des  demandes de formations'})
+    }
+})
+
 
 router.post('/addDemandeFormationPublic', async (req, res) => {
     try {
@@ -168,6 +342,9 @@ router.get('/all_demande/:id', async(req,res)=>{
         console.error(err)
     }
 })
+
+
+
 
 router.post('/approuver/:id', async (req, res) => {
     const DemandeformationId = req.params.id;

@@ -65,7 +65,7 @@ function CollaborateurListItem(props) {
         async function fetchData() {
             try {
                 if (collaborateurId === 'new') {
-                    console.log('Ajout d\'un nouvelle collaborateur')
+                    // console.log('Ajout d\'un nouvelle collaborateur')
                     setNoCollab(false)
                     setEditData(false)
                 } else {
@@ -169,7 +169,7 @@ function CollaborateurListItem(props) {
                             <Tab className="h-64" label="Deuxième information professionnelle" />
                             <Tab className="h-64" label="Photo" />
                         </Tabs>
-                        <div className="p-16 sm:p-24 max-w-3xl">
+                        <div >
                             <div className={tabValue !== 0 ? 'hidden' : ''}>
                                 <BasicInfo methods={methods} formValues={form} />
                             </div>

@@ -24,6 +24,7 @@ import FormationConfig from '../main/FormationAdmin/ListeFormations/FormationCon
 import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
 import CongeConfig from '../main/CalendarCongé/CongéConfig';
 
+import FormationAppConfig from '../main/formationApp/FormationAppConfig';
 
 //Module d'actualité
 import appsConfigs from '../main/apps/appsConfigs';
@@ -38,12 +39,18 @@ import ResetPasswordPageConfig from '../main/resetPassword/ResetPasswordPageConf
 import AccountSettingsConfig from '../main/accountSettings/AccountSettingConfig';
 import ProfileConfig from '../main/Profile/ProfileConfig';
 import ImportDataPageConfig from '../main/pages/ImportData/ImportDataPageConfig';
+import AgendaAppConfig from '../main/Agenda/AgendaAppConfig';
+import SceanceAppConfig from '../main/Formation/Sceance/SceanceAppConfig';
 
 
 
 const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
   ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,CongeConfig,
+  AgendaAppConfig,
+  SceanceAppConfig,
+  FormationAppConfig,
+
   //Module Profil
   // ContactConfig,
   CollaborateurAppConfig,
