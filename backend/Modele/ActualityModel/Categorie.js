@@ -11,12 +11,8 @@ Categorie.init({
 
 }, {
     sequelize,
-<<<<<<< HEAD
-    modelName: 'Categorie',
-    timestamps : false
-=======
+    timestamps : false,
     modelName: 'Actualite_Categorie'
->>>>>>> 160894bc1dbfda2a818d51b06987e9739b1cc18e
 })
 
 module.exports = Categorie;
