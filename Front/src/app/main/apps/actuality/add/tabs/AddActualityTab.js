@@ -359,6 +359,14 @@ function AddActualityTab() {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
 
+  const options = [
+    { "category": "Site", "options": ["Fivoarana", "Mahatsangy", "Ivohasina", "Soazaraina"] },
+    { "category": "Département", "options": ["Développeur", "RH", "Direction"] },
+    { "category": "Poste", "options": ["A", "B", "C"] }
+  ];
+
+  const allOptions = options.reduce((acc, curr) => [...acc, ...curr.options], []);
+
   const handleSubmit = async (e) => {
 
     e.preventDefault();
@@ -396,6 +404,7 @@ function AddActualityTab() {
 
     };
 
+
     const serveurApi = 'http://localhost:4000/api/actualite/new';
     axios.post(serveurApi, dataForm)
         .then(res => {
@@ -429,7 +438,7 @@ function AddActualityTab() {
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="w-full">
       <form ref={formRef} onSubmit={handleSubmit}>
-        <div className="md:flex flex-row justify-between items-center">
+        <div className="flex flex-row justify-between items-center">
           <Typography className="text-3xl font-semibold tracking-tight leading-8 mb-24 mt-16">
                 Ajouter un nouvel article
           </Typography>
@@ -476,7 +485,7 @@ function AddActualityTab() {
               variants={item}
               className="w-full overflow-hidden min-h-480 mb-32"
             >
-              <ReactQuill className="h-full" theme="snow" value={wysiwygContent} onChange={handleWysiwygChange} modules={modules} />
+              <ReactQuill className="h-full sm:min-h-480" theme="snow" value={wysiwygContent} onChange={handleWysiwygChange} modules={modules} />
             </Card>
 
             <Card
@@ -507,10 +516,28 @@ function AddActualityTab() {
 
               <CardContent className="p-0 mb-16">    
                 <FormControl required fullWidth>
-                  <Autocomplete
+                  {/* <Autocomplete
                     multiple
                     options={['Mahatsangy', 'Ivohasina', 'Fivoarana', 'CP', 'CE', 'CP&CE', 'collaborateurs', 'RH', 'Direction']}
                     renderInput={(params) => <TextField {...params}/>}
+                  /> */}
+                  <Autocomplete
+                    multiple
+                    id="multiselect-autocomplete"
+                    options={allOptions}
+                    groupBy={(option) => {
+                      // Find the category for the current option
+                      const category = options.find((cat) => cat.options.includes(option));
+                      return category ? category.category : '';
+                    }}
+                    getOptionLabel={(option) => option}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label="Select"
+                      />
+                    )}
                   />
                 </FormControl>
                 </CardContent>
@@ -520,7 +547,7 @@ function AddActualityTab() {
             } 
           </div>
 
-          <div className="flex flex-col w-full md:w-320 md:rtl:ml-32 ml-32">
+          <div className="flex flex-col w-full md:w-320 md:ml-32 xs:ml-0 ml-32">
           <Card component={motion.div} variants={item} className="flex flex-col w-full px-32 pt-24 mb-32">
               <div className="flex justify-between items-center pb-16">
                 <Typography className="text-2xl font-semibold leading-tight">
@@ -539,6 +566,7 @@ function AddActualityTab() {
                     getOptionLabel={(option) => option.nom}
                     value={selectedTag}
                     onChange={handleTagChange}
+                
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </FormControl>
@@ -576,6 +604,7 @@ function AddActualityTab() {
                     getOptionLabel={(option) => option.nom}
                     value={selectedCategory}
                     onChange={handleCategoryChange}
+                
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </FormControl>
@@ -614,6 +643,7 @@ function AddActualityTab() {
                       getOptionLabel={(option) => option.nom}
                       value={selectedTypes}
                       onChange={handleTypesChange}
+                  
                       renderInput={(params) => <TextField {...params}/>}
                     />
                 </FormControl>

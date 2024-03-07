@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const CountdownComponent = () => {
-  const targetDate = new Date(new Date().getFullYear(), 11, 31).getTime();
+  const targetDate = new Date(new Date().getFullYear(), 6, 26).getTime();
   const [timeRemaining, setTimeRemaining] = useState({
     days: 0,
     hours: 0,
@@ -39,7 +39,7 @@ const CountdownComponent = () => {
   }, [targetDate]);
 
   return (
-    <div className="flex flex-row justify-center align-center w-full text-7xl">
+    <div className="flex flex-row justify-center align-center w-full xs:text-5xl sm:text-7xl">
       <div className="grid w-1/3">
         <span className="font-medium">{timeRemaining.days}</span>
         <span className="text-base font-normal">Jours</span>

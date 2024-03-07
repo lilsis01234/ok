@@ -24,11 +24,11 @@ import Input from '@mui/material/Input';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { useDispatch } from 'react-redux';
 import { Card, CardContent, Typography, Avatar } from '@mui/material';
-import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import { FacebookSelector, FacebookCounter } from '@charkour/react-reactions';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-// import { FacebookSelector } from 'react-reactions';
-import IconButton from '@mui/material/IconButton';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Link from '@mui/material/Link';
+import Popover from '@mui/material/Popover';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
@@ -54,6 +54,10 @@ function ActualitiesByCategorie() {
   const [comment, setComment] = useState('');
   const [loadingBouton, setLoadingBouton] = useState(false);
   const [dateActuelle, setDateActuelle] = useState('');
+  const [facebookHidden, setFacebookHidden] = useState(true);
+  const [likeButtonHidden, setLikeButtonHidden] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [reactionAndUser, setReactionAndUser] = useState([]);
 
 
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -61,15 +65,74 @@ function ActualitiesByCategorie() {
   const maxChars = 100;
   const maxCharsTitle = 40; 
   const dispatch = useDispatch();
+  const reactions = ['like', 'love', 'haha'];
+  const user = useSelector(selectUser);
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
 
-  const formaterDate = (dateString) => {
+const formaterDate = (dateString) => {
 
-    const date = new Date(dateString);
-    const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
-    return new Intl.DateTimeFormat('fr-FR', options).format(date);
+  const date = new Date(dateString);
+  const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
+  return new Intl.DateTimeFormat('fr-FR', options).format(date);
 
 }
+
+const showFacebookReaction = () => {
+  setLikeButtonHidden(true);
+  setFacebookHidden(false);
+}
+
+const HiddeFacebookReaction = () => {
+  setLikeButtonHidden(false);
+  setFacebookHidden(true);
+}
+
+
+const handleClickPopOver = (event) => {
+  setAnchorEl(event.currentTarget);
+};
+
+const handleClosePopOver = () => {
+  setAnchorEl(null);
+};
+
+const saveReaction = (reactionType) => {
+  const serveurApi = 'http://localhost:4000/api/reaction/new';
+  const mapping = {
+      'like': { type: 'jaime', message: "reaction j'aime ajoutée" },
+      'love': { type: 'jadore', message: "reaction j'adore ajoutée" },
+      'haha': { type: 'drole', message: "reaction drôle ajoutée" }
+  };
+
+  const reactionData = mapping[reactionType];
+
+  axios.post(serveurApi, {
+      type: reactionData.type,
+      act_id: actualityId,
+      compte_id: user.data.CompteId
+  })
+      .then(res => {
+          if (res.data) {
+              console.log(res.data);
+              if (res.data.message.includes('existait déjà et a été supprimée')) {
+                  // La réaction existait déjà et a été supprimée
+                  dispatch(showMessage({ message: "La réaction existait déjà et a été supprimée." }));
+                  fetchReaction();
+              } else {
+                  // La réaction a été ajoutée avec succès
+                  dispatch(showMessage({ message: reactionData.message }));
+                  fetchReaction();
+              }
+          }
+      })
+      .catch(err => {
+          console.log(err);
+      });
+
+  HiddeFacebookReaction();
+};
 
 
   //Récupération de la liste des actualités similaire
@@ -104,6 +167,15 @@ function ActualitiesByCategorie() {
       .catch(err => console.log(err));
   }
 
+  //Récupération de la liste des reactions et son auteur de l'actualité par son id
+  const fetchReaction = () => {
+    axios.get(`http://localhost:4000/api/reaction/actualite/${actualityId}`)
+      .then(res => {
+        setReactionAndUser(res.data);
+      })
+      .catch(err => console.log(err));
+  }
+
   const item = {
     hidden: { opacity: 0, y: 40 },
     show: { opacity: 1, y: 0 },
@@ -117,7 +189,6 @@ function ActualitiesByCategorie() {
     setDateActuelle(`${annee}-${mois}-${jour}`);
   };
 
-  const user = useSelector(selectUser);
 
   const handleSubmit = async (e) => { 
 
@@ -162,16 +233,9 @@ function ActualitiesByCategorie() {
     fetchActuality();
     fetchPrevAndNextActuality();
     fetchComment();
+    fetchReaction();
   }, [actualityId]);
 
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleReaction = () => {
-    // Logique de réaction
-    setTimeout(() => {
-      setIsHovered(false);
-    }, 1000);
-  };
 
   return (
     <Root
@@ -205,8 +269,8 @@ function ActualitiesByCategorie() {
               
               {Actuality?.actuality?.categorie && Actuality?.actuality?.categorie.length != 0 && ( 
                 <div className="flex flex-row">
-                  {Actuality.actuality.categorie.map((categorie) => (
-                    <div className="flex flex-row items-center hover:cursor-pointer group mr-20" onClick={() => {navigate(`/apps/timeline/categorie/${categorie.id}`);}}>
+                  {Actuality.actuality.categorie.map((categorie, index) => (
+                    <div key={index} className="flex flex-row items-center hover:cursor-pointer group mr-20" onClick={() => {navigate(`/apps/timeline/categorie/${categorie.id}`);}}>
                       <FuseSvgIcon className="text-48 mr-5 group-hover:text-blue-900 text-[#6B7280]" size={16} sx={{ color: 'text.secondary' }}>heroicons-outline:folder</FuseSvgIcon>
                       <Typography className='text-center group-hover:text-blue-900' sx={{ color: 'text.secondary' }}>{categorie.nom}</Typography>
                     </div>
@@ -216,8 +280,8 @@ function ActualitiesByCategorie() {
 
               {Actuality?.actuality?.Type && Actuality?.actuality?.Type.length != 0 && (
                 <div className="flex flex-row items-center justify-center">
-                  {Actuality.actuality.Type.map((type) => (
-                    <div className="flex flex-row items-center hover:cursor-pointer group  mr-20" onClick={() => {navigate(`/apps/timeline/type/${type.id}`);}}>
+                  {Actuality.actuality.Type.map((type, index) => (
+                    <div key={index} className="flex flex-row items-center hover:cursor-pointer group  mr-20" onClick={() => {navigate(`/apps/timeline/type/${type.id}`);}}>
                       <FuseSvgIcon className="text-48 mr-5 group-hover:text-blue-900 text-[#6B7280]" size={16} sx={{ color: 'text.secondary' }}>heroicons-outline:minus</FuseSvgIcon>
                       <Typography className='text-center group-hover:text-blue-900' sx={{ color: 'text.secondary' }}>{type.nom}</Typography>
                     </div>
@@ -230,8 +294,8 @@ function ActualitiesByCategorie() {
           {Actuality?.actuality?.Type && Actuality?.actuality?.Type.length != 0 && (
             <div className='mb-40'>
                 <div className="flex flex-row items-center justify-center">
-                  {Actuality.actuality.Tag.map((tag) => (
-                    <div className="hover:cursor-pointer mr-20" onClick={() => {navigate(`/apps/timeline/tag/${tag.id}`);}}>
+                  {Actuality.actuality.Tag.map((tag, index) => (
+                    <div key={index} className="hover:cursor-pointer mr-20" onClick={() => {navigate(`/apps/timeline/tag/${tag.id}`);}}>
                       <Typography className='text-center text-sky-400/25 text-blue-600 hover:text-blue-800 hover:underline hover:text-sky-400/100'>#{tag.nom}</Typography>
                     </div>
                   ))}
@@ -253,23 +317,62 @@ function ActualitiesByCategorie() {
             </div>
           )}
 
-          <Card className="w-2xl p-32 flex flex-row justify-evenly" >
-              <span className="flex flex-col items-center">
-                <ThumbUpIcon className="ease-out duration-300 ..." sx={{ color: blue[500]  }} />
-                <Typography>22</Typography>
-              </span>
-              <span className="flex flex-col items-center">
-                <FavoriteIcon sx={{ color: pink[500]  }} />
-                <Typography>22</Typography>
-              </span>
-              <span className="flex flex-col items-center">
-                <EmojiEmotionsIcon sx={{ color: yellow[500]  }} />
-                <Typography>22</Typography>
-              </span>
-          </Card>
-          {/* <Card className="w-2xl p-32 flex flex-row justify-evenly" >
-            <FacebookSelector />
-          </Card> */}
+          <div className="w-3xl flex mb-32">
+            <Card className="w-full px-32 py-20">
+              <div className="pb-10 border-b border-slate-900">
+                <div>
+                  <FacebookCounter counters={reactionAndUser} user={user?.data?.displayName} onClick={handleClickPopOver} />
+                  <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClosePopOver}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <div className='p-20 max-h-[220px] overflow-scroll'>
+                      {reactionAndUser.map((n, index) => {
+                        return (
+                            <Typography key={index} className='text-sm'>
+                            
+                              {(n.emoji == "like") && (<span className='mr-10 mb-10'><ThumbUpIcon  sx={{ color: blue[300], fontSize: 'small'  }}  /></span>)}
+                              {(n.emoji == "love") && (<span className='mr-10 mb-10'><FavoriteIcon  sx={{ color: pink[300], fontSize: 'small'  }} /></span>)}
+                              {(n.emoji == "haha") && (<span className='mr-10 mb-10'><EmojiEmotionsIcon  sx={{ color: yellow[300], fontSize: 'small'  }} /></span>)}
+
+                              {n.by}
+
+                            </Typography>
+                        );
+                      })}
+                    </div>
+                    
+
+                  </Popover>
+                </div>
+              </div>
+              <div className="flex flex-row pt-10 items-center">
+                <div hidden={facebookHidden} className="mr-20" onMouseLeave={() => {HiddeFacebookReaction()}}>
+                  <FacebookSelector iconSize={20} reactions={reactions} onSelect={(e) => {saveReaction(e);}}/> 
+                </div>
+                <div  hidden={likeButtonHidden}   onMouseOver={() => {showFacebookReaction()}}>
+                 <div className="flex flex-row items-center hover:cursor-pointer group  mr-20" >
+                    <ThumbUpIcon style={{ fontSize: '1.6rem' }} sx={{ color: 'text.secondary' }} className="text-48 mr-5 text-[#6B7280]"/>
+                    <Typography className='text-center group-hover:text-blue-900' sx={{ color: 'text.secondary' }}>j'aime</Typography>
+                  </div>
+                </div>  
+                <div>
+                  <div className="flex flex-row items-center hover:cursor-pointer group  mr-20">
+                    <CommentIcon style={{ fontSize: '1.6rem' }} sx={{ color: 'text.secondary' }} className="text-48 mr-5 group-hover:text-blue-900 text-[#6B7280]"/>
+                    <Typography className='text-center group-hover:text-blue-900' sx={{ color: 'text.secondary' }}>{Actuality?.actuality?.nombre_commentaires} commentaire</Typography>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+          
+          
           
           <div className="w-3xl flex my-32">
             <ButtonGroup className="w-full" variant="contained" aria-label="outlined button group">
@@ -381,7 +484,7 @@ function ActualitiesByCategorie() {
             { 
               relatedActuality.map((n) => {
               return (
-                <div className="flex w-2/4 px-16 mb-32">   
+                <div key={n.id} className="flex w-2/4 px-16 mb-32">   
                   <Card className="w-full shadow-md hover:shadow-2xl hover:cursor-pointer group" onClick={() => {navigate(`/actuality/${n.id}`)}} >
                     <div className="h-256 overflow-hidden">
                       {n.image ? (

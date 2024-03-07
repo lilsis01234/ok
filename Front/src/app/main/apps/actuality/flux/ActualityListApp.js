@@ -21,20 +21,48 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function ActualityListApp() {
-  const [listeActuality, setListActuality] = useState([]);
+
+  const [hideSearchBlock, setHideSearchBlock] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
   const navigate = useNavigate();
 
-//Récupération de la liste des actualités
-const fetchActualities = () => {
-  axios.get('http://localhost:4000/api/actualite/all')
-    .then(res => {setListActuality(res.data)})
-    .catch(err => console.log(err));
-}
+// //Récupération de la liste des actualités
+// const fetchActualities = () => {
+//   axios.get('http://localhost:4000/api/actualite/all')
+//     .then(res => {setListActuality(res.data)})
+//     .catch(err => console.log(err));
+// }
+
+// useEffect(() => {
+//   fetchActualities();
+// }, []);
+
+
 
 useEffect(() => {
-  fetchActualities();
-}, []);
+  axios
+    .get("http://localhost:4000/api/actualite/all")
+    .then((response) => {
+      setSearchResults(response.data)
+      updateSearchResults('');
+      setHideSearchBlock(false);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}, [])
+
+const updateSearchResults = async (term) => {
+  const response = await axios.get(`http://localhost:4000/api/actualite/search`, {
+    params: {
+      q: term,
+    },
+  });
+  setSearchResults(response.data)
+};
+
+
 
   return (
     <Root
@@ -52,8 +80,8 @@ useEffect(() => {
         </div>
       }
       content={
-        <div className="flex flex-auto justify-center w-full max-w-7xl mx-auto p-24 sm:p-32">
-          <TimelineTab listeActuality={listeActuality} />
+        <div className="flex flex-auto justify-center w-full max-w-7xl mx-auto p-24 sm:p-32 xs:flex-col md:flex-row">
+          <TimelineTab listeActuality={searchResults} updateSearchResults={updateSearchResults} hideSearchBlock={hideSearchBlock}/>
         </div>
       }
       scroll={isMobile ? 'normal' : 'page'}

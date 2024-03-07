@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { Actualite, Categorie, ActuCateg} = require('../../Modele/ActualityModel/associationActuCateg');
+const Commentaire = require('../../Modele/ActualityModel/Commentaire');
+const { Sequelize, Op } = require('sequelize');
 
 //Ajouter une nouvelle categorie d'actualité
 router.post('/new', async (req, res) => {
@@ -70,6 +72,17 @@ router.get('/:id/actualites', async (req, res) => {
             include: [
               {
                 model: Actualite,
+                attributes: [
+                    'id',
+                    'titre',
+                    'contenu',
+                    'date_publication',
+                    'image',
+                    'extrait',
+                    [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = `Actualites`.`id` AND Commentaires.approuver = true)'), 'nombre_commentaires'],
+                    [Sequelize.literal('(SELECT COUNT(*) FROM Reactions WHERE Reactions.act_id = `Actualites`.`id`)'), 'nombre_reactions'],
+
+                ],          
                 through: { 
                     model: ActuCateg,
                     attributes: [] 
