@@ -72,6 +72,7 @@ router.get('/:id/actualites', async (req, res) => {
             include: [
               {
                 model: Actualite,
+                as: 'Actualites',
                 attributes: [
                     'id',
                     'titre',
@@ -79,8 +80,8 @@ router.get('/:id/actualites', async (req, res) => {
                     'date_publication',
                     'image',
                     'extrait',
-                    [Sequelize.literal('(SELECT COUNT(*) FROM Commentaires WHERE Commentaires.act_id = `Actualites`.`id` AND Commentaires.approuver = true)'), 'nombre_commentaires'],
-                    [Sequelize.literal('(SELECT COUNT(*) FROM Reactions WHERE Reactions.act_id = `Actualites`.`id`)'), 'nombre_reactions'],
+                    [Sequelize.literal('(SELECT COUNT(*) FROM Actualite_Commentaires WHERE Actualite_Commentaires.act_id = Actualites.id AND Actualite_Commentaires.approuver = true)'), 'nombre_commentaires'],
+                    [Sequelize.literal('(SELECT COUNT(*) FROM Actualite_Reactions WHERE Actualite_Reactions.act_id = Actualites.id)'), 'nombre_reactions'],
 
                 ],          
                 through: { 

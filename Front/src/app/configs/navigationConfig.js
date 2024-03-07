@@ -352,7 +352,7 @@ const loadBackOfficeNavigation = () => {
           },
           url: 'business/manage/team'
         }, {
-          id: 'entreprise.direction-manage-teams',
+          id: 'entreprise.direction-manage-site',
           title: 'Site',
           type: 'item',
           icon : 'heroicons-outline:briefcase',
