@@ -90,9 +90,9 @@ async function syncDatabase() {
         const { RoleHierarchique, Permission, RolePermission } = associationPermission
 
         //Modele et asociation Module FORMATION ICI
-        const{ Seance, Collaborateur ,ParticipantsSeance} = associationSeanceCollab;
-        Collaborateur.belongsToMany(Seance,{through:ParticipantsSeance});
-        Seance.belongsToMany(Collaborateur,{through:ParticipantsSeance});
+        const{ SceanceFormation, Collaborateur ,ParticipantsSeance} = associationSeanceCollab;
+        Collaborateur.belongsToMany(SceanceFormation,{through:ParticipantsSeance});
+        SceanceFormation.belongsToMany(Collaborateur,{through:ParticipantsSeance});
 
         const{ Seance2, Equipe,EquipeSeance} = associationSeanceEquipe;
         Equipe.belongsToMany(Seance2,{through:EquipeSeance});

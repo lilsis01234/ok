@@ -131,15 +131,15 @@ const Dashboard = () => {
                     <div>
                       {formations.map((formation) => (
                         <div key={formation.id} className="mb-8 p-4 border border-gray-300 rounded-lg w-full">
-                          {formation.Formateur.image!== null ? 
+                          {formation.Formateur?.image!== null ? 
                           (
-                          <Typography className="text-gray-700 mb-4">{formation.Formateur.nom} {formation.Formateur.prenom}</Typography>
+                          <Typography className="text-gray-700 mb-4">{formation.Formateur?.nom} {formation.Formateur?.prenom}</Typography>
                           )
                           :
                           (
                           <>
                           {/* <img src={``}/> */}
-                          <Typography className="text-gray-700 mb-4">{formation.Formateur.nom} {formation.Formateur.prenom}</Typography>
+                          <Typography className="text-gray-700 mb-4">{formation.Formateur?.nom} {formation.Formateur?.prenom}</Typography>
                           </>
                           )}
                           <Typography className="text-xl sm:text-xl font-bold text-green-400 mb-2">

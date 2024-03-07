@@ -41,4 +41,4 @@ SceanceFormation.init({
     modelName : 'Formation_Sceance'
 })
 
-module.export = SceanceFormation;
+module.exports = SceanceFormation;

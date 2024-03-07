@@ -24,6 +24,7 @@ import FormationConfig from '../main/FormationAdmin/ListeFormations/FormationCon
 import GererCollaborateurConfig from '../main/pages/gererCollaborateur/GererCollaborateurConfig';
 import CongeConfig from '../main/CalendarCongé/CongéConfig';
 
+import FormationAppConfig from '../main/formationApp/FormationAppConfig';
 
 //Module d'actualité
 import appsConfigs from '../main/apps/appsConfigs';
@@ -48,6 +49,8 @@ const routeConfigs = [
   ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,CongeConfig,
   AgendaAppConfig,
   SceanceAppConfig,
+  FormationAppConfig,
+
   //Module Profil
   // ContactConfig,
   CollaborateurAppConfig,

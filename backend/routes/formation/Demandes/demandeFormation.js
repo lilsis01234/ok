@@ -23,7 +23,6 @@ router.post('/new', async(req, res) => {
             titre : req.body.titre,
             detail : req.body.detail,
             auteur : req.body.auteur,
-            approbation : req.body.approbation,
             typeFormation : req.body.typeFormation,
             critereTypeFormation : req.body.critereTypeFormation,
             approbation : 'Nouveau',
