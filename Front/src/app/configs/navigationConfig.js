@@ -163,14 +163,13 @@ const loadFrontOfficeNavigation = () => {
         },
         {
           id: 'formation.ajoutDemandeFormation',
-          title: 'Demande',
+          title: 'Nouvelle demande',
           type: 'item',
           auth: {
             role: ['SuperAdmin', 'User', 'Admin'],
           },
           icon: 'heroicons-outline:plus',
-          translate: 'Demande',
-          url : '/dashboards/addDemandeFormation',
+          url : '/formation/demande/new',
         }
     ]}
   ]

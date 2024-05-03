@@ -8,10 +8,13 @@ import * as yup from 'yup';
 import { motion } from 'framer-motion';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import DemandeFormationFormHeader from './DemandeFormationFormHeader';
+import InfoDemandeTab from './tabs/InfoDemandeTab';
+import ConfidentialiteFormation from './tabs/ConfidentialiteFormation';
+import axios from 'axios';
 
 const schema = yup.object().shape({
     titre: yup.string().required('Veuillez entrer le titre de la demande'),
-    detail: yup.date().required('Veuillez entrer les détails de la demande'),
+    details: yup.string().required('Veuillez entrer les détails de la demande'),
     typeFormation: yup.string().required('Veuillez selectionner le type de formation'),
 })
 
@@ -41,6 +44,16 @@ function DemandeFormationFormApp(props) {
                 if (idDemande === 'new') {
                     setNoDemande(false)
                     setEditData(false)
+                } else {
+                    axios.get(`http://localhost:4000/api/demande_formation/view/${idDemande}`)
+                        .then(response => {
+                            setDemande(response.data)
+                            setNoDemande(false)
+                            setEditData(true);
+                        })
+                        .catch(error => {
+                            setNoDemande(true);
+                        })
                 }
             } catch (error) {
                 console.error('Une erreur s\'est produit:', error)
@@ -85,7 +98,7 @@ function DemandeFormationFormApp(props) {
                     className="mt-24"
                     component={Link}
                     variant="outlined"
-                    // to="/manage/collaborator"
+                    to="/formation/mesdemandes"
                     color="inherit"
                 >
                     Retourner à la liste des demandes
@@ -114,9 +127,15 @@ function DemandeFormationFormApp(props) {
                             classes={{ root: 'w-full h-64 border-b-1' }}
                         >
                             <Tab className="h-64" label="Information sur la demande"/>
+                            <Tab className="h-64" label="Confidentialité de la demande"/>
                         </Tabs>
                         <div className="p-16 sm:p-24 max-w-3xl">
-
+                            <div className={tabValue !== 0 ? 'hidden' : ''}>
+                                <InfoDemandeTab methods={methods} formValues={form} />
+                            </div >
+                            <div className={tabValue !== 1 ? 'hidden' : ''}>
+                                <ConfidentialiteFormation methods={methods} formValues={form}/>
+                            </div> 
                         </div>
                     </>
                 }
