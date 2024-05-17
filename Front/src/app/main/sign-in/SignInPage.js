@@ -59,9 +59,9 @@ function SignInPage() {
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
         // No need to do anything, user data will be set at app/auth/AuthContexts
-          // console.log('Utilisateur authentifié avec succès')
-          navigate('/acceuil')
-          window.location.reload();
+        // console.log('Utilisateur authentifié avec succès')
+        navigate('/acceuil')
+        window.location.reload();
       })
       .catch((error) => {
         setError('generic', {
@@ -152,7 +152,7 @@ function SignInPage() {
             />
 
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
-              <Controller
+              {/* <Controller
                 name="remember"
                 control={control}
                 render={({ field }) => (
@@ -163,12 +163,14 @@ function SignInPage() {
                     />
                   </FormControl>
                 )}
-              />
+              /> */}
 
-              <Link className="text-md font-medium" to="/authentification/motdepasseOublie">
+              <Link className=" font-medium" to="/authentification/motdepasseOublie">
                 Mot de passe oublié?
               </Link>
             </div>
+
+
 
             <Button
               variant="contained"
@@ -181,6 +183,8 @@ function SignInPage() {
             >
               Se connecter
             </Button>
+
+
 
             {/* <div className="flex items-center mt-32">
               <div className="flex-auto mt-px border-t" />

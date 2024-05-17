@@ -23,50 +23,86 @@ const actualityAppConfig = {
     {
       path: 'apps/actuality/list',
       element: <Actualities />,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              } 
     },
     {
       path: 'apps/addActuality',
       element: <AddActualityApp />,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }
     },
     {
       path: `/apps/actuality/:actualityId/*`,
-      element: <EditActualityApp />
+      element: <EditActualityApp /> ,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }
     },
     {
       path: `/apps/timeline`,
-      element: <ActualityListApp />
+      element: <ActualityListApp /> ,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }
     },
     {
       path: `/actuality/:actualityId`,
-      element: <ActualitySingleApp />
+      element: <ActualitySingleApp  />,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }
     },
     {
       path: `/apps/timeline/categorie/:categorieId`,
-      element: <ActualitiesByCategorie />
+      element: <ActualitiesByCategorie />,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }
     },
     {
       path: `/apps/timeline/tag/:tagId`,
-      element: <ActualitiesByTag />
+      element: <ActualitiesByTag /> ,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }, 
     },
     {
       path: `/apps/timeline/type/:typeId`,
-      element: <ActualitiesByType />
+      element: <ActualitiesByType /> ,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }
     },
     {
       path: `/apps/commentaires`,
-      element: <Comment />
+      element: <Comment /> ,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }
     },
     {
       path: `/apps/categorie`,
-      element: <Categorie />
+      element: <Categorie />,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }, 
     },
     {
       path: `/apps/type`,
-      element: <Type />
+      element: <Type />,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }
     },
     {
       path: `/apps/tag`,
-      element: <Tag />
+      element: <Tag /> ,
+      auth : {
+                role : ['SuperAdmin', 'User', 'Admin'],
+              }
     }
   ],
 };

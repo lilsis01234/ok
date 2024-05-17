@@ -11,6 +11,7 @@ Categorie.init({
 
 }, {
     sequelize,
+    timestamps : false,
     modelName: 'Actualite_Categorie'
 })
 

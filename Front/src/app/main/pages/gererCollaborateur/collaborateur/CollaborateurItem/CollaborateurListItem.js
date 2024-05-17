@@ -69,7 +69,7 @@ function CollaborateurListItem(props) {
                     setNoCollab(false)
                     setEditData(false)
                 } else {
-                    console.log('Affichage d\'une collaborateur existante')
+                    // console.log('Affichage d\'une collaborateur existante')
                     axios.get(`http://localhost:4000/api/collaborateur/view/${collaborateurId}`)
                         .then(response => {
                             // console.log(response.data.collaborateur)
@@ -169,7 +169,7 @@ function CollaborateurListItem(props) {
                             <Tab className="h-64" label="Deuxième information professionnelle" />
                             <Tab className="h-64" label="Photo" />
                         </Tabs>
-                        <div >
+                        <div className="p-16 sm:p-24 max-w-3xl">
                             <div className={tabValue !== 0 ? 'hidden' : ''}>
                                 <BasicInfo methods={methods} formValues={form} />
                             </div>

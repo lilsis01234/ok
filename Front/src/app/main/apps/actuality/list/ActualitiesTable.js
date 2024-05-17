@@ -25,8 +25,8 @@ function ActualitiesTable({searchResults}) {
   const [selected, setSelected] = useState([]);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState({
-    direction: "asc",
-    id: null,
+    direction: "desc",
+    id: "date_publication",
   });
 
   useEffect(() => {
@@ -107,8 +107,10 @@ function ActualitiesTable({searchResults}) {
         </Typography>
       </motion.div>
     );
+
   }
 
+  
   return (
     <div className="w-full flex flex-col min-h-full">
       <FuseScrollbars className="grow overflow-x-auto">
@@ -128,8 +130,8 @@ function ActualitiesTable({searchResults}) {
               [
                 (o) => {
                   switch (order.id) {
-                    case "categories": {
-                      return o.categories[0];
+                    case "date_publication": {
+                      return new Date(o.date_publication);
                     }
                     default: {
                       return o[order.id];
@@ -149,6 +151,9 @@ function ActualitiesTable({searchResults}) {
                     role="checkbox"
                     key={n.id}
                     onClick={(event) => handleClick(n)}
+                    aria-checked={isSelected}
+                    tabIndex={-1}
+                    selected={isSelected}
                   >
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
@@ -160,8 +165,8 @@ function ActualitiesTable({searchResults}) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      { n.categorie && n.categorie.map((categorie) => ( 
-                        <Typography>
+                      { n.categorie && n.categorie.map((categorie, index) => ( 
+                        <Typography key={index}>
                            {categorie.nom}
                         </Typography>
                         ))} 
@@ -169,15 +174,15 @@ function ActualitiesTable({searchResults}) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.Type && n.Type.map((type) => ( 
-                          <Typography>
+                      {n.Type && n.Type.map((type, index) => ( 
+                          <Typography key={index}>
                             {type.nom}
                           </Typography>
                       ))} 
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      0
+                      {n?.nombre_reactions}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">

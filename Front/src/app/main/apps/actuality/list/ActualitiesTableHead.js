@@ -36,28 +36,28 @@ const rows = [
     sort: true,
   },
   {
-    id: 'reaction',
+    id: 'nombre_reactions',
     align: 'right',
     disablePadding: false,
     label: "Reaction",
     sort: true,
   },
   {
-    id: 'comment',
+    id: 'nombre_commentaires',
     align: 'right',  
     disablePadding: false,
     label: 'Commentaire',
     sort: true,
   },
   {
-    id: 'date',
+    id: 'date_publication',
     align: 'right',
     disablePadding: false,
     label: 'Date',
     sort: true,
   },
   {
-    id: 'publie',
+    id: 'etat',
     align: 'right',
     disablePadding: false,
     label: 'Publié',
@@ -72,7 +72,17 @@ const rows = [
   }
 ];
 
-function ActualitiesTableHead() {
+
+
+function ActualitiesTableHead(props) {
+
+
+  const createSortHandler = (property) => (event) => {
+    props.onRequestSort(event, property);
+  };
+
+
+
   return (
     <TableHead>
       <TableRow className="h-48 sm:h-64">
@@ -109,6 +119,7 @@ function ActualitiesTableHead() {
                   enterDelay={300}
                 >
                   <TableSortLabel
+                    onClick={createSortHandler(row.id)}
                     className="font-semibold"
                   >
                     {row.label}

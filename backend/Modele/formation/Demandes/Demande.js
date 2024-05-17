@@ -40,8 +40,7 @@ const Demande = sequelize.define('Formation_demande', {
 })
 
 
-Demande.belongsTo(Collab, {foreignKey:"demande", targetKey:'id', onUpdate:'CASCADE', onDelete:'CASCADE'})
-Collab.hasMany(Demande);
+Demande.belongsTo(Collab, {foreignKey:"auteur", targetKey:'id', onUpdate:'CASCADE', onDelete:'CASCADE'});
 
 module.exports = Demande;
 

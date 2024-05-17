@@ -163,14 +163,13 @@ const loadFrontOfficeNavigation = () => {
         },
         {
           id: 'formation.ajoutDemandeFormation',
-          title: 'Demande',
+          title: 'Nouvelle demande',
           type: 'item',
           auth: {
             role: ['SuperAdmin', 'User', 'Admin'],
           },
           icon: 'heroicons-outline:plus',
-          translate: 'Demande',
-          url : '/dashboards/addDemandeFormation',
+          url : '/formation/demande/new',
         }
     ]}
   ]
@@ -352,7 +351,7 @@ const loadBackOfficeNavigation = () => {
           },
           url: 'business/manage/team'
         }, {
-          id: 'entreprise.direction-manage-teams',
+          id: 'entreprise.direction-manage-site',
           title: 'Site',
           type: 'item',
           icon : 'heroicons-outline:briefcase',

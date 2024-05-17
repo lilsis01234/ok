@@ -735,16 +735,16 @@ router.get('/searchCollab', async (req, res) => {
                 [Op.or] : [
                     { email: { [Op.like]: `%${q}%` } },
                     {
-                        '$Collab.nom$': { [Op.like]: `%${q}%` },
+                        '$Profil_Collab.nom$': { [Op.like]: `%${q}%` },
                     },
                     {
-                        '$Collab.prenom$': { [Op.like]: `%${q}%` },
+                        '$Profil_Collab.prenom$': { [Op.like]: `%${q}%` },
                     },
                     {
-                        '$Collab.matricule$': { [Op.like]: `%${q}%` },
+                        '$Profil_Collab.matricule$': { [Op.like]: `%${q}%` },
                     },
                     {
-                        '$Collab.poste1.titrePoste$': { [Op.like]: `%${q}%` },
+                        '$Profil_Collab.poste1.titrePoste$': { [Op.like]: `%${q}%` },
                     }
                 ]
             }

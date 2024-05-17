@@ -60,6 +60,7 @@ function CollaborateurProfileContent(props) {
         show: { opacity: 1, y: 0 },
     };
 
+
     return (
         <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
             <motion.div variants={container} initial="hidden" animate="show" className="w-full">

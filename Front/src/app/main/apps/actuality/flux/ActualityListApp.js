@@ -21,7 +21,9 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function ActualityListApp() {
-  const [listeActuality, setListActuality] = useState([]);
+
+  const [hideSearchBlock, setHideSearchBlock] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
   const navigate = useNavigate();
 
@@ -52,8 +54,8 @@ function ActualityListApp() {
         </div>
       }
       content={
-        <div className="flex flex-auto justify-center w-full max-w-7xl mx-auto p-24 sm:p-32">
-          <TimelineTab listeActuality={listeActuality} />
+        <div className="flex flex-auto justify-center w-full max-w-7xl mx-auto p-24 sm:p-32 xs:flex-col md:flex-row">
+          <TimelineTab listeActuality={searchResults} updateSearchResults={updateSearchResults} hideSearchBlock={hideSearchBlock}/>
         </div>
       }
       scroll={isMobile ? 'normal' : 'page'}

@@ -21,11 +21,11 @@ router.post('/new', async(req, res) => {
     try {
         const newDemande = await Demande.create({
             titre : req.body.titre,
-            detail : req.body.detail,
+            details : req.body.details,
             auteur : req.body.auteur,
             typeFormation : req.body.typeFormation,
             critereTypeFormation : req.body.critereTypeFormation,
-            approbation : 'Nouveau',
+            approbation : false,
         })
 
         res.status(201).json(newDemande);
@@ -58,7 +58,7 @@ router.get('/view/all', async(req, res) => {
 //Route pour voir toutes les demandes d'une collaborateur
 router.get('/view/all/:auteur', async(req, res) => {
     try {
-        const auteur = req.params;
+        const {auteur} = req.params;
         const demandesAuteur = await Demande.findAll({
             where : {auteur : auteur},
             include : [
@@ -80,7 +80,7 @@ router.get('/view/all/:auteur', async(req, res) => {
 
 //Route pour voir la détail d'une demande
 router.get('/view/:id', async(req, res) => {
-    const {id} = req.params.id
+    const {id} = req.params;
     try {
         const demande = await Demande.findByPk(id, {
             include : {
@@ -98,8 +98,8 @@ router.get('/view/:id', async(req, res) => {
 
 
 //Route pour mettre à jour une demande de formation
-router.get('/edit/:id', async(req, res) => {
-    const {id} = req.params.id;
+router.put('/edit/:id', async(req, res) => {
+    const {id} = req.params;
     try {
         const demande = await Demande.findByPk(id)
         const {titre, details, auteur, approbation, typeFormation, critereTypeFormation} = req.body;
@@ -114,17 +114,35 @@ router.get('/edit/:id', async(req, res) => {
         })
 
 
-        function buildCriteria(criteria){
+        function buildCriteria(criteria, criteriaXOR){
             const where = {};
-            for (let key in criteria){
-                let value = criteria[key];
-                if(Array.isArray(value)) {
-                    where[key] = {[Op.in] : value};
-                } else {
-                    where[key] = value;
+            // Construire la clause WHERE pour les critères normaux
+            for (let critere in criteria){
+                for(let key in critere){
+                    let value = critere[key];
+                    if(value.length > 1){
+                        where[key] = {[Op.or] : value}
+                    } else {
+                        where[key] = value
+                    }
                 }
             }
+        
+            if(criteriaXOR){
+                for(let critere in criteriaXOR){
+                    for(let key in critere){
+                        let value = critere[key];
+                        if(value.length > 1){
+                            where[key] =  {[Op.notIn] : value}
+                        } else {
+                            where[key] = { [Op.ne]: value };
+                        }
+                    }
+                }
+            }
+            
             return where;
+        
         }
 
         if(approbation === 'Accepté'){
@@ -138,8 +156,9 @@ router.get('/edit/:id', async(req, res) => {
 
             if(formation.confidentialite === 'Privée'){
                 if(critereTypeFormation){
+                    const {criteria, criteriaXOR} = critereTypeFormation
                     const collaborateur = Collab.findAll({
-                        where : buildCriteria(critereTypeFormation)
+                        where : buildCriteria(criteria, criteriaXOR)
                     })
 
 
@@ -173,7 +192,7 @@ router.delete('/demande/:id', async(req, res) => {
 
     try {
         const demandeToDelete = await Demande.findByPk(id);
-        if(deleteDemande ){
+        if(!demandeToDelete ){
             res.status(404).json({error : 'Demande introuvable'})
         }
 
@@ -184,6 +203,9 @@ router.delete('/demande/:id', async(req, res) => {
         res.status(500).json({error : 'Erreur lors de la suppresson des  demandes de formations'})
     }
 })
+
+
+
 
 
 router.post('/addDemandeFormationPublic', async (req, res) => {

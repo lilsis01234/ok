@@ -113,7 +113,6 @@ function CommentTable(props) {
   const fetchComment = () => {
     axios.get('http://localhost:4000/api/commentaire/all')
       .then(res => {
-        console.log(res.data);
         setComments(res.data);
       })
       .catch(err => console.log(err));

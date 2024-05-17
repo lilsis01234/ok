@@ -39,19 +39,52 @@ router.get('/all', async(req, res) => {
 
 })
 
-function buildCriteria(criteria){
+// function buildCriteria(criteria){
+//   const where = {};
+//   for (let key in criteria){
+//     let value = criteria[key];
+//     if(Array.isArray(value)){
+//       where[key] = {[Op.or] : value};
+//     } else {
+//       where[key] = value
+//     }
+//   }
+
+//   return where;
+// }
+
+//New build Criteria
+function buildCriteria(criteria, criteriaXOR){
   const where = {};
-  for (let key in criteria){
-    let value = criteria[key];
-    if(Array.isArray(value)){
-      where[key] = {[Op.or] : value};
-    } else {
-      where[key] = value
-    }
+  // Construire la clause WHERE pour les critères normaux
+  for (let critere in criteria){
+      for(let key in critere){
+          let value = critere[key];
+          if(value.length > 1){
+              where[key] = {[Op.or] : value}
+          } else {
+              where[key] = value
+          }
+      }
   }
 
+  if(criteriaXOR){
+      for(let critere in criteriaXOR){
+          for(let key in critere){
+              let value = critere[key];
+              if(value.length > 1){
+                  where[key] =  {[Op.notIn] : value}
+              } else {
+                  where[key] = { [Op.ne]: value };
+              }
+          }
+      }
+  }
+  
   return where;
+
 }
+
 
 
 //Ajout Formation
@@ -75,9 +108,11 @@ router.post('/new', async(req, res) => {
 
       if(confidentialite === 'Privée'){
           // console.log('On est dans le critère privée')
+
           if(critere){
+            const {criteria, criteriaXOR} = critere
             const collaborateur = await Collab.findAll({
-              where : buildCriteria(critere)
+              where : buildCriteria(criteria, criteriaXOR)
             })
 
 
@@ -199,8 +234,9 @@ router.put('/edit/:id', async(req, res) => {
         }
       } else if (formationToUpdate.confidentialite === 'Privée'){
           if (critere){
+            const {criteria, criteriaXOR} = critere
             const collaborateur = await Collab.findAll({
-              where : buildCriteria(critere)
+              where : buildCriteria(criteria, criteriaXOR)
             })
   
             for(const collab of collaborateur){
@@ -222,8 +258,9 @@ router.put('/edit/:id', async(req, res) => {
       } else if (formation.confidentialite === 'Public'){
         if(formationToUpdate.confidentialite = 'Privée') {
           if(critere){
+            const {criteria, criteriaXOR} = critere
               const collaborateur = await Collab.findAll({
-                  where : buildCriteria(critere)
+                where : buildCriteria(criteria, criteriaXOR)
               })
 
 

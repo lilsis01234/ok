@@ -3,21 +3,53 @@ const GroupFormation = require('../../Modele/formation/PublicCible/GroupFormatio
 
 const router = require('express').Router();
 
-function buildCriteria(criteria){
+// function buildCriteria(criteria){
+//     const where = {};
+//     for (let key in criteria){
+//       let value = criteria[key];
+//       if(Array.isArray(value)){
+//         where[key] = {[Op.or] : value};
+//       } else {
+//         where[key] = value
+//       }
+//     }
+  
+//     return where;
+//   }
+  
+//New build Criteria
+function buildCriteria(criteria, criteriaXOR){
     const where = {};
-    for (let key in criteria){
-      let value = criteria[key];
-      if(Array.isArray(value)){
-        where[key] = {[Op.or] : value};
-      } else {
-        where[key] = value
-      }
+    // Construire la clause WHERE pour les critères normaux
+    for (let critere in criteria){
+        for(let key in critere){
+            let value = critere[key];
+            if(value.length > 1){
+                where[key] = {[Op.or] : value}
+            } else {
+                where[key] = value
+            }
+        }
     }
-  
-    return where;
-  }
-  
 
+    if(criteriaXOR){
+        for(let critere in criteriaXOR){
+            for(let key in critere){
+                let value = critere[key];
+                if(value.length > 1){
+                    where[key] =  {[Op.notIn] : value}
+                } else {
+                    where[key] = { [Op.ne]: value };
+                }
+            }
+        }
+    }
+    
+    return where;
+
+}
+
+ 
 //Récupérer toutes les membres du groupe d'une formations
 router.get('/all/:id', async(req, res) => {
     try {
@@ -44,9 +76,10 @@ router.get('/all/:id', async(req, res) => {
 router.post('/add', async(req, res) => {
     try {
         const {formation , critere} = req.body;
+        const {criteria, criteriaXOR} = critere
 
         const collaborateur = await Collab.findAll({
-            where : buildCriteria(critere)
+            where : buildCriteria(criteria, criteriaXOR)
         })
 
         for(const collab of collaborateur){
