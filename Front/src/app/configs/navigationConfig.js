@@ -152,14 +152,13 @@ const loadFrontOfficeNavigation = () => {
         },
         {
           id: 'formation.demandeformations',
-          title: 'Demandes de formations',
+          title: 'Demandes',
           auth: {
-            role: ['SuperAdmin', 'User', 'Admin','Coatch'],
+            role: ['SuperAdmin', 'User', 'Admin'],
           },
           type: 'item',
           icon: 'heroicons-outline:users',
-          translate: 'Demandes',
-          url : 'dashboards/demandeFormation'
+          url : '/formation/mesdemandes'
         },
         {
           id: 'formation.ajoutDemandeFormation',
@@ -440,6 +439,18 @@ const loadBackOfficeNavigation = () => {
         icon: 'heroicons-outline:academic-cap',
         translate: 'Formations',
         children : [
+    
+          {
+            id: 'formation.demandeformations',
+            title: 'Liste des demandes',
+            auth: {
+              role: ['SuperAdmin', 'User', 'Admin','Coatch'],
+            },
+            type: 'item',
+            icon: 'heroicons-outline:users',
+            translate: 'Demandes',
+            url : 'formation/demande/all'
+          },
           {
             id: 'formation.formations',
             title: 'Formations',
@@ -452,17 +463,6 @@ const loadBackOfficeNavigation = () => {
             url : 'dashboards/listeFormation'
           },
           {
-            id: 'formation.demandeformations',
-            title: 'Demandes de formations',
-            auth: {
-              role: ['SuperAdmin', 'User', 'Admin','Coatch'],
-            },
-            type: 'item',
-            icon: 'heroicons-outline:users',
-            translate: 'Demandes',
-            url : 'dashboards/demandeFormation'
-          },
-          {
             id: 'formation.ajoutFormation',
             title: 'Formation',
             auth: {
@@ -473,17 +473,17 @@ const loadBackOfficeNavigation = () => {
             translate: 'Formation',
             url : 'formateur/addFormation',
           },
-          {
-            id: 'formation.ajoutDemandeFormation',
-            title: 'Demande',
-            auth: {
-              role: ['SuperAdmin', 'User', 'Admin'],
-            },
-            type: 'item',
-            icon: 'heroicons-outline:plus',
-            translate: 'Demande',
-            url : '/dashboards/addDemandeFormation',
-          }
+          // {
+          //   id: 'formation.ajoutDemandeFormation',
+          //   title: 'Demande',
+          //   auth: {
+          //     role: ['SuperAdmin', 'User', 'Admin'],
+          //   },
+          //   type: 'item',
+          //   icon: 'heroicons-outline:plus',
+          //   translate: 'Demande',
+          //   url : '/dashboards/addDemandeFormation',
+          // }
         ]}
       ]
 }

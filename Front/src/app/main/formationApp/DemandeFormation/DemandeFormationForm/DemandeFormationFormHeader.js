@@ -7,8 +7,8 @@ import { useFormContext } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { Button, Typography } from '@mui/material';
+import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 
 function DemandeFormationFormHeader({ formValues }) {
     const methods = useFormContext();

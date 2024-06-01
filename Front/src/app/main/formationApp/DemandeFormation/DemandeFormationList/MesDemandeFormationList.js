@@ -7,6 +7,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { DatePicker } from '@mui/x-date-pickers';
+import DemandeFormationCard from './DemandeFormationCard';
 
 function MesDemandeFormationList() {
     const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -41,6 +42,7 @@ function MesDemandeFormationList() {
         setSearchText(event.target.value);
     }
 
+    console.log(mesDemandes);
 
     return (
         <FusePageSimple
@@ -132,7 +134,7 @@ function MesDemandeFormationList() {
                                         {mesDemandes.map((demande) => {
                                             return (
                                                 <motion.div variants={item} key={demande.id}>
-
+                                                    <DemandeFormationCard demande={demande}/>
                                                 </motion.div>
                                             )
                                         })}

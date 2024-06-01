@@ -30,6 +30,12 @@ const FormationAppConfig = {
             auth : {
                 role : ['SuperAdmin', 'Admin']
             }, 
+        }, {
+            path: 'formation/demande/all',
+            element : <DemandeFormationList/>,
+            auth : {
+                role : ['SuperAdmin', 'Admin']
+            }, 
         }
     ]
 }
