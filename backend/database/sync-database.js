@@ -82,7 +82,7 @@ const PieceJointe = require('../Modele/conge/PiecesJointes');
 async function syncDatabase() {
     try {
         //Modele et asociation Module PROFILE ICI
-        await sequelize.sync({ force: false });
+        await sequelize.sync({ force: true });
         const { TestPoste, TestDepartement, PosteDepartement } = association;
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });
