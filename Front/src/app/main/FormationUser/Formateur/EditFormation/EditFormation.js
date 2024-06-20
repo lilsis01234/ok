@@ -13,13 +13,16 @@ const EditFormation = ({ formationId, theme, description, onUpdate }) => {
       await axios.put(`http://localhost:4000/api/formations/edit/${formationId}`, {
         theme: newTheme,
         description: newDescription
+      })
+      .then(response => {
+        navigate(`/dashboards/listeFormation`); 
       });
-      onUpdate(); // Call the onUpdate function
-      navigate(`/dashboards/listeFormation`);
     } catch (error) {
       console.error('Error updating formation:', error);
     }
   };
+  
+  
 
   return (
     <div className="form-container">
@@ -41,5 +44,6 @@ const EditFormation = ({ formationId, theme, description, onUpdate }) => {
 };
 
 export default EditFormation;
+
 
 

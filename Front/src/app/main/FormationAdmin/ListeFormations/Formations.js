@@ -39,7 +39,7 @@ const Formations = () => {
 
   const handleUpdate = () => {
     fetchFormation();
-    setEditingFormation(null); // Close the edit form
+    setEditingFormation(null); 
   };
 
   useEffect(() => {
