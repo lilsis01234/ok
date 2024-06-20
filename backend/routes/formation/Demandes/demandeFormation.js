@@ -4,7 +4,7 @@ router.use(cookieParser());
 const {  DemandeFormation2,Collab2,DemandeCollab } = require('../../../Modele/formation/associationDemande/associationDemandeCollab');
 const {  DemandeFormation,Equipe2,DemandeEq} = require('../../../Modele/formation/associationDemande/associationDemandeEq');
 const RoleHierarchique = require('../../../Modele/RoleModel/RoleHierarchique');
-const Seance = require('../../../Modele/formation/Seances/Seance');
+const Seance = require('../../../Modele/formation/Seances/SeanceFormation');
 const Collab = require('../../../Modele/CollabModel/Collab');
 const Formation = require('../../../Modele/formation/Formation');
 const { Formation2, Collab3, FormationCollab} = require('../../../Modele/formation/associationFormation/associationCollabFormation');

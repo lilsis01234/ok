@@ -2,9 +2,9 @@ const { Model, DataTypes } = require("sequelize");
 const sequelize = require('../../../database/database');
 const Module = require('../Modules/Module')
 
-class SceanceFormation extends Model { }
+class SeanceFormation extends Model { }
 
-SceanceFormation.init({
+SeanceFormation.init({
     date: {
         type: DataTypes.DATE,
     },
@@ -38,7 +38,7 @@ SceanceFormation.init({
     }
 }, {
     sequelize,
-    modelName : 'Formation_Sceance'
+    modelName : 'Formation_Seance'
 })
 
-module.exports = SceanceFormation;
+module.exports = SeanceFormation;

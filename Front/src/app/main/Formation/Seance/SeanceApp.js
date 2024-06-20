@@ -22,22 +22,22 @@ const StyledBadge = styled('div')(({ theme, value }) => ({
   color: alpha(blue[500], 0.8),
 }));
 
-function SceanceApp() {
+function SeanceApp() {
   const { id } = useParams();
 
-  const [sceanceData, setSceanceData] = useState();
+  const [seanceData, setSeanceData] = useState();
 
   useEffect(() => {
     axios.get(`http://localhost:4000/api/calendrier/view/${id}`)
       .then((response) => {
-        setSceanceData(response.data);
+        setSeanceData(response.data);
       })
       .catch((error) => {
         console.error(error);
       })
   }, [])
 
-  // console.log(sceanceData)
+  // console.log(seanceData)
 
   //Récupération des modules lié à la formation
   const [moduleFormationData, setModuleFormationData] = useState();
@@ -73,52 +73,52 @@ function SceanceApp() {
           </Button>
         </div>
         <div className="mt-8 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight">
-          {sceanceData?.title}
+          {seanceData?.title}
         </div>
         <div>
           {
-            sceanceData?.Formation && (
+            seanceData?.Formation && (
               <>
 
-                {/* <Typography className="mt-48 sm:mt-64 text-3xl font-bold leading-tight tracking-tight">{sceanceData?.Formation?.theme}</Typography> */}
+                {/* <Typography className="mt-48 sm:mt-64 text-3xl font-bold leading-tight tracking-tight">{seanceData?.Formation?.theme}</Typography> */}
                 <Card className={clsx('py-24 px-32 shadow shrink-0 mt-24 mb-24 w-full')}>
                   <div className="flex items-center">
                     <Typography className="text-24 font-700" component="h2">Formation</Typography>
-                    {/* <Typography className="text-17 mx-8 font-600" color="text.secondary" component="h3">{sceanceData?.Formation?.theme}</Typography> */}
+                    {/* <Typography className="text-17 mx-8 font-600" color="text.secondary" component="h3">{seanceData?.Formation?.theme}</Typography> */}
                   </div>
                   <div className="mt-40">
                     <StyledBadge>Thème</StyledBadge>
-                    <Typography className="my-16 px-24">{sceanceData?.Formation?.theme}</Typography>
+                    <Typography className="my-16 px-24">{seanceData?.Formation?.theme}</Typography>
                   </div>
                   <div className="mt-40">
                     <StyledBadge>Description</StyledBadge>
-                    <Typography className="my-16 px-24">{sceanceData?.Formation?.description}</Typography>
+                    <Typography className="my-16 px-24">{seanceData?.Formation?.description}</Typography>
                   </div>
 
                   <div className="mt-40">
                     <StyledBadge>Formateur</StyledBadge>
                     <div className='flex items-center'>
-                      {sceanceData?.Formation?.formateur ? (
+                      {seanceData?.Formation?.formateur ? (
                         <>
-                          {sceanceData?.Formation?.Formateur?.image ? (
+                          {seanceData?.Formation?.Formateur?.image ? (
                             <Avatar
-                              key={sceanceData?.Formation?.Formateur?.id}
+                              key={seanceData?.Formation?.Formateur?.id}
                               className="w-64 h-64 rounded-12 m-4"
-                              alt={sceanceData?.Formation?.Formateur?.nom}
-                              src={`http://localhost:4000/${sceanceData?.Formation?.Formateur?.image}`}
+                              alt={seanceData?.Formation?.Formateur?.nom}
+                              src={`http://localhost:4000/${seanceData?.Formation?.Formateur?.image}`}
                             />
                           ) : (
                             <Avatar
-                              key={sceanceData?.Formation?.Formateur?.id}
+                              key={seanceData?.Formation?.Formateur?.id}
                               className="w-64 h-64 rounded-12 m-4"
-                              alt={sceanceData?.Formation?.Formateur?.nom}
+                              alt={seanceData?.Formation?.Formateur?.nom}
                             >
-                              {sceanceData?.Formation?.Formateur?.nom ? sceanceData?.Formation?.Formateur?.nom[0] : '?'}
+                              {seanceData?.Formation?.Formateur?.nom ? seanceData?.Formation?.Formateur?.nom[0] : '?'}
                             </Avatar>
                           )}
-                          <Typography className="my-16 px-24 text-center">{sceanceData?.Formation?.Formateur?.nom} {sceanceData?.Formation?.Formateur?.prenom}</Typography></>
+                          <Typography className="my-16 px-24 text-center">{seanceData?.Formation?.Formateur?.nom} {seanceData?.Formation?.Formateur?.prenom}</Typography></>
                       ) : (
-                        <Typography className="my-16 px-24 text-center">{sceanceData?.Formation?.formateurExterne}</Typography>
+                        <Typography className="my-16 px-24 text-center">{seanceData?.Formation?.formateurExterne}</Typography>
                       )}
 
 
@@ -138,7 +138,7 @@ function SceanceApp() {
   )
 }
 
-export default SceanceApp
+export default SeanceApp
 
 
 

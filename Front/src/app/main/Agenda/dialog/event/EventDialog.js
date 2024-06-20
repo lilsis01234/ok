@@ -71,7 +71,7 @@ function EventDialog(props) {
     }, []);
 
     const handleFormSubmit = async (formData) => {
-        if (label === 'Scéance Formation') {
+        if (label === 'Séance Formation') {
             const data = {
                 title: titleEvents,
                 start: eventStart,
@@ -81,24 +81,24 @@ function EventDialog(props) {
             }
 
             if (type === 'new') {
-                axios.post('http://localhost:4000/api/agenda/addSceance', data)
+                axios.post('http://localhost:4000/api/agenda/addSeance', data)
                     .then(response => {
-                        dispatch(showMessage({ message: 'Scéance formation ajouté avec succés' }))
+                        dispatch(showMessage({ message: 'Séance formation ajouté avec succés' }))
                         closePopover()
                     })
                     .catch(error => {
-                        dispatch(showMessage({ message: 'Erreur lors de l\'ajout de la scéance' }))
+                        dispatch(showMessage({ message: 'Erreur lors de l\'ajout de la séance' }))
                         console.error(error);
                         closePopover();
                     })
             } else if (type === 'edit') {
                 axios.put(`http://localhost:4000/api/calendrier/edit/${idEvent}`, data)
                     .then(response => {
-                        dispatch(showMessage({ message: 'Scéance mise à jour avec succés' }));
+                        dispatch(showMessage({ message: 'Séance mise à jour avec succés' }));
                         closePopover();
                     })
                     .catch(error => {
-                        dispatch(showMessage({ message: 'Erreur lors de la mise à jour de la scéance' }))
+                        dispatch(showMessage({ message: 'Erreur lors de la mise à jour de la séance' }))
                         console.error(error);
                         closePopover();
                     })
@@ -109,11 +109,11 @@ function EventDialog(props) {
 
 
     const handleRemove = async () => {
-        // if (label === 'Scéance Formation'){
-            const confirmation = window.confirm(`Vous voulez vraiment supprimer la scéance ${titleEvents} ?`)
+        // if (label === 'Séance Formation'){
+            const confirmation = window.confirm(`Vous voulez vraiment supprimer la séance ${titleEvents} ?`)
             if(confirmation){
                 axios.delete(`http://localhost:4000/api/calendrier/seance/${idEvent}`)
-                dispatch(showMessage({message : 'Scéance effacé avec succés'}))
+                dispatch(showMessage({message : 'Séance effacé avec succés'}))
                 closePopover();
             } else {
                 closePopover();
@@ -121,8 +121,8 @@ function EventDialog(props) {
         // }     
     }
 
-    const handleVoirPlusSceance = () => {
-        navigate(`/sceance/info/${idEvent}`);
+    const handleVoirPlusSeance = () => {
+        navigate(`/seance/info/${idEvent}`);
     }
 
 
@@ -264,12 +264,12 @@ function EventDialog(props) {
                                 variant='outlined'
                                 fullWidth
                             >
-                                <MenuItem value='Scéance Formation'>Scéance Formation</MenuItem>
+                                <MenuItem value='Séance Formation'>Séance Formation</MenuItem>
                             </TextField>
                         )}
                     />
                 </div>
-                {label === 'Scéance Formation' && (
+                {label === 'Séance Formation' && (
                     <>
                         <div className="flex sm:space-x-24 mb-16">
                             <FuseSvgIcon className="hidden sm:inline-flex mt-16" color="action">
@@ -347,7 +347,7 @@ function EventDialog(props) {
                     <div className="flex items-center space-x-8">
                         <Button
                             variant="contained"
-                            onClick={handleVoirPlusSceance}
+                            onClick={handleVoirPlusSeance}
                         >
                             <FuseSvgIcon>heroicons-solid:plus-circle</FuseSvgIcon>
                             Voir plus

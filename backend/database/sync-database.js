@@ -26,7 +26,7 @@ const DemandeFormation = require('../Modele/formation/Demandes/demandeFormation'
 const CommentaireFormation = require('../Modele/formation/Discussions/CommentaireFormation');
 const DiscussionFormation = require('../Modele/formation/Discussions/DiscussionFormation');
 const Module = require('../Modele/formation/Modules/Module');
-const Seance = require('../Modele/formation/Seances/Seance');
+const Seance = require('../Modele/formation/Seances/SeanceFormation');
 const ParticipantsSeance = require('../Modele/formation/Seances/ParticipantsSeance');
 
 const EquipeSeance = require('../Modele/formation/Seances/EquipeSeance');
@@ -42,7 +42,7 @@ const associationFormationCollab = require('../Modele/formation/associationForma
 
 //Les nouveaux modeles 
 const Demande = require('../Modele/formation/Demandes/Demande')
-const SceanceFormation = require('../Modele/formation/Seances/SceanceFormation')
+const SeanceFormation = require('../Modele/formation/Seances/SeanceFormation')
 const GroupFormation = require('../Modele/formation/PublicCible/GroupFormation')
         
 
@@ -90,9 +90,9 @@ async function syncDatabase() {
         const { RoleHierarchique, Permission, RolePermission } = associationPermission
 
         //Modele et asociation Module FORMATION ICI
-        const{ SceanceFormation, Collaborateur ,ParticipantsSeance} = associationSeanceCollab;
-        Collaborateur.belongsToMany(SceanceFormation,{through:ParticipantsSeance});
-        SceanceFormation.belongsToMany(Collaborateur,{through:ParticipantsSeance});
+        const{ SeanceFormation, Collaborateur ,ParticipantsSeance} = associationSeanceCollab;
+        Collaborateur.belongsToMany(SeanceFormation,{through:ParticipantsSeance});
+        SeanceFormation.belongsToMany(Collaborateur,{through:ParticipantsSeance});
 
         const{ Seance2, Equipe,EquipeSeance} = associationSeanceEquipe;
         Equipe.belongsToMany(Seance2,{through:EquipeSeance});

@@ -11,11 +11,14 @@ const AjoutFormation = ()=>{
     const navigate = useNavigate()
     const[theme,setTheme] = useState('');
     const[description,setDescription]= useState('');
+    const[dateDebut,setDatedebut]= useState('');
+    const[dateFin,setDatefin]= useState('');
+
     const formateur = JSON.parse(localStorage.getItem('user')).id;
 
     const handleSubmit =(event)=>{
         event.preventDefault();
-        axios.post('http://localhost:4000/api/formations/addFormation', {theme,description,formateur})
+        axios.post('http://localhost:4000/api/formations/addFormation', {theme,description,formateur,dateDebut, dateFin})
         .then(res => {
             console.log(res);
             navigate('/dashboards/listeFormation');
@@ -70,6 +73,26 @@ const AjoutFormation = ()=>{
                   fullWidth
                   required
                   label="Description"
+                />
+
+                <TextField
+                  className="mt-8 mb-16"
+                  type="date"
+                  value={dateDebut}
+                  onChange={(e) => setDatedebut(e.target.value)}
+                  fullWidth
+                  required
+                  label="Date de début"
+                />
+
+                <TextField
+                  className="mt-8 mb-16"
+                  type="date"
+                  value={dateFin}
+                  onChange={(e) => setDatefin(e.target.value)}
+                  fullWidth
+                  required
+                  label="Date de fin"
                 />
 
                 <Button

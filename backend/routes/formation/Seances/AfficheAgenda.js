@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Agenda = require('../../../Modele/formation/Seances/Seance');
+const Agenda = require('../../../Modele/formation/Seances/SeanceFormation');
 const Formation = require('../../../Modele/formation/Formation');
 const Collab = require('../../../Modele/CollabModel/Collab');
 
@@ -11,7 +11,7 @@ router.get('/agenda', async (req, res) => {
     const agendaEntries = await Agenda.findAll({
       include: {
         model: Formation,
-        attributes: ['theme', 'formateur', 'confidentialite']
+        attributes: ['theme', 'formateur', 'confidentialite','module']
       }
     });
     // Retournez les entrées de l'agenda en tant que réponse JSON
@@ -39,7 +39,7 @@ router.delete('/seance/:id', async (req, res) => {
 })
 
 
-//Route pour mettre à jour un sceance existants
+//Route pour mettre à jour un seance existants
 router.put('/edit/:id', async (req, res) => {
   try {
     const {title, start, end, nombreDePlaces, formation} = req.body;
@@ -47,13 +47,13 @@ router.put('/edit/:id', async (req, res) => {
     const { id } = req.params;
 
   
-      const sceanceToEdit = await Agenda.findByPk(id);
+      const seanceToEdit = await Agenda.findByPk(id);
 
-      if (!sceanceToEdit) {
-        res.status(404).json({ error: 'Scéance introuvable' })
+      if (!seanceToEdit) {
+        res.status(404).json({ error: 'Séance introuvable' })
       }
 
-      const agendaEntry = await sceanceToEdit.update({
+      const agendaEntry = await seanceToEdit.update({
         date : start,
         heureStart : start,
         heureEnd : end,
@@ -79,7 +79,7 @@ router.get('/view/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
-    const sceance = await Agenda.findByPk(
+    const seance = await Agenda.findByPk(
       id, 
       {
       include: [{
@@ -90,18 +90,18 @@ router.get('/view/:id', async (req, res) => {
           attributes: ['id','nom', 'prenom','image'],
         }
       }],
-      attributes: ['id', 'date', 'heureStart', 'heureEnd', 'formation', 'nombreDePlaces', 'title']
+      attributes: ['id', 'date', 'heureStart', 'heureEnd', 'formation', 'nombreDePlaces', 'title','module']
 
     });
 
-    if (!sceance) {
-      res.status(404).json({ error: 'Scéance introuvable' })
+    if (!seance) {
+      res.status(404).json({ error: 'Séance introuvable' })
     }
 
 
-    res.status(201).json(sceance)
+    res.status(201).json(seance)
   } catch (error) {
-    console.error("Une erreur s'est produite lors de la récupération des scéances", error);
+    console.error("Une erreur s'est produite lors de la récupération des séances", error);
     res.status(500).json({ error: 'Erreur lors de la récupération des informations concernant les formations' })
   }
 })

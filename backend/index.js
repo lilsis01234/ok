@@ -54,12 +54,12 @@ const requestRouter = require('../backend/routes/formation/Demandes/demandeForma
 const seanceRouter = require('../backend/routes/formation/Seances/seance')
 const moduleRouter = require('../backend/routes/formation/Modules/module')
 const discussionRouter = require('../backend/routes/formation/Discussion/discussion')
-const participantSeanceRouter = require('../backend/routes/formation/Seances/participantsseance')
+const participantSeanceRouter = require('../backend/routes/formation/Seances/participantSeance')
 const commentaireRouter = require('../backend/routes/formation/Discussion/commentaire')
 const agendaCongeRouter = require('../backend/routes/Conge/ListeConge/ListeConge')
 
-const sceance = require('./routes/formation/Seances/sceances');
-const participantSeance = require('./routes/formation/Seances/participantSceance')
+const seance = require('./routes/formation/Seances/seance');
+const participantSeance = require('./routes/formation/Seances/participantSeance')
 
 //Module Actualité
 const actualite = require('./routes/Actualite/Actualité');
@@ -82,7 +82,7 @@ const membrer = require('./routes/Chat/membre')
 const message = require('./routes/Chat/message')
 
 //Protection contre les attaques cors
-app.use(cors({ origin: 'http://192.168.16.46:3000', credentials: true }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 //Ajout de middleware express.json()
 app.use(express.json())
@@ -129,8 +129,8 @@ app.use('/api/roleHierarchique',roleHierarchique);
 app.use('/api/commentaire',commentaireRouter);
 app.use('/api/participantSeance',participantSeanceRouter)
 
-app.use('/api/sceance', sceance)
-app.use('/api/participantSceance', participantSeance)
+app.use('/api/seance', seance)
+app.use('/api/participantSeance', participantSeance)
 
 
 //Module actualité
