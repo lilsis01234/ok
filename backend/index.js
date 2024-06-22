@@ -130,7 +130,6 @@ app.use('/api/commentaire',commentaireRouter);
 app.use('/api/participantSeance',participantSeanceRouter)
 
 app.use('/api/seance', seance)
-app.use('/api/participantSeance', participantSeance)
 
 
 //Module actualité
