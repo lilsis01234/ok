@@ -36,7 +36,7 @@ const VoirPlusFormation = () => {
                 console.log(err);
             });
 
-        axios.get(`http://localhost:4000/api/seances/seancesParFormation/${idFormation.id}`)
+        axios.get(`http://localhost:4000/api/seances/all/formation/${idFormation.id}`)
             .then((res) => {
               console.log(res.data)
                 const formattedEvents = res.data.map((event) => {

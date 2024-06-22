@@ -11,7 +11,7 @@ import frLocale from '@fullcalendar/core/locales/fr';
 import AgendaAppSideBar from './AgendaAppSideBar';
 import EventDialog from './dialog/event/EventDialog';
 import { useDispatch } from 'react-redux';
-import { getSceanceEvents, openNewEventDialog, selectFilteredEvents } from './store/eventsSlice';
+import { getSeanceEvents, openNewEventDialog, selectFilteredEvents } from './store/eventsSlice';
 import axios from 'axios';
 import moment from 'moment-timezone';
 import AgendaAppEventContent from './AgendaAppEventContent';
@@ -152,11 +152,11 @@ function AgendaApp() {
     }
 
     
-    //Pour mettre à jour les scéances existants quand on change l'emplacement des evenements
+    //Pour mettre à jour les séances existants quand on change l'emplacement des evenements
     const updateEvents = (id, data) =>{
         axios.put(`http://localhost:4000/api/calendrier/edit/${id}`, data)
            .then(response => {
-                dispatch(showMessage({message : 'Scéance mise à jour avec succès'}))
+                dispatch(showMessage({message : 'Séance mise à jour avec succès'}))
            })
            .catch(error => {
                 dispatch(showMessage({message : 'Erreur lors de la mise à jour des calendrier'}))
@@ -190,8 +190,8 @@ function AgendaApp() {
     const [idEventClick, setIdEventClick] = useState();
 
     //Récupérer les informations concernant l'évenement cliqué
-    //Evenement de type scéance
-    const getSceanceEvent = (id) => {
+    //Evenement de type séance
+    const getSeanceEvent = (id) => {
         axios.get(`http://localhost:4000/api/calendrier/view/${id}`)
             .then((response) => {
                 setData({
@@ -220,7 +220,7 @@ function AgendaApp() {
         setType('edit');
         setIsEventDialogOpen(true);
         setIdEventClick(id);
-        getSceanceEvent(id);
+        getSeanceEvent(id);
 
         const positionX = jsEvent?.clientX;
         const positionY = jsEvent?.clientY;
@@ -245,7 +245,7 @@ function AgendaApp() {
         setLeftSidebarOpen(!leftSidebarOpen);
     }
 
-    //Récupération des evenements type Scéances
+    //Récupération des evenements type Séances
     useEffect(() => {
         axios.get('http://localhost:4000/api/calendrier/agenda')
             .then((response) => {

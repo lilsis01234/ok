@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment-timezone';
@@ -31,6 +31,17 @@ function CalendarForm() {
       }
   };
 
+  const ModuleGet = () =>{
+    axios.post(`http://localhost:4000/api/module/modules/${idformation}`)
+    .then(response =>{
+      console.log(response.data);
+    })
+  }
+
+  useEffect =()=>{
+    ModuleGet()
+  ,[]}
+  
   const handleSave = () => {
     axios
       .post('http://localhost:4000/api/agenda/agenda', {events,idformation})

@@ -1,6 +1,6 @@
-import SceanceApp from "./SceanceApp";
+import SeanceApp from "./SeanceApp";
 
-const SceanceAppConfig = {
+const SeanceAppConfig = {
     settings : {
         layout : {
             config : {},
@@ -8,8 +8,8 @@ const SceanceAppConfig = {
     },
     routes : [
         {
-            path : '/sceance/info/:id',
-            element : <SceanceApp/>,
+            path : '/seance/info/:id',
+            element : <SeanceApp/>,
             auth: {
                 role: ['SuperAdmin', 'Admin', 'User'],
             },
@@ -18,4 +18,4 @@ const SceanceAppConfig = {
 
 }
 
-export default SceanceAppConfig;
+export default SeanceAppConfig;

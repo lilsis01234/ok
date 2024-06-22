@@ -35,7 +35,7 @@ const schema = yup.object().shape({
 const defaultValues = {
   email: '',
   password: '',
-  remember: true,
+  remember: false,
 };
 
 function SignInPage() {

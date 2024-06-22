@@ -5,28 +5,28 @@ import formatISO from 'date-fns/formatISO';
 
 export const dateFormat = 'YYYY-MM-DDTHH:mm:ss.sssZ';
 
-//Pour la scéance
-export const getSceanceEvents = createAsyncThunk('agenda/events/getSceanceEvents', async () => {
+//Pour la séance
+export const getSeanceEvents = createAsyncThunk('agenda/events/getSeanceEvents', async () => {
     const response = await axios.get('http://localhost:4000/api/calendrier/agenda');
     const data = await response.data;
 
     return data;
 })
 
-export const addSceanceEvents = createAsyncThunk('agenda/events/addSceanceEvents', async (newSceanceEvent, { dispatch }) => {
-    const response = await axios.post(('http://localhost/api/agenda/agenda'), newSceanceEvent)
+export const addSeanceEvents = createAsyncThunk('agenda/events/addSeanceEvents', async (newSeanceEvent, { dispatch }) => {
+    const response = await axios.post(('http://localhost/api/agenda/agenda'), newSeanceEvent)
     const data = await response.data;
     return data;
 })
 
-export const updateSceanceEvent = createAsyncThunk('agenda/events/updateSceanceEvent', async (sceanceEvent, { dispatch }) => {
-    const response = await axios.put(`http://localhost:4000/api/calendrier/edit/${sceanceEvent.id}`, sceanceEvent)
+export const updateSeanceEvent = createAsyncThunk('agenda/events/updateSeanceEvent', async (seanceEvent, { dispatch }) => {
+    const response = await axios.put(`http://localhost:4000/api/calendrier/edit/${seanceEvent.id}`, seanceEvent)
     const data = await response.data;
     return data
 })
 
-export const removeSceanceEvent = createAsyncThunk('agenda/events/deleteSceanceEvent', async (sceanceId, { dispatch }) => {
-    const response = await axios.delete(`http://localhost:4000/api/calendrier/seance/${sceanceId}`);
+export const removeSeanceEvent = createAsyncThunk('agenda/events/deleteSeanceEvent', async (seanceId, { dispatch }) => {
+    const response = await axios.delete(`http://localhost:4000/api/calendrier/seance/${seanceId}`);
     const data = await response.data;
 
     return data;
@@ -121,10 +121,10 @@ const eventsSlice = createSlice({
         },
     },
     extraReducers: {
-        [getSceanceEvents.fulfilled]: eventsAdapter.setAll,
-        [addSceanceEvents.fulfilled]: eventsAdapter.addOne,
-        [updateSceanceEvent.fulfilled]: eventsAdapter.upsertOne,
-        [removeSceanceEvent.fulfilled]: eventsAdapter.removeOne,
+        [getSeanceEvents.fulfilled]: eventsAdapter.setAll,
+        [addSeanceEvents.fulfilled]: eventsAdapter.addOne,
+        [updateSeanceEvent.fulfilled]: eventsAdapter.upsertOne,
+        [removeSeanceEvent.fulfilled]: eventsAdapter.removeOne,
     },
 })
 

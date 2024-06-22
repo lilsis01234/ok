@@ -90,7 +90,7 @@ function buildCriteria(criteria, criteriaXOR){
 //Ajout Formation
 router.post('/new', async(req, res) => {
     try {
-      const {theme, description, confidentialite, formateur, formateurExt, critere, dateDebutFormation, dateFinFormation} = req.body;
+      const {theme, description, confidentialite, formateur, formateurExt, dateDebut, dateFin} = req.body;
       
       const formation = await Formation.create({
           theme : theme,
@@ -98,10 +98,9 @@ router.post('/new', async(req, res) => {
           confidentialite : confidentialite,
           formateur : formateur,
           formateurExt : formateurExt,
-          dateDebutFormation : dateDebutFormation,
-          dateFinFormation : dateFinFormation,
+          dateDebutFormation : dateDebut,
+          dateFinFormation : dateFin,
           demande : 'false',
-
       })
 
 
@@ -207,18 +206,27 @@ router.put('/edit/:id', async(req, res) => {
   try {
     const {theme, description, confidentialite, formateur, formateurExt, critere, dateDebutFormation, dateFinFormation} = req.body;
     
+    const id = req.params.id;
     //Reperer les information à modifier
     const formation = await Formation.findByPk(id);
 
-    const formationToUpdate = await Formation.update({
-      theme : theme,
-      description : description,
-      confidentialite : confidentialite,
-      formateur : formateur,
-      formateurExt : formateurExt,
-      dateDebutFormation : dateDebutFormation,
-      dateFinFormation : dateFinFormation,
-    })
+    const formationToUpdate = await Formation.update(
+      {
+        theme: theme,
+        description: description,
+        confidentialite: confidentialite,
+        formateur: formateur,
+        formateurExt: formateurExt,
+        dateDebutFormation: dateDebutFormation,
+        dateFinFormation: dateFinFormation,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    
 
    //Récupérer les membres de la formation à modifier
    if(formation.confidentialite === 'Privée') {
@@ -565,7 +573,9 @@ router.post('/addFormation',async(req,res)=>{
             description:req.body.description,
             formateur:req.body.formateur,
             confidentialite:0,
-            formateurExt:null
+            formateurExt:null,
+            dateDebutFormation:req.body.dateDebut,
+            dateFinFormation:req.body.dateFin
         }))
         const formation = await newFormation.save();
         res.status(201).json(formation);

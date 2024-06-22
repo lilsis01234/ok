@@ -40,7 +40,7 @@ import AccountSettingsConfig from '../main/accountSettings/AccountSettingConfig'
 import ProfileConfig from '../main/Profile/ProfileConfig';
 import ImportDataPageConfig from '../main/pages/ImportData/ImportDataPageConfig';
 import AgendaAppConfig from '../main/Agenda/AgendaAppConfig';
-import SceanceAppConfig from '../main/Formation/Sceance/SceanceAppConfig';
+import SeanceAppConfig from '../main/Formation/Seance/SeanceAppConfig';
 
 
 
@@ -48,7 +48,7 @@ const routeConfigs = [
   ExampleConfig, SignOutConfig, SignInConfig, SignUpConfig, 
   ... dashboardsConfigs,CalendarConfig,CalendarFormConfig,FormationConfig,CongeConfig,
   AgendaAppConfig,
-  SceanceAppConfig,
+  SeanceAppConfig,
   FormationAppConfig,
 
   //Module Profil

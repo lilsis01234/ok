@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Agenda = require('../../../Modele/formation/Seances/Seance');
+const Agenda = require('../../../Modele/formation/Seances/SeanceFormation');
 const moment = require('moment');
 const timezone = require('moment-timezone');
 moment.tz.setDefault('Indian/Antananarivo');
@@ -17,7 +17,7 @@ router.post('/agenda', async (req, res) => {
         date: start,
         heureStart: start,
         heureEnd: end, 
-        nombreDePlacesReservees: 0,
+        nombredePlacesReservees: 0,
         nombreDePlaces: nombreDePlaces,
         title: title,
         formation,
@@ -33,8 +33,8 @@ router.post('/agenda', async (req, res) => {
   }
 });
 
-//Pour ajouter des scéances à une formation
-router.post('/addSceance', async(req, res) => {
+//Pour ajouter des séances à une formation
+router.post('/addSeance', async(req, res) => {
   try {
     const {title, start, end, nombreDePlaces, formation} = req.body;
 
@@ -55,7 +55,7 @@ router.post('/addSceance', async(req, res) => {
 
   } catch (error) {
       console.error(error);
-      res.status(500).json({error : 'Erreur lors de l\'ajout des scéances'})
+      res.status(500).json({error : 'Erreur lors de l\'ajout des séances'})
   }
 })
 

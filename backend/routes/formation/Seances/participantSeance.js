@@ -2,7 +2,7 @@
 const Formation = require('../../../Modele/formation/Formation');
 const Module = require('../../../Modele/formation/Modules/Module');
 const GroupFormation = require('../../../Modele/formation/PublicCible/GroupFormation');
-const { SceanceFormation, Collaborateur, ParticipantsSeance } = require('../../../Modele/formation/associationSeance/associationSeanceCollab')
+const { SeanceFormation, Collaborateur, ParticipantsSeance } = require('../../../Modele/formation/associationSeance/associationSeanceCollab')
 
 
 const router = require('express').Router();
@@ -22,13 +22,13 @@ function buildCriteria(criteria) {
 }
 
 
-//Récupérer toutes les participants d'une sceance
+//Récupérer toutes les participants d'une seance
 router.get('/all/:id', async (req, res) => {
     try {
 
         const { id } = req.params
 
-        const participantsSceance = await ParticipantsSeance.findAll({
+        const participantsSeance = await ParticipantsSeance.findAll({
             where: {
                 seance: id,
             },
@@ -41,10 +41,10 @@ router.get('/all/:id', async (req, res) => {
         })
 
 
-        res.status(200).json(participantsSceance)
+        res.status(200).json(participantsSeance)
     } catch (error) {
         console.error(error)
-        res.status(500).json({error : 'Erreur lors de la récupération des participants de la scéance'})
+        res.status(500).json({error : 'Erreur lors de la récupération des participants de la séance'})
     }
 })
 
@@ -52,23 +52,23 @@ router.get('/all/:id', async (req, res) => {
 //Ajouter un participants
 router.post('/add', async(req, res) => {
     try {
-        const {sceance, collaborateur, online} = req.body;
+        const {seance, collaborateur, online} = req.body;
 
-        //Rechercher dans la sceance s'il le nombre de place n'est pas encore plein
-        const sceanceParticipant = await SceanceFormation.findByPk(sceance)
+        //Rechercher dans la seance s'il le nombre de place n'est pas encore plein
+        const seanceParticipant = await SeanceFormation.findByPk(seance)
 
-        if(sceanceParticipant.nombreDePlaces === sceanceParticipant.nombreDePlacesReservees){
+        if(seanceParticipant.nombreDePlaces === seanceParticipant.nombreDePlacesReservees){
             res.status(200).json({message : 'Il n\'y a plus de place.'});
         } else {
             const participant = await ParticipantsSeance.create({
-                sceance : sceance,
+                seance : seance,
                 collaborateur: collaborateur,
                 online : online,
             })
 
-            const newNbrPlaceReservee = sceanceParticipant.nombreDePlacesReservees + 1
+            const newNbrPlaceReservee = seanceParticipant.nombreDePlacesReservees + 1
 
-           await SceanceFormation.update({
+           await SeanceFormation.update({
                 nombreDePlacesReservees : newNbrPlaceReservee
             })
 
@@ -85,27 +85,27 @@ router.post('/add', async(req, res) => {
 //Ajouter plusieurs participants en même temps 
 router.post('/addManyParticipant', async(req, res) => {
     try {
-        const {critere, sceance, online} = req.body;
+        const {critere, seance, online} = req.body;
 
-        const sceanceParticipant = await SceanceFormation.findByPk(sceance)
+        const seanceParticipant = await SeanceFormation.findByPk(seance)
 
         const collaborateur = await Collab.findAll({
             where : buildCriteria(critere)
         })
 
         for(const collab of collaborateur){
-            if(sceanceParticipant.nombreDePlaces === sceanceParticipant.nombreDePlacesReservees){
+            if(seanceParticipant.nombreDePlaces === seanceParticipant.nombreDePlacesReservees){
                 res.status(200).json({message : 'Il n\'y a plus de place.'});
             } else {
                 const participant = await ParticipantsSeance.create({
-                    sceance : sceance,
+                    seance : seance,
                     collaborateur : collab.id,
                     online : online
                 })
 
-                const newNbrPlaceReservee = sceanceParticipant.nombreDePlacesReservees + 1
+                const newNbrPlaceReservee = seanceParticipant.nombreDePlacesReservees + 1
 
-                await SceanceFormation.update({
+                await SeanceFormation.update({
                     nombreDePlacesReservees : newNbrPlaceReservee
                 })
 
@@ -125,9 +125,9 @@ router.post('/addManyParticipant', async(req, res) => {
 //Importer des participants
 router.post('/importParticipant', async(req, res) => {
     try {
-        const {sceance} = req.body;
+        const {seance} = req.body;
 
-        const sceanceParticipant = await SceanceFormation.findByPk(sceance, {
+        const seanceParticipant = await SeanceFormation.findByPk(seance, {
             include : 
                 {
                     model : Module,
@@ -141,11 +141,11 @@ router.post('/importParticipant', async(req, res) => {
                 }
         })
 
-        if(!sceanceParticipant){
-            res.status(500).json({error : 'Sceance non trouvé'})
+        if(!seanceParticipant){
+            res.status(500).json({error : 'Seance non trouvé'})
         }
 
-        const formationId = sceanceParticipant.module?.formation?.id
+        const formationId = seanceParticipant.module?.formation?.id
 
         if(!formationId){
             res.status(500).json({error : 'Formation non trouvé'})
@@ -162,13 +162,13 @@ router.post('/importParticipant', async(req, res) => {
         if(groupeFormation){
             for (const group in groupeFormation){
                 await ParticipantsSeance.create({
-                    sceance : sceance,
+                    seance : seance,
                     collaborateur : group.id
                 })
 
-                const newNbrPlaceReservee = sceanceParticipant.nombreDePlacesReservees+1
+                const newNbrPlaceReservee = seanceParticipant.nombreDePlacesReservees+1
 
-                await SceanceFormation.update({
+                await SeanceFormation.update({
                     nombreDePlacesReservees : newNbrPlaceReservee
                 })
                 
@@ -189,14 +189,14 @@ router.delete('/delete/:id', async(req, res) => {
     try {
         const {id} = req.params;
 
-        const sceanceToDelete = await ParticipantsSeance.findByPk(id);
+        const seanceToDelete = await ParticipantsSeance.findByPk(id);
         
-        if(!sceanceToDelete){
+        if(!seanceToDelete){
             res.status(500).json({error : 'Participant Non Trouvé'})
         }
 
 
-        await sceanceToDelete.delete();
+        await seanceToDelete.delete();
         res.status(200).json({message : 'Participant supprimé avec succés'})
 
 
