@@ -11,7 +11,7 @@ router.post('/agenda', async (req, res) => {
     const formation = req.body.idformation;
 
     const agendaEntries = await Promise.all(eventsData.map(async event => {
-      const { start, end, title, nombreDePlaces } = event;
+      const { start, end, title, nombreDePlaces,module } = event;
 
       const agendaEntry = await Agenda.create({
         date: start,
@@ -20,7 +20,8 @@ router.post('/agenda', async (req, res) => {
         nombredePlacesReservees: 0,
         nombreDePlaces: nombreDePlaces,
         title: title,
-        formation,
+        module:module,
+        formation:formation,
         approbation: 1
       });
       return agendaEntry;
@@ -32,31 +33,5 @@ router.post('/agenda', async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur' });
   }
 });
-
-//Pour ajouter des séances à une formation
-router.post('/addSeance', async(req, res) => {
-  try {
-    const {title, start, end, nombreDePlaces, formation} = req.body;
-
-    const agendaEntry = await Agenda.create({
-      date : start,
-      heureStart : start,
-      heureEnd : end,
-      nombreDePlacesReservees : 0,
-      nombreDePlaces : nombreDePlaces,
-      title : title,
-      formation : formation,
-      approbation : 1
-    })
-
-    res.status(201).json(agendaEntry)
-
-
-
-  } catch (error) {
-      console.error(error);
-      res.status(500).json({error : 'Erreur lors de l\'ajout des séances'})
-  }
-})
 
 module.exports = router;

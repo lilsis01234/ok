@@ -4,32 +4,6 @@ const Module = require('../../../Modele/formation/Modules/Module');
 const GroupFormation = require('../../../Modele/formation/PublicCible/GroupFormation');
 const SeanceFormation = require('../../../Modele/formation/Seances/SeanceFormation')
 
-
-
-//Route pour ajouter une nouvelle formation
-router.post('/add', async (req, res) => {
-    try {
-        const { title, start, end, nombreDePlaces, module } = req.body;
-
-        const seanceToAdd = await SeanceFormation.create({
-            date: start,
-            heureStart: start,
-            heureEnd: end,
-            nombreDePlacesReservees: 0,
-            nombreDePlaces: nombreDePlaces,
-            title: title,
-            module: module
-        })
-
-        res.status(201).json(seanceToAdd)
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Erreur lors de l\'ajout des séances' })
-    }
-})
-
-
 //Récupérer toutes les séance
 router.get('/all', async (req, res) => {
     try {
@@ -62,30 +36,27 @@ router.get('/all/formation/:id', async (req, res) => {
 
         const allFormationSeance = await SeanceFormation.findAll({
             include: [
-                [
-                    {
-                        model: Module,
-                        attributes: ['titreModule', 'description', 'formation'],
-                    },
-                   
-                    {
-                        model: Formation,
-                        attributes: ['theme', 'description', 'formateur', 'formateurExterne', 'confidentialite', 'dateFinFormation', 'dateDebutFormation', 'demande']
-                    }
-                ]
-            ]
-        })
+                {
+                    model: Module,
+                    attributes: ['titreModule'],
+                },
+                {
+                    model: Formation,
+                    attributes: ['theme', 'description', 'formateur', 'formateurExterne', 'confidentialite', 'dateFinFormation', 'dateDebutFormation', 'demande']
+                }
+            ],
+            where: {
+                formation: id
+            }
+        });
 
-
-        res.status(200).json(allFormationSeance)
-
+        res.status(200).json(allFormationSeance);
 
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ error: 'Erreur lors de la récupération de toutes les séances d\'une formation' })
+        console.error(error);
+        res.status(500).json({ error: 'Erreur lors de la récupération de toutes les séances d\'une formation' });
     }
-})
-
+});
 
 //Récupérer toutes les séances d'une Module 
 router.get('/all/module/:id', async (req, res) => {
