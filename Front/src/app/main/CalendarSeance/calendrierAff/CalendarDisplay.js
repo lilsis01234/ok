@@ -175,7 +175,7 @@ function CalendarTraining() {
   
 
   const ShowAllParticipant = async (seanceId) => {
-    axios.get(`http://localhost:4000/api/participantSeance/allCollab/${seanceId}`)
+    axios.get(`http://localhost:4000/api/participantSeance/all/${seanceId}`)
     .then((res) => {
       console.log(res.data);
       setParticipantData(res.data);

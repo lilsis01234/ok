@@ -1,9 +1,9 @@
-// const ParticipantsSeance = require('../../../Modele/formation/Seances/ParticipantsSeance');
 const Formation = require('../../../Modele/formation/Formation');
 const Module = require('../../../Modele/formation/Modules/Module');
 const GroupFormation = require('../../../Modele/formation/PublicCible/GroupFormation');
-const { SeanceFormation, Collaborateur, ParticipantsSeance } = require('../../../Modele/formation/associationSeance/associationSeanceCollab')
-
+const { SeanceFormation, Collab, ParticipantsSeance } = require('../../../Modele/formation/associationSeance/associationSeanceCollab')
+const { QueryTypes } = require('sequelize');
+const sequelize = require('../../../database/database'); 
 
 const router = require('express').Router();
 
@@ -23,30 +23,39 @@ function buildCriteria(criteria) {
 
 
 //Récupérer toutes les participants d'une seance
+
+
 router.get('/all/:id', async (req, res) => {
     try {
+        const { id } = req.params;
 
-        const { id } = req.params
-
+        // Fetch ParticipantsSeance records for a specific seance id
+        // const participantsSeance = await sequelize.query(
+        //     `SELECT ps.*, c.*
+        //      FROM formation_participantsseances ps
+        //      INNER JOIN profil_collabs c ON ps.collaborateur = c.id
+        //      WHERE ps.seance = :seanceId`,
+        //     {
+        //         replacements: { seanceId: id },
+        //         type: QueryTypes.SELECT,
+        //     }
+        // );
         const participantsSeance = await ParticipantsSeance.findAll({
-            where: {
-                seance: id,
+            where: { seance: id },
+            include: {
+                model: Collab,
+                attributes: ['id', 'nom', 'prenom', 'tel','image']
             },
-            include: [
-                {
-                    model: Collaborateur,
-                    as: collabseance
-                }
-            ]
-        })
+        });
 
-
-        res.status(200).json(participantsSeance)
+        res.status(200).json(participantsSeance);
     } catch (error) {
-        console.error(error)
-        res.status(500).json({error : 'Erreur lors de la récupération des participants de la séance'})
+        console.error(error);
+        res.status(500).json({ error: 'Erreur lors de la récupération des participants de la séance' });
     }
-})
+});
+
+
 
 
 //Ajouter un participants

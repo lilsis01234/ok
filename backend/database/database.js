@@ -4,7 +4,7 @@ const {Sequelize} = require('sequelize');
 const sequelize = new Sequelize('mysql://127.0.0.1:3306/intranet', { 
   username : 'root', 
   password :'',
-  charset: 'utf8mb4'
+  charset: 'utf8mb4', 
 })
 
 module.exports = sequelize;

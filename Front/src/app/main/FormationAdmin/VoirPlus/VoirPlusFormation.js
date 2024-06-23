@@ -283,7 +283,7 @@ const VoirPlusFormation = () => {
                         >
                           X
                         </button>
-                        {role.toLowerCase() === 'superadministrateur' && (
+                        {(role.toLowerCase() === 'superadministrateur' ||  selectedEvent.auteur == userId) ?(
                           <button
                             className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
                             onClick={() => {
@@ -292,7 +292,19 @@ const VoirPlusFormation = () => {
                           >
                             Démarrer l'appel vidéo
                           </button>
-                        )}
+                        )
+                        :
+                        (
+                          <button
+                          className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
+                          onClick={() => {
+                            handleParticipateNowClick(selectedEvent.id);
+                          }}
+                        >
+                          Joindre l'appel vidéo
+                        </button>
+                        )
+                        }
 
                         <button
                           className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"

@@ -82,7 +82,7 @@ const PieceJointe = require('../Modele/conge/PiecesJointes');
 async function syncDatabase() {
     try {
         //Modele et asociation Module PROFILE ICI
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ force: false });
         const { TestPoste, TestDepartement, PosteDepartement } = association;
         TestPoste.belongsToMany(TestDepartement, { through: PosteDepartement });
         TestDepartement.belongsToMany(TestPoste, { through: PosteDepartement });
@@ -90,9 +90,9 @@ async function syncDatabase() {
         const { RoleHierarchique, Permission, RolePermission } = associationPermission
 
         //Modele et asociation Module FORMATION ICI
-        const{ SeanceFormation, Collaborateur ,ParticipantsSeance} = associationSeanceCollab;
-        Collaborateur.belongsToMany(SeanceFormation,{through:ParticipantsSeance});
-        SeanceFormation.belongsToMany(Collaborateur,{through:ParticipantsSeance});
+        const{ SeanceFormation, Collab ,ParticipantsSeance} = associationSeanceCollab;
+        Collab.belongsToMany(SeanceFormation,{through:ParticipantsSeance});
+        SeanceFormation.belongsToMany(Collab,{through:ParticipantsSeance});
 
         const{ Seance2, Equipe,EquipeSeance} = associationSeanceEquipe;
         Equipe.belongsToMany(Seance2,{through:EquipeSeance});
