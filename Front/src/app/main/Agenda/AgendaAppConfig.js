@@ -1,3 +1,4 @@
+import CalendarSeance from "../CalendarSeance/calendrierAff/CalendarDisplay"
 import AgendaApp from "./AgendaApp"
 
 

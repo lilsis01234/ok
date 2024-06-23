@@ -191,12 +191,10 @@ router.get('/view/:id', async(req, res) => {
                 {
                     model: Module,
                     attributes: ['titreModule', 'description'],
-                    include: [
-                        {
-                            model: Formation,
-                            attributes: ['theme', 'description', 'formateur', 'formateurExterne', 'confidentialite', 'dateDebutFormation', 'dateFinFormation', 'demande']
-                        }
-                    ]
+                },
+                {
+                    model: Formation,
+                    attributes: ['theme', 'description', 'formateur', 'formateurExterne', 'confidentialite', 'dateDebutFormation', 'dateFinFormation', 'demande']
                 }
             ]
         })
