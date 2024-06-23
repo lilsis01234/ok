@@ -108,105 +108,9 @@ const VoirPlusFormation = () => {
       }
     };
   
-    
-    const handleEventSelect = (event) => {
-      setSelectedEvent(event);
-      setShowButtons(true);
-      console.log('Selected event ID:', event);
+    const handleVoirPlusSeance = () => {
+      navigate(`/seance/info/${idEvent}`);
     };
-  
-  
-    const handleParticipateNowClick = (id) => {
-      if (role.toLowerCase() === 'superadministrateur') {
-        startVideoCall(id);
-      } else {
-        showNotification (<Link to={`/appelVideo/${id}`} >Cliquez ici pour participer</Link>,'L\'appel a commencé')
-      }
-    };
-  
-  
-    const startVideoCall = (id) => {
-      console.log("Appel vidéo démarré par le formateur");
-      navigate (`/appelVideo/${id}`)
-    };
-  
-    const handleReserveClick = (id) => {
-      if (id) {
-        axios.post('http://localhost:4000/api/participantSeance/addCollabSeancePres', {
-          seance: id,
-          collaborateur: userId, 
-          online: false,
-        })
-          .then(response => {
-            console.log('Reservation successful:', response.data);
-            closePopup()
-            alert('Réservation à succès')
-          })
-          .catch(error => {
-            console.error('Error reserving place:', error);
-          });
-      } else {
-        console.log('No event selected.');
-      }
-    };
-  
-  
-    const handleReserveEqClick = (id) =>{
-      if (id) {
-        axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
-          seance: id,
-          equipe: equipe, 
-          online: false,
-        })
-          .then(response => {
-            console.log('Reservation successful:', response.data);
-            closePopup()
-            alert('Réservation à succès')
-          })
-          .catch(error => {
-            console.error('Error reserving place:', error);
-          });
-      } 
-      else {
-        console.log('No event selected.');
-      }
-    }
-    
-    
-    const DeleteSeance = async (id) => {
-      const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette séance ?");
-      if (isConfirmed) {
-      try {
-        const response = await axios.delete(`http://localhost:4000/api/calendrier/seance/${id}`);
-        if (response.status === 204) {
-          // Suppression réussie, mise à jour la liste des événements
-          const updatedEvents = events.filter(event => event.id !== id);
-          setEvents(updatedEvents);
-          closePopup()
-        } else {
-          console.error('Erreur lors de la suppression de la séance');
-        }
-      } catch (error) {
-        console.error('Erreur lors de la suppression de la séance :', error);
-      }
-    }};
-    
-  
-    const ShowAllParticipant = async (seanceId) => {
-      axios.get(`http://localhost:4000/api/participantSeance/allCollab/${seanceId}`)
-      .then((res) => {
-        console.log(res.data);
-        setParticipantData(res.data);
-        setParticipantListVisible(!isParticipantListVisible); // Inverse la visibilité
-      })
-      .catch(error =>
-        console.error('Error fetching participant data:', error));
-    };
-  
-    const closePopup = () => {
-      setShowButtons(false);
-    };
-  
   
     return (
         <div className="voirPlusContainer">
@@ -266,96 +170,11 @@ const VoirPlusFormation = () => {
                       events={events}
                       startAccessor="start"
                       endAccessor="end"
-                      onSelectEvent={handleEventSelect}
+                      onSelectEvent={handleVoirPlusSeance}
                       style={{ margin: '10px', padding: '10px', backgroundColor: 'white', borderRadius: '5px' }}
                     />
                   ) : (
                     <h2>Aucune séance pour le moment</h2>
-                  )
-                }
-                {
-                  showButtons && selectedEvent && (
-                    <div className="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded shadow-md">
-                      <div className="popupContent bg-white p-8 rounded-lg max-w-md relative">
-                        <button
-                          className="closeButton bg-gray-500 text-white py-2 px-4 rounded absolute top-4 right-4"
-                          onClick={closePopup}
-                        >
-                          X
-                        </button>
-                        {(role.toLowerCase() === 'superadministrateur' ||  selectedEvent.auteur == userId) ?(
-                          <button
-                            className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
-                            onClick={() => {
-                              handleParticipateNowClick(selectedEvent.id);
-                            }}
-                          >
-                            Démarrer l'appel vidéo
-                          </button>
-                        )
-                        :
-                        (
-                          <button
-                          className="popupButton bg-blue-500 text-white py-2 px-4 rounded mb-4"
-                          onClick={() => {
-                            handleParticipateNowClick(selectedEvent.id);
-                          }}
-                        >
-                          Joindre l'appel vidéo
-                        </button>
-                        )
-                        }
-
-                        <button
-                          className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
-                          onClick={() => {
-                            handleReserveClick(selectedEvent.id);
-                          }}
-                        >
-                          Réserver une place
-                        </button>
-
-                        {selectedEvent.auteur === userId && (
-                          <button
-                            className="popupButton bg-red-500 text-white py-2 px-4 rounded mb-4"
-                            onClick={() => {
-                              DeleteSeance(selectedEvent.id);
-                            }}
-                          >
-                            Supprimer
-                          </button>
-                        )}
-
-                        {isParticipantListVisible && (
-                          <div className="participantData mb-4">
-                            {participantData &&
-                              [...participantData.collabNames, ...participantData.collabNames2]
-                                .filter((collab, index, self) => self.findIndex((c) => c.id === collab.id) === index)
-                                .map((collab, index) => (
-                                  <div key={index} className="mb-2">{`${collab.nom} ${collab.prenom}`}</div>
-                                ))}
-                          </div>
-                        )}
-
-                        <button
-                          className="popupButton bg-blue-700 text-white py-2 px-4 rounded mb-4"
-                          onClick={() => ShowAllParticipant(selectedEvent.id)}
-                        >
-                          Liste des participants
-                        </button>
-
-                        {role.toLowerCase() === 'chefequipe' && (
-                          <button
-                            className="popupButton bg-green-500 text-white py-2 px-4 rounded"
-                            onClick={() => {
-                              handleReserveEqClick(selectedEvent.id);
-                            }}
-                          >
-                            Réserver des places pour mon équipe
-                          </button>
-                        )}
-                      </div>
-                    </div>
                   )
                 }
         </div>

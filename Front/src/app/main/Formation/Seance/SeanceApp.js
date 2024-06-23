@@ -26,17 +26,74 @@ function SeanceApp() {
   const { id } = useParams();
 
   const [seanceData, setSeanceData] = useState();
+  const [participantData, setParticipantData] = useState();
+
+  const ViewMore = () =>{
+    axios.get(`http://localhost:4000/api/calendrier/view/${id}`)
+    .then((response) => {
+      setSeanceData(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }
+
+  const handleReserveClick = (id) => {
+    if (id) {
+      axios.post('http://localhost:4000/api/participantSeance/addCollabSeancePres', {
+        seance: id,
+        collaborateur: userId, 
+        online: false,
+      })
+        .then(response => {
+          console.log('Reservation successful:', response.data);
+          closePopup()
+          alert('Réservation à succès')
+        })
+        .catch(error => {
+          console.error('Error reserving place:', error);
+        });
+    } else {
+      console.log('No event selected.');
+    }
+  };
+
+
+  const handleReserveEqClick = (id) =>{
+    if (id) {
+      axios.post('http://localhost:4000/api/participantSeance/addCollabSeanceEq', {
+        seance: id,
+        equipe: equipe, 
+        online: false,
+      })
+        .then(response => {
+          console.log('Reservation successful:', response.data);
+          closePopup()
+          alert('Réservation à succès')
+        })
+        .catch(error => {
+          console.error('Error reserving place:', error);
+        });
+    } 
+    else {
+      console.log('No event selected.');
+    }
+  }
+  
+  const ShowAllParticipant = async (id) => {
+    axios.get(`http://localhost:4000/api/participantSeance/all/${id}`)
+    .then((res) => {
+      console.log(res.data);
+      setParticipantData(res.data);
+    })
+    .catch(error =>
+      console.error('Error fetching participant data:', error));
+  };
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/api/calendrier/view/${id}`)
-      .then((response) => {
-        setSeanceData(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
+   ViewMore();
+   ShowAllParticipant();
   }, [])
-
   // console.log(seanceData)
 
   //Récupération des modules lié à la formation
@@ -121,11 +178,36 @@ function SeanceApp() {
                         <Typography className="my-16 px-24 text-center">{seanceData?.Formation?.formateurExterne}</Typography>
                       )}
 
-
                     </div>
                   </div>
 
+                  <StyledBadge>Personnes inscrites</StyledBadge>
 
+                    {participantData && participantData.map((participant, index) => (
+                          <div key={index}>
+                            <Typography>{`${participant.Profil_Collab.nom} ${participant.Profil_Collab.prenom}`}</Typography>
+                          </div>
+                    ))}
+
+                      <button
+                        className="popupButton bg-green-500 text-white py-2 px-4 rounded mb-4"
+                        onClick={() => {
+                          handleReserveClick(selectedEvent.id);
+                        }}
+                      >
+                       <StyledBadge> Réserver une place</StyledBadge>
+                      </button>
+
+                      {role.toLowerCase() === 'chefequipe' && (
+                          <button
+                            className="popupButton bg-green-500 text-white py-2 px-4 rounded"
+                            onClick={() => {
+                              handleReserveEqClick(selectedEvent.id);
+                            }}
+                          >
+                          <StyledBadge>  Réserver des places pour mon équipe</StyledBadge>
+                          </button>
+                        )}
 
                 </Card>
 
