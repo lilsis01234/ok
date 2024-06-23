@@ -1,4 +1,4 @@
-const Seance2 = require('../Seances/Seance');
+const Seance2 = require('../Seances/SeanceFormation');
 const Equipe = require('../../CollabModel/Collab');
 const EquipeSeance = require('../Seances/EquipeSeance');
 

@@ -13,6 +13,10 @@ router.get('/agenda', async (req, res) => {
       include: [{
         model: Formation,
         attributes: ['theme', 'formateur', 'confidentialite'],
+          include :{
+            model: Collab,
+            attributes:['nom','prenom']
+          }
         },
         {
           model:Module,

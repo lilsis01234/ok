@@ -104,7 +104,6 @@ function AgendaApp() {
 
 
     //Récupérer les labels et les évenements ici 
-
     useEffect(() => {
         setLeftSidebarOpen(!isMobile);
     }, [isMobile])
@@ -164,6 +163,9 @@ function AgendaApp() {
             })
     }
 
+    const handleDates = (rangeInfo) => {
+        setCurrentDate(rangeInfo)
+    }
 
     const handleEventDrop = (eventDropInfo) => {
         //Mettre le code qui s'execute quand on change l'emplacement d'une évenement
@@ -178,7 +180,6 @@ function AgendaApp() {
             start,
             end,
         }
-
         updateEvents(id, data);
 
     }
@@ -195,8 +196,6 @@ function AgendaApp() {
         axios.get(`http://localhost:4000/api/calendrier/view/${id}`)
             .then((response) => {
                 setData({
-                    //    eventStart : response.data.heureStart,
-                    //    eventEnd :  response.data.heureEnd,
                     eventStart: moment.tz(response.data.heureStart, 'Africa/Nairobi').toDate(),
                     eventEnd: moment.tz(response.data.heureEnd, 'Africa/Nairobi').toDate(),
                     titleEvents: response.data.title,
@@ -210,6 +209,52 @@ function AgendaApp() {
     }
 
 
+    const scheduleNotification = (event) => {
+        if (event.start && event.end) {
+          const notificationTime = moment(event.start).subtract(10, 'minutes'); // 10 minutes before the event
+          const currentTime = moment();
+    
+          console.log(notificationTime);
+    
+          if (notificationTime.isAfter(currentTime)) {
+            const timeDifference = notificationTime.diff(currentTime);
+            setTimeout(() => {
+              showNotification(event.title, 'Dans 10 minutes');
+            }, timeDifference);
+            console.log('ty zao ande aveo')
+          } else {
+            console.log('Event has already passed.');
+          }
+        } else {
+          console.error('Invalid event data:', event);
+        }
+      };
+    
+    
+      const showNotification = (title, customMessage) => {
+        if (!("Notification" in window)) {
+          console.log("This browser does not support desktop notification");
+        } else {
+          Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+              try {
+                const notification = new Notification(title, {
+                  body: customMessage,
+                  requireInteraction: true,
+                  icon:Sary
+                });
+                console.log('lasa le notif')
+                notification.onclick = function () {
+                  console.log("Notification clicked!");
+                  handleIncomingCall();
+                };
+              } catch (err) {
+                console.error("Error showing notification:", err);
+              }
+            }
+          });
+        }
+      };
 
     const handleEventClick = (clickInfo) => {
         //Mettre le code qui s'execute quand un évenement est cliqué
@@ -231,9 +276,8 @@ function AgendaApp() {
 
 
 
-    const handleDates = (rangeInfo) => {
-        setCurrentDate(rangeInfo)
-    }
+
+    
 
     const handleEventAdd = (addInfo) => { };
 
@@ -249,7 +293,7 @@ function AgendaApp() {
     useEffect(() => {
         axios.get('http://localhost:4000/api/calendrier/agenda')
             .then((response) => {
-                const formattedEvents = response.data.filter((res) => res.Formation?.confidentialite === false).map((event) => {
+                const formattedEvents = response.data.filter((res) => res.Formation?.confidentialite.toString() === "0").map((event) => {
                     return {
                         auteur: event.Formation.formateur,
                         id: event.id,
@@ -259,6 +303,7 @@ function AgendaApp() {
                     };
                 });
                 setEvents(formattedEvents);
+                formattedEvents.forEach((event) => scheduleNotification(event));
             })
             .catch((error) => {
                 console.error(error)

@@ -3,7 +3,7 @@ const sequelize = require('../../../database/database');
 const Module = require('../Modules/Module');
 const Formation = require('../Formation');
 
-class SeanceFormation extends Model { }
+class SeanceFormation extends Model {}
 
 SeanceFormation.init({
     date: {
@@ -22,6 +22,14 @@ SeanceFormation.init({
         allowNull: true,
         references: {
             model: Module,
+            key: 'id',
+        },
+    },
+    formation: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: Formation,
             key: 'id',
         },
     },
