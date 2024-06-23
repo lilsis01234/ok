@@ -11,11 +11,13 @@ function CalendarForm() {
   const [events, setEvents] = useState([]);
   const [modules, setModules] = useState([]);
   const [selectedModule, setSelectedModule] = useState('');
+  const [isCreatingEvent, setIsCreatingEvent] = useState(false); 
   const formation = useParams();
   const idformation = formation.id;
   const navigate = useNavigate();
 
   const handleSelect = ({ start, end }) => {
+    setIsCreatingEvent(true); 
     const titre = window.prompt('Nom de l\'événement :');
     if (titre) {
       const placesString = window.prompt('Nombre de places :');
@@ -26,9 +28,9 @@ function CalendarForm() {
         end: new Date(Date.parse(end)),
         title: titre,
         nombreDePlaces: nombrePlaces,
-        module: selectedModule,
       };
       setEvents([...events, newEvent]);
+      console.log(events);
     }
   };
 
@@ -47,7 +49,7 @@ function CalendarForm() {
   }, []);
 
   const handleSave = () => {
-    axios.post('http://localhost:4000/api/agenda/agenda', { events, idformation })
+    axios.post('http://localhost:4000/api/agenda/agenda', { events, idformation,selectedModule })
       .then(response => {
         console.log(response.data);
         navigate(`/admin/formation/${idformation}`);
@@ -59,19 +61,21 @@ function CalendarForm() {
 
   return (
     <div style={{ height: '500px' }}>
-      <div>
-        <label htmlFor="moduleSelect">Select Module:</label>
-        <select
-          id="moduleSelect"
-          value={selectedModule}
-          onChange={e => setSelectedModule(e.target.value)}
-        >
-          <option value="">Select a module</option>
-          {modules.map(module => (
-            <option key={module.id} value={module.id}>{module.titreModule}</option>
-          ))}
-        </select>
-      </div>
+      {isCreatingEvent && ( 
+        <div>
+          <label htmlFor="moduleSelect">Selectionner un module:</label>
+          <select
+            id="moduleSelect"
+            value={selectedModule}
+            onChange={e => setSelectedModule(e.target.value)}
+          >
+            <option value="">Sélectionner un module</option>
+            {modules.map(module => (
+              <option key={module.id} value={module.id}>{module.titreModule}</option>
+            ))}
+          </select>
+        </div>
+      )}
       <Calendar
         localizer={localizer}
         events={events}

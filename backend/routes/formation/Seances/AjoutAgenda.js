@@ -9,9 +9,10 @@ router.post('/agenda', async (req, res) => {
   try {
     const eventsData = req.body.events;
     const formation = req.body.idformation;
+    const module = req.body.selectedModule;
 
     const agendaEntries = await Promise.all(eventsData.map(async event => {
-      const { start, end, title, nombreDePlaces,module } = event;
+      const { start, end, title, nombreDePlaces } = event;
 
       const agendaEntry = await Agenda.create({
         date: start,
@@ -20,9 +21,9 @@ router.post('/agenda', async (req, res) => {
         nombredePlacesReservees: 0,
         nombreDePlaces: nombreDePlaces,
         title: title,
-        module:module,
         formation:formation,
-        approbation: 1
+        approbation: 1,
+        module:module
       });
       return agendaEntry;
     }));
