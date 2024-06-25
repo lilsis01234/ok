@@ -41,6 +41,10 @@ function EventDialog(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [infos, setInfos] = useState();
+    const users = localStorage.getItem('user');
+    const userConnected = JSON.parse(users);
+    const roleH = userConnected.Profile_RoleHierarchique?.roleHierarchique;
+    console.log(roleH);
 
     useEffect(() => {
         if (data) {
@@ -130,7 +134,7 @@ function EventDialog(props) {
     };
 
     // Determine if fields should be editable
-    const isEditable = user.data?.photo?.id.toString() === infos?.Formation?.formateur.toString();
+    const isEditable =  user.data?.photo?.id.toString() === infos?.Formation?.formateur.toString()|| roleH.toString() === "SuperAdministrateur";
     console.log(infos)
     return (
         <Popover

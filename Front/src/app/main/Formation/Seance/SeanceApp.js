@@ -28,6 +28,11 @@ function SeanceApp() {
   const [seanceData, setSeanceData] = useState();
   const [participantData, setParticipantData] = useState();
 
+  const users = localStorage.getItem('user');
+  const user = JSON.parse(users);
+  const roleH = user.Profile_RoleHierarchique?.roleHierarchique;
+  console.log(roleH);
+
   const ViewMore = () =>{
     axios.get(`http://localhost:4000/api/calendrier/view/${id}`)
     .then((response) => {
@@ -97,23 +102,19 @@ function SeanceApp() {
   // console.log(seanceData)
 
   //Récupération des modules lié à la formation
-  const [moduleFormationData, setModuleFormationData] = useState();
+  // const [moduleFormationData, setModuleFormationData] = useState();
 
-  useEffect(() => {
-    axios.get(`http://localhost:4000/api/module/modules/${id}`)
-      .then((response) => {
-        setModuleFormationData(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-  }, [])
+  // useEffect(() => {
+  //   axios.get(`http://localhost:4000/api/module/modules/${id}`)
+  //     .then((response) => {
+  //       setModuleFormationData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     })
+  // }, [])
 
-  console.log(moduleFormationData)
-
-
-
-
+  // console.log(moduleFormationData)
 
 
   return (
@@ -198,7 +199,7 @@ function SeanceApp() {
                        <StyledBadge> Réserver une place</StyledBadge>
                       </button>
 
-                      {role.toLowerCase() === 'chefequipe' && (
+                      {/* {role.toLowerCase() === 'chefequipe' && (
                           <button
                             className="popupButton bg-green-500 text-white py-2 px-4 rounded"
                             onClick={() => {
@@ -207,7 +208,7 @@ function SeanceApp() {
                           >
                           <StyledBadge>  Réserver des places pour mon équipe</StyledBadge>
                           </button>
-                        )}
+                      )} */}
 
                 </Card>
 
