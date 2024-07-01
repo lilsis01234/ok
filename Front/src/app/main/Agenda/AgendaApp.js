@@ -272,14 +272,9 @@ function AgendaApp() {
 
         setDialogPosition({ x: positionX, y: positionY })
     }
-
-
-
-
-
     
 
-    const handleEventAdd = (addInfo) => { };
+    // const handleEventAdd = (addInfo) => { };
 
     const handleEventChange = (changeInfo) => { };
 
@@ -338,7 +333,7 @@ function AgendaApp() {
                         events={events}
                         eventContent={(eventInfo) => <AgendaAppEventContent eventInfo={eventInfo} />}
                         eventClick={handleEventClick}
-                        eventAdd={handleEventAdd}
+                        // eventAdd={handleEventAdd}
                         eventChange={handleEventChange}
                         eventRemove={handleEventRemove}
                         eventDrop={handleEventDrop}
