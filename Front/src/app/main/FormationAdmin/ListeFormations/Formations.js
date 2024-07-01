@@ -37,11 +37,6 @@ const Formations = () => {
       .catch(err => console.log(err));
   };
 
-  const handleUpdate = () => {
-    fetchFormation();
-    setEditingFormation(null); 
-  };
-
   useEffect(() => {
     fetchFormation();
   }, []);
@@ -135,7 +130,7 @@ const Formations = () => {
                       </Typography>
                       <div className="grid grid-cols-4 mt-32 border-t-2 pt-32">
                         <Link to={`/discussion/formation/${formation.id}`} className="text-blue-500 mt-2 hover:underline">
-                          Message
+                          Flux
                         </Link>
                         {userId === formation.Formateur.id && (
                           <>
@@ -155,7 +150,6 @@ const Formations = () => {
                           formationId={formation.id}
                           theme={formation.theme}
                           description={formation.description}
-                          onUpdate={handleUpdate}
                         />
                       )}
                     </div>

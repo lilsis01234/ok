@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const EditFormation = ({ formationId, theme, description, onUpdate }) => {
+const EditFormation = ({ formationId, theme, description }) => {
   const [newTheme, setNewTheme] = useState(theme);
   const [newDescription, setNewDescription] = useState(description);
   const navigate = useNavigate();

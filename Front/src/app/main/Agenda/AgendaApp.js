@@ -137,7 +137,7 @@ function AgendaApp() {
     const handleDateSelect = (selectInfo) => {
         const { start, end, jsEvent } = selectInfo || 'null';
         //Mettre le code qui permet de faire quelque chose quand une date est selectionnée
-        setType('new');
+        // setType('new');
         setIsEventDialogOpen(true);
         const positionX = jsEvent?.clientX;
         const positionY = jsEvent?.clientY;
@@ -272,14 +272,9 @@ function AgendaApp() {
 
         setDialogPosition({ x: positionX, y: positionY })
     }
-
-
-
-
-
     
 
-    const handleEventAdd = (addInfo) => { };
+    // const handleEventAdd = (addInfo) => { };
 
     const handleEventChange = (changeInfo) => { };
 
@@ -338,7 +333,7 @@ function AgendaApp() {
                         events={events}
                         eventContent={(eventInfo) => <AgendaAppEventContent eventInfo={eventInfo} />}
                         eventClick={handleEventClick}
-                        eventAdd={handleEventAdd}
+                        // eventAdd={handleEventAdd}
                         eventChange={handleEventChange}
                         eventRemove={handleEventRemove}
                         eventDrop={handleEventDrop}

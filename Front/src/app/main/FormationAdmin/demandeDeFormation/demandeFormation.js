@@ -104,8 +104,6 @@ const DemandeFormations = () => {
       <h1 className="text-2xl font-bold mb-6">Demandes de formations</h1>
       <MesDemandes />
 
-      {(role.toLowerCase() === 'superadministrateur' || role.toLowerCase() === 'rh') && (
-        <>
           {DemandeFormations.length !== 0 && (
             <Typography className="mt-6 mb-4">Les demandes de formation</Typography>
           )}
@@ -192,12 +190,10 @@ const DemandeFormations = () => {
                 </div>
               }
             </div>
-          ))}
-        </>
+          )
       )}
 
-      {(role.toLowerCase() === 'coatch' || role.toLowerCase() === 'superadministrateur') && (
-        <>
+
           <Typography className="mt-6 mb-4">Les demandes de formation pour le coatch</Typography>
 
           {DemandeCoatch.map((demande, index) => (
@@ -235,8 +231,7 @@ const DemandeFormations = () => {
                 </>
               )}
             </div>
-          ))}
-        </>
+          )
       )}
     </div>
 )
