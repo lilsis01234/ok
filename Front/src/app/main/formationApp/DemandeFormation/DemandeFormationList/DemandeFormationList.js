@@ -27,6 +27,7 @@ function DemandeFormationList() {
     axios.get('http://localhost:4000/api/demande_formation/view/all')
       .then(response => {
         setSearchResults(response.data)
+        console.log(response.data)
       })
       .catch((err) => {
         console.error(err)
@@ -49,7 +50,7 @@ function DemandeFormationList() {
           animate="show"
         >
           <motion.div variants={item} className="widget flex w-full">
-              <DemandeFormationListAll demandes={searchResults}/>
+              <DemandeFormationListAll demande={searchResults}/>
           </motion.div>
         </motion.div>
       }

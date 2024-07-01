@@ -28,7 +28,6 @@ const GroupFormation = sequelize.define('Formation_groupeFormation', {
     }
 })
 
-
 GroupFormation.belongsTo(Formation, {foreignKey:"formation", targetKey:'id', onUpdate:'CASCADE', onDelete: 'CASCADE'})
 Formation.hasMany(GroupFormation,  {foreignKey:"formation", targetKey:'id'})
 
